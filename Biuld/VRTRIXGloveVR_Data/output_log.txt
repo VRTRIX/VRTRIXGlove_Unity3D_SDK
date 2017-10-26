@@ -1,0 +1,79 @@
+Initialize engine version: 2017.1.0f3 (472613c02cf7)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA GeForce GTX 980 (ID=0x13c0)
+    Vendor:   NVIDIA
+    VRAM:     4060 MB
+    Driver:   22.21.13.8165
+Begin MonoManager ReloadAssembly
+Platform assembly: D:\VRTRIX\Projects\VR_Glove\DEMO\VRTRIXGlove_Unity3D_SDK\Biuld\VRTRIXGloveVR_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading D:\VRTRIX\Projects\VR_Glove\DEMO\VRTRIXGlove_Unity3D_SDK\Biuld\VRTRIXGloveVR_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: D:\VRTRIX\Projects\VR_Glove\DEMO\VRTRIXGlove_Unity3D_SDK\Biuld\VRTRIXGloveVR_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading D:\VRTRIX\Projects\VR_Glove\DEMO\VRTRIXGlove_Unity3D_SDK\Biuld\VRTRIXGloveVR_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: D:\VRTRIX\Projects\VR_Glove\DEMO\VRTRIXGlove_Unity3D_SDK\Biuld\VRTRIXGloveVR_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading D:\VRTRIX\Projects\VR_Glove\DEMO\VRTRIXGlove_Unity3D_SDK\Biuld\VRTRIXGloveVR_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: D:\VRTRIX\Projects\VR_Glove\DEMO\VRTRIXGlove_Unity3D_SDK\Biuld\VRTRIXGloveVR_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading D:\VRTRIX\Projects\VR_Glove\DEMO\VRTRIXGlove_Unity3D_SDK\Biuld\VRTRIXGloveVR_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+Platform assembly: D:\VRTRIX\Projects\VR_Glove\DEMO\VRTRIXGlove_Unity3D_SDK\Biuld\VRTRIXGloveVR_Data\Managed\UnityEngine.Timeline.dll (this message is harmless)
+Loading D:\VRTRIX\Projects\VR_Glove\DEMO\VRTRIXGlove_Unity3D_SDK\Biuld\VRTRIXGloveVR_Data\Managed\UnityEngine.Timeline.dll into Unity Child Domain
+Platform assembly: D:\VRTRIX\Projects\VR_Glove\DEMO\VRTRIXGlove_Unity3D_SDK\Biuld\VRTRIXGloveVR_Data\Managed\System.dll (this message is harmless)
+Platform assembly: D:\VRTRIX\Projects\VR_Glove\DEMO\VRTRIXGlove_Unity3D_SDK\Biuld\VRTRIXGloveVR_Data\Managed\System.Core.dll (this message is harmless)
+- Completed reload, in  0.022 seconds
+<RI> Initializing input.
+<RI> Input initialized.
+<RI> Initialized touch support.
+OpenVR initialized!
+ 
+(Filename:  Line: 584)
+
+[VRDevice] Successfully created device OpenVR.
+UnloadTime: 37.828873 ms
+Connected to lighthouse:LHR-93341474
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Material:Internal_CreateWithShader (UnityEngine.Material,UnityEngine.Shader)
+  at UnityEngine.Material..ctor (UnityEngine.Shader shader) [0x00000] in <filename unknown>:0 
+  at SteamVR_Fade.OnEnable () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+Setting up 4 worker threads for Enlighten.
+  Thread -> id: 44f0 -> priority: 1 
+  Thread -> id: 4eb0 -> priority: 1 
+  Thread -> id: 6988 -> priority: 1 
+  Thread -> id: 7c60 -> priority: 1 
+[Device1] Render model does not support components, falling back to single mesh.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+[Device2] Render model does not support components, falling back to single mesh.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+[Device3] Render model does not support components, falling back to single mesh.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+[Device4] Render model does not support components, falling back to single mesh.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Try to opening RH Port: COM31
+COM_PORT Opened: COM31
+Try to opening LH Port: COM32
+COM_PORT Opened: COM32
+Righthand Port Opened!
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Lefthand Port Opened!
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+OpenVR Shutdown
+ 
+(Filename:  Line: 1253)
+

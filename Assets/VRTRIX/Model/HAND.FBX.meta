@@ -1,0 +1,158 @@
+fileFormatVersion: 2
+guid: 87f0047ae03ebb943b23614acc1ac89c
+timeCreated: 1499326575
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Dummy001
+    100002: Dummy002
+    100004: Dummy003
+    100006: Dummy004
+    100008: Dummy005
+    100010: Dummy006
+    100012: Dummy007
+    100014: Dummy008
+    100016: Dummy009
+    100018: Dummy010
+    100020: Dummy011
+    100022: Dummy012
+    100024: Dummy013
+    100026: Dummy014
+    100028: Dummy015
+    100030: Dummy016
+    100032: Dummy017
+    100034: Dummy018
+    100036: Dummy021
+    100038: Dummy023
+    100040: Dummy024
+    100042: Dummy025
+    100044: Dummy026
+    100046: Dummy027
+    100048: Dummy028
+    100050: Dummy029
+    100052: Dummy030
+    100054: Dummy031
+    100056: Dummy032
+    100058: Dummy034
+    100060: Dummy035
+    100062: Dummy039
+    100064: Dummy040
+    100066: Dummy041
+    100068: Dummy042
+    100070: Hand
+    100072: Hand002
+    100074: Pyramid001
+    100076: //RootNode
+    400000: Dummy001
+    400002: Dummy002
+    400004: Dummy003
+    400006: Dummy004
+    400008: Dummy005
+    400010: Dummy006
+    400012: Dummy007
+    400014: Dummy008
+    400016: Dummy009
+    400018: Dummy010
+    400020: Dummy011
+    400022: Dummy012
+    400024: Dummy013
+    400026: Dummy014
+    400028: Dummy015
+    400030: Dummy016
+    400032: Dummy017
+    400034: Dummy018
+    400036: Dummy021
+    400038: Dummy023
+    400040: Dummy024
+    400042: Dummy025
+    400044: Dummy026
+    400046: Dummy027
+    400048: Dummy028
+    400050: Dummy029
+    400052: Dummy030
+    400054: Dummy031
+    400056: Dummy032
+    400058: Dummy034
+    400060: Dummy035
+    400062: Dummy039
+    400064: Dummy040
+    400066: Dummy041
+    400068: Dummy042
+    400070: Hand
+    400072: Hand002
+    400074: Pyramid001
+    400076: //RootNode
+    2300000: Pyramid001
+    3300000: Pyramid001
+    4300000: Pyramid001
+    4300002: Hand
+    4300004: Hand002
+    7400000: Take 001
+    9500000: //RootNode
+    13700000: Hand
+    13700002: Hand002
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
