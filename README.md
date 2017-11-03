@@ -1,4 +1,4 @@
-# Introduction
+# Introduction [中文][chinese]
 
 <p align="center">
   <img src="https://github.com/VRTRIX/VRTRIXGlove_Unity3D_SDK/blob/master/docs/img/digital_glove.jpg?raw=true"/>
@@ -23,5 +23,6 @@ This repository contains the VRTRIX Glove Unity3D Plugin, which includes assets 
 
 - Note that this repository may contains code for work-in-progress modules, tentative modules, or older modules that may be unsupported.We recommend using the release version packages available on the [our release page][devsite].
 
+[chinese]: https://github.com/VRTRIX/VRTRIXGlove_Unity3D_SDK/blob/master/README_CN.md "chinese"
 [devsite]: https://github.com/VRTRIX/VRTRIXGlove_Unity3D_SDK/releases "VRTRIX Glove Unity Plugin Release site"
 [wiki]: https://github.com/VRTRIX/VRTRIXGlove_Unity3D_SDK/wiki "VRTRIX Glove Unity Plugin Wiki"
