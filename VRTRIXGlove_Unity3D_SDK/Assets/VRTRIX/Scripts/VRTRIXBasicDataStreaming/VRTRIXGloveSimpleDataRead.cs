@@ -39,6 +39,10 @@ namespace VRTRIX
         public Text fps { get; private set; }
         public Text mode { get; private set; }
         public Text status { get; private set; }
+        public Text lh_radio { get; private set; }
+        public Text rh_radio { get; private set; }
+        public Text lh_cal { get; private set; }
+        public Text rh_cal { get; private set; }
         public Text L_data_rate_text { get; private set; }
         public Text L_status_text { get; private set; }
         public Text L_hand_text { get; private set; }
@@ -61,6 +65,11 @@ namespace VRTRIX
             fps = GameObject.Find("Abstract/FPS").GetComponent<Text>();
             mode = GameObject.Find("Abstract/MODE").GetComponent<Text>();
             status = GameObject.Find("Abstract/STATUS").GetComponent<Text>();
+
+            lh_radio = GameObject.Find("CAL_RADIO/LH_RADIO").GetComponent<Text>();
+            rh_radio = GameObject.Find("CAL_RADIO/RH_RADIO").GetComponent<Text>();
+            lh_cal = GameObject.Find("CAL_RADIO/LH_CAL").GetComponent<Text>();
+            rh_cal = GameObject.Find("CAL_RADIO/RH_CAL").GetComponent<Text>();
 
             L_data_rate_text = GameObject.Find("LEFT/DATA_RATE").GetComponent<Text>();
             L_status_text = GameObject.Find("LEFT/STATUS").GetComponent<Text>();
@@ -151,35 +160,37 @@ namespace VRTRIX
                     qroffset = GetOffset(objectToAlign, RH, HANDTYPE.RIGHT_HAND);
                     qroffset_cal = true;
                 }
+                rh_radio.text = "Radio Strength:  " + RH.GetReceiveRadioStrength().ToString() + " dB";
+                rh_cal.text = "Cal Score:  " + RH.GetReceivedCalScoreMean().ToString();
                 R_data_rate_text.text = "RIGHT HAND DATA RATE: " + RH.GetReceivedDataRate().ToString() + "/s";
                 SetRotation(VRTRIXBones.R_Forearm, RH.GetReceivedRotation(VRTRIXBones.R_Forearm), RH.DataValidStatus(VRTRIXBones.R_Forearm), HANDTYPE.RIGHT_HAND);
                 SetRotation(VRTRIXBones.R_Hand, RH.GetReceivedRotation(VRTRIXBones.R_Hand), RH.DataValidStatus(VRTRIXBones.R_Hand), HANDTYPE.RIGHT_HAND);
-                R_hand_text.text = "R_Hand   " + RH.GetReceivedRotation(VRTRIXBones.R_Hand).ToString();
+                R_hand_text.text = "R_Hand   " + RH.GetReceivedRotation(VRTRIXBones.R_Hand).ToString() + "    " + RH.GetReceivedCalScore(VRTRIXBones.R_Hand).ToString();
 
                 SetRotation(VRTRIXBones.R_Thumb_1, RH.GetReceivedRotation(VRTRIXBones.R_Thumb_1), RH.DataValidStatus(VRTRIXBones.R_Thumb_1), HANDTYPE.RIGHT_HAND);
                 SetRotation(VRTRIXBones.R_Thumb_2, RH.GetReceivedRotation(VRTRIXBones.R_Thumb_2), RH.DataValidStatus(VRTRIXBones.R_Thumb_2), HANDTYPE.RIGHT_HAND);
                 SetRotation(VRTRIXBones.R_Thumb_3, RH.GetReceivedRotation(VRTRIXBones.R_Thumb_3), RH.DataValidStatus(VRTRIXBones.R_Thumb_3), HANDTYPE.RIGHT_HAND);
-                R_thumb_text.text = "R_Thumb   " + RH.GetReceivedRotation(VRTRIXBones.R_Thumb_2).ToString();
+                R_thumb_text.text = "R_Thumb   " + RH.GetReceivedRotation(VRTRIXBones.R_Thumb_2).ToString() + "    " + RH.GetReceivedCalScore(VRTRIXBones.R_Thumb_2).ToString();
 
                 SetRotation(VRTRIXBones.R_Index_1, RH.GetReceivedRotation(VRTRIXBones.R_Index_1), RH.DataValidStatus(VRTRIXBones.R_Index_1), HANDTYPE.RIGHT_HAND);
                 SetRotation(VRTRIXBones.R_Index_2, RH.GetReceivedRotation(VRTRIXBones.R_Index_2), RH.DataValidStatus(VRTRIXBones.R_Index_2), HANDTYPE.RIGHT_HAND);
                 SetRotation(VRTRIXBones.R_Index_3, RH.GetReceivedRotation(VRTRIXBones.R_Index_3), RH.DataValidStatus(VRTRIXBones.R_Index_3), HANDTYPE.RIGHT_HAND);
-                R_index_text.text = "R_Index   " + RH.GetReceivedRotation(VRTRIXBones.R_Index_2).ToString();
+                R_index_text.text = "R_Index   " + RH.GetReceivedRotation(VRTRIXBones.R_Index_2).ToString() + "    " + RH.GetReceivedCalScore(VRTRIXBones.R_Index_2).ToString();
 
                 SetRotation(VRTRIXBones.R_Middle_1, RH.GetReceivedRotation(VRTRIXBones.R_Middle_1), RH.DataValidStatus(VRTRIXBones.R_Middle_1), HANDTYPE.RIGHT_HAND);
                 SetRotation(VRTRIXBones.R_Middle_2, RH.GetReceivedRotation(VRTRIXBones.R_Middle_2), RH.DataValidStatus(VRTRIXBones.R_Middle_2), HANDTYPE.RIGHT_HAND);
                 SetRotation(VRTRIXBones.R_Middle_3, RH.GetReceivedRotation(VRTRIXBones.R_Middle_3), RH.DataValidStatus(VRTRIXBones.R_Middle_3), HANDTYPE.RIGHT_HAND);
-                R_middle_text.text = "R_Middle   " + RH.GetReceivedRotation(VRTRIXBones.R_Middle_2).ToString();
+                R_middle_text.text = "R_Middle   " + RH.GetReceivedRotation(VRTRIXBones.R_Middle_2).ToString() + "    " + RH.GetReceivedCalScore(VRTRIXBones.R_Middle_2).ToString();
 
                 SetRotation(VRTRIXBones.R_Ring_1, RH.GetReceivedRotation(VRTRIXBones.R_Ring_1), RH.DataValidStatus(VRTRIXBones.R_Ring_1), HANDTYPE.RIGHT_HAND);
                 SetRotation(VRTRIXBones.R_Ring_2, RH.GetReceivedRotation(VRTRIXBones.R_Ring_2), RH.DataValidStatus(VRTRIXBones.R_Ring_2), HANDTYPE.RIGHT_HAND);
                 SetRotation(VRTRIXBones.R_Ring_3, RH.GetReceivedRotation(VRTRIXBones.R_Ring_3), RH.DataValidStatus(VRTRIXBones.R_Ring_3), HANDTYPE.RIGHT_HAND);
-                R_ring_text.text = "R_Ring   " + RH.GetReceivedRotation(VRTRIXBones.R_Ring_2).ToString();
+                R_ring_text.text = "R_Ring   " + RH.GetReceivedRotation(VRTRIXBones.R_Ring_2).ToString() + "    " + RH.GetReceivedCalScore(VRTRIXBones.R_Ring_2).ToString();
 
                 SetRotation(VRTRIXBones.R_Pinky_1, RH.GetReceivedRotation(VRTRIXBones.R_Pinky_1), RH.DataValidStatus(VRTRIXBones.R_Pinky_1), HANDTYPE.RIGHT_HAND);
                 SetRotation(VRTRIXBones.R_Pinky_2, RH.GetReceivedRotation(VRTRIXBones.R_Pinky_2), RH.DataValidStatus(VRTRIXBones.R_Pinky_2), HANDTYPE.RIGHT_HAND);
                 SetRotation(VRTRIXBones.R_Pinky_3, RH.GetReceivedRotation(VRTRIXBones.R_Pinky_3), RH.DataValidStatus(VRTRIXBones.R_Pinky_3), HANDTYPE.RIGHT_HAND);
-                R_pinky_text.text = "R_Pinky   " + RH.GetReceivedRotation(VRTRIXBones.R_Pinky_2).ToString();
+                R_pinky_text.text = "R_Pinky   " + RH.GetReceivedRotation(VRTRIXBones.R_Pinky_2).ToString() + "    " + RH.GetReceivedCalScore(VRTRIXBones.R_Pinky_2).ToString();
             }
 
 
@@ -191,35 +202,37 @@ namespace VRTRIX
                     qloffset = GetOffset(objectToAlign, LH, HANDTYPE.LEFT_HAND);
                     qloffset_cal = true;
                 }
+                lh_radio.text = "Radio Strength:  " + LH.GetReceiveRadioStrength().ToString() + " dB";
+                lh_cal.text = "Cal Score:  " + LH.GetReceivedCalScoreMean().ToString();
                 L_data_rate_text.text = "LEFT HAND DATA RATE: " + LH.GetReceivedDataRate().ToString() + "/s";
                 SetRotation(VRTRIXBones.L_Forearm, LH.GetReceivedRotation(VRTRIXBones.L_Forearm), LH.DataValidStatus(VRTRIXBones.L_Forearm), HANDTYPE.LEFT_HAND);
                 SetRotation(VRTRIXBones.L_Hand, LH.GetReceivedRotation(VRTRIXBones.L_Hand), LH.DataValidStatus(VRTRIXBones.L_Hand), HANDTYPE.LEFT_HAND);
-                L_hand_text.text = "L_HAND:   " + LH.GetReceivedRotation(VRTRIXBones.L_Hand);
+                L_hand_text.text = "L_HAND:   " + LH.GetReceivedRotation(VRTRIXBones.L_Hand) + "    " + LH.GetReceivedCalScore(VRTRIXBones.L_Hand).ToString();
 
                 SetRotation(VRTRIXBones.L_Thumb_1, LH.GetReceivedRotation(VRTRIXBones.L_Thumb_1), LH.DataValidStatus(VRTRIXBones.L_Thumb_1), HANDTYPE.LEFT_HAND);
                 SetRotation(VRTRIXBones.L_Thumb_2, LH.GetReceivedRotation(VRTRIXBones.L_Thumb_2), LH.DataValidStatus(VRTRIXBones.L_Thumb_2), HANDTYPE.LEFT_HAND);
                 SetRotation(VRTRIXBones.L_Thumb_3, LH.GetReceivedRotation(VRTRIXBones.L_Thumb_3), LH.DataValidStatus(VRTRIXBones.L_Thumb_3), HANDTYPE.LEFT_HAND);
-                L_thumb_text.text = "L_THUMB:   " + LH.GetReceivedRotation(VRTRIXBones.L_Thumb_2);
+                L_thumb_text.text = "L_THUMB:   " + LH.GetReceivedRotation(VRTRIXBones.L_Thumb_2) + "    " + LH.GetReceivedCalScore(VRTRIXBones.L_Thumb_2).ToString();
 
                 SetRotation(VRTRIXBones.L_Index_1, LH.GetReceivedRotation(VRTRIXBones.L_Index_1), LH.DataValidStatus(VRTRIXBones.L_Index_1), HANDTYPE.LEFT_HAND);
                 SetRotation(VRTRIXBones.L_Index_2, LH.GetReceivedRotation(VRTRIXBones.L_Index_2), LH.DataValidStatus(VRTRIXBones.L_Index_2), HANDTYPE.LEFT_HAND);
                 SetRotation(VRTRIXBones.L_Index_3, LH.GetReceivedRotation(VRTRIXBones.L_Index_3), LH.DataValidStatus(VRTRIXBones.L_Index_3), HANDTYPE.LEFT_HAND);
-                L_index_text.text = "L_INDEX:   " + LH.GetReceivedRotation(VRTRIXBones.L_Index_2);
+                L_index_text.text = "L_INDEX:   " + LH.GetReceivedRotation(VRTRIXBones.L_Index_2) + "    " + LH.GetReceivedCalScore(VRTRIXBones.L_Index_2).ToString();
 
                 SetRotation(VRTRIXBones.L_Middle_1, LH.GetReceivedRotation(VRTRIXBones.L_Middle_1), LH.DataValidStatus(VRTRIXBones.L_Middle_1), HANDTYPE.LEFT_HAND);
                 SetRotation(VRTRIXBones.L_Middle_2, LH.GetReceivedRotation(VRTRIXBones.L_Middle_2), LH.DataValidStatus(VRTRIXBones.L_Middle_2), HANDTYPE.LEFT_HAND);
                 SetRotation(VRTRIXBones.L_Middle_3, LH.GetReceivedRotation(VRTRIXBones.L_Middle_3), LH.DataValidStatus(VRTRIXBones.L_Middle_3), HANDTYPE.LEFT_HAND);
-                L_middle_text.text = "L_MIDDLE:   " + LH.GetReceivedRotation(VRTRIXBones.L_Index_2);
+                L_middle_text.text = "L_MIDDLE:   " + LH.GetReceivedRotation(VRTRIXBones.L_Index_2) + "    " + LH.GetReceivedCalScore(VRTRIXBones.L_Index_2).ToString();
 
                 SetRotation(VRTRIXBones.L_Ring_1, LH.GetReceivedRotation(VRTRIXBones.L_Ring_1), LH.DataValidStatus(VRTRIXBones.L_Ring_1), HANDTYPE.LEFT_HAND);
                 SetRotation(VRTRIXBones.L_Ring_2, LH.GetReceivedRotation(VRTRIXBones.L_Ring_2), LH.DataValidStatus(VRTRIXBones.L_Ring_2), HANDTYPE.LEFT_HAND);
                 SetRotation(VRTRIXBones.L_Ring_3, LH.GetReceivedRotation(VRTRIXBones.L_Ring_3), LH.DataValidStatus(VRTRIXBones.L_Ring_3), HANDTYPE.LEFT_HAND);
-                L_ring_text.text = "L_RING:   " + LH.GetReceivedRotation(VRTRIXBones.L_Ring_2);
+                L_ring_text.text = "L_RING:   " + LH.GetReceivedRotation(VRTRIXBones.L_Ring_2) + "    " + LH.GetReceivedCalScore(VRTRIXBones.L_Ring_2).ToString();
 
                 SetRotation(VRTRIXBones.L_Pinky_1, LH.GetReceivedRotation(VRTRIXBones.L_Pinky_1), LH.DataValidStatus(VRTRIXBones.L_Pinky_1), HANDTYPE.LEFT_HAND);
                 SetRotation(VRTRIXBones.L_Pinky_2, LH.GetReceivedRotation(VRTRIXBones.L_Pinky_2), LH.DataValidStatus(VRTRIXBones.L_Pinky_2), HANDTYPE.LEFT_HAND);
                 SetRotation(VRTRIXBones.L_Pinky_3, LH.GetReceivedRotation(VRTRIXBones.L_Pinky_3), LH.DataValidStatus(VRTRIXBones.L_Pinky_3), HANDTYPE.LEFT_HAND);
-                L_pinky_text.text = "L_PINKY:   " + LH.GetReceivedRotation(VRTRIXBones.L_Pinky_2);
+                L_pinky_text.text = "L_PINKY:   " + LH.GetReceivedRotation(VRTRIXBones.L_Pinky_2) + "    " + LH.GetReceivedCalScore(VRTRIXBones.L_Pinky_2).ToString();
                 //print(GameObject.Find("L_Thumb_1").transform.rotation * Quaternion.Inverse(LH.GetReceivedRotation(VRTRIXBones.L_Hand)));
                 //print(GameObject.Find("L_Index_2").transform.rotation  + " , " + GameObject.Find("L_Hand").transform.rotation + " ," + GameObject.Find("L_Index_2").transform.rotation* Quaternion.Inverse(GameObject.Find("L_Hand").transform.rotation));
                 //print(LH.DataValidStatus(VRTRIXBones.L_Index_1) + ", " + LH.DataValidStatus(VRTRIXBones.L_Middle_1) + ", " + LH.DataValidStatus(VRTRIXBones.L_Ring_1) + ", " + LH.DataValidStatus(VRTRIXBones.L_Pinky_1) + ", " + LH.DataValidStatus(VRTRIXBones.L_Thumb_1));

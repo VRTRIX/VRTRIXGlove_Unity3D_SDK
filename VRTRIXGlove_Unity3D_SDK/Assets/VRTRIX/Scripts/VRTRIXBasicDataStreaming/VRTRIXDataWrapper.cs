@@ -45,6 +45,8 @@ namespace VRTRIX {
         //Define Useful Parameters & Variables
         private IntPtr sp;
         private int data_rate;
+        private int radio_strength;
+        private int[] calscore = new int[6];
         private bool port_opened = false;
         private bool[] valid = new bool[6];
         private Quaternion[] data = new Quaternion[16];
@@ -65,7 +67,7 @@ namespace VRTRIX {
         }
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        public delegate void ReceivedDataCallback(IntPtr sp, int data_rate);
+        public delegate void ReceivedDataCallback(IntPtr data, int data_rate, byte radio_strength, IntPtr cal_score_ptr);
         public static ReceivedDataCallback receivedDataCallback;
 
 
@@ -205,15 +207,17 @@ namespace VRTRIX {
         public void receivedData(HANDTYPE type)
         {
             receivedDataCallback =
-            (IntPtr ptr, int data_rate) =>
+            (IntPtr ptr, int data_rate, byte radio_strength, IntPtr cal_score_ptr) =>
             {
-                this.data_rate = data_rate;
                 VRTRIX_Quat[] quat = new VRTRIX_Quat[16];
                 MarshalUnmananagedArray2Struct<VRTRIX_Quat>(ptr, 16, out quat);
                 for (int i = 0; i < 16; i++)
                 {
                     data[i] = new Quaternion(quat[i].qx, quat[i].qy, quat[i].qz, quat[i].qw);
                 }
+                this.data_rate = data_rate;
+                this.radio_strength = radio_strength;
+                Marshal.Copy(cal_score_ptr, this.calscore, 0, 6);
             };
 
             if (this.sp != IntPtr.Zero)
@@ -279,6 +283,49 @@ namespace VRTRIX {
         public int GetReceivedDataRate()
         {
             return data_rate;
+        }
+
+        public int GetReceiveRadioStrength()
+        {
+            return -(int)radio_strength;
+        }
+        public int GetReceivedCalScore(VRTRIXBones bone)
+        {
+            switch (bone)
+            {
+                case VRTRIXBones.R_Index_2:
+                    return calscore[3];
+                case VRTRIXBones.R_Middle_2:
+                    return calscore[2];
+                case VRTRIXBones.R_Ring_2:
+                    return calscore[1];
+                case VRTRIXBones.R_Pinky_2:
+                    return calscore[0];
+                case VRTRIXBones.R_Thumb_2:
+                    return calscore[4];
+                case VRTRIXBones.R_Hand:
+                    return calscore[5];
+
+                case VRTRIXBones.L_Index_2:
+                    return calscore[3];
+                case VRTRIXBones.L_Middle_2:
+                    return calscore[2];
+                case VRTRIXBones.L_Ring_2:
+                    return calscore[1];
+                case VRTRIXBones.L_Pinky_2:
+                    return calscore[0];
+                case VRTRIXBones.L_Thumb_2:
+                    return calscore[4];
+                case VRTRIXBones.L_Hand:
+                    return calscore[5];
+
+                default:
+                    return 0;
+            }
+        }
+        public int GetReceivedCalScoreMean()
+        {
+            return (calscore[0] + calscore[1] + calscore[2] + calscore[3] + calscore[4] + calscore[5]) / 6;
         }
         public bool DataValidStatus (VRTRIXBones bone)
         {
