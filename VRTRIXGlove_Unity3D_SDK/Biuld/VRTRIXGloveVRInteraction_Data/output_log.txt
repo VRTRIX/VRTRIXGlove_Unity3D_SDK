@@ -7,19 +7,19 @@ Direct3D:
     VRAM:     4060 MB
     Driver:   22.21.13.8165
 Begin MonoManager ReloadAssembly
-Platform assembly: D:\VRTRIX\Projects\VR_Glove\DEMO\VRTRIXGlove_Unity3D_SDK\Biuld\VRTRIXGloveVRInteraction_Data\Managed\UnityEngine.dll (this message is harmless)
-Loading D:\VRTRIX\Projects\VR_Glove\DEMO\VRTRIXGlove_Unity3D_SDK\Biuld\VRTRIXGloveVRInteraction_Data\Managed\UnityEngine.dll into Unity Child Domain
-Platform assembly: D:\VRTRIX\Projects\VR_Glove\DEMO\VRTRIXGlove_Unity3D_SDK\Biuld\VRTRIXGloveVRInteraction_Data\Managed\Assembly-CSharp.dll (this message is harmless)
-Loading D:\VRTRIX\Projects\VR_Glove\DEMO\VRTRIXGlove_Unity3D_SDK\Biuld\VRTRIXGloveVRInteraction_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
-Platform assembly: D:\VRTRIX\Projects\VR_Glove\DEMO\VRTRIXGlove_Unity3D_SDK\Biuld\VRTRIXGloveVRInteraction_Data\Managed\UnityEngine.UI.dll (this message is harmless)
-Loading D:\VRTRIX\Projects\VR_Glove\DEMO\VRTRIXGlove_Unity3D_SDK\Biuld\VRTRIXGloveVRInteraction_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
-Platform assembly: D:\VRTRIX\Projects\VR_Glove\DEMO\VRTRIXGlove_Unity3D_SDK\Biuld\VRTRIXGloveVRInteraction_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
-Loading D:\VRTRIX\Projects\VR_Glove\DEMO\VRTRIXGlove_Unity3D_SDK\Biuld\VRTRIXGloveVRInteraction_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
-Platform assembly: D:\VRTRIX\Projects\VR_Glove\DEMO\VRTRIXGlove_Unity3D_SDK\Biuld\VRTRIXGloveVRInteraction_Data\Managed\UnityEngine.Timeline.dll (this message is harmless)
-Loading D:\VRTRIX\Projects\VR_Glove\DEMO\VRTRIXGlove_Unity3D_SDK\Biuld\VRTRIXGloveVRInteraction_Data\Managed\UnityEngine.Timeline.dll into Unity Child Domain
-Platform assembly: D:\VRTRIX\Projects\VR_Glove\DEMO\VRTRIXGlove_Unity3D_SDK\Biuld\VRTRIXGloveVRInteraction_Data\Managed\System.dll (this message is harmless)
-Platform assembly: D:\VRTRIX\Projects\VR_Glove\DEMO\VRTRIXGlove_Unity3D_SDK\Biuld\VRTRIXGloveVRInteraction_Data\Managed\System.Core.dll (this message is harmless)
-- Completed reload, in  0.020 seconds
+Platform assembly: D:\VRTRIX\Projects\VRTRIXGlove_Unity3D_SDK\VRTRIXGlove_Unity3D_SDK\Biuld\VRTRIXGloveVRInteraction_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading D:\VRTRIX\Projects\VRTRIXGlove_Unity3D_SDK\VRTRIXGlove_Unity3D_SDK\Biuld\VRTRIXGloveVRInteraction_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: D:\VRTRIX\Projects\VRTRIXGlove_Unity3D_SDK\VRTRIXGlove_Unity3D_SDK\Biuld\VRTRIXGloveVRInteraction_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading D:\VRTRIX\Projects\VRTRIXGlove_Unity3D_SDK\VRTRIXGlove_Unity3D_SDK\Biuld\VRTRIXGloveVRInteraction_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: D:\VRTRIX\Projects\VRTRIXGlove_Unity3D_SDK\VRTRIXGlove_Unity3D_SDK\Biuld\VRTRIXGloveVRInteraction_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading D:\VRTRIX\Projects\VRTRIXGlove_Unity3D_SDK\VRTRIXGlove_Unity3D_SDK\Biuld\VRTRIXGloveVRInteraction_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: D:\VRTRIX\Projects\VRTRIXGlove_Unity3D_SDK\VRTRIXGlove_Unity3D_SDK\Biuld\VRTRIXGloveVRInteraction_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading D:\VRTRIX\Projects\VRTRIXGlove_Unity3D_SDK\VRTRIXGlove_Unity3D_SDK\Biuld\VRTRIXGloveVRInteraction_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+Platform assembly: D:\VRTRIX\Projects\VRTRIXGlove_Unity3D_SDK\VRTRIXGlove_Unity3D_SDK\Biuld\VRTRIXGloveVRInteraction_Data\Managed\UnityEngine.Timeline.dll (this message is harmless)
+Loading D:\VRTRIX\Projects\VRTRIXGlove_Unity3D_SDK\VRTRIXGlove_Unity3D_SDK\Biuld\VRTRIXGloveVRInteraction_Data\Managed\UnityEngine.Timeline.dll into Unity Child Domain
+Platform assembly: D:\VRTRIX\Projects\VRTRIXGlove_Unity3D_SDK\VRTRIXGlove_Unity3D_SDK\Biuld\VRTRIXGloveVRInteraction_Data\Managed\System.dll (this message is harmless)
+Platform assembly: D:\VRTRIX\Projects\VRTRIXGlove_Unity3D_SDK\VRTRIXGlove_Unity3D_SDK\Biuld\VRTRIXGloveVRInteraction_Data\Managed\System.Core.dll (this message is harmless)
+- Completed reload, in  0.018 seconds
 <RI> Initializing input.
 <RI> Input initialized.
 <RI> Initialized touch support.
@@ -32,7 +32,7 @@ The referenced script on this Behaviour (Game Object 'Sound_TorchFire') is missi
  
 (Filename:  Line: 1758)
 
-UnloadTime: 0.680540 ms
+UnloadTime: 0.784603 ms
 Connected to lighthouse:LHR-93341474
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
@@ -43,6 +43,10 @@ NullReferenceException
   at SteamVR_Fade.OnEnable () [0x00000] in <filename unknown>:0 
  
 (Filename:  Line: -1)
+
+ChaperoneInfo initialized. Standing play area 1.00m x 1.00m
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
 The referenced script on this Behaviour (Game Object '<null>') is missing!
  
@@ -56,15 +60,11 @@ The referenced script on this Behaviour (Game Object 'Sound_TorchFire') is missi
  
 (Filename:  Line: 1758)
 
-ChaperoneInfo initialized. Standing play area 1.00m x 1.00m
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
 Setting up 4 worker threads for Enlighten.
-  Thread -> id: 2f24 -> priority: 1 
-  Thread -> id: 7780 -> priority: 1 
-  Thread -> id: 7724 -> priority: 1 
-  Thread -> id: 8194 -> priority: 1 
+  Thread -> id: 3fdc -> priority: 1 
+  Thread -> id: 67fc -> priority: 1 
+  Thread -> id: 5768 -> priority: 1 
+  Thread -> id: 3854 -> priority: 1 
 [Device1] Render model does not support components, falling back to single mesh.
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
@@ -77,12 +77,58 @@ Setting up 4 worker threads for Enlighten.
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
-Try to opening LH Port: COM32
-COM_PORT Opened: COM32
+[Device4] Render model does not support components, falling back to single mesh.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Righthand Port Opened!
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
 Lefthand Port Opened!
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
+Try to opening RH Port: COM21Try to opening LH Port: COM22
+
+COM_PORT Opened: COM21
+COM_PORT Opened: COM22
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
 hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
@@ -332,9 +378,185 @@ hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
 hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+pointedAtTeleportMarker： TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+teleportPosition: (-0.2, 0.3, 3.7)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+teleportPoint: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+(0.2, -0.2, 4.0)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Moving Player
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+playerFeetOffset: (0.0, 0.0, 0.0)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+trackingOriginTransform: (0.2, -0.2, 4.0)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableBall (2) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Found 1 overlapping colliders.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableBall (2) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableBall (2) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableBall (2) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableBall (2) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableBall (2) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableBall (2) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+AttachObject ThrowableBall (2) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableBall (2) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableBall (2) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableBall (2) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableBall (2) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableBall (2) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableBall (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableBall (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableBall (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+AttachObject ThrowableBall (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableBall (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableBall (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableBall (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableBall (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableBall (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableBall (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+AttachObject ThrowableBall (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableBall (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableBall (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableBall (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableBall (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableBall (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableBall (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+AttachObject ThrowableBall (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableBall (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableBall (4) (UnityEngine.GameObject)
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
+DetachObject ThrowableBall (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableBall (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableBall (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
 hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
@@ -496,6 +718,690 @@ hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
 hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+pointedAtTeleportMarker： TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+teleportPosition: (-2.0, 0.4, 4.2)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+teleportPoint: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+(-2.5, -0.2, 4.0)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Moving Player
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+playerFeetOffset: (0.0, 0.0, 0.0)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+trackingOriginTransform: (-2.5, -0.2, 4.0)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableCube_Small (3) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Found 2 overlapping colliders.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Found 1 overlapping colliders.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableCube_Small (3) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableCube (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableCube (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableCube (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableCube (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableCube (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableCube (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableCube (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableCube (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableCube (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+AttachObject ThrowableCube (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableCube (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableCube (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableCube (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableCube (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableCube (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableCube (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableCube (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableCube (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableCube (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableCube_Small (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableCube_Small (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableCube (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableCube (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableCube (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableCube (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableCube (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableCube (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableCube (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+AttachObject ThrowableCube (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableCube (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableCube (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableCube (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableCube_Small (3) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube_Small (3) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube_Small (3) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+AttachObject ThrowableCube_Small (3) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableCube_Small (3) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube_Small (3) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube_Small (3) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableCube_Small (3) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableCube_Small (3) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+AttachObject ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableCube_Small (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Found 2 overlapping colliders.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Found 1 overlapping colliders.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube_Small (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube_Small (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+AttachObject ThrowableCube_Small (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableCube_Small (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube_Small (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube_Small (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableCube_Small (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableCube_Small (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableCube_Small (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableCube_Small (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableCube_Small (3) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube_Small (3) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube_Small (3) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+AttachObject ThrowableCube_Small (3) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableCube_Small (3) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube_Small (3) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube_Small (3) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableCube_Small (3) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Found 2 overlapping colliders.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Found 1 overlapping colliders.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableCube_Small (3) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableCube_Small (3) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Found 2 overlapping colliders.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableCube_Small (3) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+AttachObject ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+AttachObject ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+AttachObject ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Found 1 overlapping colliders.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableCube_Small (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube_Small (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube_Small (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+AttachObject ThrowableCube_Small (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableCube_Small (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube_Small (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube_Small (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableCube_Small (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableCube_Small (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableCube (1) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube (1) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube (1) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+AttachObject ThrowableCube (1) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableCube (1) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube (1) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube (1) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableCube (1) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableCube (1) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+AttachObject ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableCube_Small (3) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube_Small (3) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube_Small (3) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+AttachObject ThrowableCube_Small (3) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableCube_Small (3) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube_Small (3) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube_Small (3) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableCube_Small (3) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableCube_Small (3) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+AttachObject ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableCube (5) (UnityEngine.GameObject)
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
@@ -811,7 +1717,7 @@ pointedAtTeleportMarker： TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
-teleportPosition: (0.2, 0.3, 3.5)
+teleportPosition: (-0.3, 0.3, 4.0)
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
@@ -832,6 +1738,2786 @@ playerFeetOffset: (0.0, 0.0, 0.0)
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
 trackingOriginTransform: (0.2, -0.2, 4.0)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+pointedAtTeleportMarker： TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+teleportPosition: (2.4, 0.3, 4.0)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+teleportPoint: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+(2.8, 0.0, 4.0)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Moving Player
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+playerFeetOffset: (0.0, 0.0, 0.0)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+trackingOriginTransform: (2.8, 0.0, 4.0)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin Interactable (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject Interactable (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject Interactable (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+AttachObject Interactable (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject Interactable (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject Interactable (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd Interactable (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (Locked) (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (Locked) (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (Locked) (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (Locked) (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (Locked) (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (Locked) (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (Locked) (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (Locked) (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (Locked) (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (Locked) (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (Locked) (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (Locked) (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (Locked) (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (Locked) (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (Locked) (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (Locked) (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (Locked) (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (Locked) (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+pointedAtTeleportMarker： TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+teleportPosition: (0.7, 0.1, -1.3)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+teleportPoint: 
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Moving Player
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+playerFeetOffset: (0.0, 0.0, 0.0)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+trackingOriginTransform: (0.7, 0.1, -1.3)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+pointedAtTeleportMarker： TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+teleportPosition: (-0.8, 0.1, -2.9)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+teleportPoint: 
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Moving Player
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+playerFeetOffset: (0.0, 0.0, 0.0)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+trackingOriginTransform: (-0.8, 0.1, -2.9)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+pointedAtTeleportMarker： TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+teleportPosition: (-1.7, 0.1, -3.3)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+teleportPoint: 
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Moving Player
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+playerFeetOffset: (0.0, 0.0, 0.0)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+trackingOriginTransform: (-1.7, 0.1, -3.3)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin Torch (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject Torch (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject Torch (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+AttachObject Torch (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject Torch (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject Torch (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd Torch (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+pointedAtTeleportMarker： TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+teleportPosition: (1.0, 0.1, -2.6)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+teleportPoint: 
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Moving Player
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+playerFeetOffset: (0.0, 0.0, 0.0)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+trackingOriginTransform: (1.0, 0.1, -2.6)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+pointedAtTeleportMarker： TeleportArea (VRTRIX.VRTRIXGloveTelportArea)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+teleportPosition: (2.0, 0.1, -3.2)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+teleportPoint: 
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Moving Player
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+playerFeetOffset: (0.0, 0.0, 0.0)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+trackingOriginTransform: (2.0, 0.1, -3.2)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableCube_Small (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableCube_Small (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableCube_Small (1) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableCube_Small (1) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableBall (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableBall (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableCube (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Found 2 overlapping colliders.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Found 3 overlapping colliders.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+AttachObject ThrowableCube (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableCube (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableCube (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Found 1 overlapping colliders.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableCube (4) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableCube (3) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Found 2 overlapping colliders.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableCube (3) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableCube (2) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Found 5 overlapping colliders.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Found 4 overlapping colliders.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Found 3 overlapping colliders.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Found 2 overlapping colliders.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube (2) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube (2) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+AttachObject ThrowableCube (2) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableCube (2) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube (2) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube (2) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableCube (2) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Found 1 overlapping colliders.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Found 2 overlapping colliders.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableCube (2) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableCube (3) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableCube (3) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableCube (2) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableCube (2) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableCube (3) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableCube (3) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableCube (2) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Found 1 overlapping colliders.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableCube (2) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+pointedAtTeleportMarker： TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+teleportPosition: (4.0, 0.3, 1.4)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+teleportPoint: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+(4.1, 0.0, 1.9)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Moving Player
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+playerFeetOffset: (0.0, 0.0, 0.0)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+trackingOriginTransform: (4.1, 0.0, 1.9)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin Button_DisableHints (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Found 2 overlapping colliders.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd Button_DisableHints (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin Button_DisableHints (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd Button_DisableHints (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin Button_ShowLogo (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd Button_ShowLogo (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin Button_HideLogo (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd Button_HideLogo (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin Button_ShowLogo (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Found 1 overlapping colliders.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Found 2 overlapping colliders.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd Button_ShowLogo (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin Button_DisableHints (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Found 3 overlapping colliders.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd Button_DisableHints (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin Button_HideLogo (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd Button_HideLogo (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin Button_ShowLogo (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Found 2 overlapping colliders.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Found 1 overlapping colliders.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Found 2 overlapping colliders.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd Button_ShowLogo (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin Button_ShowLogo (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Found 1 overlapping colliders.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd Button_ShowLogo (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+pointedAtTeleportMarker： TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+teleportPosition: (0.6, 0.2, 3.7)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+teleportPoint: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+(0.2, -0.2, 4.0)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Moving Player
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+playerFeetOffset: (0.0, 0.0, 0.0)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+trackingOriginTransform: (0.2, -0.2, 4.0)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableBall (3) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableBall (3) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableBall (3) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableBall (3) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableBall (3) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableBall (3) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableBall (3) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+AttachObject ThrowableBall (3) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableBall (3) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableBall (3) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableBall (3) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableBall (3) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableBall (3) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+pointedAtTeleportMarker： TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+teleportPosition: (-2.0, 0.4, 3.9)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+teleportPoint: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+(-2.5, -0.2, 4.0)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Moving Player
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+playerFeetOffset: (0.0, 0.0, 0.0)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+trackingOriginTransform: (-2.5, -0.2, 4.0)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+AttachObject ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableCube (5) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableCube_Small (3) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube_Small (3) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube_Small (3) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+AttachObject ThrowableCube_Small (3) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableCube_Small (3) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube_Small (3) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube_Small (3) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableCube_Small (3) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableCube_Small (3) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableCube (1) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube (1) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube (1) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+AttachObject ThrowableCube (1) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableCube (1) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube (1) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube (1) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableCube (1) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableCube (1) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableCube (1) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube (1) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube (1) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+AttachObject ThrowableCube (1) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableCube (1) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube (1) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DetachObject ThrowableCube (1) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin ThrowableCube (1) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd ThrowableCube (1) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+pointedAtTeleportMarker： TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+teleportPosition: (3.7, 0.5, 1.8)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+teleportPoint: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+(4.1, 0.0, 1.9)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Moving Player
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+playerFeetOffset: (0.0, 0.0, 0.0)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+trackingOriginTransform: (4.1, 0.0, 1.9)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin Button_DisableHints (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Found 3 overlapping colliders.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd Button_DisableHints (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin Button_ResetScene (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd Button_ResetScene (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverBegin Button_DisableHints (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+HoverEnd Button_DisableHints (UnityEngine.GameObject)
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
