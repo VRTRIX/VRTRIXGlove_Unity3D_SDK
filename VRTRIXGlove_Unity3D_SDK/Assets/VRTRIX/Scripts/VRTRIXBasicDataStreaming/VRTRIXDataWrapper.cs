@@ -37,7 +37,8 @@ namespace VRTRIX {
     public class VRTRIXDataWrapper
     {
         //Define Useful Constant
-        private const string ReaderImportor = "VRTRIX_IMU";
+        private const string ReaderImportor = "VRTRIX_IMU_TRIAL";
+        //private const string ReaderImportor = "VRTRIX_IMU";
         private const int baud_rate = 1000000;
         private const float SQRT1_2 = 0.70710678118f;
         private const float radToDeg = (float)(180.0 / Math.PI);
@@ -139,7 +140,6 @@ namespace VRTRIX {
 
         public bool Init(HANDTYPE type)
         {
-
             byte[] buf = new byte[300];
             for (int i = 0; i < 6; i++)
             {
@@ -149,42 +149,59 @@ namespace VRTRIX {
             {
                 data[i] = Quaternion.identity;
             }
-                
-            if (type == HANDTYPE.RIGHT_HAND)
+
+            if (this.sp != null)
             {
-                if (get_RH_port(buf))
+                if (type == HANDTYPE.RIGHT_HAND)
                 {
-                    Console.WriteLine("Try to opening RH Port: " + System.Text.Encoding.ASCII.GetString(buf));
-                    if (open_port(this.sp, buf, baud_rate, type))
+                    try
                     {
-                        Console.WriteLine("COM_PORT Opened: " + System.Text.Encoding.ASCII.GetString(buf));
-                        port_opened = true;
-                        stat = VRTRIXGloveStatus.NORMAL;
+                        if (get_RH_port(buf))
+                        {
+                            Console.WriteLine("Try to opening RH Port: " + System.Text.Encoding.ASCII.GetString(buf));
+                            if (open_port(this.sp, buf, baud_rate, type))
+                            {
+                                Console.WriteLine("COM_PORT Opened: " + System.Text.Encoding.ASCII.GetString(buf));
+                                port_opened = true;
+                                stat = VRTRIXGloveStatus.NORMAL;
+                            }
+                            else
+                            {
+                                Console.WriteLine("COM_PORT Open Failed");
+                            }
+                        }
                     }
-                    else
+                    catch (Exception e)
                     {
-                        Console.WriteLine("COM_PORT Open Failed");
+                        Console.WriteLine("{0} Exception caught.", e);
                     }
                 }
-            }
-            else if (type == HANDTYPE.LEFT_HAND)
-            {
-                if (get_LH_port(buf))
+                else if (type == HANDTYPE.LEFT_HAND)
                 {
-                    Console.WriteLine("Try to opening LH Port: " + System.Text.Encoding.ASCII.GetString(buf));
-                    if (open_port(this.sp, buf, baud_rate, type))
+                    try
                     {
-                        Console.WriteLine("COM_PORT Opened: " + System.Text.Encoding.ASCII.GetString(buf));
-                        port_opened = true;
-                        stat = VRTRIXGloveStatus.NORMAL;
+                        if (get_LH_port(buf))
+                        {
+                            Console.WriteLine("Try to opening LH Port: " + System.Text.Encoding.ASCII.GetString(buf));
+                            if (open_port(this.sp, buf, baud_rate, type))
+                            {
+                                Console.WriteLine("COM_PORT Opened: " + System.Text.Encoding.ASCII.GetString(buf));
+                                port_opened = true;
+                                stat = VRTRIXGloveStatus.NORMAL;
+                            }
+                            else
+                            {
+                                Console.WriteLine("COM_PORT Open Failed");
+                            }
+                        }
                     }
-                    else
+                    catch (Exception e)
                     {
-                        Console.WriteLine("COM_PORT Open Failed");
+                        Console.WriteLine("{0} Exception caught.", e);
                     }
+
                 }
             }
-            
             return port_opened;
         }
         public bool ClosePort()

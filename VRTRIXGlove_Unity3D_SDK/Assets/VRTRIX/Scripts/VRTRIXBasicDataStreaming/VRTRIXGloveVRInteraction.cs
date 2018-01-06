@@ -20,29 +20,22 @@ namespace VRTRIX
 {
     public class VRTRIXGloveVRInteraction : MonoBehaviour
     {
-        public static VRTRIXGloveGesture LH_Gesture;
-        public static VRTRIXGloveGesture RH_Gesture;
+        public static VRTRIXGloveGesture LH_Gesture, RH_Gesture;
         public static VRTRIXDataWrapper RH = new VRTRIXDataWrapper();
         public static VRTRIXDataWrapper LH = new VRTRIXDataWrapper();
+        private static GameObject LH_tracker, RH_tracker;
+        private static bool LH_Mode, RH_Mode;
         private Thread RH_Thread, LH_Thread;
-        private GameObject RH_tracker;
-        private GameObject LH_tracker;
+        private VRTRIXGloveRunningMode Mode;
+
         private Quaternion qloffset = Quaternion.identity;
         private Quaternion qroffset = Quaternion.identity;
         private bool qroffset_cal = false;
         private bool qloffset_cal = false;
         private Vector3 troffset = new Vector3(0.01f, 0, -0.035f);
         private Vector3 tloffset = new Vector3(-0.01f, 0, -0.035f);
-        private int m_frameCounter = 0;
-        private float m_timeCounter = 0.0f;
-        private float m_lastFramerate = 0.0f;
-        private float m_refreshTime = 1.0f;
         private const float degToRad = (float)(Math.PI / 180.0);
-        private VRTRIXGloveRunningMode Mode;
-        private bool RH_Mode;
-        private bool LH_Mode;
-
-
+        
         void Start()
         {
             RH_tracker = CheckDeviceModelName(HANDTYPE.RIGHT_HAND);
@@ -50,10 +43,17 @@ namespace VRTRIX
         }
         void CheckToStart()
         {
-            RH_tracker = CheckDeviceModelName(HANDTYPE.RIGHT_HAND);
-            LH_tracker = CheckDeviceModelName(HANDTYPE.LEFT_HAND);
-            RH_Mode = RH.Init(HANDTYPE.RIGHT_HAND) && (RH_tracker != null);
-            LH_Mode = LH.Init(HANDTYPE.LEFT_HAND) && (LH_tracker != null);
+            RH_Thread = new Thread(ReceiveRHData);
+            RH_Thread.Start();
+            print("Righthand Port Opened!");
+
+            LH_Thread = new Thread(ReceiveLHData);
+            LH_Thread.Start();
+            print("Lefthand Port Opened!");
+        }
+
+        void Update()
+        {
             if (RH_Mode && LH_Mode)
             {
                 Mode = VRTRIXGloveRunningMode.PAIR;
@@ -70,39 +70,9 @@ namespace VRTRIX
             {
                 Mode = VRTRIXGloveRunningMode.NONE;
             }
-
-
-            if (RH_Mode)
-            {
-                RH_Thread = new Thread(ReceiveRHData);
-                RH_Thread.Start();
-                print("Righthand Port Opened!");
-            }
-
-            if (LH_Mode)
-            {
-                LH_Thread = new Thread(ReceiveLHData);
-                LH_Thread.Start();
-                print("Lefthand Port Opened!");
-            }
-
         }
-
-        // Update is called once per frame
-        void Update()
+        void FixedUpdate()
         {
-            if (m_timeCounter < m_refreshTime)
-            {
-                m_timeCounter += Time.deltaTime;
-                m_frameCounter++;
-            }
-            else
-            {
-                //This code will break if you set your m_refreshTime to 0, which makes no sense.
-                m_lastFramerate = (float)m_frameCounter / m_timeCounter;
-                m_frameCounter = 0;
-                m_timeCounter = 0.0f;
-            }
 
             if (RH_Mode && RH.GetReceivedStatus() == VRTRIXGloveStatus.NORMAL)
             {
@@ -113,7 +83,7 @@ namespace VRTRIX
                 }
 
                 SetPosition(VRTRIXBones.R_Hand, RH_tracker.transform.position, RH_tracker.transform.rotation, troffset);
-                
+
                 SetRotation(VRTRIXBones.R_Forearm, RH.GetReceivedRotation(VRTRIXBones.R_Forearm), RH.DataValidStatus(VRTRIXBones.R_Forearm), HANDTYPE.RIGHT_HAND);
                 SetRotation(VRTRIXBones.R_Hand, RH.GetReceivedRotation(VRTRIXBones.R_Hand), RH.DataValidStatus(VRTRIXBones.R_Hand), HANDTYPE.RIGHT_HAND);
 
@@ -138,7 +108,7 @@ namespace VRTRIX
                 SetRotation(VRTRIXBones.R_Pinky_3, RH.GetReceivedRotation(VRTRIXBones.R_Pinky_3), RH.DataValidStatus(VRTRIXBones.R_Pinky_3), HANDTYPE.RIGHT_HAND);
 
                 RH_Gesture = VRTRIXGloveGestureRecognition.GestureDetection(RH, HANDTYPE.RIGHT_HAND);
-                
+
             }
 
 
@@ -177,21 +147,23 @@ namespace VRTRIX
                 SetRotation(VRTRIXBones.L_Pinky_3, LH.GetReceivedRotation(VRTRIXBones.L_Pinky_3), LH.DataValidStatus(VRTRIXBones.L_Pinky_3), HANDTYPE.LEFT_HAND);
 
                 LH_Gesture = VRTRIXGloveGestureRecognition.GestureDetection(LH, HANDTYPE.LEFT_HAND);
-                //if(LH_Gesture == VRTRIXGloveGesture.BUTTONGRAB)
-                //{
-                //    Debug.Log(LH_Gesture);
-                //}
-                
             }
         }
-
-        private void ReceiveLHData()
+        private static void ReceiveLHData()
         {
+            
+            
+            LH_Mode = LH.Init(HANDTYPE.LEFT_HAND) && (LH_tracker != null);
+            
             LH.receivedData(HANDTYPE.LEFT_HAND);
+
         }
 
-        private void ReceiveRHData()
+        private static void ReceiveRHData()
         {
+            
+            RH_Mode = RH.Init(HANDTYPE.RIGHT_HAND) && (RH_tracker != null);
+            
             RH.receivedData(HANDTYPE.RIGHT_HAND);
         }
 

@@ -26,7 +26,7 @@ namespace VRTRIX
                 float MiddleAngle = hand.GetReceivedGestureAngle(VRTRIXBones.L_Middle_2);
                 float RingAngle = hand.GetReceivedGestureAngle(VRTRIXBones.L_Ring_2);
                 float PinkyAngle = hand.GetReceivedGestureAngle(VRTRIXBones.L_Pinky_2);
-                bool ThumbCurve = (ThumbAngle < 340f) && (ThumbAngle > 170f);
+                bool ThumbCurve = (ThumbAngle < 350f) && (ThumbAngle > 170f);
                 bool IndexCurve = (IndexAngle < 270f) && (IndexAngle > 95f);
                 bool MiddleCurve = (MiddleAngle < 270f) && (MiddleAngle > 95f);
                 bool RingCurve = (RingAngle < 270f) && (RingAngle > 95f);
