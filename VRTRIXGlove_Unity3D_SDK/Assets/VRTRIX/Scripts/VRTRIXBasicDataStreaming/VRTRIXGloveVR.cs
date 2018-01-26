@@ -15,9 +15,9 @@ namespace VRTRIX
 {
     public class VRTRIXGloveVR : MonoBehaviour
     {
-        private VRTRIXDataWrapper RH = new VRTRIXDataWrapper();
-        private VRTRIXDataWrapper LH = new VRTRIXDataWrapper();
-        private Thread RH_Thread, LH_Thread;
+        private static VRTRIXDataWrapper RH = new VRTRIXDataWrapper();
+        private static VRTRIXDataWrapper LH = new VRTRIXDataWrapper();
+        private Thread LH_Thread_read, RH_Thread_read, LH_receivedData, RH_receivedData;
         private GameObject RH_tracker;
         private GameObject LH_tracker;
         private Quaternion qloffset = Quaternion.identity;
@@ -38,11 +38,19 @@ namespace VRTRIX
         // Use this for initialization
         void Start()
         {
-            RH_tracker = CheckDeviceModelName(HANDTYPE.RIGHT_HAND);
-            LH_tracker = CheckDeviceModelName(HANDTYPE.LEFT_HAND);
+            try
+            {
+                RH_tracker = CheckDeviceModelName(HANDTYPE.RIGHT_HAND);
+                LH_tracker = CheckDeviceModelName(HANDTYPE.LEFT_HAND);
+            }
+            catch (Exception e)
+            {
+                print("Exception caught: " + e);
+            }
         }
         void CheckToStart()
         {
+            
             RH_Mode = RH.Init(HANDTYPE.RIGHT_HAND) && (RH_tracker != null);
             LH_Mode = LH.Init(HANDTYPE.LEFT_HAND) && (LH_tracker != null);
             if (RH_Mode && LH_Mode)
@@ -62,21 +70,23 @@ namespace VRTRIX
                 Mode = VRTRIXGloveRunningMode.NONE;
             }
 
-
-            if (RH_Mode)
+            try
             {
-                RH_Thread = new Thread(ReceiveRHData);
-                RH_Thread.Start();
-                print("Righthand Port Opened!");
-            }
+                if (RH_Mode)
+                {
+                    ReceiveRHData();
+                }
 
-            if (LH_Mode)
+                if (LH_Mode)
+                {
+                    ReceiveLHData();
+                }
+                
+            }
+            catch (Exception e)
             {
-                LH_Thread = new Thread(ReceiveLHData);
-                LH_Thread.Start();
-                print("Lefthand Port Opened!");
+                print("Exception caught: " + e);
             }
-
         }
 
         // Update is called once per frame
@@ -174,10 +184,35 @@ namespace VRTRIX
 
         private void ReceiveLHData()
         {
+            //LH_Mode = LH.Init(HANDTYPE.LEFT_HAND);
+            print("LH_Mode: " + LH_Mode);
+            if (LH_Mode)
+            {
+                LH_Thread_read = new Thread(LH.streaming_read_begin);
+                LH_Thread_read.Start();
+                LH_receivedData = new Thread(ReceiveLHData2);
+                LH_receivedData.Start();
+            }
+        }
+        private static void ReceiveLHData2()
+        {
             LH.receivedData(HANDTYPE.LEFT_HAND);
         }
 
+
         private void ReceiveRHData()
+        {
+            //RH_Mode = RH.Init(HANDTYPE.RIGHT_HAND);
+            print("RH_Mode: " + RH_Mode);
+            if (RH_Mode)
+            {
+                RH_Thread_read = new Thread(RH.streaming_read_begin);
+                RH_Thread_read.Start();
+                RH_receivedData = new Thread(ReceiveRHData2);
+                RH_receivedData.Start();
+            }
+        }
+        private static void ReceiveRHData2()
         {
             RH.receivedData(HANDTYPE.RIGHT_HAND);
         }
@@ -185,14 +220,14 @@ namespace VRTRIX
 
         void OnApplicationQuit()
         {
-            if (LH_Mode && LH_Thread.IsAlive)
+            if (LH_Mode)
             {
-                LH_Thread.Abort();
+                //LH_Thread.Abort();
                 LH.ClosePort();
             }
-            if (RH_Mode && RH_Thread.IsAlive)
+            if (RH_Mode)
             {
-                RH_Thread.Abort();
+                //RH_Thread.Abort();
                 RH.ClosePort();
             }
         }

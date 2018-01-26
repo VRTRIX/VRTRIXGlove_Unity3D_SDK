@@ -19,24 +19,22 @@ Platform assembly: D:\VRTRIX\Projects\VRTRIXGlove_Unity3D_SDK\VRTRIXGlove_Unity3
 Loading D:\VRTRIX\Projects\VRTRIXGlove_Unity3D_SDK\VRTRIXGlove_Unity3D_SDK\Biuld\VRTRIXGloveDataStreaming_Data\Managed\UnityEngine.Timeline.dll into Unity Child Domain
 Platform assembly: D:\VRTRIX\Projects\VRTRIXGlove_Unity3D_SDK\VRTRIXGlove_Unity3D_SDK\Biuld\VRTRIXGloveDataStreaming_Data\Managed\System.dll (this message is harmless)
 Platform assembly: D:\VRTRIX\Projects\VRTRIXGlove_Unity3D_SDK\VRTRIXGlove_Unity3D_SDK\Biuld\VRTRIXGloveDataStreaming_Data\Managed\System.Core.dll (this message is harmless)
-- Completed reload, in  0.025 seconds
+- Completed reload, in  0.022 seconds
 <RI> Initializing input.
 <RI> Input initialized.
 <RI> Initialized touch support.
-UnloadTime: 0.675694 ms
+UnloadTime: 0.699072 ms
 Setting up 4 worker threads for Enlighten.
-  Thread -> id: 6df8 -> priority: 1 
-  Thread -> id: 6aec -> priority: 1 
-  Thread -> id: 7480 -> priority: 1 
-  Thread -> id: 1a08 -> priority: 1 
-Try to opening RH Port: COM21Try to opening LH Port: COM22
-
-COM_PORT Opened: COM21
-RH_Mode: True
+  Thread -> id: 47fc -> priority: 1 
+  Thread -> id: 31d4 -> priority: 1 
+  Thread -> id: 4bac -> priority: 1 
+  Thread -> id: a60 -> priority: 1 
+Try to opening LH Port: COM34RH_Mode: False
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
-COM_PORT Opened: COM22
+
+COM_PORT Opened: COM34
 LH_Mode: True
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)

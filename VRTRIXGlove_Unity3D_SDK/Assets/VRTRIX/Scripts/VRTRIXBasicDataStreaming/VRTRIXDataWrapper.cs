@@ -130,6 +130,11 @@ namespace VRTRIX {
         /// <param name="handle">Client defined function.</param>
         [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, EntryPoint = "RegisterDataCallback")]
         public static extern void RegisterDataCallback(IntPtr sp, ReceivedDataCallback receivedDataCallback);
+
+
+        [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+        public static extern bool streaming_sync_read(IntPtr sp);
+
         #endregion
 
         public VRTRIXDataWrapper()
@@ -251,11 +256,12 @@ namespace VRTRIX {
         {
             return sendData("c");
         }
-
         public bool vibrate()
         {
             return sendData("v");
         }
+
+
         public VRTRIXGloveStatus GetReceivedStatus()
         {
             return stat;
@@ -467,6 +473,11 @@ namespace VRTRIX {
         public void alignmentCheck(HANDTYPE type)
         {
             alignment_check(this.sp);
+        }
+
+        public void streaming_read_begin()
+        {
+            streaming_sync_read(this.sp);
         }
     }
 }

@@ -18,7 +18,7 @@ namespace VRTRIX
         public GameObject objectToAlign;
         private static VRTRIXDataWrapper RH = new VRTRIXDataWrapper();
         private static VRTRIXDataWrapper LH = new VRTRIXDataWrapper();
-        private Thread RH_Thread, LH_Thread;
+        private Thread LH_Thread_read, RH_Thread_read, LH_receivedData, RH_receivedData;
         private Quaternion qloffset = Quaternion.identity;
         private Quaternion qroffset = Quaternion.identity;
         private bool qroffset_cal = false;
@@ -60,6 +60,7 @@ namespace VRTRIX
         public Text R_pinky_text { get; private set; }
         public Text R_thumb_text { get; private set; }
         // Use this for initialization
+        private float LastFeedbackTime = 0.0f;
         void Start()
         {
             fps = GameObject.Find("Abstract/FPS").GetComponent<Text>();
@@ -92,16 +93,17 @@ namespace VRTRIX
             R_ring_text = GameObject.Find("RIGHT/R_RING").GetComponent<Text>();
             R_pinky_text = GameObject.Find("RIGHT/R_PINKY").GetComponent<Text>();
             R_thumb_text = GameObject.Find("RIGHT/R_THUMB").GetComponent<Text>();
+
+            LastFeedbackTime = Time.time;
         }
         void CheckToStart()
         {
             try
             {
-                RH_Thread = new Thread(ReceiveRHData);
-                RH_Thread.Start();
-
-                LH_Thread = new Thread(ReceiveLHData);
-                LH_Thread.Start();
+                RH_receivedData = new Thread(ReceiveRHData);
+                LH_receivedData = new Thread(ReceiveLHData);
+                RH_receivedData.Start();
+                LH_receivedData.Start();
             }
             catch (Exception e)
             {
@@ -124,9 +126,7 @@ namespace VRTRIX
                 
 
                 SetRotation(VRTRIXBones.R_Thumb_1, RH.GetReceivedRotation(VRTRIXBones.R_Thumb_1), RH.DataValidStatus(VRTRIXBones.R_Thumb_1), HANDTYPE.RIGHT_HAND);
-                SetThumbRotation(VRTRIXBones.R_Thumb_1, Quaternion.Euler(15f, -15f, 0f));
                 SetRotation(VRTRIXBones.R_Thumb_2, RH.GetReceivedRotation(VRTRIXBones.R_Thumb_2), RH.DataValidStatus(VRTRIXBones.R_Thumb_2), HANDTYPE.RIGHT_HAND);
-                SetThumbRotation(VRTRIXBones.R_Thumb_2, Quaternion.Euler(10f, 0f, 0f));
                 SetRotation(VRTRIXBones.R_Thumb_3, RH.GetReceivedRotation(VRTRIXBones.R_Thumb_3), RH.DataValidStatus(VRTRIXBones.R_Thumb_3), HANDTYPE.RIGHT_HAND);
 
                 SetRotation(VRTRIXBones.R_Index_1, RH.GetReceivedRotation(VRTRIXBones.R_Index_1), RH.DataValidStatus(VRTRIXBones.R_Index_1), HANDTYPE.RIGHT_HAND);
@@ -255,41 +255,58 @@ namespace VRTRIX
                 Mode = VRTRIXGloveRunningMode.PAIR;
                 mode.text = "MODE:   PAIR";
             }
+
         }
 
-        private static void ReceiveLHData()
+       private void ReceiveLHData()
         {
             LH_Mode = LH.Init(HANDTYPE.LEFT_HAND);
             print("LH_Mode: " + LH_Mode);
             if (LH_Mode)
             {
+                LH_Thread_read= new Thread(LH.streaming_read_begin);
+                LH_Thread_read.Start();
+                //LH_receivedData = new Thread(ReceiveLHData2);
+                //LH_receivedData.Start();
                 LH.receivedData(HANDTYPE.LEFT_HAND);
             }
         }
+       private static void ReceiveLHData2()
+        {
+            LH.receivedData(HANDTYPE.LEFT_HAND);
+        }
 
-        private static void ReceiveRHData()
+
+        private void ReceiveRHData()
         {
             RH_Mode = RH.Init(HANDTYPE.RIGHT_HAND);
             print("RH_Mode: " + RH_Mode);
             if (RH_Mode)
             {
+                RH_Thread_read= new Thread(RH.streaming_read_begin);
+                RH_Thread_read.Start();
+                //RH_receivedData = new Thread(ReceiveRHData2);
+                //RH_receivedData.Start();
                 RH.receivedData(HANDTYPE.RIGHT_HAND);
-            }
-            
+            }          
         }
-
+        private static void ReceiveRHData2()
+        {
+            RH.receivedData(HANDTYPE.RIGHT_HAND);
+        }
 
         void OnApplicationQuit()
         {
             if (LH_Mode)
             {
-                LH_Thread.Abort();
+              //  LH_Thread_read.Abort();
                 LH.ClosePort();
             }
             if (RH_Mode)
             {
-                RH_Thread.Abort();
-                RH.ClosePort();
+            //  RH_Thread_read.Abort();
+               RH.ClosePort();
+  
             }
         }
 
@@ -371,15 +388,7 @@ namespace VRTRIX
             }
 
         }
-        private void SetThumbRotation(VRTRIXBones bone, Quaternion offset)
-        {
-            string bone_name = VRTRIXUtilities.GetBoneName((int)bone);
-            GameObject obj = GameObject.Find(bone_name);
-            if (obj != null)
-            {
-                obj.transform.rotation = offset * obj.transform.rotation;
-            }
-        }
+
         private void SetRotation(VRTRIXBones bone, Quaternion rotation, bool valid, HANDTYPE type)
         {
             string bone_name = VRTRIXUtilities.GetBoneName((int)bone);

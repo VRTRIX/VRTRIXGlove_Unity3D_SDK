@@ -19,7 +19,7 @@ Platform assembly: D:\VRTRIX\Projects\VRTRIXGlove_Unity3D_SDK\VRTRIXGlove_Unity3
 Loading D:\VRTRIX\Projects\VRTRIXGlove_Unity3D_SDK\VRTRIXGlove_Unity3D_SDK\Biuld\VRTRIXGloveVR_Data\Managed\UnityEngine.Timeline.dll into Unity Child Domain
 Platform assembly: D:\VRTRIX\Projects\VRTRIXGlove_Unity3D_SDK\VRTRIXGlove_Unity3D_SDK\Biuld\VRTRIXGloveVR_Data\Managed\System.dll (this message is harmless)
 Platform assembly: D:\VRTRIX\Projects\VRTRIXGlove_Unity3D_SDK\VRTRIXGlove_Unity3D_SDK\Biuld\VRTRIXGloveVR_Data\Managed\System.Core.dll (this message is harmless)
-- Completed reload, in  0.130 seconds
+- Completed reload, in  0.035 seconds
 <RI> Initializing input.
 <RI> Input initialized.
 <RI> Initialized touch support.
@@ -28,7 +28,7 @@ OpenVR initialized!
 (Filename:  Line: 584)
 
 [VRDevice] Successfully created device OpenVR.
-UnloadTime: 0.409693 ms
+UnloadTime: 0.593298 ms
 Connected to lighthouse:LHR-93341474
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
@@ -41,10 +41,10 @@ NullReferenceException
 (Filename:  Line: -1)
 
 Setting up 4 worker threads for Enlighten.
-  Thread -> id: 6b98 -> priority: 1 
-  Thread -> id: 69e0 -> priority: 1 
-  Thread -> id: 6830 -> priority: 1 
-  Thread -> id: 4c90 -> priority: 1 
+  Thread -> id: 316c -> priority: 1 
+  Thread -> id: 4b44 -> priority: 1 
+  Thread -> id: 688 -> priority: 1 
+  Thread -> id: 168 -> priority: 1 
 [Device1] Render model does not support components, falling back to single mesh.
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
@@ -57,22 +57,16 @@ Setting up 4 worker threads for Enlighten.
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
-[Device4] Render model does not support components, falling back to single mesh.
+Device2 (UnityEngine.GameObject)
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
-Righthand Port Opened!
+Try to opening LH Port: COM34
+COM_PORT Opened: COM34
+LH_Mode: True
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
-Lefthand Port Opened!
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-Try to opening RH Port: COM21Try to opening LH Port: COM22
-
-COM_PORT Opened: COM21
-COM_PORT Opened: COM22
 OpenVR Shutdown
  
 (Filename:  Line: 1253)
