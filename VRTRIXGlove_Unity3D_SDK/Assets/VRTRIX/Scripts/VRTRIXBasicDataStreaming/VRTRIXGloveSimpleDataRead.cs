@@ -124,7 +124,9 @@ namespace VRTRIX
                 
 
                 SetRotation(VRTRIXBones.R_Thumb_1, RH.GetReceivedRotation(VRTRIXBones.R_Thumb_1), RH.DataValidStatus(VRTRIXBones.R_Thumb_1), HANDTYPE.RIGHT_HAND);
+                SetThumbRotation(VRTRIXBones.R_Thumb_1, Quaternion.Euler(15f, -15f, 0f));
                 SetRotation(VRTRIXBones.R_Thumb_2, RH.GetReceivedRotation(VRTRIXBones.R_Thumb_2), RH.DataValidStatus(VRTRIXBones.R_Thumb_2), HANDTYPE.RIGHT_HAND);
+                SetThumbRotation(VRTRIXBones.R_Thumb_2, Quaternion.Euler(10f, 0f, 0f));
                 SetRotation(VRTRIXBones.R_Thumb_3, RH.GetReceivedRotation(VRTRIXBones.R_Thumb_3), RH.DataValidStatus(VRTRIXBones.R_Thumb_3), HANDTYPE.RIGHT_HAND);
 
                 SetRotation(VRTRIXBones.R_Index_1, RH.GetReceivedRotation(VRTRIXBones.R_Index_1), RH.DataValidStatus(VRTRIXBones.R_Index_1), HANDTYPE.RIGHT_HAND);
@@ -369,7 +371,15 @@ namespace VRTRIX
             }
 
         }
-
+        private void SetThumbRotation(VRTRIXBones bone, Quaternion offset)
+        {
+            string bone_name = VRTRIXUtilities.GetBoneName((int)bone);
+            GameObject obj = GameObject.Find(bone_name);
+            if (obj != null)
+            {
+                obj.transform.rotation = offset * obj.transform.rotation;
+            }
+        }
         private void SetRotation(VRTRIXBones bone, Quaternion rotation, bool valid, HANDTYPE type)
         {
             string bone_name = VRTRIXUtilities.GetBoneName((int)bone);
