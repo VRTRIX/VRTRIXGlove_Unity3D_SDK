@@ -94,7 +94,7 @@ namespace VRTRIX {
         /// <param name="handle">Client defined function.</param>
         /// <returns></returns>
         [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        public static extern IntPtr init_port();
+        public static extern IntPtr init_port(bool AdvancedMode);
         /// <summary>
         /// Register receiving and parsed frame calculation data callback
         /// </summary>
@@ -137,10 +137,10 @@ namespace VRTRIX {
 
         #endregion
 
-        public VRTRIXDataWrapper()
+        public VRTRIXDataWrapper(bool AdvancedMode)
         {
             
-            this.sp = init_port();
+            this.sp = init_port(AdvancedMode);
         }
 
         public bool Init(HANDTYPE type)

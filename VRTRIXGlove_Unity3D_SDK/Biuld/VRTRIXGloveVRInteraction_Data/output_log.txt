@@ -19,7 +19,7 @@ Platform assembly: D:\VRTRIX\Projects\VRTRIXGlove_Unity3D_SDK\VRTRIXGlove_Unity3
 Loading D:\VRTRIX\Projects\VRTRIXGlove_Unity3D_SDK\VRTRIXGlove_Unity3D_SDK\Biuld\VRTRIXGloveVRInteraction_Data\Managed\UnityEngine.Timeline.dll into Unity Child Domain
 Platform assembly: D:\VRTRIX\Projects\VRTRIXGlove_Unity3D_SDK\VRTRIXGlove_Unity3D_SDK\Biuld\VRTRIXGloveVRInteraction_Data\Managed\System.dll (this message is harmless)
 Platform assembly: D:\VRTRIX\Projects\VRTRIXGlove_Unity3D_SDK\VRTRIXGlove_Unity3D_SDK\Biuld\VRTRIXGloveVRInteraction_Data\Managed\System.Core.dll (this message is harmless)
-- Completed reload, in  0.246 seconds
+- Completed reload, in  0.021 seconds
 <RI> Initializing input.
 <RI> Input initialized.
 <RI> Initialized touch support.
@@ -32,7 +32,7 @@ The referenced script on this Behaviour (Game Object 'Sound_TorchFire') is missi
  
 (Filename:  Line: 1758)
 
-UnloadTime: 0.559941 ms
+UnloadTime: 0.779756 ms
 Connected to lighthouse:LHR-93341474
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
@@ -43,10 +43,6 @@ NullReferenceException
   at SteamVR_Fade.OnEnable () [0x00000] in <filename unknown>:0 
  
 (Filename:  Line: -1)
-
-ChaperoneInfo initialized. Standing play area 1.00m x 1.00m
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
 The referenced script on this Behaviour (Game Object '<null>') is missing!
  
@@ -60,11 +56,15 @@ The referenced script on this Behaviour (Game Object 'Sound_TorchFire') is missi
  
 (Filename:  Line: 1758)
 
+ChaperoneInfo initialized. Standing play area 1.00m x 1.00m
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
 Setting up 4 worker threads for Enlighten.
-  Thread -> id: 85e4 -> priority: 1 
-  Thread -> id: 7718 -> priority: 1 
-  Thread -> id: 797c -> priority: 1 
-  Thread -> id: 1fac -> priority: 1 
+  Thread -> id: 78c -> priority: 1 
+  Thread -> id: 33d4 -> priority: 1 
+  Thread -> id: 275c -> priority: 1 
+  Thread -> id: 3724 -> priority: 1 
 [Device1] Render model does not support components, falling back to single mesh.
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
@@ -77,13 +77,9 @@ Setting up 4 worker threads for Enlighten.
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
-Device2 (UnityEngine.GameObject)
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-Try to opening LH Port: COM34
-COM_PORT Opened: COM34
-LH_Mode: True
+Try to opening RH Port: COM41
+COM_PORT Opened: COM41
+RH_Mode: True
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
@@ -92,6 +88,418 @@ hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
 hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hitTeleportMarker: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+pointedAtTeleportMarker： TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+teleportPosition: (0.3, 0.4, 3.5)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+teleportPoint: TeleportPoint (VRTRIX.VRTRIXGloveTelportPoint)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+(0.2, -0.2, 4.0)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Moving Player
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+playerFeetOffset: (0.0, 0.0, 0.0)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+trackingOriginTransform: (0.2, -0.2, 4.0)
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 

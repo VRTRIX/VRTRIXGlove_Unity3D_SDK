@@ -15,8 +15,9 @@ namespace VRTRIX
 {
     public class VRTRIXGloveVR : MonoBehaviour
     {
-        private static VRTRIXDataWrapper RH = new VRTRIXDataWrapper();
-        private static VRTRIXDataWrapper LH = new VRTRIXDataWrapper();
+        public bool AdvancedMode;
+        private static VRTRIXDataWrapper RH;
+        private static VRTRIXDataWrapper LH;
         private Thread LH_Thread_read, RH_Thread_read, LH_receivedData, RH_receivedData;
         private GameObject RH_tracker;
         private GameObject LH_tracker;
@@ -26,10 +27,6 @@ namespace VRTRIX
         private bool qloffset_cal = false;
         private Vector3 troffset = new Vector3(0.01f, 0, -0.035f);
         private Vector3 tloffset = new Vector3(-0.01f, 0, -0.035f);
-        private int m_frameCounter = 0;
-        private float m_timeCounter = 0.0f;
-        private float m_lastFramerate = 0.0f;
-        private float m_refreshTime = 1.0f;
         private const float degToRad = (float)(Math.PI / 180.0);
         private VRTRIXGloveRunningMode Mode;
         private bool RH_Mode;
@@ -38,6 +35,8 @@ namespace VRTRIX
         // Use this for initialization
         void Start()
         {
+            RH = new VRTRIXDataWrapper(AdvancedMode);
+            LH = new VRTRIXDataWrapper(AdvancedMode);
             try
             {
                 RH_tracker = CheckDeviceModelName(HANDTYPE.RIGHT_HAND);
@@ -92,18 +91,6 @@ namespace VRTRIX
         // Update is called once per frame
         void Update()
         {
-            if (m_timeCounter < m_refreshTime)
-            {
-                m_timeCounter += Time.deltaTime;
-                m_frameCounter++;
-            }
-            else
-            {
-                //This code will break if you set your m_refreshTime to 0, which makes no sense.
-                m_lastFramerate = (float)m_frameCounter / m_timeCounter;
-                m_frameCounter = 0;
-                m_timeCounter = 0.0f;
-            }
             if (RH_Mode && RH.GetReceivedStatus() == VRTRIXGloveStatus.NORMAL)
             {
                 if (RH.GetReceivedRotation(VRTRIXBones.R_Hand) != Quaternion.identity && !qroffset_cal)
@@ -172,13 +159,6 @@ namespace VRTRIX
                 SetRotation(VRTRIXBones.L_Pinky_1, LH.GetReceivedRotation(VRTRIXBones.L_Pinky_1), LH.DataValidStatus(VRTRIXBones.L_Pinky_1), HANDTYPE.LEFT_HAND);
                 SetRotation(VRTRIXBones.L_Pinky_2, LH.GetReceivedRotation(VRTRIXBones.L_Pinky_2), LH.DataValidStatus(VRTRIXBones.L_Pinky_2), HANDTYPE.LEFT_HAND);
                 SetRotation(VRTRIXBones.L_Pinky_3, LH.GetReceivedRotation(VRTRIXBones.L_Pinky_3), LH.DataValidStatus(VRTRIXBones.L_Pinky_3), HANDTYPE.LEFT_HAND);
-
-                //UnityEngine.Debug.Log(VRTRIXDataWrapper.Angle(LH.GetReceivedRotation(VRTRIXBones.L_Index_2), LH.GetReceivedRotation(VRTRIXBones.L_Hand)));
-                //print("Quat Index: " + GameObject.Find("L_Index_2").transform.rotation);
-                //print("Local Quat * Quat Hand: " + GameObject.Find("L_Index_2").transform.localRotation * GameObject.Find("L_Hand").transform.rotation);
-                //print("Euler Index: " + GameObject.Find("L_Index_2").transform.localRotation.eulerAngles);
-                //print("Local Quat * Quat Index1: " + (Quaternion.Inverse(GameObject.Find("L_Index_1").transform.rotation) * GameObject.Find("L_Index_2").transform.rotation).eulerAngles);
-
             }
         }
 
@@ -190,13 +170,10 @@ namespace VRTRIX
             {
                 LH_Thread_read = new Thread(LH.streaming_read_begin);
                 LH_Thread_read.Start();
-                LH_receivedData = new Thread(ReceiveLHData2);
+                LH_receivedData = new Thread(ReceiveLHDataAsync);
                 LH_receivedData.Start();
+                //LH.receivedData(HANDTYPE.LEFT_HAND);
             }
-        }
-        private static void ReceiveLHData2()
-        {
-            LH.receivedData(HANDTYPE.LEFT_HAND);
         }
 
 
@@ -208,11 +185,18 @@ namespace VRTRIX
             {
                 RH_Thread_read = new Thread(RH.streaming_read_begin);
                 RH_Thread_read.Start();
-                RH_receivedData = new Thread(ReceiveRHData2);
+                RH_receivedData = new Thread(ReceiveRHDataAsync);
                 RH_receivedData.Start();
+                //RH.receivedData(HANDTYPE.RIGHT_HAND);
             }
         }
-        private static void ReceiveRHData2()
+
+        private static void ReceiveLHDataAsync()
+        {
+            LH.receivedData(HANDTYPE.LEFT_HAND);
+        }
+
+        private static void ReceiveRHDataAsync()
         {
             RH.receivedData(HANDTYPE.RIGHT_HAND);
         }

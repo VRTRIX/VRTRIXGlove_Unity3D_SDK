@@ -20,9 +20,10 @@ namespace VRTRIX
 {
     public class VRTRIXGloveVRInteraction : MonoBehaviour
     {
+        public bool AdvancedMode;
         public static VRTRIXGloveGesture LH_Gesture, RH_Gesture;
-        public static VRTRIXDataWrapper RH = new VRTRIXDataWrapper();
-        public static VRTRIXDataWrapper LH = new VRTRIXDataWrapper();
+        public static VRTRIXDataWrapper RH;
+        public static VRTRIXDataWrapper LH;
         private static GameObject LH_tracker, RH_tracker;
         private static bool LH_Mode, RH_Mode;
         private Thread LH_Thread_read, RH_Thread_read, LH_receivedData, RH_receivedData;
@@ -38,6 +39,8 @@ namespace VRTRIX
         
         void Start()
         {
+            RH = new VRTRIXDataWrapper(AdvancedMode);
+            LH = new VRTRIXDataWrapper(AdvancedMode);
             try
             {
                 RH_tracker = CheckDeviceModelName(HANDTYPE.RIGHT_HAND);
@@ -177,13 +180,10 @@ namespace VRTRIX
             {
                 LH_Thread_read = new Thread(LH.streaming_read_begin);
                 LH_Thread_read.Start();
-                LH_receivedData = new Thread(ReceiveLHData2);
+                LH_receivedData = new Thread(ReceiveLHDataAsync);
                 LH_receivedData.Start();
+                //LH.receivedData(HANDTYPE.LEFT_HAND);
             }
-        }
-        private static void ReceiveLHData2()
-        {
-            LH.receivedData(HANDTYPE.LEFT_HAND);
         }
 
 
@@ -195,11 +195,18 @@ namespace VRTRIX
             {
                 RH_Thread_read = new Thread(RH.streaming_read_begin);
                 RH_Thread_read.Start();
-                RH_receivedData = new Thread(ReceiveRHData2);
+                RH_receivedData = new Thread(ReceiveRHDataAsync);
                 RH_receivedData.Start();
+                //RH.receivedData(HANDTYPE.RIGHT_HAND);
             }
         }
-        private static void ReceiveRHData2()
+
+        private static void ReceiveLHDataAsync()
+        {
+            LH.receivedData(HANDTYPE.LEFT_HAND);
+        }
+
+        private static void ReceiveRHDataAsync()
         {
             RH.receivedData(HANDTYPE.RIGHT_HAND);
         }

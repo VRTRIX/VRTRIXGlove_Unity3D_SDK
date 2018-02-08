@@ -16,8 +16,42 @@ namespace VRTRIX
     public class VRTRIXGloveSimpleDataRead : MonoBehaviour
     {
         public GameObject objectToAlign;
-        private static VRTRIXDataWrapper RH = new VRTRIXDataWrapper();
-        private static VRTRIXDataWrapper LH = new VRTRIXDataWrapper();
+        public bool AdvancedMode = true;
+
+        [Header("UIComponent")]
+        public GameObject m_FPS;
+        public GameObject m_MODE;
+        public GameObject m_Status;
+        public GameObject m_LHRadio;
+        public GameObject m_RHRadio;
+        public GameObject m_LHRadioBar;
+        public GameObject m_RHRadioBar;
+        public GameObject m_LHCal;
+        public GameObject m_RHCal;
+        public GameObject m_LHCalBar;
+        public GameObject m_RHCalBar;
+
+        public GameObject m_LHDataRate;
+        public GameObject m_RHDataRate;
+        public GameObject m_LHStatus;
+        public GameObject m_RHStatus;
+        public GameObject m_LHand;
+        public GameObject m_LThumb;
+        public GameObject m_LIndex;
+        public GameObject m_LMiddle;
+        public GameObject m_LRing;
+        public GameObject m_LPinky;
+        public GameObject m_RHand;
+        public GameObject m_RThumb;
+        public GameObject m_RIndex;
+        public GameObject m_RMiddle;
+        public GameObject m_RRing;
+        public GameObject m_RPinky;
+        public float m_refreshTime = 1.0f;
+
+
+        private static VRTRIXDataWrapper RH;
+        private static VRTRIXDataWrapper LH;
         private Thread LH_Thread_read, RH_Thread_read, LH_receivedData, RH_receivedData;
         private Quaternion qloffset = Quaternion.identity;
         private Quaternion qroffset = Quaternion.identity;
@@ -26,74 +60,16 @@ namespace VRTRIX
         private int m_frameCounter = 0;
         private float m_timeCounter = 0.0f;
         private float m_lastFramerate = 0.0f;
-        public float m_refreshTime = 1.0f;
         private VRTRIXGloveRunningMode Mode = VRTRIXGloveRunningMode.NONE;
         private static bool RH_Mode;
         private static bool LH_Mode;
         private const float degToRad = (float)(Math.PI / 180.0);
-
-        public Text fps { get; private set; }
-        public Text mode { get; private set; }
-        public Text status { get; private set; }
-        public Text lh_radio { get; private set; }
-        public Image lh_radio_bar { get; private set; }
-        public Text rh_radio { get; private set; }
-        public Image rh_radio_bar { get; private set; }
-        public Text lh_cal { get; private set; }
-        public Image lh_cal_bar { get; private set; }
-        public Text rh_cal { get; private set; }
-        public Image rh_cal_bar { get; private set; }
-        public Text L_data_rate_text { get; private set; }
-        public Text L_status_text { get; private set; }
-        public Text L_hand_text { get; private set; }
-        public Text L_index_text { get; private set; }
-        public Text L_middle_text { get; private set; }
-        public Text L_ring_text { get; private set; }
-        public Text L_pinky_text { get; private set; }
-        public Text L_thumb_text { get; private set; }
-        public Text R_data_rate_text { get; private set; }
-        public Text R_status_text { get; private set; }
-        public Text R_hand_text { get; private set; }
-        public Text R_index_text { get; private set; }
-        public Text R_middle_text { get; private set; }
-        public Text R_ring_text { get; private set; }
-        public Text R_pinky_text { get; private set; }
-        public Text R_thumb_text { get; private set; }
-        // Use this for initialization
         private float LastFeedbackTime = 0.0f;
+
         void Start()
         {
-            fps = GameObject.Find("Abstract/FPS").GetComponent<Text>();
-            mode = GameObject.Find("Abstract/MODE").GetComponent<Text>();
-            status = GameObject.Find("Abstract/STATUS").GetComponent<Text>();
-
-            lh_radio = GameObject.Find("CAL_RADIO/LH_RADIO").GetComponent<Text>();
-            rh_radio = GameObject.Find("CAL_RADIO/RH_RADIO").GetComponent<Text>();
-            lh_radio_bar = GameObject.Find("CAL_RADIO/LH_RADIO_BAR").GetComponent<Image>();
-            rh_radio_bar = GameObject.Find("CAL_RADIO/RH_RADIO_BAR").GetComponent<Image>();
-            lh_cal = GameObject.Find("CAL_RADIO/LH_CAL").GetComponent<Text>();
-            rh_cal = GameObject.Find("CAL_RADIO/RH_CAL").GetComponent<Text>();
-            lh_cal_bar = GameObject.Find("CAL_RADIO/LH_CAL_BAR").GetComponent<Image>();
-            rh_cal_bar = GameObject.Find("CAL_RADIO/RH_CAL_BAR").GetComponent<Image>();
-
-            L_data_rate_text = GameObject.Find("LEFT/DATA_RATE").GetComponent<Text>();
-            L_status_text = GameObject.Find("LEFT/STATUS").GetComponent<Text>();
-            L_hand_text = GameObject.Find("LEFT/L_HAND").GetComponent<Text>();
-            L_index_text = GameObject.Find("LEFT/L_INDEX").GetComponent<Text>();
-            L_middle_text = GameObject.Find("LEFT/L_MIDDLE").GetComponent<Text>();
-            L_ring_text = GameObject.Find("LEFT/L_RING").GetComponent<Text>();
-            L_pinky_text = GameObject.Find("LEFT/L_PINKY").GetComponent<Text>();
-            L_thumb_text = GameObject.Find("LEFT/L_THUMB").GetComponent<Text>();
-
-            R_data_rate_text = GameObject.Find("RIGHT/DATA_RATE").GetComponent<Text>();
-            R_status_text = GameObject.Find("RIGHT/STATUS").GetComponent<Text>();
-            R_hand_text = GameObject.Find("RIGHT/R_HAND").GetComponent<Text>();
-            R_index_text = GameObject.Find("RIGHT/R_INDEX").GetComponent<Text>();
-            R_middle_text = GameObject.Find("RIGHT/R_MIDDLE").GetComponent<Text>();
-            R_ring_text = GameObject.Find("RIGHT/R_RING").GetComponent<Text>();
-            R_pinky_text = GameObject.Find("RIGHT/R_PINKY").GetComponent<Text>();
-            R_thumb_text = GameObject.Find("RIGHT/R_THUMB").GetComponent<Text>();
-
+            RH = new VRTRIXDataWrapper(AdvancedMode);
+            LH = new VRTRIXDataWrapper(AdvancedMode);
             LastFeedbackTime = Time.time;
         }
         void CheckToStart()
@@ -123,7 +99,7 @@ namespace VRTRIX
 
                 SetRotation(VRTRIXBones.R_Forearm, RH.GetReceivedRotation(VRTRIXBones.R_Forearm), RH.DataValidStatus(VRTRIXBones.R_Forearm), HANDTYPE.RIGHT_HAND);
                 SetRotation(VRTRIXBones.R_Hand, RH.GetReceivedRotation(VRTRIXBones.R_Hand), RH.DataValidStatus(VRTRIXBones.R_Hand), HANDTYPE.RIGHT_HAND);
-                
+
 
                 SetRotation(VRTRIXBones.R_Thumb_1, RH.GetReceivedRotation(VRTRIXBones.R_Thumb_1), RH.DataValidStatus(VRTRIXBones.R_Thumb_1), HANDTYPE.RIGHT_HAND);
                 SetRotation(VRTRIXBones.R_Thumb_2, RH.GetReceivedRotation(VRTRIXBones.R_Thumb_2), RH.DataValidStatus(VRTRIXBones.R_Thumb_2), HANDTYPE.RIGHT_HAND);
@@ -155,34 +131,34 @@ namespace VRTRIX
                     qloffset = GetOffset(objectToAlign, LH, HANDTYPE.LEFT_HAND);
                     qloffset_cal = true;
                 }
-                
+
                 SetRotation(VRTRIXBones.L_Forearm, LH.GetReceivedRotation(VRTRIXBones.L_Forearm), LH.DataValidStatus(VRTRIXBones.L_Forearm), HANDTYPE.LEFT_HAND);
                 SetRotation(VRTRIXBones.L_Hand, LH.GetReceivedRotation(VRTRIXBones.L_Hand), LH.DataValidStatus(VRTRIXBones.L_Hand), HANDTYPE.LEFT_HAND);
 
                 SetRotation(VRTRIXBones.L_Thumb_1, LH.GetReceivedRotation(VRTRIXBones.L_Thumb_1), LH.DataValidStatus(VRTRIXBones.L_Thumb_1), HANDTYPE.LEFT_HAND);
                 SetRotation(VRTRIXBones.L_Thumb_2, LH.GetReceivedRotation(VRTRIXBones.L_Thumb_2), LH.DataValidStatus(VRTRIXBones.L_Thumb_2), HANDTYPE.LEFT_HAND);
                 SetRotation(VRTRIXBones.L_Thumb_3, LH.GetReceivedRotation(VRTRIXBones.L_Thumb_3), LH.DataValidStatus(VRTRIXBones.L_Thumb_3), HANDTYPE.LEFT_HAND);
-                
+
 
                 SetRotation(VRTRIXBones.L_Index_1, LH.GetReceivedRotation(VRTRIXBones.L_Index_1), LH.DataValidStatus(VRTRIXBones.L_Index_1), HANDTYPE.LEFT_HAND);
                 SetRotation(VRTRIXBones.L_Index_2, LH.GetReceivedRotation(VRTRIXBones.L_Index_2), LH.DataValidStatus(VRTRIXBones.L_Index_2), HANDTYPE.LEFT_HAND);
                 SetRotation(VRTRIXBones.L_Index_3, LH.GetReceivedRotation(VRTRIXBones.L_Index_3), LH.DataValidStatus(VRTRIXBones.L_Index_3), HANDTYPE.LEFT_HAND);
-                
+
 
                 SetRotation(VRTRIXBones.L_Middle_1, LH.GetReceivedRotation(VRTRIXBones.L_Middle_1), LH.DataValidStatus(VRTRIXBones.L_Middle_1), HANDTYPE.LEFT_HAND);
                 SetRotation(VRTRIXBones.L_Middle_2, LH.GetReceivedRotation(VRTRIXBones.L_Middle_2), LH.DataValidStatus(VRTRIXBones.L_Middle_2), HANDTYPE.LEFT_HAND);
                 SetRotation(VRTRIXBones.L_Middle_3, LH.GetReceivedRotation(VRTRIXBones.L_Middle_3), LH.DataValidStatus(VRTRIXBones.L_Middle_3), HANDTYPE.LEFT_HAND);
-                
+
 
                 SetRotation(VRTRIXBones.L_Ring_1, LH.GetReceivedRotation(VRTRIXBones.L_Ring_1), LH.DataValidStatus(VRTRIXBones.L_Ring_1), HANDTYPE.LEFT_HAND);
                 SetRotation(VRTRIXBones.L_Ring_2, LH.GetReceivedRotation(VRTRIXBones.L_Ring_2), LH.DataValidStatus(VRTRIXBones.L_Ring_2), HANDTYPE.LEFT_HAND);
                 SetRotation(VRTRIXBones.L_Ring_3, LH.GetReceivedRotation(VRTRIXBones.L_Ring_3), LH.DataValidStatus(VRTRIXBones.L_Ring_3), HANDTYPE.LEFT_HAND);
-                
+
 
                 SetRotation(VRTRIXBones.L_Pinky_1, LH.GetReceivedRotation(VRTRIXBones.L_Pinky_1), LH.DataValidStatus(VRTRIXBones.L_Pinky_1), HANDTYPE.LEFT_HAND);
                 SetRotation(VRTRIXBones.L_Pinky_2, LH.GetReceivedRotation(VRTRIXBones.L_Pinky_2), LH.DataValidStatus(VRTRIXBones.L_Pinky_2), HANDTYPE.LEFT_HAND);
                 SetRotation(VRTRIXBones.L_Pinky_3, LH.GetReceivedRotation(VRTRIXBones.L_Pinky_3), LH.DataValidStatus(VRTRIXBones.L_Pinky_3), HANDTYPE.LEFT_HAND);
-                
+
                 //print(GameObject.Find("L_Thumb_1").transform.rotation * Quaternion.Inverse(LH.GetReceivedRotation(VRTRIXBones.L_Hand)));
                 //print(GameObject.Find("L_Index_2").transform.rotation  + " , " + GameObject.Find("L_Hand").transform.rotation + " ," + GameObject.Find("L_Index_2").transform.rotation* Quaternion.Inverse(GameObject.Find("L_Hand").transform.rotation));
                 //print(LH.DataValidStatus(VRTRIXBones.L_Index_1) + ", " + LH.DataValidStatus(VRTRIXBones.L_Middle_1) + ", " + LH.DataValidStatus(VRTRIXBones.L_Ring_1) + ", " + LH.DataValidStatus(VRTRIXBones.L_Pinky_1) + ", " + LH.DataValidStatus(VRTRIXBones.L_Thumb_1));
@@ -198,84 +174,79 @@ namespace VRTRIX
             }
             else
             {
-                //This code will break if you set your m_refreshTime to 0, which makes no sense.
                 m_lastFramerate = (float)m_frameCounter / m_timeCounter;
                 m_frameCounter = 0;
                 m_timeCounter = 0.0f;
             }
-            fps.text = "FRAME RATE:   " + m_lastFramerate.ToString() + " fps";
+            m_FPS.GetComponent<Text>().text = "FRAME RATE:   " + m_lastFramerate.ToString() + " fps";
 
 
             if (RH_Mode)
             {
                 Mode = VRTRIXGloveRunningMode.RIGHT;
-                status.text = "GLOVE STATUS:   CONNECTED";
-                mode.text = "MODE:   RIGHT ONLY";
-                R_status_text.text = "RIGHT HAND STATUS: CONNECTED";
+                m_Status.GetComponent<Text>().text = "GLOVE STATUS:   CONNECTED";
+                m_MODE.GetComponent<Text>().text = "MODE:   RIGHT ONLY";
+                m_RHStatus.GetComponent<Text>().text = "RIGHT HAND STATUS: CONNECTED";
 
-                rh_radio.text = "Radio Strength:  " + RH.GetReceiveRadioStrength().ToString() + " dB";
-                RadioStrengthGUI(rh_radio_bar, RH.GetReceiveRadioStrength());
-                rh_cal.text = "Cal Score:  " + RH.GetReceivedCalScoreMean().ToString();
-                CalScoreGUI(rh_cal_bar, RH.GetReceivedCalScoreMean());
+                m_RHRadio.GetComponent<Text>().text = "Radio Strength:  " + RH.GetReceiveRadioStrength().ToString() + " dB";
+                RadioStrengthGUI(m_RHRadioBar.GetComponent<Image>(), RH.GetReceiveRadioStrength());
+                m_RHCal.GetComponent<Text>().text = "Cal Score:  " + RH.GetReceivedCalScoreMean().ToString();
+                CalScoreGUI(m_RHCalBar.GetComponent<Image>(), RH.GetReceivedCalScoreMean());
 
-                R_data_rate_text.text = "RIGHT HAND DATA RATE: " + RH.GetReceivedDataRate().ToString() + "/s";
+                m_RHDataRate.GetComponent<Text>().text = "RIGHT HAND DATA RATE: " + RH.GetReceivedDataRate().ToString() + "/s";
 
-                R_hand_text.text = "R_Hand   " + RH.GetReceivedRotation(VRTRIXBones.R_Hand).ToString() + "    " + RH.GetReceivedCalScore(VRTRIXBones.R_Hand).ToString();
-                R_thumb_text.text = "R_Thumb   " + RH.GetReceivedRotation(VRTRIXBones.R_Thumb_2).ToString() + "    " + RH.GetReceivedCalScore(VRTRIXBones.R_Thumb_2).ToString();
-                R_index_text.text = "R_Index   " + RH.GetReceivedRotation(VRTRIXBones.R_Index_2).ToString() + "    " + RH.GetReceivedCalScore(VRTRIXBones.R_Index_2).ToString();
-                R_middle_text.text = "R_Middle   " + RH.GetReceivedRotation(VRTRIXBones.R_Middle_2).ToString() + "    " + RH.GetReceivedCalScore(VRTRIXBones.R_Middle_2).ToString();
-                R_ring_text.text = "R_Ring   " + RH.GetReceivedRotation(VRTRIXBones.R_Ring_2).ToString() + "    " + RH.GetReceivedCalScore(VRTRIXBones.R_Ring_2).ToString();
-                R_pinky_text.text = "R_Pinky   " + RH.GetReceivedRotation(VRTRIXBones.R_Pinky_2).ToString() + "    " + RH.GetReceivedCalScore(VRTRIXBones.R_Pinky_2).ToString();
+                m_RHand.GetComponent<Text>().text = "R_Hand   " + RH.GetReceivedRotation(VRTRIXBones.R_Hand).ToString() + "    " + RH.GetReceivedCalScore(VRTRIXBones.R_Hand).ToString();
+                m_RThumb.GetComponent<Text>().text = "R_Thumb   " + RH.GetReceivedRotation(VRTRIXBones.R_Thumb_2).ToString() + "    " + RH.GetReceivedCalScore(VRTRIXBones.R_Thumb_2).ToString();
+                m_RIndex.GetComponent<Text>().text = "R_Index   " + RH.GetReceivedRotation(VRTRIXBones.R_Index_2).ToString() + "    " + RH.GetReceivedCalScore(VRTRIXBones.R_Index_2).ToString();
+                m_RMiddle.GetComponent<Text>().text = "R_Middle   " + RH.GetReceivedRotation(VRTRIXBones.R_Middle_2).ToString() + "    " + RH.GetReceivedCalScore(VRTRIXBones.R_Middle_2).ToString();
+                m_RRing.GetComponent<Text>().text = "R_Ring   " + RH.GetReceivedRotation(VRTRIXBones.R_Ring_2).ToString() + "    " + RH.GetReceivedCalScore(VRTRIXBones.R_Ring_2).ToString();
+                m_RPinky.GetComponent<Text>().text = "R_Pinky   " + RH.GetReceivedRotation(VRTRIXBones.R_Pinky_2).ToString() + "    " + RH.GetReceivedCalScore(VRTRIXBones.R_Pinky_2).ToString();
             }
 
             if (LH_Mode)
             {
                 Mode = VRTRIXGloveRunningMode.LEFT;
-                status.text = "GLOVE STATUS:   CONNECTED";
-                mode.text = "MODE:   LEFT ONLY";
-                L_status_text.text = "LEFT HAND STATUS: CONNECTED";
+                m_Status.GetComponent<Text>().text = "GLOVE STATUS:   CONNECTED";
+                m_MODE.GetComponent<Text>().text = "MODE:   LEFT ONLY";
+                m_LHStatus.GetComponent<Text>().text = "LEFT HAND STATUS: CONNECTED";
 
-                lh_radio.text = "Radio Strength:  " + LH.GetReceiveRadioStrength().ToString() + " dB";
-                RadioStrengthGUI(lh_radio_bar, LH.GetReceiveRadioStrength());
-                
-                lh_cal.text = "Cal Score:  " + LH.GetReceivedCalScoreMean().ToString();
-                CalScoreGUI(lh_cal_bar, LH.GetReceivedCalScoreMean());
-                L_data_rate_text.text = "LEFT HAND DATA RATE: " + LH.GetReceivedDataRate().ToString() + "/s";
+                m_LHRadio.GetComponent<Text>().text = "Radio Strength:  " + LH.GetReceiveRadioStrength().ToString() + " dB";
+                RadioStrengthGUI(m_LHRadioBar.GetComponent<Image>(), LH.GetReceiveRadioStrength());
+                m_LHCal.GetComponent<Text>().text = "Cal Score:  " + LH.GetReceivedCalScoreMean().ToString();
+                CalScoreGUI(m_LHCalBar.GetComponent<Image>(), LH.GetReceivedCalScoreMean());
 
-                L_hand_text.text = "L_HAND:   " + LH.GetReceivedRotation(VRTRIXBones.L_Hand) + "    " + LH.GetReceivedCalScore(VRTRIXBones.L_Hand).ToString();
-                L_thumb_text.text = "L_THUMB:   " + LH.GetReceivedRotation(VRTRIXBones.L_Thumb_2) + "    " + LH.GetReceivedCalScore(VRTRIXBones.L_Thumb_2).ToString();
-                L_index_text.text = "L_INDEX:   " + LH.GetReceivedRotation(VRTRIXBones.L_Index_2) + "    " + LH.GetReceivedCalScore(VRTRIXBones.L_Index_2).ToString();
-                L_middle_text.text = "L_MIDDLE:   " + LH.GetReceivedRotation(VRTRIXBones.L_Index_2) + "    " + LH.GetReceivedCalScore(VRTRIXBones.L_Index_2).ToString();
-                L_ring_text.text = "L_RING:   " + LH.GetReceivedRotation(VRTRIXBones.L_Ring_2) + "    " + LH.GetReceivedCalScore(VRTRIXBones.L_Ring_2).ToString();
-                L_pinky_text.text = "L_PINKY:   " + LH.GetReceivedRotation(VRTRIXBones.L_Pinky_2) + "    " + LH.GetReceivedCalScore(VRTRIXBones.L_Pinky_2).ToString();
+                m_LHDataRate.GetComponent<Text>().text = "LEFT HAND DATA RATE: " + LH.GetReceivedDataRate().ToString() + "/s";
+
+                m_LHand.GetComponent<Text>().text = "L_HAND:   " + LH.GetReceivedRotation(VRTRIXBones.L_Hand) + "    " + LH.GetReceivedCalScore(VRTRIXBones.L_Hand).ToString();
+                m_LThumb.GetComponent<Text>().text = "L_THUMB:   " + LH.GetReceivedRotation(VRTRIXBones.L_Thumb_2) + "    " + LH.GetReceivedCalScore(VRTRIXBones.L_Thumb_2).ToString();
+                m_LIndex.GetComponent<Text>().text = "L_INDEX:   " + LH.GetReceivedRotation(VRTRIXBones.L_Index_2) + "    " + LH.GetReceivedCalScore(VRTRIXBones.L_Index_2).ToString();
+                m_LMiddle.GetComponent<Text>().text = "L_MIDDLE:   " + LH.GetReceivedRotation(VRTRIXBones.L_Index_2) + "    " + LH.GetReceivedCalScore(VRTRIXBones.L_Index_2).ToString();
+                m_LRing.GetComponent<Text>().text = "L_RING:   " + LH.GetReceivedRotation(VRTRIXBones.L_Ring_2) + "    " + LH.GetReceivedCalScore(VRTRIXBones.L_Ring_2).ToString();
+                m_LPinky.GetComponent<Text>().text = "L_PINKY:   " + LH.GetReceivedRotation(VRTRIXBones.L_Pinky_2) + "    " + LH.GetReceivedCalScore(VRTRIXBones.L_Pinky_2).ToString();
             }
 
             if (RH_Mode && LH_Mode)
             {
                 Mode = VRTRIXGloveRunningMode.PAIR;
-                mode.text = "MODE:   PAIR";
+                m_MODE.GetComponent<Text>().text = "MODE:   PAIR";
             }
 
         }
 
-       private void ReceiveLHData()
+        private void ReceiveLHData()
         {
             LH_Mode = LH.Init(HANDTYPE.LEFT_HAND);
             print("LH_Mode: " + LH_Mode);
             if (LH_Mode)
             {
-                LH_Thread_read= new Thread(LH.streaming_read_begin);
+                LH_Thread_read = new Thread(LH.streaming_read_begin);
                 LH_Thread_read.Start();
-                //LH_receivedData = new Thread(ReceiveLHData2);
-                //LH_receivedData.Start();
-                LH.receivedData(HANDTYPE.LEFT_HAND);
+                LH_receivedData = new Thread(ReceiveLHDataAsync);
+                LH_receivedData.Start();
+                //LH.receivedData(HANDTYPE.LEFT_HAND);
             }
         }
-       private static void ReceiveLHData2()
-        {
-            LH.receivedData(HANDTYPE.LEFT_HAND);
-        }
-
+        
 
         private void ReceiveRHData()
         {
@@ -283,14 +254,20 @@ namespace VRTRIX
             print("RH_Mode: " + RH_Mode);
             if (RH_Mode)
             {
-                RH_Thread_read= new Thread(RH.streaming_read_begin);
+                RH_Thread_read = new Thread(RH.streaming_read_begin);
                 RH_Thread_read.Start();
-                //RH_receivedData = new Thread(ReceiveRHData2);
-                //RH_receivedData.Start();
-                RH.receivedData(HANDTYPE.RIGHT_HAND);
-            }          
+                RH_receivedData = new Thread(ReceiveRHDataAsync);
+                RH_receivedData.Start();
+                //RH.receivedData(HANDTYPE.RIGHT_HAND);
+            }
         }
-        private static void ReceiveRHData2()
+
+        private static void ReceiveLHDataAsync()
+        {
+            LH.receivedData(HANDTYPE.LEFT_HAND);
+        }
+
+        private static void ReceiveRHDataAsync()
         {
             RH.receivedData(HANDTYPE.RIGHT_HAND);
         }
@@ -299,14 +276,14 @@ namespace VRTRIX
         {
             if (LH_Mode)
             {
-              //  LH_Thread_read.Abort();
+                //  LH_Thread_read.Abort();
                 LH.ClosePort();
             }
             if (RH_Mode)
             {
-            //  RH_Thread_read.Abort();
-               RH.ClosePort();
-  
+                //  RH_Thread_read.Abort();
+                RH.ClosePort();
+
             }
         }
 
@@ -457,7 +434,7 @@ namespace VRTRIX
 
         private static void CalScoreGUI(Image image, int calscore)
         {
-            image.fillAmount = (calscore / 15f > 1) ? 0 : (1- calscore / 15f);
+            image.fillAmount = (calscore / 15f > 1) ? 0 : (1 - calscore / 15f);
             if (calscore > 9)
             {
                 image.color = Color.red;
