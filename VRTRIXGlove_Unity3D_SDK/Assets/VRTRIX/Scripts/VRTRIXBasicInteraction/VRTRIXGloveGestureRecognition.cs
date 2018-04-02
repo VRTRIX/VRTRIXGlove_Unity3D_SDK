@@ -5,15 +5,19 @@
 //
 //=============================================================================
 
+
+using UnityEngine;
+
 namespace VRTRIX
 {
     public enum VRTRIXGloveGesture
     {
-        BUTTONCLICK,
-        BUTTONOK,
-        BUTTONGRAB,
-        BUTTONTELEPORT,
-        BUTTONNONE
+        BUTTONCLICK = 0,
+        BUTTONOK = 1,
+        BUTTONGRAB = 2,
+        BUTTONTELEPORT = 3,
+        BUTTONPAPER = 4,
+        BUTTONNONE = 5
     };
     public class VRTRIXGloveGestureRecognition
     {
@@ -32,7 +36,8 @@ namespace VRTRIX
                 bool RingCurve = (RingAngle < 270f) && (RingAngle > 95f);
                 bool PinkyCurve = (PinkyAngle < 270f) && (PinkyAngle > 95f);
                 bool TeleportCheck = (RingAngle - MiddleAngle < -110f || RingAngle - MiddleAngle > 200) && (PinkyAngle - IndexAngle < -110f || PinkyAngle - IndexAngle > 200f);
-                //Debug.Log("ThumbAngle: " + ThumbAngle + ", ThumbCurve: " + ThumbCurve);
+                bool PaperCheck = (IndexAngle < 30f && MiddleAngle < 30f && RingAngle < 30f && PinkyAngle < 30f && (ThumbAngle > 30f && ThumbAngle < 90f));
+                //Debug.Log("ThumbAngle: " + ThumbAngle + ", IndexAngle: " + IndexAngle + ", MiddleAngle: " + MiddleAngle + ", RingAngle: " + RingAngle + ", PinkyAngle: " + PinkyAngle);
                 //Debug.Log("TeleportCheck1: " + (RingAngle - MiddleAngle) + ", TeleportCheck2: " + (PinkyAngle - IndexAngle));
                 if (ThumbCurve && MiddleCurve && RingCurve && PinkyCurve && !IndexCurve)
                 {
@@ -54,6 +59,12 @@ namespace VRTRIX
                     return VRTRIXGloveGesture.BUTTONGRAB;
                 }
 
+                if (!ThumbCurve && !MiddleCurve && !RingCurve && !PinkyCurve && !IndexCurve && PaperCheck)
+                {
+                    return VRTRIXGloveGesture.BUTTONPAPER;
+                }
+
+
             }
             else if (type == HANDTYPE.RIGHT_HAND)
             {
@@ -68,6 +79,8 @@ namespace VRTRIX
                 bool RingCurve = (RingAngle < 270f) && (RingAngle > 95f);
                 bool PinkyCurve = (PinkyAngle < 270f) && (PinkyAngle > 95f);
                 bool TeleportCheck = (RingAngle - MiddleAngle < -80f || RingAngle - MiddleAngle > 200) && (PinkyAngle - IndexAngle < -90f || PinkyAngle - IndexAngle > 210f);
+                bool PaperCheck = (IndexAngle < 30f && MiddleAngle < 30f && RingAngle < 30f && PinkyAngle < 30f && (ThumbAngle > 30f && ThumbAngle < 90f));
+                //Debug.Log("ThumbAngle: " + ThumbAngle + ", IndexAngle: " + IndexAngle + ", MiddleAngle: " + MiddleAngle + ", RingAngle: " + RingAngle + ", PinkyAngle: " + PinkyAngle);
                 //Debug.Log("ThumbAngle: " + ThumbAngle + ", ThumbCurve: " + ThumbCurve);
                 if (ThumbCurve && MiddleCurve && RingCurve && PinkyCurve && !IndexCurve)
                 {
@@ -87,6 +100,11 @@ namespace VRTRIX
                 if (ThumbCurve && MiddleCurve && RingCurve && PinkyCurve && IndexCurve)
                 {
                     return VRTRIXGloveGesture.BUTTONGRAB;
+                }
+
+                if (!ThumbCurve && !MiddleCurve && !RingCurve && !PinkyCurve && !IndexCurve && PaperCheck)
+                {
+                    return VRTRIXGloveGesture.BUTTONPAPER;
                 }
             }
             return VRTRIXGloveGesture.BUTTONNONE;

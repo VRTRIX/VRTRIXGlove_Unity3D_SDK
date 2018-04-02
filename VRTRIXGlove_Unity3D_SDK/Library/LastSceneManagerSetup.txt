@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/VRTRIX/Scenes/VRTRIXGloveVRInteraction.unity
+- path: Assets/VRTRIX/Scenes/VRTRIXGloveDataStreaming.unity
   isLoaded: 1
   isActive: 1
