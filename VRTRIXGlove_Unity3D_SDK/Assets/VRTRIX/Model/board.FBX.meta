@@ -1,0 +1,137 @@
+fileFormatVersion: 2
+guid: 6459bf085b017dc4cad11a8b5496a0b0
+timeCreated: 1525326321
+licenseType: Free
+ModelImporter:
+  serializedVersion: 21
+  fileIDToRecycleName:
+    100000: 001-MAINSTREAM MODULE (View)
+    100002: 001-TOTAL VEHICLE GEM (View)
+    100004: 001-VPPS_50 BODY STRUCTURE (View)
+    100006: 01 1
+    100008: 018-VPPS_50.1 BODY LOWER STRUCTURE (View)
+    100010: 26225279_006-PANEL-BODY H_PLR INR_3832570
+    100012: //RootNode
+    100014: JCXX)-V-MM (View)
+    100016: jt_obj_12
+    100018: jt_obj_12_MeshPart0
+    100020: jt_obj_12_MeshPart1
+    100022: jt_obj_12_MeshPart2
+    100024: jt_obj_12_MeshPart3
+    100026: jt_obj_12_MeshPart4
+    100028: jt_obj_13
+    100030: P BRACKET-V-MM (View)
+    100032: PLR INR (View)
+    100034: PLR INR (View) 1
+    400000: 001-MAINSTREAM MODULE (View)
+    400002: 001-TOTAL VEHICLE GEM (View)
+    400004: 001-VPPS_50 BODY STRUCTURE (View)
+    400006: 01 1
+    400008: 018-VPPS_50.1 BODY LOWER STRUCTURE (View)
+    400010: 26225279_006-PANEL-BODY H_PLR INR_3832570
+    400012: //RootNode
+    400014: JCXX)-V-MM (View)
+    400016: jt_obj_12
+    400018: jt_obj_12_MeshPart0
+    400020: jt_obj_12_MeshPart1
+    400022: jt_obj_12_MeshPart2
+    400024: jt_obj_12_MeshPart3
+    400026: jt_obj_12_MeshPart4
+    400028: jt_obj_13
+    400030: P BRACKET-V-MM (View)
+    400032: PLR INR (View)
+    400034: PLR INR (View) 1
+    2300000: jt_obj_12_MeshPart0
+    2300002: jt_obj_12_MeshPart1
+    2300004: jt_obj_12_MeshPart2
+    2300006: jt_obj_12_MeshPart3
+    2300008: jt_obj_12_MeshPart4
+    2300010: jt_obj_13
+    3300000: jt_obj_12_MeshPart0
+    3300002: jt_obj_12_MeshPart1
+    3300004: jt_obj_12_MeshPart2
+    3300006: jt_obj_12_MeshPart3
+    3300008: jt_obj_12_MeshPart4
+    3300010: jt_obj_13
+    4300000: jt_obj_12_MeshPart0
+    4300002: jt_obj_12_MeshPart1
+    4300004: jt_obj_12_MeshPart2
+    4300006: jt_obj_12_MeshPart3
+    4300008: jt_obj_12_MeshPart4
+    4300010: jt_obj_13
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
