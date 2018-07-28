@@ -4,8 +4,8 @@ Direct3D:
     Version:  Direct3D 11.0 [level 11.1]
     Renderer: NVIDIA GeForce GTX 980 (ID=0x13c0)
     Vendor:   NVIDIA
-    VRAM:     4060 MB
-    Driver:   22.21.13.8554
+    VRAM:     4053 MB
+    Driver:   24.21.13.9764
 Begin MonoManager ReloadAssembly
 Platform assembly: D:\VRTRIX\Projects\VRTRIXGlove_Unity3D_SDK\VRTRIXGlove_Unity3D_SDK\Biuld\VRTRIXGloveDataStreaming_Data\Managed\UnityEngine.dll (this message is harmless)
 Loading D:\VRTRIX\Projects\VRTRIXGlove_Unity3D_SDK\VRTRIXGlove_Unity3D_SDK\Biuld\VRTRIXGloveDataStreaming_Data\Managed\UnityEngine.dll into Unity Child Domain
@@ -19,23 +19,25 @@ Platform assembly: D:\VRTRIX\Projects\VRTRIXGlove_Unity3D_SDK\VRTRIXGlove_Unity3
 Loading D:\VRTRIX\Projects\VRTRIXGlove_Unity3D_SDK\VRTRIXGlove_Unity3D_SDK\Biuld\VRTRIXGloveDataStreaming_Data\Managed\UnityEngine.Timeline.dll into Unity Child Domain
 Platform assembly: D:\VRTRIX\Projects\VRTRIXGlove_Unity3D_SDK\VRTRIXGlove_Unity3D_SDK\Biuld\VRTRIXGloveDataStreaming_Data\Managed\System.dll (this message is harmless)
 Platform assembly: D:\VRTRIX\Projects\VRTRIXGlove_Unity3D_SDK\VRTRIXGlove_Unity3D_SDK\Biuld\VRTRIXGloveDataStreaming_Data\Managed\System.Core.dll (this message is harmless)
-- Completed reload, in  0.125 seconds
+- Completed reload, in  0.017 seconds
 <RI> Initializing input.
 <RI> Input initialized.
 <RI> Initialized touch support.
-UnloadTime: 0.812543 ms
+UnloadTime: 0.741553 ms
 Setting up 4 worker threads for Enlighten.
-  Thread -> id: 3d80 -> priority: 1 
-  Thread -> id: 75e8 -> priority: 1 
-  Thread -> id: 81c8 -> priority: 1 
-  Thread -> id: 844c -> priority: 1 
-Try to opening RH Port: COM5LH_Mode: False
+  Thread -> id: 5238 -> priority: 1 
+  Thread -> id: 564c -> priority: 1 
+  Thread -> id: 4c74 -> priority: 1 
+  Thread -> id: 531c -> priority: 1 
+Try to opening LH Port: COM7Try to opening RH Port: COM19
+
+COM_PORT Opened: COM19
+RH_Mode: True
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
-
-COM_PORT Opened: COM5
-RH_Mode: True
+COM_PORT Opened: COM7
+LH_Mode: True
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
