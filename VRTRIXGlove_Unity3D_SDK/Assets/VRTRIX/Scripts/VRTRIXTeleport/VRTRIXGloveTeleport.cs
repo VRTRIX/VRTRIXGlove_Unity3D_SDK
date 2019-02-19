@@ -100,7 +100,7 @@ namespace VRTRIX
 
         private float loopingAudioMaxVolume = 0.0f;
 
-        private Coroutine hintCoroutine = null;
+        //private Coroutine hintCoroutine = null;
 
         private bool originalHoverLockState = false;
         private VRTRIXInteractable originalHoveringInteractable = null;

@@ -12,7 +12,6 @@
 //=============================================================================
 using UnityEngine;
 using System.Threading;
-using UnityEngine.UI;
 using Valve.VR;
 using System;
 
@@ -21,26 +20,24 @@ namespace VRTRIX
     public class VRTRIXGloveVRInteraction : MonoBehaviour
     {
         public bool AdvancedMode;
-        public static VRTRIXGloveGesture LH_Gesture, RH_Gesture;
-        public static VRTRIXDataWrapper RH;
-        public static VRTRIXDataWrapper LH;
-        private static GameObject LH_tracker, RH_tracker;
-        private static bool LH_Mode, RH_Mode;
+        public Vector3 ql_modeloffset, qr_modeloffset;
+        public VRTRIXDataWrapper LH, RH;
+        private GameObject LH_tracker, RH_tracker;
         private Thread LH_Thread_read, RH_Thread_read, LH_receivedData, RH_receivedData;
-        private VRTRIXGloveRunningMode Mode;
+        private VRTRIXGloveGesture LH_Gesture, RH_Gesture;
+        private VRTRIXGloveGestureRecognition GloveGesture;
+        private bool LH_Mode, RH_Mode;
+        private float qloffset, qroffset;
+        private bool qloffset_cal, qroffset_cal;
 
-        private Quaternion qloffset = Quaternion.identity;
-        private Quaternion qroffset = Quaternion.identity;
-        private bool qroffset_cal = false;
-        private bool qloffset_cal = false;
         private Vector3 troffset = new Vector3(0.01f, 0, -0.035f);
         private Vector3 tloffset = new Vector3(-0.01f, 0, -0.035f);
-        private const float degToRad = (float)(Math.PI / 180.0);
-        
+
         void Start()
         {
             RH = new VRTRIXDataWrapper(AdvancedMode);
             LH = new VRTRIXDataWrapper(AdvancedMode);
+            GloveGesture = new VRTRIXGloveGestureRecognition();
             try
             {
                 RH_tracker = CheckDeviceModelName(HANDTYPE.RIGHT_HAND);
@@ -50,19 +47,19 @@ namespace VRTRIX
             {
                 print("Exception caught: " + e);
             }
-
         }
-        void CheckToStart()
+        //数据手套初始化，硬件连接
+        public void OnConnectGlove()
         {
             try
             {
-                if(RH_tracker != null)
+                if (RH_tracker != null)
                 {
                     RH_Mode = RH.Init(HANDTYPE.RIGHT_HAND);
                     ReceiveRHData();
                 }
-               
-                if(LH_tracker != null)
+
+                if (LH_tracker != null)
                 {
                     print(LH_tracker);
                     LH_Mode = LH.Init(HANDTYPE.LEFT_HAND);
@@ -75,35 +72,74 @@ namespace VRTRIX
             }
         }
 
-        void Update()
+        //数据手套反初始化，硬件断开连接
+        public void OnDisconnectGlove()
         {
-            if (RH_Mode && LH_Mode)
+            if (LH_Mode)
             {
-                Mode = VRTRIXGloveRunningMode.PAIR;
+                if (LH.ClosePort())
+                {
+                    LH = new VRTRIXDataWrapper(AdvancedMode);
+                }
+                LH_Mode = false;
             }
-            else if (RH_Mode)
+            if (RH_Mode)
             {
-                Mode = VRTRIXGloveRunningMode.RIGHT;
-            }
-            else if (LH_Mode)
-            {
-                Mode = VRTRIXGloveRunningMode.LEFT;
-            }
-            else
-            {
-                Mode = VRTRIXGloveRunningMode.NONE;
+                if (RH.ClosePort())
+                {
+                    RH = new VRTRIXDataWrapper(AdvancedMode);
+                }
+                RH_Mode = false;
             }
         }
-        void FixedUpdate()
-        {
 
+        //数据手套硬件校准，仅在磁场大幅度变化后使用。
+        public void OnHardwareCalibrate()
+        {
+            if (LH_Mode)
+            {
+                LH.calibration();
+            }
+            if (RH_Mode)
+            {
+                RH.calibration();
+            }
+        }
+
+        //数据手套振动
+        public void OnVibrate()
+        {
+            if (LH_Mode)
+            {
+                LH.vibrate();
+            }
+            if (RH_Mode)
+            {
+                RH.vibrate();
+            }
+        }
+
+        //数据手套软件对齐手指，仅在磁场大幅度变化后使用。
+        public void OnAlignFingers()
+        {
+            if (LH_Mode)
+            {
+                qloffset = Math.Abs(LH_tracker.transform.rotation.eulerAngles.z) - 180;
+                LH.alignmentCheck(HANDTYPE.LEFT_HAND);
+            }
+            if (RH_Mode)
+            {
+                qroffset = Math.Abs(RH_tracker.transform.rotation.eulerAngles.z) - 180;
+                RH.alignmentCheck(HANDTYPE.RIGHT_HAND);
+            }
+
+        }
+
+        //数据更新与骨骼赋值。
+        void Update()
+        {
             if (RH_Mode && RH.GetReceivedStatus() == VRTRIXGloveStatus.NORMAL)
             {
-                if (RH.GetReceivedRotation(VRTRIXBones.R_Hand) != Quaternion.identity && !qroffset_cal)
-                {
-                    qroffset = GetOffset(RH_tracker, RH, HANDTYPE.RIGHT_HAND);
-                    qroffset_cal = true;
-                }
 
                 SetPosition(VRTRIXBones.R_Hand, RH_tracker.transform.position, RH_tracker.transform.rotation, troffset);
 
@@ -130,7 +166,7 @@ namespace VRTRIX
                 SetRotation(VRTRIXBones.R_Pinky_2, RH.GetReceivedRotation(VRTRIXBones.R_Pinky_2), RH.DataValidStatus(VRTRIXBones.R_Pinky_2), HANDTYPE.RIGHT_HAND);
                 SetRotation(VRTRIXBones.R_Pinky_3, RH.GetReceivedRotation(VRTRIXBones.R_Pinky_3), RH.DataValidStatus(VRTRIXBones.R_Pinky_3), HANDTYPE.RIGHT_HAND);
 
-                RH_Gesture = VRTRIXGloveGestureRecognition.GestureDetection(RH, HANDTYPE.RIGHT_HAND);
+                RH_Gesture = GloveGesture.GestureDetection(RH, HANDTYPE.RIGHT_HAND);
 
             }
 
@@ -138,12 +174,7 @@ namespace VRTRIX
 
             if (LH_Mode && LH.GetReceivedStatus() == VRTRIXGloveStatus.NORMAL)
             {
-                if (LH.GetReceivedRotation(VRTRIXBones.L_Hand) != Quaternion.identity && !qloffset_cal)
-                {
-                    qloffset = GetOffset(LH_tracker, LH, HANDTYPE.LEFT_HAND);
-                    qloffset_cal = true;
-                }
-                
+
                 SetPosition(VRTRIXBones.L_Hand, LH_tracker.transform.position, LH_tracker.transform.rotation, tloffset);
 
                 SetRotation(VRTRIXBones.L_Forearm, LH.GetReceivedRotation(VRTRIXBones.L_Forearm), LH.DataValidStatus(VRTRIXBones.L_Forearm), HANDTYPE.LEFT_HAND);
@@ -169,44 +200,40 @@ namespace VRTRIX
                 SetRotation(VRTRIXBones.L_Pinky_2, LH.GetReceivedRotation(VRTRIXBones.L_Pinky_2), LH.DataValidStatus(VRTRIXBones.L_Pinky_2), HANDTYPE.LEFT_HAND);
                 SetRotation(VRTRIXBones.L_Pinky_3, LH.GetReceivedRotation(VRTRIXBones.L_Pinky_3), LH.DataValidStatus(VRTRIXBones.L_Pinky_3), HANDTYPE.LEFT_HAND);
 
-                LH_Gesture = VRTRIXGloveGestureRecognition.GestureDetection(LH, HANDTYPE.LEFT_HAND);
+                LH_Gesture = GloveGesture.GestureDetection(LH, HANDTYPE.LEFT_HAND);
             }
         }
         private void ReceiveLHData()
         {
-            //LH_Mode = LH.Init(HANDTYPE.LEFT_HAND);
-            print("LH_Mode: " + LH_Mode);
+            print("Left hand glove connected!");
             if (LH_Mode)
             {
                 LH_Thread_read = new Thread(LH.streaming_read_begin);
                 LH_Thread_read.Start();
                 LH_receivedData = new Thread(ReceiveLHDataAsync);
                 LH_receivedData.Start();
-                //LH.receivedData(HANDTYPE.LEFT_HAND);
             }
         }
 
 
         private void ReceiveRHData()
         {
-            //RH_Mode = RH.Init(HANDTYPE.RIGHT_HAND);
-            print("RH_Mode: " + RH_Mode);
+            print("Right hand glove connected!");
             if (RH_Mode)
             {
                 RH_Thread_read = new Thread(RH.streaming_read_begin);
                 RH_Thread_read.Start();
                 RH_receivedData = new Thread(ReceiveRHDataAsync);
                 RH_receivedData.Start();
-                //RH.receivedData(HANDTYPE.RIGHT_HAND);
             }
         }
 
-        private static void ReceiveLHDataAsync()
+        private void ReceiveLHDataAsync()
         {
             LH.receivedData(HANDTYPE.LEFT_HAND);
         }
 
-        private static void ReceiveRHDataAsync()
+        private void ReceiveRHDataAsync()
         {
             RH.receivedData(HANDTYPE.RIGHT_HAND);
         }
@@ -214,14 +241,12 @@ namespace VRTRIX
 
         void OnApplicationQuit()
         {
-            if (LH_Mode)
+            if (LH_Mode && LH.GetReceivedStatus() != VRTRIXGloveStatus.CLOSED)
             {
-                //LH_Thread.Abort();
                 LH.ClosePort();
             }
-            if (RH_Mode)
+            if (RH_Mode && RH.GetReceivedStatus() != VRTRIXGloveStatus.CLOSED)
             {
-                //RH_Thread.Abort();
                 RH.ClosePort();
             }
         }
@@ -231,102 +256,57 @@ namespace VRTRIX
         {
             if (GUI.Button(new Rect(0, Screen.height / 8, Screen.width / 8, Screen.height / 8), "Reset"))
             {
-                if (LH_Mode)
-                {
-                    LH.alignmentCheck(HANDTYPE.LEFT_HAND);
-                }
-                if (RH_Mode)
-                {
-                    RH.alignmentCheck(HANDTYPE.RIGHT_HAND);
-                }
+                OnAlignFingers();
             }
 
             if (LH.GetReceivedStatus() == VRTRIXGloveStatus.CLOSED && RH.GetReceivedStatus() == VRTRIXGloveStatus.CLOSED)
             {
                 if (GUI.Button(new Rect(0, 0, Screen.width / 8, Screen.height / 8), "Connect"))
                 {
-                    //ThreadPool.QueueUserWorkItem(CheckToStart);
-                    CheckToStart();
+                    OnConnectGlove();
                 }
             }
 
             if (LH.GetReceivedStatus() == VRTRIXGloveStatus.NORMAL || RH.GetReceivedStatus() == VRTRIXGloveStatus.NORMAL)
             {
-                if (GUI.Button(new Rect(0, 0, Screen.width / 8, Screen.height / 8), "Pause"))
+                if (GUI.Button(new Rect(0, 0, Screen.width / 8, Screen.height / 8), "Disconnect"))
                 {
-                    if (LH_Mode)
-                    {
-                        LH.SetReceivedStatus(VRTRIXGloveStatus.PAUSED);
-                    }
-                    if (RH_Mode)
-                    {
-                        RH.SetReceivedStatus(VRTRIXGloveStatus.PAUSED);
-                    }
+                    OnDisconnectGlove();
                 }
             }
 
-            if (LH.GetReceivedStatus() == VRTRIXGloveStatus.PAUSED || RH.GetReceivedStatus() == VRTRIXGloveStatus.PAUSED)
+            if (GUI.Button(new Rect(0, Screen.height / 4, Screen.width / 8, Screen.height / 8), "Hardware Calibrate"))
             {
-                if (GUI.Button(new Rect(0, 0, Screen.width / 8, Screen.height / 8), "Resume"))
-                {
-                    if (LH_Mode)
-                    {
-                        LH.SetReceivedStatus(VRTRIXGloveStatus.NORMAL);
-                    }
-                    if (RH_Mode)
-                    {
-                        RH.SetReceivedStatus(VRTRIXGloveStatus.NORMAL);
-                    }
-                }
-            }
-
-            if (GUI.Button(new Rect(0, Screen.height / 4, Screen.width / 8, Screen.height / 8), "Calibrate"))
-            {
-                if (LH_Mode)
-                {
-                    LH.calibration();
-                }
-                if (RH_Mode)
-                {
-                    RH.calibration();
-                }
+                OnHardwareCalibrate();
             }
 
             if (GUI.Button(new Rect(0, Screen.height * (3.0f / 8.0f), Screen.width / 8, Screen.height / 8), "Vibrate"))
             {
-                if (LH_Mode)
-                {
-                    LH.vibrate();
-                }
-                if (RH_Mode)
-                {
-                    RH.vibrate();
-                }
+                OnVibrate();
             }
-
         }
        
 
         private void SetRotation(VRTRIXBones bone, Quaternion rotation, bool valid, HANDTYPE type)
         {
             string bone_name = VRTRIXUtilities.GetBoneName((int)bone);
-            Quaternion qr = new Quaternion(1f, 0f, 0f, 0f);
-   
             GameObject obj = GameObject.Find(bone_name);
-            if (obj != null)   
+            if (obj != null)
             {
                 if (!float.IsNaN(rotation.x) && !float.IsNaN(rotation.y) && !float.IsNaN(rotation.z) && !float.IsNaN(rotation.w))
                 {
                     if (valid)
                     {
-                        if(type == HANDTYPE.LEFT_HAND)
-                        {    
-                            obj.transform.rotation = qloffset * (rotation * qr);
-                        }
-                        else if(type == HANDTYPE.RIGHT_HAND)
+
+                        if (type == HANDTYPE.LEFT_HAND)
                         {
-                            obj.transform.rotation = qroffset * (new Quaternion(0f, 1f, 0f, 0f) * rotation * qr);
-                            
+                            obj.transform.rotation = CalculateDynamicOffset(LH_tracker, LH, HANDTYPE.LEFT_HAND) * (rotation * Quaternion.Euler(ql_modeloffset));
+                            //obj.transform.rotation = rotation * Quaternion.Euler(ql_modeloffset);
+                        }
+                        else if (type == HANDTYPE.RIGHT_HAND)
+                        {
+                            obj.transform.rotation = CalculateDynamicOffset(RH_tracker, RH, HANDTYPE.RIGHT_HAND) * (rotation * Quaternion.Euler(qr_modeloffset));
+                            //obj.transform.rotation = rotation * Quaternion.Euler(qr_modeloffset);
                         }
                     }
                 }
@@ -343,26 +323,47 @@ namespace VRTRIX
             }
         }
 
-       
-
-        private static Quaternion GetOffset(GameObject tracker, VRTRIXDataWrapper glove, HANDTYPE type)
+        //用于计算左手/右手腕关节姿态（由动捕设备得到）和左手手背姿态（由数据手套得到）之间的四元数差值，该方法为动态调用，即每一帧都会调用该计算。
+        //适用于：当动捕设备有腕关节/手背节点时
+        private Quaternion CalculateDynamicOffset(GameObject tracker, VRTRIXDataWrapper glove, HANDTYPE type)
         {
-            //print("IMU: " + glove.GetReceivedRotation(VRTRIXBones.L_Hand).eulerAngles.y);
-            //print("Tracker: " + tracker.transform.rotation.eulerAngles.y);
-            float offset = glove.GetReceivedRotation(VRTRIXBones.L_Hand).eulerAngles.y - tracker.transform.rotation.eulerAngles.y -180f;
+            if (type == HANDTYPE.RIGHT_HAND)
+            {
+                //MapToVRTRIX_BoneName: 此函数用于将任意的手部骨骼模型中关节名称转化为VRTRIX数据手套可识别的关节名称。
+                //GameObject R_hand = MyHandsMapToVrtrixHand.UniqueStance.MapToVRTRIX_BoneName(BoneNameForR_hand);
 
-            if(offset > 180f)
-            {
-                offset = 360f - offset;
-            }else if(offset < -180f)
-            {
-                offset = 360f + offset;
+                //计算场景中角色右手腕在unity世界坐标系下的旋转与手套的右手腕在手套追踪系统中世界坐标系下右手腕的旋转之间的角度差值，意在匹配两个坐标系的方向；
+                //return tracker.transform.rotation * Quaternion.Inverse(glove.GetReceivedRotation(VRTRIXBones.R_Hand) * Quaternion.Euler(qr_modeloffset));
+                Quaternion offsetTracker = (tracker.transform.rotation * new Quaternion(0, 1f, 0, 0))  * Quaternion.Inverse(RH.GetReceivedRotation(VRTRIXBones.R_Hand) * Quaternion.Euler(qr_modeloffset));
+                if (!qroffset_cal)
+                {
+                    qroffset = Math.Abs(tracker.transform.rotation.eulerAngles.z) - 180;
+                    qroffset_cal = true;
+                }
+                return Quaternion.AngleAxis(-qroffset, Vector3.Normalize(tracker.transform.rotation * Vector3.forward)) * offsetTracker;
             }
-            //print(offset);
-            return new Quaternion(0, Mathf.Sin(-offset * degToRad/2), 0, Mathf.Cos(-offset * degToRad / 2));
+            else if (type == HANDTYPE.LEFT_HAND)
+            {
+                //MapToVRTRIX_BoneName: 此函数用于将任意的手部骨骼模型中关节名称转化为VRTRIX数据手套可识别的关节名称。
+                //GameObject L_hand = MyHandsMapToVrtrixHand.UniqueStance.MapToVRTRIX_BoneName(BoneNameForL_hand);
+
+                //计算场景中角色左手腕在unity世界坐标系下的旋转与手套的左手腕在手套追踪系统中世界坐标系下左手腕的旋转之间的角度差值，意在匹配两个坐标系的方向；
+                //return tracker.transform.rotation * Quaternion.Inverse(LH.GetReceivedRotation(VRTRIXBones.L_Hand) * Quaternion.Euler(ql_modeloffset));
+                Quaternion offsetTracker = tracker.transform.rotation * Quaternion.Inverse(LH.GetReceivedRotation(VRTRIXBones.L_Hand) * Quaternion.Euler(ql_modeloffset));
+                if (!qloffset_cal)
+                {
+                    qloffset = Math.Abs(tracker.transform.rotation.eulerAngles.z) - 180;
+                    qloffset_cal = true;
+                }
+                return Quaternion.AngleAxis(-qloffset, tracker.transform.rotation * Vector3.forward) * offsetTracker;
+            }
+            else
+            {
+                return Quaternion.identity;
+            }
         }
 
-        public static VRTRIXGloveGesture GetGesture (HANDTYPE type)
+        public VRTRIXGloveGesture GetGesture (HANDTYPE type)
         {
             if (type == HANDTYPE.LEFT_HAND)
             {

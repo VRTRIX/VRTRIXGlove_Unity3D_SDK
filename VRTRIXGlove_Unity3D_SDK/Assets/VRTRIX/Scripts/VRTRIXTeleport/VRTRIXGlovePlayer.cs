@@ -319,7 +319,7 @@ namespace VRTRIX
             int count = handCount;
             for (int i = 0; i < count; i++)
             {
-                VRTRIXGloveGrab hand = GetHand(i);
+                //VRTRIXGloveGrab hand = GetHand(i);
 
                 //if (hand.startingHandType == VRTRIXGloveGrab.HandType.Left)
                 //{

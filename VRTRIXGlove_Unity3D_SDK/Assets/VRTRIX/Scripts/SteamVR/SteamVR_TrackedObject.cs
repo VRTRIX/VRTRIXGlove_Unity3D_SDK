@@ -58,17 +58,17 @@ public class SteamVR_TrackedObject : MonoBehaviour
 
 		var pose = new SteamVR_Utils.RigidTransform(poses[i].mDeviceToAbsoluteTracking);
 
-		if (origin != null)
-		{
-			transform.position = origin.transform.TransformPoint(pose.pos);
-			transform.rotation = origin.rotation * pose.rot;
-		}
-		else
-		{
-			transform.localPosition = pose.pos;
-			transform.localRotation = pose.rot;
-		}
-	}
+        if (origin != null)
+        {
+            transform.position = origin.transform.TransformPoint(pose.pos);
+            transform.rotation = origin.rotation * pose.rot;
+        }
+        else
+        {
+            transform.localPosition = pose.pos;
+            transform.localRotation = pose.rot;
+        }
+    }
 
 	SteamVR_Events.Action newPosesAction;
 

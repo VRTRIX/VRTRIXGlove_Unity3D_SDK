@@ -6,14 +6,15 @@ namespace VRTRIX
     {
 
         [Header("GestureComponent")]
+        public GameObject m_Glove;
         public GameObject m_Scissors;
         public GameObject m_Rock;
         public GameObject m_Paper;
-
+        private VRTRIXGloveSimpleDataRead glove3D;
         // Use this for initialization
         void Start()
         {
-
+            glove3D = m_Glove.GetComponent<VRTRIXGloveSimpleDataRead>();
         }
 
         // Update is called once per frame
@@ -51,20 +52,54 @@ namespace VRTRIX
             }
         }
 
+        void OnGUI()
+        {
+            if (GUI.Button(new Rect(0, Screen.height / 8, Screen.width / 8, Screen.height / 8), "Reset"))
+            {
+                glove3D.OnAlignFingers();
+            }
+
+            if (glove3D.GetReceivedStatus(HANDTYPE.LEFT_HAND) == VRTRIXGloveStatus.CLOSED && glove3D.GetReceivedStatus(HANDTYPE.RIGHT_HAND) == VRTRIXGloveStatus.CLOSED)
+            {
+                if (GUI.Button(new Rect(0, 0, Screen.width / 8, Screen.height / 8), "Connect"))
+                {
+                    glove3D.OnConnectGlove();
+                }
+            }
+
+            if (glove3D.GetReceivedStatus(HANDTYPE.LEFT_HAND) == VRTRIXGloveStatus.NORMAL || glove3D.GetReceivedStatus(HANDTYPE.RIGHT_HAND) == VRTRIXGloveStatus.NORMAL)
+            {
+                if (GUI.Button(new Rect(0, 0, Screen.width / 8, Screen.height / 8), "Disconnect"))
+                {
+                    glove3D.OnDisconnectGlove();
+                }
+            }
+
+            if (GUI.Button(new Rect(0, Screen.height / 4, Screen.width / 8, Screen.height / 8), "Hardware Calibrate"))
+            {
+                glove3D.OnHardwareCalibrate();
+            }
+
+            if (GUI.Button(new Rect(0, Screen.height * (3.0f / 8.0f), Screen.width / 8, Screen.height / 8), "Vibrate"))
+            {
+                glove3D.OnVibrate();
+            }
+
+        }
 
         private bool GetScissorsButtonDown(HANDTYPE tpye)
         {
-            return VRTRIXGloveSimpleDataRead.GetGesture(tpye) == VRTRIXGloveGesture.BUTTONTELEPORT;
+            return glove3D.GetGesture(tpye) == VRTRIXGloveGesture.BUTTONTELEPORT;
         }
 
         private bool GetRockButtonDown(HANDTYPE tpye)
         {
-            return VRTRIXGloveSimpleDataRead.GetGesture(tpye) == VRTRIXGloveGesture.BUTTONGRAB;
+            return glove3D.GetGesture(tpye) == VRTRIXGloveGesture.BUTTONGRAB;
         }
 
         private bool GetPaperButtonDown(HANDTYPE tpye)
         {
-            return VRTRIXGloveSimpleDataRead.GetGesture(tpye) == VRTRIXGloveGesture.BUTTONPAPER;
+            return glove3D.GetGesture(tpye) == VRTRIXGloveGesture.BUTTONPAPER;
         }
     }
 }

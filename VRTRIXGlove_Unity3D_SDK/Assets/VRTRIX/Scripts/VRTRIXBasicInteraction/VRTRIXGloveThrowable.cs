@@ -68,7 +68,7 @@ namespace VRTRIX
         //-------------------------------------------------
         private void OnHandHoverBegin(VRTRIXGloveGrab hand)
         {
-            bool showHint = false;
+            //bool showHint = false;
 
             // "Catch" the throwable by holding down the interaction button instead of pressing it.
             // Only do this if the throwable is moving faster than the prescribed threshold speed,
@@ -81,7 +81,7 @@ namespace VRTRIX
                     if (rb.velocity.magnitude >= catchSpeedThreshold)
                     {
                         hand.AttachObject(gameObject, attachmentFlags, attachmentPoint);
-                        showHint = false;
+                        //showHint = false;
                     }
                 }
             }

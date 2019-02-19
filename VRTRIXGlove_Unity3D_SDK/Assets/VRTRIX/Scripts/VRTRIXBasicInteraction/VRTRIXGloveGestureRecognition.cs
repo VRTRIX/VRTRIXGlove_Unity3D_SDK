@@ -21,7 +21,7 @@ namespace VRTRIX
     };
     public class VRTRIXGloveGestureRecognition
     {
-        public static VRTRIXGloveGesture GestureDetection(VRTRIXDataWrapper hand, HANDTYPE type)
+        public VRTRIXGloveGesture GestureDetection(VRTRIXDataWrapper hand, HANDTYPE type)
         {
             if (type == HANDTYPE.LEFT_HAND)
             {

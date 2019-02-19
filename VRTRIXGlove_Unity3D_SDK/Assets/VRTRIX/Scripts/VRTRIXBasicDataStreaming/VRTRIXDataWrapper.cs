@@ -37,12 +37,10 @@ namespace VRTRIX {
     public class VRTRIXDataWrapper
     {
         //Define Useful Constant
-        private const string ReaderImportor = "VRTRIX_IMU_TRIAL";
-        //private const string ReaderImportor = "VRTRIX_IMU";
+        //private const string ReaderImportor = "VRTRIX_IMU_TRIAL";
+        private const string ReaderImportor = "VRTRIX_IMU";
         private const int baud_rate = 1000000;
-        private const float SQRT1_2 = 0.70710678118f;
-        private const float radToDeg = (float)(180.0 / Math.PI);
-        private const float degToRad = (float)(Math.PI / 180.0);
+
         //Define Useful Parameters & Variables
         private IntPtr sp;
         private int data_rate;
@@ -50,13 +48,11 @@ namespace VRTRIX {
         private int[] calscore = new int[6];
         private bool port_opened = false;
         private bool[] valid = new bool[6];
+        public int id;
         private Quaternion[] data = new Quaternion[16];
-        private Quaternion[] offset = new Quaternion[16];
         private Quaternion L_thumb_offset = new Quaternion(0.49673f, 0.409576f, 0.286788f, 0.709406f); //(sin(70/2), 0, 0, cos(70/2))*(0, sin(60/2), 0, cos(60/2))
-        //private Quaternion L_thumb_offset = new Quaternion(0.556670f, 0.383022f, 0.3213938f, 0.663413f); //(sin(80/2), 0, 0, cos(80/2))*(0, sin(60/2), 0, cos(60/2))
         private Quaternion R_thumb_offset = new Quaternion(-0.49673f, -0.409576f, 0.286788f, 0.709406f); //(sin(-70/2), 0, 0, cos(-70/2))*(0, sin(-60/2), 0, cos(-60/2))
         private VRTRIXGloveStatus stat = VRTRIXGloveStatus.CLOSED;
-
 
         [StructLayout(LayoutKind.Sequential)]
         public struct VRTRIX_Quat
@@ -74,64 +70,67 @@ namespace VRTRIX {
 
         #region Functions API
         /// <summary>
-        /// Register receiving and parsed frame calculation data callback
+        /// Get right hand serial port information.
         /// </summary>
-        /// <param name="customedObj">Client defined object. Can be null</param>
-        /// <param name="handle">Client defined function.</param>
+        /// <param name="buf">Returned port information</param>
+        /// <returns>Whether the right hand receiver is presented.</returns>
         [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         public static extern bool get_RH_port(byte[] buf);
         /// <summary>
-        /// Register receiving and parsed frame calculation data callback
+        /// Get left hand serial port information.
         /// </summary>
-        /// <param name="customedObj">Client defined object. Can be null</param>
-        /// <param name="handle">Client defined function.</param>
+        /// <param name="buf">Returned port information</param>
+        /// <returns>Whether the left hand receiver is presented.</returns>
         [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         public static extern bool get_LH_port(byte[] buf);
         /// <summary>
-        /// Register receiving and parsed frame calculation data callback
+        /// Initializtion of the serial port
         /// </summary>
-        /// <param name="customedObj">Client defined object. Can be null</param>
-        /// <param name="handle">Client defined function.</param>
-        /// <returns></returns>
+        /// <param name="AdvancedMode">Unlock the yaw of fingers if set true</param>
+        /// <returns>The serial port object as IntPtr</returns>
         [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         public static extern IntPtr init_port(bool AdvancedMode);
         /// <summary>
-        /// Register receiving and parsed frame calculation data callback
+        /// Open the serial port
         /// </summary>
-        /// <param name="customedObj">Client defined object. Can be null</param>
-        /// <param name="handle">Client defined function.</param>
+        /// <param name="sp">The serial port object</param>
+        /// <param name="com_port_name">com_port_name.</param>
+        /// <param name="baud_rate">baud_rate.</param>
+        /// <param name="type">Hand type.</param>
         [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         public static extern bool open_port(IntPtr sp, byte[] com_port_name, int baud_rate, HANDTYPE type);
         /// <summary>
-        /// Register receiving and parsed frame calculation data callback
+        /// Write data to the serial port
         /// </summary>
-        /// <param name="customedObj">Client defined object. Can be null</param>
-        /// <param name="handle">Client defined function.</param>
+        /// <param name="sp">The serial port object</param>
+        /// <param name="buf">Data to be written</param>
         [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         public static extern int data_write(IntPtr sp, byte[] buf);
         /// <summary>
-        /// Register receiving and parsed frame calculation data callback
+        /// Close the serial port
         /// </summary>
-        /// <param name="customedObj">Client defined object. Can be null</param>
-        /// <param name="handle">Client defined function.</param>
+        /// <param name="sp">The serial port object</param>
+        /// <returns>Whether the serial port is closed successfully</returns>
         [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         public static extern bool close_port(IntPtr sp);
         /// <summary>
-        /// Register receiving and parsed frame calculation data callback
+        /// Align the fingers
         /// </summary>
-        /// <param name="customedObj">Client defined object. Can be null</param>
-        /// <param name="handle">Client defined function.</param>
+        /// <param name="sp">The serial port object</param>
         [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         public static extern void alignment_check(IntPtr sp);
         /// <summary>
         /// Register receiving and parsed frame calculation data callback
         /// </summary>
-        /// <param name="customedObj">Client defined object. Can be null</param>
-        /// <param name="handle">Client defined function.</param>
+        /// <param name="sp">The serial port object</param>
+        /// <param name="receivedDataCallback">received data callback.</param>
         [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, EntryPoint = "RegisterDataCallback")]
         public static extern void RegisterDataCallback(IntPtr sp, ReceivedDataCallback receivedDataCallback);
-
-
+        /// <summary>
+        /// Read the data from serial port synchronously.
+        /// </summary>
+        /// <param name="sp">The serial port object</param>
+        /// <returns>Whether the read process successfully</returns>
         [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         public static extern bool streaming_sync_read(IntPtr sp);
 
@@ -239,6 +238,7 @@ namespace VRTRIX {
                 }
                 this.data_rate = data_rate;
                 this.radio_strength = radio_strength;
+                id++;
                 Marshal.Copy(cal_score_ptr, this.calscore, 0, 6);
             };
 
@@ -297,7 +297,6 @@ namespace VRTRIX {
                     return (Quaternion.Inverse(data[0]) * data[5]).eulerAngles.z;
                 case VRTRIXBones.L_Thumb_2:
                     return (Quaternion.Inverse(data[4]) * (data[5] * L_thumb_offset)).eulerAngles.z;
-                   
 
                 default:
                     return 0f;
@@ -383,7 +382,6 @@ namespace VRTRIX {
         }
         public Quaternion GetReceivedRotation(VRTRIXBones bone)
         {
-            //UnityEngine.Debug.Log((Quaternion.Inverse(data[5]) * data[3]).eulerAngles.y);
             switch (bone)
             {
                 case VRTRIXBones.R_Forearm:
@@ -469,7 +467,6 @@ namespace VRTRIX {
             }
 
         }
-        //TODO: Add AlignmentCheck for Righthand
         public void alignmentCheck(HANDTYPE type)
         {
             alignment_check(this.sp);

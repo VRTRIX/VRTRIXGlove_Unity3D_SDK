@@ -191,7 +191,7 @@ namespace VRTRIX
 
                     if ((nockDistanceTravelled > (lastTickDistance + hapticDistanceThreshold)) || nockDistanceTravelled < (lastTickDistance - hapticDistanceThreshold))
                     {
-                        ushort hapticStrength = (ushort)Util.RemapNumber(nockDistanceTravelled, 0, maxPull, bowPullPulseStrengthLow, bowPullPulseStrengthHigh);
+                        //ushort hapticStrength = (ushort)Util.RemapNumber(nockDistanceTravelled, 0, maxPull, bowPullPulseStrengthLow, bowPullPulseStrengthHigh);
                         //hand.controller.TriggerHapticPulse(hapticStrength);
                         //hand.otherHand.controller.TriggerHapticPulse(hapticStrength);
 

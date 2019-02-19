@@ -31,7 +31,7 @@ namespace VRTRIX {
         private const int ColliderArraySize = 16;
         private Collider[] overlappingColliders;
         private VRTRIXInteractable _hoveringInteractable;
-
+        private VRTRIXGloveVRInteraction gloveVR;
         // The flags used to determine how an object is attached to the hand.
         [Flags]
         public enum AttachmentFlags
@@ -93,6 +93,7 @@ namespace VRTRIX {
         void Start()
         {
             overlappingColliders = new Collider[ColliderArraySize];
+            gloveVR = GetComponentInParent<VRTRIXGloveVRInteraction>();
         }
 
         // Update is called once per frame
@@ -519,41 +520,41 @@ namespace VRTRIX {
 
         public bool GetStandardInteractionButton()
         {
-            return VRTRIXGloveVRInteraction.GetGesture(this.GetHandType()) == VRTRIXGloveGesture.BUTTONGRAB;
+            return gloveVR.GetGesture(this.GetHandType()) == VRTRIXGloveGesture.BUTTONGRAB;
         }
 
         public bool GetStandardInteractionButtonDown()
         {
-            return VRTRIXGloveVRInteraction.GetGesture(this.GetHandType()) == VRTRIXGloveGesture.BUTTONGRAB;
+            return gloveVR.GetGesture(this.GetHandType()) == VRTRIXGloveGesture.BUTTONGRAB;
         }
         //-------------------------------------------------
         // Was the standard interaction button just released? In VR, this is a trigger press. In 2D fallback, this is a mouse left-click.
         //-------------------------------------------------
         public bool GetStandardInteractionButtonUp()
         {
-            return VRTRIXGloveVRInteraction.GetGesture(this.GetHandType()) != VRTRIXGloveGesture.BUTTONGRAB;
+            return gloveVR.GetGesture(this.GetHandType()) != VRTRIXGloveGesture.BUTTONGRAB;
         }
 
         public bool GetPressButtonDown()
         {
-            return VRTRIXGloveVRInteraction.GetGesture(this.GetHandType()) == VRTRIXGloveGesture.BUTTONCLICK;
+            return gloveVR.GetGesture(this.GetHandType()) == VRTRIXGloveGesture.BUTTONCLICK;
         }
 
         public bool GetTeleportButton()
         {
-            return VRTRIXGloveVRInteraction.GetGesture(this.GetHandType()) == VRTRIXGloveGesture.BUTTONTELEPORT;
+            return gloveVR.GetGesture(this.GetHandType()) == VRTRIXGloveGesture.BUTTONTELEPORT;
         }
 
         public bool GetTeleportButtonDown()
         {
-            return VRTRIXGloveVRInteraction.GetGesture(this.GetHandType()) == VRTRIXGloveGesture.BUTTONTELEPORT;
+            return gloveVR.GetGesture(this.GetHandType()) == VRTRIXGloveGesture.BUTTONTELEPORT;
         }
         //-------------------------------------------------
         // Was the standard interaction button just released? In VR, this is a trigger press. In 2D fallback, this is a mouse left-click.
         //-------------------------------------------------
         public bool GetTeleportButtonUp()
         {
-            return VRTRIXGloveVRInteraction.GetGesture(this.GetHandType()) != VRTRIXGloveGesture.BUTTONTELEPORT;
+            return gloveVR.GetGesture(this.GetHandType()) != VRTRIXGloveGesture.BUTTONTELEPORT;
         }
 
 
@@ -561,11 +562,11 @@ namespace VRTRIX {
         {
             if(this.GetHandType() == HANDTYPE.LEFT_HAND)
             {
-                VRTRIXGloveVRInteraction.LH.vibrate();
+                gloveVR.LH.vibrate();
             }
             else if (this.GetHandType() == HANDTYPE.RIGHT_HAND)
             {
-                VRTRIXGloveVRInteraction.RH.vibrate();
+                gloveVR.RH.vibrate();
             }
         }
 
