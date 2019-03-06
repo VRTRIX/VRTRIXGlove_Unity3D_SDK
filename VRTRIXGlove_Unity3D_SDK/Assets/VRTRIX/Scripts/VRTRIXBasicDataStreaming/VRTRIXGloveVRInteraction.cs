@@ -56,14 +56,23 @@ namespace VRTRIX
                 if (RH_tracker != null)
                 {
                     RH_Mode = RH.Init(HANDTYPE.RIGHT_HAND);
-                    ReceiveRHData();
+                    if (RH_Mode)
+                    {
+                        print("Right hand glove connected!");
+                        RH.registerCallBack();
+                        RH.startStreaming();
+                    }
                 }
 
-                if (LH_tracker != null)
+                if(LH_tracker != null)
                 {
-                    print(LH_tracker);
                     LH_Mode = LH.Init(HANDTYPE.LEFT_HAND);
-                    ReceiveLHData();
+                    if (LH_Mode)
+                    {
+                        print("Left hand glove connected!");
+                        LH.registerCallBack();
+                        LH.startStreaming();
+                    }
                 }
             }
             catch (Exception e)
@@ -140,7 +149,6 @@ namespace VRTRIX
         {
             if (RH_Mode && RH.GetReceivedStatus() == VRTRIXGloveStatus.NORMAL)
             {
-
                 SetPosition(VRTRIXBones.R_Hand, RH_tracker.transform.position, RH_tracker.transform.rotation, troffset);
 
                 SetRotation(VRTRIXBones.R_Forearm, RH.GetReceivedRotation(VRTRIXBones.R_Forearm), RH.DataValidStatus(VRTRIXBones.R_Forearm), HANDTYPE.RIGHT_HAND);
@@ -202,40 +210,6 @@ namespace VRTRIX
 
                 LH_Gesture = GloveGesture.GestureDetection(LH, HANDTYPE.LEFT_HAND);
             }
-        }
-        private void ReceiveLHData()
-        {
-            print("Left hand glove connected!");
-            if (LH_Mode)
-            {
-                LH_Thread_read = new Thread(LH.streaming_read_begin);
-                LH_Thread_read.Start();
-                LH_receivedData = new Thread(ReceiveLHDataAsync);
-                LH_receivedData.Start();
-            }
-        }
-
-
-        private void ReceiveRHData()
-        {
-            print("Right hand glove connected!");
-            if (RH_Mode)
-            {
-                RH_Thread_read = new Thread(RH.streaming_read_begin);
-                RH_Thread_read.Start();
-                RH_receivedData = new Thread(ReceiveRHDataAsync);
-                RH_receivedData.Start();
-            }
-        }
-
-        private void ReceiveLHDataAsync()
-        {
-            LH.receivedData(HANDTYPE.LEFT_HAND);
-        }
-
-        private void ReceiveRHDataAsync()
-        {
-            RH.receivedData(HANDTYPE.RIGHT_HAND);
         }
 
 

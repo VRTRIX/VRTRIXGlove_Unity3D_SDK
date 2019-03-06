@@ -9,12 +9,8 @@
 //
 //=============================================================================
 using System;
-using System.Collections.Generic;
-using System.Collections;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
 using UnityEngine;
-using System.Timers;
 using System.Text;
 
 namespace VRTRIX {
@@ -45,10 +41,11 @@ namespace VRTRIX {
         private IntPtr sp;
         private int data_rate;
         private int radio_strength;
+        private float battery;
+        public HANDTYPE hand_type;
         private int[] calscore = new int[6];
         private bool port_opened = false;
         private bool[] valid = new bool[6];
-        public int id;
         private Quaternion[] data = new Quaternion[16];
         private Quaternion L_thumb_offset = new Quaternion(0.49673f, 0.409576f, 0.286788f, 0.709406f); //(sin(70/2), 0, 0, cos(70/2))*(0, sin(60/2), 0, cos(60/2))
         private Quaternion R_thumb_offset = new Quaternion(-0.49673f, -0.409576f, 0.286788f, 0.709406f); //(sin(-70/2), 0, 0, cos(-70/2))*(0, sin(-60/2), 0, cos(-60/2))
@@ -64,7 +61,7 @@ namespace VRTRIX {
         }
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        public delegate void ReceivedDataCallback(IntPtr data, int data_rate, byte radio_strength, IntPtr cal_score_ptr);
+        public delegate void ReceivedDataCallback(IntPtr pUserParam, IntPtr ptr, int data_rate, byte radio_strength, IntPtr cal_score_ptr, float battery, int hand_type);
         public static ReceivedDataCallback receivedDataCallback;
 
 
@@ -125,21 +122,20 @@ namespace VRTRIX {
         /// <param name="sp">The serial port object</param>
         /// <param name="receivedDataCallback">received data callback.</param>
         [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, EntryPoint = "RegisterDataCallback")]
-        public static extern void RegisterDataCallback(IntPtr sp, ReceivedDataCallback receivedDataCallback);
+        public static extern void RegisterDataCallback(IntPtr pUserParam, IntPtr sp, ReceivedDataCallback receivedDataCallback);
         /// <summary>
-        /// Read the data from serial port synchronously.
+        /// Read the data from serial port asynchronously.
         /// </summary>
         /// <param name="sp">The serial port object</param>
         /// <returns>Whether the read process successfully</returns>
         [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        public static extern bool streaming_sync_read(IntPtr sp);
+        public static extern void StartStreaming(IntPtr sp);
 
         #endregion
 
         public VRTRIXDataWrapper(bool AdvancedMode)
         {
-            
-            this.sp = init_port(AdvancedMode);
+            sp = init_port(AdvancedMode);
         }
 
         public bool Init(HANDTYPE type)
@@ -154,7 +150,7 @@ namespace VRTRIX {
                 data[i] = Quaternion.identity;
             }
 
-            if (this.sp != null)
+            if (sp != null)
             {
                 if (type == HANDTYPE.RIGHT_HAND)
                 {
@@ -163,7 +159,7 @@ namespace VRTRIX {
                         if (get_RH_port(buf))
                         {
                             Console.WriteLine("Try to opening RH Port: " + System.Text.Encoding.ASCII.GetString(buf));
-                            if (open_port(this.sp, buf, baud_rate, type))
+                            if (open_port(sp, buf, baud_rate, type))
                             {
                                 Console.WriteLine("COM_PORT Opened: " + System.Text.Encoding.ASCII.GetString(buf));
                                 port_opened = true;
@@ -187,7 +183,7 @@ namespace VRTRIX {
                         if (get_LH_port(buf))
                         {
                             Console.WriteLine("Try to opening LH Port: " + System.Text.Encoding.ASCII.GetString(buf));
-                            if (open_port(this.sp, buf, baud_rate, type))
+                            if (open_port(sp, buf, baud_rate, type))
                             {
                                 Console.WriteLine("COM_PORT Opened: " + System.Text.Encoding.ASCII.GetString(buf));
                                 port_opened = true;
@@ -225,32 +221,39 @@ namespace VRTRIX {
             }
         }
 
-        public void receivedData(HANDTYPE type)
+        public void registerCallBack()
         {
             receivedDataCallback =
-            (IntPtr ptr, int data_rate, byte radio_strength, IntPtr cal_score_ptr) =>
+            (IntPtr pUserParam, IntPtr ptr, int data_rate, byte radio_strength, IntPtr cal_score_ptr, float battery, int hand_type) =>
             {
+                GCHandle handle_consume = (GCHandle)pUserParam;
+                VRTRIXDataWrapper objDataGlove = (handle_consume.Target as VRTRIXDataWrapper);
+
                 VRTRIX_Quat[] quat = new VRTRIX_Quat[16];
                 MarshalUnmananagedArray2Struct<VRTRIX_Quat>(ptr, 16, out quat);
                 for (int i = 0; i < 16; i++)
                 {
-                    data[i] = new Quaternion(quat[i].qx, quat[i].qy, quat[i].qz, quat[i].qw);
+                    objDataGlove.data[i] = new Quaternion(quat[i].qx, quat[i].qy, quat[i].qz, quat[i].qw);
                 }
-                this.data_rate = data_rate;
-                this.radio_strength = radio_strength;
-                id++;
-                Marshal.Copy(cal_score_ptr, this.calscore, 0, 6);
+                objDataGlove.data_rate = data_rate;
+                objDataGlove.radio_strength = radio_strength;
+                objDataGlove.battery = battery;
+                objDataGlove.hand_type = (HANDTYPE)hand_type;
+                Marshal.Copy(cal_score_ptr, objDataGlove.calscore, 0, 6);
             };
 
-            if (this.sp != IntPtr.Zero)
+            if (sp != IntPtr.Zero)
             {
-                RegisterDataCallback(this.sp, receivedDataCallback);
+                GCHandle handle_reg = GCHandle.Alloc(this);
+                IntPtr pUserParam = (IntPtr)handle_reg;
+                RegisterDataCallback(pUserParam, this.sp, receivedDataCallback);
             }
         }
+
         public bool sendData(string s)
         {
             byte[] buf = Encoding.ASCII.GetBytes(s);
-            return (data_write(this.sp, buf) == s.Length);
+            return (data_write(sp, buf) == s.Length);
         }
         public bool calibration()
         {
@@ -310,6 +313,11 @@ namespace VRTRIX {
         public int GetReceiveRadioStrength()
         {
             return -(int)radio_strength;
+        }
+
+        public float GetReceiveBattery()
+        {
+            return battery;
         }
         public int GetReceivedCalScore(VRTRIXBones bone)
         {
@@ -469,13 +477,14 @@ namespace VRTRIX {
         }
         public void alignmentCheck(HANDTYPE type)
         {
-            alignment_check(this.sp);
+            alignment_check(sp);
         }
 
-        public void streaming_read_begin()
+        public void startStreaming()
         {
-            streaming_sync_read(this.sp);
+            StartStreaming(sp);
         }
+
     }
 }
 

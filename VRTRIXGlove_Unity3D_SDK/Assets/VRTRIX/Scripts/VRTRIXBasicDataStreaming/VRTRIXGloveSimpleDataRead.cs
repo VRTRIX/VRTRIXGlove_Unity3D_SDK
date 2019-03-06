@@ -20,7 +20,7 @@ namespace VRTRIX
 
         private VRTRIXDataWrapper LH, RH;
         private VRTRIXGloveGestureRecognition GloveGesture;
-        private Thread LH_Thread_read, RH_Thread_read, LH_receivedData, RH_receivedData;
+        private Thread LH_receivedData, RH_receivedData;
         private Quaternion qloffset, qroffset;
         private bool qloffset_cal, qroffset_cal;
         private VRTRIXGloveGesture LH_Gesture, RH_Gesture = VRTRIXGloveGesture.BUTTONNONE;
@@ -28,8 +28,8 @@ namespace VRTRIX
 
         void Start()
         {
-            RH = new VRTRIXDataWrapper(AdvancedMode);
             LH = new VRTRIXDataWrapper(AdvancedMode);
+            RH = new VRTRIXDataWrapper(AdvancedMode);
             GloveGesture = new VRTRIXGloveGestureRecognition();
         }
 
@@ -38,7 +38,7 @@ namespace VRTRIX
         {
             if (RH_Mode && RH.GetReceivedStatus() == VRTRIXGloveStatus.NORMAL)
             {
-                
+
                 if (RH.GetReceivedRotation(VRTRIXBones.R_Hand) != Quaternion.identity && !qroffset_cal)
                 {
                     qroffset = CalculateStaticOffset(objectToAlign, RH, HANDTYPE.RIGHT_HAND);
@@ -118,10 +118,21 @@ namespace VRTRIX
         {
             try
             {
-                RH_receivedData = new Thread(ReceiveRHData);
-                LH_receivedData = new Thread(ReceiveLHData);
-                RH_receivedData.Start();
-                LH_receivedData.Start();
+                LH_Mode = LH.Init(HANDTYPE.LEFT_HAND);
+                if (LH_Mode)
+                {
+                    print("Left hand glove connected!");
+                    LH.registerCallBack();
+                    LH.startStreaming();
+                }
+                RH_Mode = RH.Init(HANDTYPE.RIGHT_HAND);
+                if (RH_Mode)
+                {
+                    print("Right hand glove connected!");
+                    RH.registerCallBack();
+                    RH.startStreaming();
+                }
+
             }
             catch (Exception e)
             {
@@ -191,44 +202,6 @@ namespace VRTRIX
             }
         }
 
-        //左手手套接受数据线程
-        private void ReceiveLHData()
-        {
-            LH_Mode = LH.Init(HANDTYPE.LEFT_HAND);
-            print("Left hand glove connected!");
-            if (LH_Mode)
-            {
-                LH_Thread_read = new Thread(LH.streaming_read_begin);
-                LH_Thread_read.Start();
-                LH_receivedData = new Thread(ReceiveLHDataAsync);
-                LH_receivedData.Start();
-            }
-        }
-        //右手手套接受数据线程
-        private void ReceiveRHData()
-        {
-            RH_Mode = RH.Init(HANDTYPE.RIGHT_HAND);
-            print("Right hand glove connected!");
-            if (RH_Mode)
-            {
-                RH_Thread_read = new Thread(RH.streaming_read_begin);
-                RH_Thread_read.Start();
-                RH_receivedData = new Thread(ReceiveRHDataAsync);
-                RH_receivedData.Start();
-            }
-        }
-
-        private void ReceiveLHDataAsync()
-        {
-            LH.receivedData(HANDTYPE.LEFT_HAND);
-        }
-
-        private void ReceiveRHDataAsync()
-        {
-            RH.receivedData(HANDTYPE.RIGHT_HAND);
-        }
-
-        
         //程序退出
         void OnApplicationQuit()
         {
@@ -241,8 +214,6 @@ namespace VRTRIX
                 RH.ClosePort();
             }
         }
-
-
 
         //用于计算初始化物体的姿态和手背姿态（由数据手套得到）之间的四元数差值，该方法为静态调用，即只在初始化的时候调用一次，之后所有帧均使用同一个四元数。
         //适用于：当动捕设备没有腕关节/手背节点或者只单独使用手套，无其他定位硬件设备时。
@@ -337,11 +308,11 @@ namespace VRTRIX
             {
                 case HANDTYPE.RIGHT_HAND:
                     {
-                        return RH.GetReceiveRadioStrength();
+                        return RH.GetReceiveBattery();
                     }
                 case HANDTYPE.LEFT_HAND:
                     {
-                        return LH.GetReceiveRadioStrength();
+                        return LH.GetReceiveBattery();
                     }
                 default:
                     return 0;
