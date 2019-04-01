@@ -23,12 +23,15 @@ namespace VRTRIX
         public Vector3 ql_modeloffset, qr_modeloffset;
         public VRTRIXDataWrapper LH, RH;
         private GameObject LH_tracker, RH_tracker;
-        private Thread LH_Thread_read, RH_Thread_read, LH_receivedData, RH_receivedData;
         private VRTRIXGloveGesture LH_Gesture, RH_Gesture;
         private VRTRIXGloveGestureRecognition GloveGesture;
         private bool LH_Mode, RH_Mode;
         private float qloffset, qroffset;
         private bool qloffset_cal, qroffset_cal;
+
+        private bool isStopRendering;
+        private Quaternion[] LHFingerOffset = new Quaternion[15];
+        private Quaternion[] RHFingerOffset = new Quaternion[15];
 
         private Vector3 troffset = new Vector3(0.01f, 0, -0.035f);
         private Vector3 tloffset = new Vector3(-0.01f, 0, -0.035f);
@@ -128,6 +131,40 @@ namespace VRTRIX
             }
         }
 
+        public void OnStopRendering()
+        {
+            Quaternion rot_LH = CalculateDynamicOffset(LH_tracker, LH, HANDTYPE.LEFT_HAND) *
+                    (LH.GetReceivedRotation(VRTRIXBones.L_Hand) * Quaternion.Euler(ql_modeloffset));
+
+            for (int i = 0; i < 15; i++)
+            {
+                Quaternion rot_original = CalculateDynamicOffset(LH_tracker, LH, HANDTYPE.LEFT_HAND) *
+                    (LH.GetReceivedRotation((VRTRIXBones)(i+22)) * Quaternion.Euler(ql_modeloffset));
+                LHFingerOffset[i] = Quaternion.Inverse(rot_LH) * rot_original;
+            }
+            LH.SetReceivedStatus(VRTRIXGloveStatus.PAUSED);
+
+            Quaternion rot_RH = CalculateDynamicOffset(RH_tracker, RH, HANDTYPE.RIGHT_HAND) *
+                    (RH.GetReceivedRotation(VRTRIXBones.R_Hand) * Quaternion.Euler(qr_modeloffset));
+
+            for (int i = 0; i < 15; i++)
+            {
+                Quaternion rot_original = CalculateDynamicOffset(RH_tracker, RH, HANDTYPE.RIGHT_HAND) *
+                    (RH.GetReceivedRotation((VRTRIXBones)(i + 4)) * Quaternion.Euler(qr_modeloffset));
+                RHFingerOffset[i] = Quaternion.Inverse(rot_RH) * rot_original;
+            }
+            RH.SetReceivedStatus(VRTRIXGloveStatus.PAUSED);
+
+            isStopRendering = true;
+        }
+
+        public void OnResumeRendering()
+        {
+            LH.SetReceivedStatus(VRTRIXGloveStatus.NORMAL);
+            RH.SetReceivedStatus(VRTRIXGloveStatus.NORMAL);
+            isStopRendering = false;
+        }
+
         //数据手套软件对齐手指，仅在磁场大幅度变化后使用。
         public void OnAlignFingers()
         {
@@ -147,7 +184,7 @@ namespace VRTRIX
         //数据更新与骨骼赋值。
         void Update()
         {
-            if (RH_Mode && RH.GetReceivedStatus() == VRTRIXGloveStatus.NORMAL)
+            if (RH_Mode && RH.GetReceivedStatus() != VRTRIXGloveStatus.CLOSED)
             {
                 SetPosition(VRTRIXBones.R_Hand, RH_tracker.transform.position, RH_tracker.transform.rotation, troffset);
 
@@ -180,7 +217,7 @@ namespace VRTRIX
 
 
 
-            if (LH_Mode && LH.GetReceivedStatus() == VRTRIXGloveStatus.NORMAL)
+            if (LH_Mode && LH.GetReceivedStatus() != VRTRIXGloveStatus.CLOSED)
             {
 
                 SetPosition(VRTRIXBones.L_Hand, LH_tracker.transform.position, LH_tracker.transform.rotation, tloffset);
@@ -241,7 +278,7 @@ namespace VRTRIX
                 }
             }
 
-            if (LH.GetReceivedStatus() == VRTRIXGloveStatus.NORMAL || RH.GetReceivedStatus() == VRTRIXGloveStatus.NORMAL)
+            if (LH.GetReceivedStatus() != VRTRIXGloveStatus.CLOSED || RH.GetReceivedStatus() != VRTRIXGloveStatus.CLOSED)
             {
                 if (GUI.Button(new Rect(0, 0, Screen.width / 8, Screen.height / 8), "Disconnect"))
                 {
@@ -249,14 +286,26 @@ namespace VRTRIX
                 }
             }
 
-            if (GUI.Button(new Rect(0, Screen.height / 4, Screen.width / 8, Screen.height / 8), "Hardware Calibrate"))
-            {
-                OnHardwareCalibrate();
-            }
-
-            if (GUI.Button(new Rect(0, Screen.height * (3.0f / 8.0f), Screen.width / 8, Screen.height / 8), "Vibrate"))
+            if (GUI.Button(new Rect(0, Screen.height * 0.25f, Screen.width / 8, Screen.height / 8), "Vibrate"))
             {
                 OnVibrate();
+            }
+
+
+            if (LH.GetReceivedStatus() == VRTRIXGloveStatus.NORMAL)
+            {
+                if (GUI.Button(new Rect(0, Screen.height * 0.375f, Screen.width / 8, Screen.height / 8), "Stop Rendering"))
+                {
+                    OnStopRendering();
+                }
+            }
+
+            if (LH.GetReceivedStatus() == VRTRIXGloveStatus.PAUSED)
+            {
+                if (GUI.Button(new Rect(0, Screen.height * 0.375f, Screen.width / 8, Screen.height / 8), "Resume Rendering"))
+                {
+                    OnResumeRendering();
+                }
             }
         }
        
@@ -274,13 +323,27 @@ namespace VRTRIX
 
                         if (type == HANDTYPE.LEFT_HAND)
                         {
-                            obj.transform.rotation = CalculateDynamicOffset(LH_tracker, LH, HANDTYPE.LEFT_HAND) * (rotation * Quaternion.Euler(ql_modeloffset));
-                            //obj.transform.rotation = rotation * Quaternion.Euler(ql_modeloffset);
+                            if(bone == VRTRIXBones.L_Hand || !isStopRendering)
+                            {
+                                obj.transform.rotation = CalculateDynamicOffset(LH_tracker, LH, HANDTYPE.LEFT_HAND) * (rotation * Quaternion.Euler(ql_modeloffset));
+                            }
+                            else
+                            {
+                                obj.transform.rotation = CalculateDynamicOffset(LH_tracker, LH, HANDTYPE.LEFT_HAND) * (LH.GetReceivedRotation(VRTRIXBones.L_Hand) * Quaternion.Euler(ql_modeloffset))
+                                    * LHFingerOffset[(int)bone - 22];
+                            }
                         }
                         else if (type == HANDTYPE.RIGHT_HAND)
                         {
-                            obj.transform.rotation = CalculateDynamicOffset(RH_tracker, RH, HANDTYPE.RIGHT_HAND) * (rotation * Quaternion.Euler(qr_modeloffset));
-                            //obj.transform.rotation = rotation * Quaternion.Euler(qr_modeloffset);
+                            if(bone == VRTRIXBones.R_Hand || !isStopRendering)
+                            {
+                                obj.transform.rotation = CalculateDynamicOffset(RH_tracker, RH, HANDTYPE.RIGHT_HAND) * (rotation * Quaternion.Euler(qr_modeloffset));
+                            }
+                            else
+                            {
+                                obj.transform.rotation = CalculateDynamicOffset(RH_tracker, RH, HANDTYPE.RIGHT_HAND) * (RH.GetReceivedRotation(VRTRIXBones.R_Hand) * Quaternion.Euler(qr_modeloffset))
+                                    * RHFingerOffset[(int)bone - 4];
+                            }
                         }
                     }
                 }
