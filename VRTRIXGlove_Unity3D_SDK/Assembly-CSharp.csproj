@@ -149,10 +149,10 @@
     <None Include="Assets\VRTRIX\Resource\Shaders\SteamVR_ColorOut.shader" />
     <None Include="Assets\VRTRIX\Resource\Shaders\SeeThru.shader" />
     <Reference Include="UnityEditor.StandardEvents">
-      <HintPath>D:/VRTRIX/Projects/VRGlove/SDKs/VRTRIXGlove_Unity3D_SDK/VRTRIXGlove_Unity3D_SDK/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
+      <HintPath>D:/VRTRIX/Projects/VRGlove/SDKs/Unity/VRTRIXGlove_Unity3D_SDK/VRTRIXGlove_Unity3D_SDK/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>
     <Reference Include="Unity.PackageManagerUI.Editor">
-      <HintPath>D:/VRTRIX/Projects/VRGlove/SDKs/VRTRIXGlove_Unity3D_SDK/VRTRIXGlove_Unity3D_SDK/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
+      <HintPath>D:/VRTRIX/Projects/VRGlove/SDKs/Unity/VRTRIXGlove_Unity3D_SDK/VRTRIXGlove_Unity3D_SDK/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity_2018/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>

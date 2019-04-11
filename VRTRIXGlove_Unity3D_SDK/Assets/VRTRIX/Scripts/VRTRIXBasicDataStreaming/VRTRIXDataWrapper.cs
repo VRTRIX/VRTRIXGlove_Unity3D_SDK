@@ -33,7 +33,6 @@ namespace VRTRIX {
     public class VRTRIXDataWrapper
     {
         //Define Useful Constant
-        //private const string ReaderImportor = "VRTRIX_IMU_TRIAL";
         private const string ReaderImportor = "VRTRIX_IMU";
         private const int baud_rate = 1000000;
 
