@@ -58,7 +58,7 @@ namespace VRTRIX
         L_Pinky_1 = 34,
         L_Pinky_2 = 35,
         L_Pinky_3 = 36,
-        NumOfBones
+        NumOfBones = 37
     }
 
 

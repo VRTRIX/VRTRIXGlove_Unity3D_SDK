@@ -8,6 +8,7 @@
 using UnityEngine;
 using System;
 using System.Threading;
+using System.Collections.Generic;
 
 namespace VRTRIX
 {
@@ -25,12 +26,13 @@ namespace VRTRIX
         private bool qloffset_cal, qroffset_cal;
         private VRTRIXGloveGesture LH_Gesture, RH_Gesture = VRTRIXGloveGesture.BUTTONNONE;
         private bool LH_Mode, RH_Mode;
-
+        private Transform[] fingerTransformArray;
         void Start()
         {
             LH = new VRTRIXDataWrapper(AdvancedMode);
             RH = new VRTRIXDataWrapper(AdvancedMode);
             GloveGesture = new VRTRIXGloveGestureRecognition();
+            fingerTransformArray = FindFingerTransform();    
         }
 
 
@@ -239,8 +241,7 @@ namespace VRTRIX
         //     qr_modeloffset:该参数指的是模型右手坐标系和右手手套传感器硬件坐标系之间的四元数偏差，往往这个偏差为绕x/y/z轴旋转+/-90，+-/180度，需要根据具体情况而定。
         private void SetRotation(VRTRIXBones bone, Quaternion rotation, bool valid, HANDTYPE type)
         {
-            string bone_name = VRTRIXUtilities.GetBoneName((int)bone);
-            GameObject obj = GameObject.Find(bone_name);
+            Transform obj = fingerTransformArray[(int)bone];
             if (obj != null)
             {
                 if (!float.IsNaN(rotation.x) && !float.IsNaN(rotation.y) && !float.IsNaN(rotation.z) && !float.IsNaN(rotation.w))
@@ -251,25 +252,22 @@ namespace VRTRIX
                         {
                             //该语句的含义为由手套得到的raw data先经过ql的旋转，再经过计算得到的当前该帧下手背和摄像机的旋转差值的作用之后得到的最终旋转，
                             //该最终的旋转就会直接赋值给骨骼模型。
-                            obj.transform.rotation = qloffset * rotation * Quaternion.Euler(ql_modeloffset);
+                            obj.rotation = qloffset * rotation * Quaternion.Euler(ql_modeloffset);
                         }
                         else if (type == HANDTYPE.RIGHT_HAND)
                         {
                             //该语句的含义为由手套得到的raw data先经过ql的旋转，再经过计算得到的当前该帧下手背和摄像机的旋转差值的作用之后得到的最终旋转，
                             //该最终的旋转就会直接赋值给骨骼模型。
-                            obj.transform.rotation = qroffset * rotation * Quaternion.Euler(qr_modeloffset);
+                            obj.rotation = qroffset * rotation * Quaternion.Euler(qr_modeloffset);
                         }
                     }
                 }
             }
         }
 
-
         public Quaternion GetRotation(VRTRIXBones bone)
         {
-            string bone_name = VRTRIXUtilities.GetBoneName((int)bone);
-            GameObject obj = GameObject.Find(bone_name);
-            return obj.transform.rotation;
+            return fingerTransformArray[(int)bone].rotation;
         }
 
         public int GetCalScore(VRTRIXBones bone)
@@ -290,13 +288,13 @@ namespace VRTRIX
             switch (type)
             {
                 case HANDTYPE.RIGHT_HAND:
-                {
-                    return RH.GetReceiveRadioStrength();
-                }
+                    {
+                        return RH.GetReceiveRadioStrength();
+                    }
                 case HANDTYPE.LEFT_HAND:
-                {
-                    return LH.GetReceiveRadioStrength();
-                }
+                    {
+                        return LH.GetReceiveRadioStrength();
+                    }
                 default:
                     return 0;
             }
@@ -401,7 +399,44 @@ namespace VRTRIX
                 return VRTRIXGloveGesture.BUTTONNONE;
             }
         }
+
+        private Transform[] FindFingerTransform()
+        {
+            Transform[] transform_array = new Transform[(int)VRTRIXBones.NumOfBones];
+            transform_array[0] = null;
+            for(int i = 1; i < (int)VRTRIXBones.NumOfBones; ++i)
+            {
+                string bone_name = VRTRIXUtilities.GetBoneName(i);
+                Transform parent = (i < 19) ? transform.GetChild(1) : transform.GetChild(0);
+                Transform obj = TransformDeepChildExtension.FindDeepChild(parent, bone_name);
+                transform_array[i] = obj;
+                //print(obj);
+            }
+            return transform_array;
+        } 
     }
+    public static class TransformDeepChildExtension
+    {
+        //Breadth-first search
+        public static Transform FindDeepChild(this Transform aParent, string aName)
+        {
+            Queue<Transform> queue = new Queue<Transform>();
+            queue.Enqueue(aParent);
+            while (queue.Count > 0)
+            {
+                var c = queue.Dequeue();
+                if (c.name == aName)
+                {
+                    return c;
+                }
+                
+                foreach(Transform t in c)
+                queue.Enqueue(t);
+            }
+            return null;
+        }    
+    }
+
 }
 
 
