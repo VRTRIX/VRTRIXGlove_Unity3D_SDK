@@ -100,6 +100,7 @@
     <Compile Include="Assets\VRTRIX\Scripts\SteamVRUtils\SoundPlayOneshot.cs" />
     <Compile Include="Assets\VRTRIX\Scripts\SteamVRUtils\UIElement.cs" />
     <Compile Include="Assets\VRTRIX\Scripts\SteamVRUtils\Util.cs" />
+    <Compile Include="Assets\VRTRIX\Scripts\VRTRIXBasicDataStreaming\VRTRIXBoneMapping.cs" />
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXBasicDataStreaming\VRTRIXCameraFollow.cs" />
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXBasicDataStreaming\VRTRIXDataWrapper.cs" />
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXBasicDataStreaming\VRTRIXGloveGestureDetection.cs" />

@@ -15,7 +15,8 @@ namespace VRTRIX
 
     public class VRTRIXGloveSimpleDataRead : MonoBehaviour
     {
-        public GameObject objectToAlign;
+        public GameObject LH_ObjectToAlign, RH_ObjectToAlign;
+        public bool IsAlignOnStart;
         public bool AdvancedMode;
         public Vector3 ql_modeloffset, qr_modeloffset;
 
@@ -43,11 +44,10 @@ namespace VRTRIX
 
                 if (RH.GetReceivedRotation(VRTRIXBones.R_Hand) != Quaternion.identity && !qroffset_cal)
                 {
-                    qroffset = CalculateStaticOffset(objectToAlign, RH, HANDTYPE.RIGHT_HAND);
+                    qroffset = CalculateStaticOffset(RH, HANDTYPE.RIGHT_HAND);
                     qroffset_cal = true;
                 }
                 //以下是设置右手每个骨骼节点全局旋转(global rotation)；
-                SetRotation(VRTRIXBones.R_Forearm, RH.GetReceivedRotation(VRTRIXBones.R_Forearm), RH.DataValidStatus(VRTRIXBones.R_Forearm), HANDTYPE.RIGHT_HAND);
                 SetRotation(VRTRIXBones.R_Hand, RH.GetReceivedRotation(VRTRIXBones.R_Hand), RH.DataValidStatus(VRTRIXBones.R_Hand), HANDTYPE.RIGHT_HAND);
 
 
@@ -80,11 +80,10 @@ namespace VRTRIX
             {
                 if (LH.GetReceivedRotation(VRTRIXBones.L_Hand) != Quaternion.identity && !qloffset_cal)
                 {
-                    qloffset = CalculateStaticOffset(objectToAlign, LH, HANDTYPE.LEFT_HAND);
+                    qloffset = CalculateStaticOffset(LH, HANDTYPE.LEFT_HAND);
                     qloffset_cal = true;
                 }
                 //以下是设置左手每个骨骼节点全局旋转(global rotation)；
-                SetRotation(VRTRIXBones.L_Forearm, LH.GetReceivedRotation(VRTRIXBones.L_Forearm), LH.DataValidStatus(VRTRIXBones.L_Forearm), HANDTYPE.LEFT_HAND);
                 SetRotation(VRTRIXBones.L_Hand, LH.GetReceivedRotation(VRTRIXBones.L_Hand), LH.DataValidStatus(VRTRIXBones.L_Hand), HANDTYPE.LEFT_HAND);
 
                 SetRotation(VRTRIXBones.L_Thumb_1, LH.GetReceivedRotation(VRTRIXBones.L_Thumb_1), LH.DataValidStatus(VRTRIXBones.L_Thumb_1), HANDTYPE.LEFT_HAND);
@@ -195,12 +194,12 @@ namespace VRTRIX
             if (LH_Mode)
             {
                 LH.alignmentCheck(HANDTYPE.LEFT_HAND);
-                qloffset = CalculateStaticOffset(objectToAlign, LH, HANDTYPE.LEFT_HAND);
+                qloffset = CalculateStaticOffset(LH, HANDTYPE.LEFT_HAND);
             }
             if (RH_Mode)
             {
                 RH.alignmentCheck(HANDTYPE.RIGHT_HAND);
-                qroffset = CalculateStaticOffset(objectToAlign, RH, HANDTYPE.RIGHT_HAND);
+                qroffset = CalculateStaticOffset(RH, HANDTYPE.RIGHT_HAND);
             }
         }
 
@@ -219,15 +218,15 @@ namespace VRTRIX
 
         //用于计算初始化物体的姿态和手背姿态（由数据手套得到）之间的四元数差值，该方法为静态调用，即只在初始化的时候调用一次，之后所有帧均使用同一个四元数。
         //适用于：当动捕设备没有腕关节/手背节点或者只单独使用手套，无其他定位硬件设备时。
-        private Quaternion CalculateStaticOffset(GameObject objectToAlign, VRTRIXDataWrapper glove, HANDTYPE type)
+        private Quaternion CalculateStaticOffset(VRTRIXDataWrapper glove, HANDTYPE type)
         {
             if (type == HANDTYPE.RIGHT_HAND)
             {
-                return objectToAlign.transform.rotation * Quaternion.Inverse(this.transform.rotation) * Quaternion.Inverse(glove.GetReceivedRotation(VRTRIXBones.R_Hand) * Quaternion.Euler(qr_modeloffset));
+                return RH_ObjectToAlign.transform.rotation * Quaternion.Inverse(this.transform.rotation) * Quaternion.Inverse(glove.GetReceivedRotation(VRTRIXBones.R_Hand) * Quaternion.Euler(qr_modeloffset));
             }
             else if (type == HANDTYPE.LEFT_HAND)
             {
-                return objectToAlign.transform.rotation * Quaternion.Inverse(this.transform.rotation) * Quaternion.Inverse(glove.GetReceivedRotation(VRTRIXBones.L_Hand) * Quaternion.Euler(ql_modeloffset));
+                return LH_ObjectToAlign.transform.rotation * Quaternion.Inverse(this.transform.rotation) * Quaternion.Inverse(glove.GetReceivedRotation(VRTRIXBones.L_Hand) * Quaternion.Euler(ql_modeloffset));
             }
             else
             {
@@ -252,13 +251,15 @@ namespace VRTRIX
                         {
                             //该语句的含义为由手套得到的raw data先经过ql的旋转，再经过计算得到的当前该帧下手背和摄像机的旋转差值的作用之后得到的最终旋转，
                             //该最终的旋转就会直接赋值给骨骼模型。
-                            obj.rotation = qloffset * rotation * Quaternion.Euler(ql_modeloffset);
+                            obj.rotation = IsAlignOnStart ? qloffset * rotation * Quaternion.Euler(ql_modeloffset) 
+                                                           : rotation * Quaternion.Euler(ql_modeloffset);
                         }
                         else if (type == HANDTYPE.RIGHT_HAND)
                         {
                             //该语句的含义为由手套得到的raw data先经过ql的旋转，再经过计算得到的当前该帧下手背和摄像机的旋转差值的作用之后得到的最终旋转，
                             //该最终的旋转就会直接赋值给骨骼模型。
-                            obj.rotation = qroffset * rotation * Quaternion.Euler(qr_modeloffset);
+                            obj.rotation = IsAlignOnStart ? qroffset * rotation * Quaternion.Euler(qr_modeloffset) 
+                                                           : rotation * Quaternion.Euler(qr_modeloffset);
                         }
                     }
                 }
@@ -407,13 +408,59 @@ namespace VRTRIX
             for(int i = 1; i < (int)VRTRIXBones.NumOfBones; ++i)
             {
                 string bone_name = VRTRIXUtilities.GetBoneName(i);
-                Transform parent = (i < 19) ? transform.GetChild(1) : transform.GetChild(0);
-                Transform obj = TransformDeepChildExtension.FindDeepChild(parent, bone_name);
-                transform_array[i] = obj;
+                if (GetComponent("VRTRIXBoneMapping"))
+                {
+                    GameObject bone = VRTRIXBoneMapping.UniqueStance.MapToVRTRIX_BoneName(bone_name);
+                    if(bone != null)
+                    {
+                        transform_array[i] = bone.transform;
+                    }
+                }
+                else
+                {
+                    Transform parent = (i < 19) ? transform.GetChild(1) : transform.GetChild(0);
+                    Transform obj = TransformDeepChildExtension.FindDeepChild(parent, bone_name);
+                    transform_array[i] = obj;
+                }
+
                 //print(obj);
             }
             return transform_array;
         } 
+        void OnGUI()
+        {
+            if (GUI.Button(new Rect(0, Screen.height / 8, Screen.width / 8, Screen.height / 8), "Reset"))
+            {
+                OnAlignFingers();
+            }
+
+            if (GetReceivedStatus(HANDTYPE.LEFT_HAND) == VRTRIXGloveStatus.CLOSED && GetReceivedStatus(HANDTYPE.RIGHT_HAND) == VRTRIXGloveStatus.CLOSED)
+            {
+                if (GUI.Button(new Rect(0, 0, Screen.width / 8, Screen.height / 8), "Connect"))
+                {
+                    OnConnectGlove();
+                }
+            }
+
+            if (GetReceivedStatus(HANDTYPE.LEFT_HAND) == VRTRIXGloveStatus.NORMAL || GetReceivedStatus(HANDTYPE.RIGHT_HAND) == VRTRIXGloveStatus.NORMAL)
+            {
+                if (GUI.Button(new Rect(0, 0, Screen.width / 8, Screen.height / 8), "Disconnect"))
+                {
+                    OnDisconnectGlove();
+                }
+            }
+
+            if (GUI.Button(new Rect(0, Screen.height / 4, Screen.width / 8, Screen.height / 8), "Hardware Calibrate"))
+            {
+                OnHardwareCalibrate();
+            }
+
+            if (GUI.Button(new Rect(0, Screen.height * (3.0f / 8.0f), Screen.width / 8, Screen.height / 8), "Vibrate"))
+            {
+                OnVibrate();
+            }
+        }
+
     }
     public static class TransformDeepChildExtension
     {
