@@ -107,6 +107,7 @@
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXBasicDataStreaming\VRTRIXGloveSimpleDataRead.cs" />
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXBasicDataStreaming\VRTRIXGloveStatusUIUpdate.cs" />
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXBasicDataStreaming\VRTRIXGloveVRInteraction.cs" />
+    <Compile Include="Assets\VRTRIX\Scripts\VRTRIXBasicDataStreaming\VRTRIXMultipleConnection.cs" />
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXBasicDataStreaming\VRTRIXUtilities.cs" />
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXBasicInteraction\VRTRIXCustomEvents.cs" />
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXBasicInteraction\VRTRIXGloveButtons.cs" />
@@ -137,7 +138,6 @@
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXTeleport\VRTRIXGloveTelportArea.cs" />
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXTeleport\VRTRIXGloveTelportPoint.cs" />
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXTeleport\VRTRIXTeleportMarkerBase.cs" />
-    <Compile Include="Assets\VRTRIXMultipleConnection.cs" />
     <None Include="Assets\VRTRIX\Resource\Shaders\SteamVR_Fade.shader" />
     <None Include="Assets\VRTRIX\Resource\Shaders\SteamVR_ClearAll.shader" />
     <None Include="Assets\VRTRIX\Resource\Shaders\ControllerButtonHints.shader" />

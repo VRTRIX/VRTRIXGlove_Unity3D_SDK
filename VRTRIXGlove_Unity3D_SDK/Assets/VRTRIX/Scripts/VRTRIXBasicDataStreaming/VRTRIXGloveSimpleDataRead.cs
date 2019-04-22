@@ -18,6 +18,7 @@ namespace VRTRIX
         public GameObject LH_ObjectToAlign, RH_ObjectToAlign;
         public bool IsAlignOnStart;
         public bool AdvancedMode;
+        public bool IsEnableMultipleGloves;
         public enum GloveIndex
 	    {
 	    	None = -1,
@@ -52,6 +53,10 @@ namespace VRTRIX
         private Transform[] fingerTransformArray;
         void Start()
         {
+            if (!IsEnableMultipleGloves)
+            {
+                Index = GloveIndex.MaxDeviceCount;
+            }
             LH = new VRTRIXDataWrapper(AdvancedMode, (int)Index);
             RH = new VRTRIXDataWrapper(AdvancedMode, (int)Index);
             GloveGesture = new VRTRIXGloveGestureRecognition();
