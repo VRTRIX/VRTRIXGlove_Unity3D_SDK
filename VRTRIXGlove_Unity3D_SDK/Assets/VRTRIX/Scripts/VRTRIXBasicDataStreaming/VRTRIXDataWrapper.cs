@@ -38,6 +38,7 @@ namespace VRTRIX {
 
         //Define Useful Parameters & Variables
         private IntPtr sp;
+        private int index;
         private int data_rate;
         private int radio_strength;
         private float battery;
@@ -69,16 +70,18 @@ namespace VRTRIX {
         /// Get right hand serial port information.
         /// </summary>
         /// <param name="buf">Returned port information</param>
+        /// <param name="id">Input id of data glove</param>
         /// <returns>Whether the right hand receiver is presented.</returns>
         [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        public static extern bool get_RH_port(byte[] buf);
+        public static extern bool get_RH_port(byte[] buf, int id);
         /// <summary>
         /// Get left hand serial port information.
         /// </summary>
         /// <param name="buf">Returned port information</param>
+        /// <param name="id">Input id of data glove</param>
         /// <returns>Whether the left hand receiver is presented.</returns>
         [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        public static extern bool get_LH_port(byte[] buf);
+        public static extern bool get_LH_port(byte[] buf, int id);
         /// <summary>
         /// Initializtion of the serial port
         /// </summary>
@@ -132,8 +135,9 @@ namespace VRTRIX {
 
         #endregion
 
-        public VRTRIXDataWrapper(bool AdvancedMode)
+        public VRTRIXDataWrapper(bool AdvancedMode, int GloveIndex)
         {
+            this.index = GloveIndex;
             sp = init_port(AdvancedMode);
         }
 
@@ -155,48 +159,50 @@ namespace VRTRIX {
                 {
                     try
                     {
-                        if (get_RH_port(buf))
+                        Debug.Log("Try to connect RH index: " + index);
+                        if (get_RH_port(buf, index))
                         {
-                            Console.WriteLine("Try to opening RH Port: " + System.Text.Encoding.ASCII.GetString(buf));
+                            Debug.Log("Try to opening RH Port: " + System.Text.Encoding.ASCII.GetString(buf));
                             if (open_port(sp, buf, baud_rate, type))
                             {
-                                Console.WriteLine("COM_PORT Opened: " + System.Text.Encoding.ASCII.GetString(buf));
+                                Debug.Log("COM_PORT Opened: " + System.Text.Encoding.ASCII.GetString(buf));
                                 port_opened = true;
                                 stat = VRTRIXGloveStatus.NORMAL;
                             }
                             else
                             {
-                                Console.WriteLine("COM_PORT Open Failed");
+                                Debug.Log("COM_PORT Open Failed");
                             }
                         }
                     }
                     catch (Exception e)
                     {
-                        Console.WriteLine("{0} Exception caught.", e);
+                        Debug.Log(e + " Exception caught.");
                     }
                 }
                 else if (type == HANDTYPE.LEFT_HAND)
                 {
                     try
                     {
-                        if (get_LH_port(buf))
+                        Debug.Log("Try to connect LH index: " + index);
+                        if (get_LH_port(buf, index))
                         {
-                            Console.WriteLine("Try to opening LH Port: " + System.Text.Encoding.ASCII.GetString(buf));
+                            Debug.Log("Try to opening LH Port: " + System.Text.Encoding.ASCII.GetString(buf));
                             if (open_port(sp, buf, baud_rate, type))
                             {
-                                Console.WriteLine("COM_PORT Opened: " + System.Text.Encoding.ASCII.GetString(buf));
+                                Debug.Log("COM_PORT Opened: " + System.Text.Encoding.ASCII.GetString(buf));
                                 port_opened = true;
                                 stat = VRTRIXGloveStatus.NORMAL;
                             }
                             else
                             {
-                                Console.WriteLine("COM_PORT Open Failed");
+                                Debug.Log("COM_PORT Open Failed");
                             }
                         }
                     }
                     catch (Exception e)
                     {
-                        Console.WriteLine("{0} Exception caught.", e);
+                        Debug.Log(e + " Exception caught.");
                     }
 
                 }

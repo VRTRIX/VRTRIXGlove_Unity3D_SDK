@@ -18,6 +18,28 @@ namespace VRTRIX
         public GameObject LH_ObjectToAlign, RH_ObjectToAlign;
         public bool IsAlignOnStart;
         public bool AdvancedMode;
+        public enum GloveIndex
+	    {
+	    	None = -1,
+            Device0 = 0,
+	    	Device1 = 1,
+	    	Device2 = 2,
+	    	Device3 = 3,
+	    	Device4 = 4,
+	    	Device5 = 5,
+	    	Device6 = 6,
+	    	Device7 = 7,
+	    	Device8 = 8,
+	    	Device9 = 9,
+	    	Device10 = 10,
+	    	Device11 = 11,
+	    	Device12 = 12,
+	    	Device13 = 13,
+	    	Device14 = 14,
+	     	Device15 = 15,
+            MaxDeviceCount = 16
+    	}
+        public GloveIndex Index;
         public Vector3 ql_modeloffset, qr_modeloffset;
 
         private VRTRIXDataWrapper LH, RH;
@@ -30,8 +52,8 @@ namespace VRTRIX
         private Transform[] fingerTransformArray;
         void Start()
         {
-            LH = new VRTRIXDataWrapper(AdvancedMode);
-            RH = new VRTRIXDataWrapper(AdvancedMode);
+            LH = new VRTRIXDataWrapper(AdvancedMode, (int)Index);
+            RH = new VRTRIXDataWrapper(AdvancedMode, (int)Index);
             GloveGesture = new VRTRIXGloveGestureRecognition();
             fingerTransformArray = FindFingerTransform();    
         }
@@ -113,7 +135,6 @@ namespace VRTRIX
                 LH_Gesture = GloveGesture.GestureDetection(LH, HANDTYPE.LEFT_HAND);
             }
         }
-
         //数据手套初始化，硬件连接
         public void OnConnectGlove()
         {
@@ -148,7 +169,7 @@ namespace VRTRIX
             {
                 if (LH.ClosePort())
                 {
-                    LH = new VRTRIXDataWrapper(AdvancedMode);
+                    LH = new VRTRIXDataWrapper(AdvancedMode, (int)Index);
                 }
                 LH_Mode = false;
             }
@@ -156,7 +177,7 @@ namespace VRTRIX
             {
                 if (RH.ClosePort())
                 {
-                    RH = new VRTRIXDataWrapper(AdvancedMode);
+                    RH = new VRTRIXDataWrapper(AdvancedMode, (int)Index);
                 }
                 RH_Mode = false;
             }
@@ -426,41 +447,7 @@ namespace VRTRIX
                 //print(obj);
             }
             return transform_array;
-        } 
-        void OnGUI()
-        {
-            if (GUI.Button(new Rect(0, Screen.height / 8, Screen.width / 8, Screen.height / 8), "Reset"))
-            {
-                OnAlignFingers();
-            }
-
-            if (GetReceivedStatus(HANDTYPE.LEFT_HAND) == VRTRIXGloveStatus.CLOSED && GetReceivedStatus(HANDTYPE.RIGHT_HAND) == VRTRIXGloveStatus.CLOSED)
-            {
-                if (GUI.Button(new Rect(0, 0, Screen.width / 8, Screen.height / 8), "Connect"))
-                {
-                    OnConnectGlove();
-                }
-            }
-
-            if (GetReceivedStatus(HANDTYPE.LEFT_HAND) == VRTRIXGloveStatus.NORMAL || GetReceivedStatus(HANDTYPE.RIGHT_HAND) == VRTRIXGloveStatus.NORMAL)
-            {
-                if (GUI.Button(new Rect(0, 0, Screen.width / 8, Screen.height / 8), "Disconnect"))
-                {
-                    OnDisconnectGlove();
-                }
-            }
-
-            if (GUI.Button(new Rect(0, Screen.height / 4, Screen.width / 8, Screen.height / 8), "Hardware Calibrate"))
-            {
-                OnHardwareCalibrate();
-            }
-
-            if (GUI.Button(new Rect(0, Screen.height * (3.0f / 8.0f), Screen.width / 8, Screen.height / 8), "Vibrate"))
-            {
-                OnVibrate();
-            }
         }
-
     }
     public static class TransformDeepChildExtension
     {

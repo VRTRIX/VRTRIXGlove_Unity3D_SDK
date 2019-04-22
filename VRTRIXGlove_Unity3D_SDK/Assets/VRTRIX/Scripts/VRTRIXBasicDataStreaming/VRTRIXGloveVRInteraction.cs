@@ -22,6 +22,27 @@ namespace VRTRIX
         public bool AdvancedMode;
         public Vector3 ql_modeloffset, qr_modeloffset;
         public VRTRIXDataWrapper LH, RH;
+        public enum GloveIndex
+	    {
+	    	None = -1,
+            Device0 = 0,
+	    	Device1 = 1,
+	    	Device2 = 2,
+	    	Device3 = 3,
+	    	Device4 = 4,
+	    	Device5 = 5,
+	    	Device6 = 6,
+	    	Device7 = 7,
+	    	Device8 = 8,
+	    	Device9 = 9,
+	    	Device10 = 10,
+	    	Device11 = 11,
+	    	Device12 = 12,
+	    	Device13 = 13,
+	    	Device14 = 14,
+	     	Device15 = 15
+    	}
+        public GloveIndex Index;
         private GameObject LH_tracker, RH_tracker;
         private VRTRIXGloveGesture LH_Gesture, RH_Gesture;
         private VRTRIXGloveGestureRecognition GloveGesture;
@@ -38,8 +59,8 @@ namespace VRTRIX
 
         void Start()
         {
-            RH = new VRTRIXDataWrapper(AdvancedMode);
-            LH = new VRTRIXDataWrapper(AdvancedMode);
+            RH = new VRTRIXDataWrapper(AdvancedMode, (int)Index);
+            LH = new VRTRIXDataWrapper(AdvancedMode, (int)Index);
             GloveGesture = new VRTRIXGloveGestureRecognition();
             try
             {
@@ -91,7 +112,7 @@ namespace VRTRIX
             {
                 if (LH.ClosePort())
                 {
-                    LH = new VRTRIXDataWrapper(AdvancedMode);
+                    LH = new VRTRIXDataWrapper(AdvancedMode, (int)Index);
                 }
                 LH_Mode = false;
             }
@@ -99,7 +120,7 @@ namespace VRTRIX
             {
                 if (RH.ClosePort())
                 {
-                    RH = new VRTRIXDataWrapper(AdvancedMode);
+                    RH = new VRTRIXDataWrapper(AdvancedMode, (int)Index);
                 }
                 RH_Mode = false;
             }

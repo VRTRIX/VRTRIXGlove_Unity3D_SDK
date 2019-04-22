@@ -137,6 +137,7 @@
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXTeleport\VRTRIXGloveTelportArea.cs" />
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXTeleport\VRTRIXGloveTelportPoint.cs" />
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXTeleport\VRTRIXTeleportMarkerBase.cs" />
+    <Compile Include="Assets\VRTRIXMultipleConnection.cs" />
     <None Include="Assets\VRTRIX\Resource\Shaders\SteamVR_Fade.shader" />
     <None Include="Assets\VRTRIX\Resource\Shaders\SteamVR_ClearAll.shader" />
     <None Include="Assets\VRTRIX\Resource\Shaders\ControllerButtonHints.shader" />
