@@ -380,19 +380,7 @@ namespace VRTRIX
 
         public bool GetGloveConnectionStat(HANDTYPE type)
         {
-            switch (type)
-            {
-                case HANDTYPE.RIGHT_HAND:
-                    {
-                        return RH_Mode;
-                    }
-                case HANDTYPE.LEFT_HAND:
-                    {
-                        return LH_Mode;
-                    }
-                default:
-                    return false;
-            }
+            return GetReceivedStatus(type) == VRTRIXGloveStatus.NORMAL;
         }
         public VRTRIXGloveStatus GetReceivedStatus(HANDTYPE type)
         {

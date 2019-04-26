@@ -12,6 +12,7 @@ using System;
 using System.Runtime.InteropServices;
 using UnityEngine;
 using System.Text;
+using System.Timers;
 
 namespace VRTRIX {
     public enum HANDTYPE
@@ -26,10 +27,23 @@ namespace VRTRIX {
         CLOSED,
         NORMAL,
         PAUSED,
+        DISCONNECTED,
         MAGANOMALY
     };
 
-
+    public enum VRTRIXGloveEvent
+    {
+        VRTRIXGloveEvent_None = 0,
+	    VRTRIXGloveEvent_Idle = 1,
+	    VRTRIXGloveEvent_Connected = 2,
+        VRTRIXGloveEvent_Disconnected = 3,
+	    VRTRIXGloveEvent_LowBattery = 4,
+	    VRTRIXGloveEvent_BatteryFull = 5,
+	    VRTRIXGloveEvent_Paired = 6,
+	    VRTRIXGloveEvent_MagAbnormal = 7,
+	    VRTRIXGloveEvent_TrackerConnected = 8,
+	    VRTRIXGloveEvent_TrackerDisconnected = 9
+    }
     public class VRTRIXDataWrapper
     {
         //Define Useful Constant
@@ -64,6 +78,9 @@ namespace VRTRIX {
         public delegate void ReceivedDataCallback(IntPtr pUserParam, IntPtr ptr, int data_rate, byte radio_strength, IntPtr cal_score_ptr, float battery, int hand_type);
         public static ReceivedDataCallback receivedDataCallback;
 
+        [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+        public delegate void ReceivedEventCallback(IntPtr pUserParam, IntPtr pEvent);
+        public static ReceivedEventCallback receivedEventCallback;
 
         #region Functions API
         /// <summary>
@@ -125,6 +142,13 @@ namespace VRTRIX {
         /// <param name="receivedDataCallback">received data callback.</param>
         [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, EntryPoint = "RegisterDataCallback")]
         public static extern void RegisterDataCallback(IntPtr pUserParam, IntPtr sp, ReceivedDataCallback receivedDataCallback);
+        /// <summary>
+        /// Register receiving hardware event callback
+        /// </summary>
+        /// <param name="sp">The serial port object</param>
+        /// <param name="receivedEventCallback">received event callback.</param>
+        [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, EntryPoint = "RegisterEventCallback")]
+        public static extern void RegisterEventCallback(IntPtr sp, ReceivedEventCallback receivedEventCallback);
         /// <summary>
         /// Read the data from serial port asynchronously.
         /// </summary>
@@ -233,7 +257,6 @@ namespace VRTRIX {
             {
                 GCHandle handle_consume = (GCHandle)pUserParam;
                 VRTRIXDataWrapper objDataGlove = (handle_consume.Target as VRTRIXDataWrapper);
-
                 VRTRIX_Quat[] quat = new VRTRIX_Quat[16];
                 MarshalUnmananagedArray2Struct<VRTRIX_Quat>(ptr, 16, out quat);
                 for (int i = 0; i < 16; i++)
@@ -247,11 +270,30 @@ namespace VRTRIX {
                 Marshal.Copy(cal_score_ptr, objDataGlove.calscore, 0, 6);
             };
 
+            receivedEventCallback =
+            (IntPtr pUserParam, IntPtr pEvent) =>
+            {
+                GCHandle handle_consume = (GCHandle)pUserParam;
+                VRTRIXDataWrapper objDataGlove = (handle_consume.Target as VRTRIXDataWrapper);
+                VRTRIXGloveEvent gloveEvent = (VRTRIXGloveEvent)pEvent;
+                if (gloveEvent == VRTRIXGloveEvent.VRTRIXGloveEvent_Connected)
+                {
+                    objDataGlove.stat= VRTRIXGloveStatus.NORMAL;
+                    Debug.Log("VRTRIXGloveEvent_Connected");
+                }
+                else if (gloveEvent == VRTRIXGloveEvent.VRTRIXGloveEvent_Disconnected)
+                {
+                    objDataGlove.stat = VRTRIXGloveStatus.DISCONNECTED;
+                    Debug.Log("VRTRIXGloveEvent_Disconnected");
+                }
+            };
+
             if (sp != IntPtr.Zero)
             {
                 GCHandle handle_reg = GCHandle.Alloc(this);
                 IntPtr pUserParam = (IntPtr)handle_reg;
                 RegisterDataCallback(pUserParam, this.sp, receivedDataCallback);
+                RegisterEventCallback(this.sp, receivedEventCallback);
             }
         }
 
@@ -268,7 +310,6 @@ namespace VRTRIX {
         {
             return sendData("v");
         }
-
 
         public VRTRIXGloveStatus GetReceivedStatus()
         {

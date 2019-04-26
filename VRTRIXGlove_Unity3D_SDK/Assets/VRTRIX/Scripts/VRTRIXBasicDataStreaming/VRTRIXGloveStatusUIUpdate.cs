@@ -79,6 +79,7 @@ namespace VRTRIX
             }
             else
             {
+                m_MODE.GetComponent<Text>().text = "MODE:   NONE";
                 m_Status.GetComponent<Text>().text = "GLOVE STATUS:   DISCONNECTED";
             }
 
@@ -154,14 +155,21 @@ namespace VRTRIX
                     glove3D.OnConnectGlove();
                 }
             }
-
-            if (glove3D.GetReceivedStatus(HANDTYPE.LEFT_HAND) == VRTRIXGloveStatus.NORMAL || glove3D.GetReceivedStatus(HANDTYPE.RIGHT_HAND) == VRTRIXGloveStatus.NORMAL)
+            else
             {
                 if (GUI.Button(new Rect(0, 0, Screen.width / 8, Screen.height / 8), "Disconnect"))
                 {
                     glove3D.OnDisconnectGlove();
                 }
             }
+
+            //if(glove3D.GetReceivedStatus(HANDTYPE.LEFT_HAND) == VRTRIXGloveStatus.NORMAL || glove3D.GetReceivedStatus(HANDTYPE.RIGHT_HAND) == VRTRIXGloveStatus.NORMAL)
+            //{
+            //    if (GUI.Button(new Rect(0, 0, Screen.width / 8, Screen.height / 8), "Disconnect"))
+            //    {
+            //        glove3D.OnDisconnectGlove();
+            //    }
+            //}
 
             if (GUI.Button(new Rect(0, Screen.height / 4, Screen.width / 8, Screen.height / 8), "Hardware Calibrate"))
             {
