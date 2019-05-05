@@ -45,12 +45,13 @@ namespace VRTRIX
 
         private VRTRIXGloveSimpleDataRead glove3D;
 
+        private int m_dataFrameCounter = 0;
         private int m_frameCounter = 0;
         private float m_timeCounter = 0.0f;
         private float m_lastFramerate = 0.0f;
+        private float m_lastFrameArriveTime = 0.0f;
         public float m_refreshTime = 1.0f;
-
-
+        private Quaternion m_lastFrameQuat = Quaternion.identity;
         // Use this for initialization
         void Start()
         {
@@ -58,17 +59,36 @@ namespace VRTRIX
         }
 
         // Update is called once per frame
-        void Update()
+        void FixedUpdate()
         {
             if (m_timeCounter < m_refreshTime)
             {
                 m_timeCounter += Time.deltaTime;
+                if (glove3D.GetGloveConnectionStat(HANDTYPE.RIGHT_HAND))
+                {
+                    if (m_lastFrameArriveTime < 0.016f)
+                    {
+                        m_lastFrameArriveTime += Time.deltaTime;
+                    }
+                    else
+                    {
+                        if (m_lastFrameQuat != glove3D.GetRotation(VRTRIXBones.R_Hand))
+                        {
+                            m_dataFrameCounter++;
+                        }
+                        m_lastFrameArriveTime = 0;
+                        m_lastFrameQuat = glove3D.GetRotation(VRTRIXBones.R_Hand);
+                    }
+                }
                 m_frameCounter++;
             }
             else
             {
+                //Debug.Log("Data Frame: " + m_dataFrameCounter);
+                //m_FPS.GetComponent<Text>().text = "FRAME RATE:   " + m_dataFrameCounter.ToString() + " fps";
                 m_lastFramerate = (float)m_frameCounter / m_timeCounter;
                 m_frameCounter = 0;
+                m_dataFrameCounter = 0;
                 m_timeCounter = 0.0f;
             }
             m_FPS.GetComponent<Text>().text = "FRAME RATE:   " + m_lastFramerate.ToString() + " fps";
@@ -162,14 +182,6 @@ namespace VRTRIX
                     glove3D.OnDisconnectGlove();
                 }
             }
-
-            //if(glove3D.GetReceivedStatus(HANDTYPE.LEFT_HAND) == VRTRIXGloveStatus.NORMAL || glove3D.GetReceivedStatus(HANDTYPE.RIGHT_HAND) == VRTRIXGloveStatus.NORMAL)
-            //{
-            //    if (GUI.Button(new Rect(0, 0, Screen.width / 8, Screen.height / 8), "Disconnect"))
-            //    {
-            //        glove3D.OnDisconnectGlove();
-            //    }
-            //}
 
             if (GUI.Button(new Rect(0, Screen.height / 4, Screen.width / 8, Screen.height / 8), "Hardware Calibrate"))
             {
