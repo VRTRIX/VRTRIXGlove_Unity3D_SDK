@@ -24,7 +24,7 @@ namespace VRTRIX
         public VRTRIXDataWrapper LH, RH;
         public enum GloveIndex
 	    {
-	    	None = -1,
+	    	None = 16,
             Device0 = 0,
 	    	Device1 = 1,
 	    	Device2 = 2,
