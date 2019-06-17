@@ -156,6 +156,12 @@ namespace VRTRIX {
         /// <returns>Whether the read process successfully</returns>
         [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         public static extern void StartStreaming(IntPtr sp);
+        /// <summary>
+        /// Vibrate the data glove for given time period.
+        /// </summary>
+        /// <param name="sp">The serial port object</param>
+        [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+        public static extern void VibratePeriod(IntPtr sp, int msDurationMillisec);
 
         #endregion
 
@@ -310,7 +316,11 @@ namespace VRTRIX {
         {
             return sendData("v");
         }
-
+        
+        public void vibratePeriod(int msDurationMillisec)
+        {
+            VibratePeriod(sp, msDurationMillisec);
+        }
         public VRTRIXGloveStatus GetReceivedStatus()
         {
             return stat;

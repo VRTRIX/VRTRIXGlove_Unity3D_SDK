@@ -9,6 +9,7 @@ using UnityEngine;
 using System;
 using System.Threading;
 using System.Collections.Generic;
+using System.Collections;
 
 namespace VRTRIX
 {
@@ -76,7 +77,6 @@ namespace VRTRIX
                 }
                 //以下是设置右手每个骨骼节点全局旋转(global rotation)；
                 SetRotation(VRTRIXBones.R_Hand, RH.GetReceivedRotation(VRTRIXBones.R_Hand), RH.DataValidStatus(VRTRIXBones.R_Hand), HANDTYPE.RIGHT_HAND);
-
 
                 SetRotation(VRTRIXBones.R_Thumb_1, RH.GetReceivedRotation(VRTRIXBones.R_Thumb_1), RH.DataValidStatus(VRTRIXBones.R_Thumb_1), HANDTYPE.RIGHT_HAND);
                 SetRotation(VRTRIXBones.R_Thumb_2, RH.GetReceivedRotation(VRTRIXBones.R_Thumb_2), RH.DataValidStatus(VRTRIXBones.R_Thumb_2), HANDTYPE.RIGHT_HAND);
@@ -206,11 +206,11 @@ namespace VRTRIX
         {
             if (LH_Mode)
             {
-                LH.vibrate();
+                LH.vibratePeriod(500);
             }
             if (RH_Mode)
             {
-                RH.vibrate();
+                RH.vibratePeriod(500);
             }
         }
 
