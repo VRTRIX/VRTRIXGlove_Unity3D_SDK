@@ -19,8 +19,11 @@ namespace VRTRIX {
 
     public class VRTRIXGloveGrab : MonoBehaviour
     {
+        public HANDTYPE type;
         public VRTRIXGloveGrab otherHand;
+        public Transform teleportArcStartTransform;
         public Transform hoverSphereTransform;
+        public Transform objectAttachTransform;
         public float hoverSphereRadius = 0.05f;
         public LayerMask hoverLayerMask = -1;
         public float hoverUpdateInterval = 0.1f;
@@ -31,7 +34,7 @@ namespace VRTRIX {
         private const int ColliderArraySize = 16;
         private Collider[] overlappingColliders;
         private VRTRIXInteractable _hoveringInteractable;
-        private VRTRIXGloveVRInteraction gloveVR;
+        private VRTRIXGloveDataStreaming gloveVR;
         // The flags used to determine how an object is attached to the hand.
         [Flags]
         public enum AttachmentFlags
@@ -93,7 +96,7 @@ namespace VRTRIX {
         void Start()
         {
             overlappingColliders = new Collider[ColliderArraySize];
-            gloveVR = GetComponentInParent<VRTRIXGloveVRInteraction>();
+            gloveVR = GetComponentInParent<VRTRIXGloveDataStreaming>();
         }
 
         // Update is called once per frame
@@ -459,15 +462,7 @@ namespace VRTRIX {
 
             if (!attachmentTransform)
             {
-                //attachmentTransform = this.transform;
-                Transform[] children = GetComponentsInChildren<Transform>();
-                foreach (Transform child in children)
-                {
-                    if (child.name == "L_Hand" || child.name == "R_Hand")
-                    {
-                        attachmentTransform = child.transform;
-                    }
-                }
+                attachmentTransform = objectAttachTransform;
             }
 
             return attachmentTransform;
@@ -484,15 +479,7 @@ namespace VRTRIX {
 
             if (!attachmentTransform)
             {
-                //attachmentTransform = this.transform;
-                Transform[] children = GetComponentsInChildren<Transform>();
-                foreach (Transform child in children)
-                {
-                    if (child.name == "L_Hand" || child.name == "R_Hand")
-                    {
-                        attachmentTransform = child.transform;
-                    }
-                }
+                attachmentTransform = objectAttachTransform;
             }
 
             return attachmentTransform;
@@ -506,15 +493,7 @@ namespace VRTRIX {
 
         public HANDTYPE GetHandType()
         {
-            if (this.gameObject.name.Contains("LH"))
-            {
-                return HANDTYPE.LEFT_HAND;
-            }else if (this.gameObject.name.Contains("RH"))
-            {
-                return HANDTYPE.RIGHT_HAND;
-            }
-            return HANDTYPE.NONE;
-            
+            return this.type;
         }
 
 

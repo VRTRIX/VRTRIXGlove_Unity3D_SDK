@@ -20,7 +20,7 @@ namespace VRTRIX
         // Use this for initialization
         void Start()
         {
-            Shield_Ref = VRTRIXGloveVRInteraction.CheckDeviceModelName(HANDTYPE.NONE, InteractiveDevice.SHIELD);
+            Shield_Ref = VRTRIXGloveDataStreaming.CheckDeviceModelName(HANDTYPE.NONE, InteractiveDevice.SHIELD);
             Shield = gameObject;
             isHoveredbyHand = false;
         }

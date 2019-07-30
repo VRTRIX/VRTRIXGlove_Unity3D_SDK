@@ -27,7 +27,7 @@ namespace VRTRIX
         // Use this for initialization
         void Start()
         {
-            Sword_Ref = VRTRIXGloveVRInteraction.CheckDeviceModelName(HANDTYPE.NONE, InteractiveDevice.SWORD);
+            Sword_Ref = VRTRIXGloveDataStreaming.CheckDeviceModelName(HANDTYPE.NONE, InteractiveDevice.SWORD);
             Sword = gameObject;
             isHoveredbyHand = false;
         }

@@ -100,13 +100,13 @@
     <Compile Include="Assets\VRTRIX\Scripts\SteamVRUtils\SoundPlayOneshot.cs" />
     <Compile Include="Assets\VRTRIX\Scripts\SteamVRUtils\UIElement.cs" />
     <Compile Include="Assets\VRTRIX\Scripts\SteamVRUtils\Util.cs" />
+    <Compile Include="Assets\VRTRIX\Scripts\VRTRIXBasicDataStreaming\DrawIfAttribute.cs" />
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXBasicDataStreaming\VRTRIXBoneMapping.cs" />
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXBasicDataStreaming\VRTRIXCameraFollow.cs" />
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXBasicDataStreaming\VRTRIXDataWrapper.cs" />
+    <Compile Include="Assets\VRTRIX\Scripts\VRTRIXBasicDataStreaming\VRTRIXGloveDataStreaming.cs" />
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXBasicDataStreaming\VRTRIXGloveGestureDetection.cs" />
-    <Compile Include="Assets\VRTRIX\Scripts\VRTRIXBasicDataStreaming\VRTRIXGloveSimpleDataRead.cs" />
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXBasicDataStreaming\VRTRIXGloveStatusUIUpdate.cs" />
-    <Compile Include="Assets\VRTRIX\Scripts\VRTRIXBasicDataStreaming\VRTRIXGloveVRInteraction.cs" />
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXBasicDataStreaming\VRTRIXMultipleConnection.cs" />
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXBasicDataStreaming\VRTRIXUtilities.cs" />
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXBasicInteraction\VRTRIXCustomEvents.cs" />

@@ -10,11 +10,11 @@ namespace VRTRIX
         public GameObject m_Scissors;
         public GameObject m_Rock;
         public GameObject m_Paper;
-        private VRTRIXGloveSimpleDataRead glove3D;
+        private VRTRIXGloveDataStreaming glove3D;
         // Use this for initialization
         void Start()
         {
-            glove3D = m_Glove.GetComponent<VRTRIXGloveSimpleDataRead>();
+            glove3D = m_Glove.GetComponent<VRTRIXGloveDataStreaming>();
         }
 
         // Update is called once per frame
@@ -41,7 +41,6 @@ namespace VRTRIX
             }
 
             if (GetPaperButtonDown(HANDTYPE.LEFT_HAND) || GetPaperButtonDown(HANDTYPE.RIGHT_HAND))
-            //if (GetPaperButtonDown(HANDTYPE.LEFT_HAND))
             {
                 print("Paper!");
                 m_Paper.GetComponent<Renderer>().materials[0].color = new Color(1f, 1f, 157f / 255f, 1f);
@@ -50,41 +49,6 @@ namespace VRTRIX
             {
                 m_Paper.GetComponent<Renderer>().materials[0].color = Color.white;
             }
-        }
-
-        void OnGUI()
-        {
-            if (GUI.Button(new Rect(0, Screen.height / 8, Screen.width / 8, Screen.height / 8), "Reset"))
-            {
-                glove3D.OnAlignFingers();
-            }
-
-            if (glove3D.GetReceivedStatus(HANDTYPE.LEFT_HAND) == VRTRIXGloveStatus.CLOSED && glove3D.GetReceivedStatus(HANDTYPE.RIGHT_HAND) == VRTRIXGloveStatus.CLOSED)
-            {
-                if (GUI.Button(new Rect(0, 0, Screen.width / 8, Screen.height / 8), "Connect"))
-                {
-                    glove3D.OnConnectGlove();
-                }
-            }
-
-            if (glove3D.GetReceivedStatus(HANDTYPE.LEFT_HAND) == VRTRIXGloveStatus.NORMAL || glove3D.GetReceivedStatus(HANDTYPE.RIGHT_HAND) == VRTRIXGloveStatus.NORMAL)
-            {
-                if (GUI.Button(new Rect(0, 0, Screen.width / 8, Screen.height / 8), "Disconnect"))
-                {
-                    glove3D.OnDisconnectGlove();
-                }
-            }
-
-            if (GUI.Button(new Rect(0, Screen.height / 4, Screen.width / 8, Screen.height / 8), "Hardware Calibrate"))
-            {
-                glove3D.OnHardwareCalibrate();
-            }
-
-            if (GUI.Button(new Rect(0, Screen.height * (3.0f / 8.0f), Screen.width / 8, Screen.height / 8), "Vibrate"))
-            {
-                glove3D.OnVibrate();
-            }
-
         }
 
         private bool GetScissorsButtonDown(HANDTYPE tpye)

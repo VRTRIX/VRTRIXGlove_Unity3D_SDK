@@ -30,19 +30,20 @@ namespace VRTRIX {
         DISCONNECTED,
         MAGANOMALY
     };
-
     public enum VRTRIXGloveEvent
     {
-        VRTRIXGloveEvent_None = 0,
-	    VRTRIXGloveEvent_Idle = 1,
-	    VRTRIXGloveEvent_Connected = 2,
-        VRTRIXGloveEvent_Disconnected = 3,
-	    VRTRIXGloveEvent_LowBattery = 4,
-	    VRTRIXGloveEvent_BatteryFull = 5,
-	    VRTRIXGloveEvent_Paired = 6,
-	    VRTRIXGloveEvent_MagAbnormal = 7,
-	    VRTRIXGloveEvent_TrackerConnected = 8,
-	    VRTRIXGloveEvent_TrackerDisconnected = 9
+ 	    VRTRIXGloveEvent_None = 0,
+ 		VRTRIXGloveEvent_Idle = 1,
+ 		VRTRIXGloveEvent_Connected = 2,
+ 		VRTRIXGloveEvent_Disconnected = 3,
+ 		VRTRIXGloveEvent_PortClosed = 4,
+ 		VRTRIXGloveEvent_LowBattery = 5,
+ 		VRTRIXGloveEvent_BatteryFull = 6,
+ 		VRTRIXGloveEvent_Paired = 7,
+ 		VRTRIXGloveEvent_MagAbnormal = 8,
+ 		VRTRIXGloveEvent_TrackerConnected = 9,
+ 		VRTRIXGloveEvent_TrackerDisconnected = 10,
+ 		VRTRIXGloveEvent_ChannelHopping = 11,
     }
     public class VRTRIXDataWrapper
     {
@@ -57,6 +58,7 @@ namespace VRTRIX {
         private int radio_strength;
         private float battery;
         public HANDTYPE hand_type;
+        public int radio_channel;
         private int[] calscore = new int[6];
         private bool port_opened = false;
         private bool[] valid = new bool[6];
@@ -75,7 +77,7 @@ namespace VRTRIX {
         }
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        public delegate void ReceivedDataCallback(IntPtr pUserParam, IntPtr ptr, int data_rate, byte radio_strength, IntPtr cal_score_ptr, float battery, int hand_type);
+        public delegate void ReceivedDataCallback(IntPtr pUserParam, IntPtr ptr, int data_rate, byte radio_strength, IntPtr cal_score_ptr, float battery, int hand_type, int radio_channel);
         public static ReceivedDataCallback receivedDataCallback;
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
@@ -162,6 +164,12 @@ namespace VRTRIX {
         /// <param name="sp">The serial port object</param>
         [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         public static extern void VibratePeriod(IntPtr sp, int msDurationMillisec);
+        /// <summary>
+        /// Randomly channel hopping.
+        /// </summary>
+        /// <param name="sp">The serial port object</param>
+        [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+        public static extern void ChannelHopping(IntPtr sp);
 
         #endregion
 
@@ -259,7 +267,7 @@ namespace VRTRIX {
         public void registerCallBack()
         {
             receivedDataCallback =
-            (IntPtr pUserParam, IntPtr ptr, int data_rate, byte radio_strength, IntPtr cal_score_ptr, float battery, int hand_type) =>
+            (IntPtr pUserParam, IntPtr ptr, int data_rate, byte radio_strength, IntPtr cal_score_ptr, float battery, int hand_type, int radio_channel) =>
             {
                 GCHandle handle_consume = (GCHandle)pUserParam;
                 VRTRIXDataWrapper objDataGlove = (handle_consume.Target as VRTRIXDataWrapper);
@@ -273,6 +281,7 @@ namespace VRTRIX {
                 objDataGlove.radio_strength = radio_strength;
                 objDataGlove.battery = battery;
                 objDataGlove.hand_type = (HANDTYPE)hand_type;
+                objDataGlove.radio_channel = radio_channel;
                 Marshal.Copy(cal_score_ptr, objDataGlove.calscore, 0, 6);
             };
 
@@ -291,6 +300,10 @@ namespace VRTRIX {
                 {
                     objDataGlove.stat = VRTRIXGloveStatus.DISCONNECTED;
                     Debug.Log("VRTRIXGloveEvent_Disconnected");
+                }
+                else if (gloveEvent == VRTRIXGloveEvent.VRTRIXGloveEvent_ChannelHopping)
+                {
+                    Debug.Log("VRTRIXGloveEvent_ChannelHopping");
                 }
             };
 
@@ -369,6 +382,11 @@ namespace VRTRIX {
         public int GetReceiveRadioStrength()
         {
             return -(int)radio_strength;
+        }
+
+        public int GetReceiveRadioChannel()
+        {
+            return radio_channel;
         }
 
         public float GetReceiveBattery()
@@ -539,6 +557,11 @@ namespace VRTRIX {
         public void startStreaming()
         {
             StartStreaming(sp);
+        }
+
+        public void channelHopping()
+        {
+            ChannelHopping(sp);
         }
 
     }

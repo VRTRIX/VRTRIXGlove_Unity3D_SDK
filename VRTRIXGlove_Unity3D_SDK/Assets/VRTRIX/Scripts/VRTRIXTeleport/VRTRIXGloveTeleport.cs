@@ -311,7 +311,7 @@ namespace VRTRIX
         {
             Vector3 pointerStart = pointerStartTransform.position;
             Vector3 pointerEnd;
-            Vector3 pointerDir = -pointerStartTransform.right;
+            Vector3 pointerDir = (pointerHand.GetHandType() == HANDTYPE.RIGHT_HAND) ? pointerStartTransform.right : -pointerStartTransform.right;
             bool hitSomething = false;
             bool showPlayAreaPreview = false;
             Vector3 playerFeetOffset = player.trackingOriginTransform.position - player.feetPositionGuess;
@@ -1122,7 +1122,7 @@ namespace VRTRIX
                 //}
                 //else
                 //{
-                    //return hand.controller.GetPress(SteamVR_Controller.ButtonMask.Touchpad);
+                //return hand.controller.GetPress(SteamVR_Controller.ButtonMask.Touchpad);
                 //}
                 return hand.GetTeleportButton();
             }
@@ -1144,6 +1144,8 @@ namespace VRTRIX
                 //{
                 //return hand.controller.GetPressDown(SteamVR_Controller.ButtonMask.Touchpad);
                 //}
+
+                //Debug.Log("teleport:" + hand.GetTeleportButtonDown());
                 return hand.GetTeleportButtonDown();
             }
 
@@ -1160,15 +1162,7 @@ namespace VRTRIX
             //}
             //else
             //{
-
-            if(hand.GetHandType() == HANDTYPE.LEFT_HAND)
-            {
-                return GameObject.Find("L_Middle_3").transform;
-            }else if (hand.GetHandType() == HANDTYPE.RIGHT_HAND)
-            {
-                return GameObject.Find("R_Middle_3").transform;
-            }
-            return null;    
+                  return hand.teleportArcStartTransform;
             //}
         }
     }

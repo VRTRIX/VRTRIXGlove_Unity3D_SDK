@@ -21,7 +21,7 @@ namespace VRTRIX
         // Use this for initialization
         void Start()
         {
-            Ex_Ref = VRTRIXGloveVRInteraction.CheckDeviceModelName(HANDTYPE.NONE, InteractiveDevice.EXTINGUISHER);
+            Ex_Ref = VRTRIXGloveDataStreaming.CheckDeviceModelName(HANDTYPE.NONE, InteractiveDevice.EXTINGUISHER);
             Ex = gameObject;
             isHoveredbyHand = false;
         }
