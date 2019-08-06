@@ -541,11 +541,11 @@ namespace VRTRIX {
         {
             if(this.GetHandType() == HANDTYPE.LEFT_HAND)
             {
-                gloveVR.LH.vibrate();
+                gloveVR.LH.VibratePeriod(100);
             }
             else if (this.GetHandType() == HANDTYPE.RIGHT_HAND)
             {
-                gloveVR.RH.vibrate();
+                gloveVR.RH.VibratePeriod(100);
             }
         }
 

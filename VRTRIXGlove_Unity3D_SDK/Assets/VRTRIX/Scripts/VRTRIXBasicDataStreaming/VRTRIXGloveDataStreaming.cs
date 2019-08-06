@@ -20,13 +20,13 @@ namespace VRTRIX
  
         // An example for a bool
         public bool IsVREnabled = false;
-        [DrawIf("IsVREnabled", false)] // Show if booltest bool is true
+        [DrawIf("IsVREnabled", false)]
         public GameObject LH_ObjectToAlign, RH_ObjectToAlign;
 
-        [DrawIf("IsVREnabled", true)] // Show if booltest bool is true
+        [DrawIf("IsVREnabled", true)]
         public Vector3 RHTrackerOffset = new Vector3(0.01f, 0, -0.035f);
 
-        [DrawIf("IsVREnabled", true)] // Show if booltest bool is true
+        [DrawIf("IsVREnabled", true)]
         public Vector3 LHTrackerOffset = new Vector3(-0.01f, 0, -0.035f);
 
         public bool AdvancedMode;
@@ -61,8 +61,6 @@ namespace VRTRIX
         private VRTRIXGloveGestureRecognition GloveGesture;
         private Thread LH_receivedData, RH_receivedData;
         private Quaternion qloffset, qroffset;
-        private Quaternion[] ql_thumb_offset = { Quaternion.Euler(0, 0, 24),Quaternion.Euler(0, 0, 12), Quaternion.Euler(0, 0, 8)};
-        private Quaternion[] qr_thumb_offset = { Quaternion.Euler(0, 0, 24),Quaternion.Euler(0, 0, 12), Quaternion.Euler(0, 0, 8)};
         private bool qloffset_cal, qroffset_cal;
         private VRTRIXGloveGesture LH_Gesture, RH_Gesture = VRTRIXGloveGesture.BUTTONNONE;
         private bool LH_Mode, RH_Mode;
@@ -102,7 +100,7 @@ namespace VRTRIX
         }
 
 
-        void FixedUpdate()
+        void Update()
         {
             if (RH_Mode && RH.GetReceivedStatus() == VRTRIXGloveStatus.NORMAL)
             {
@@ -214,30 +212,24 @@ namespace VRTRIX
                 OnAlignFingers();
             }
 
-            if (GUI.Button(new Rect(0, Screen.height / 4, Screen.width / 8, Screen.height / 8), "Thumb Align", buttonStyle))
-            {
-                OnAlignThumb();
-            }
-
             if (!IsVREnabled)
             {
-                if (GUI.Button(new Rect(0, Screen.height * (3.0f / 8.0f), Screen.width / 8, Screen.height / 8), "Hardware Calibrate", buttonStyle))
+                if (GUI.Button(new Rect(0, Screen.height * (2.0f / 8.0f), Screen.width / 8, Screen.height / 8), "Hardware Calibrate", buttonStyle))
                 {
                     OnHardwareCalibrate();
                 }
     
-                if (GUI.Button(new Rect(0, Screen.height / 2, Screen.width / 8, Screen.height / 8), "Vibrate", buttonStyle))
+                if (GUI.Button(new Rect(0, Screen.height * (3.0f / 8.0f), Screen.width / 8, Screen.height / 8), "Vibrate", buttonStyle))
                 {
                     OnVibrate();
                 }
     
-                if (GUI.Button(new Rect(0, Screen.height * (5.0f / 8.0f), Screen.width / 8, Screen.height / 8), "Channel Hopping", buttonStyle))
+                if (GUI.Button(new Rect(0, Screen.height * (4.0f / 8.0f), Screen.width / 8, Screen.height / 8), "Channel Hopping", buttonStyle))
                 {
                     OnChannelHopping();
                 }
 
             }
-
         }
 
         //数据手套初始化，硬件连接
@@ -250,15 +242,15 @@ namespace VRTRIX
                 if (LH_Mode)
                 {
                     print("Left hand glove connected!");
-                    LH.registerCallBack();
-                    LH.startStreaming();
+                    LH.RegisterCallBack();
+                    LH.StartStreaming();
                 }
                 RH_Mode = RH.Init(HANDTYPE.RIGHT_HAND);
                 if (RH_Mode)
                 {
                     print("Right hand glove connected!");
-                    RH.registerCallBack();
-                    RH.startStreaming();
+                    RH.RegisterCallBack();
+                    RH.StartStreaming();
                 }
 
             }
@@ -289,16 +281,16 @@ namespace VRTRIX
             }
         }
 
-        //数据手套硬件校准，仅在磁场大幅度变化后使用。
+        //数据手套硬件地磁校准数据储存，仅在磁场大幅度变化后使用。
         public void OnHardwareCalibrate()
         {
             if (LH_Mode)
             {
-                LH.calibration();
+                LH.OnSaveCalibration();
             }
             if (RH_Mode)
             {
-                RH.calibration();
+                RH.OnSaveCalibration();
             }
         }
 
@@ -307,59 +299,39 @@ namespace VRTRIX
         {
             if (LH_Mode)
             {
-                LH.vibratePeriod(500);
+                LH.VibratePeriod(500);
             }
             if (RH_Mode)
             {
-                RH.vibratePeriod(500);
+                RH.VibratePeriod(500);
             }
         }
 
-        //数据手套振动
+        //数据手套手动跳频
         public void OnChannelHopping()
         {
             if (LH_Mode)
             {
-                LH.channelHopping();
+                LH.ChannelHopping();
             }
             if (RH_Mode)
             {
-                RH.channelHopping();
+                RH.ChannelHopping();
             }
         }
 
-        //数据手套软件对齐手指，仅在磁场大幅度变化后使用。
+        //数据手套软件对齐手指及设置手背初始方向。
         public void OnAlignFingers()
         {
             if (LH_Mode)
             {
-                LH.alignmentCheck(HANDTYPE.LEFT_HAND);
+                LH.OnCloseFingerAlignment(HANDTYPE.LEFT_HAND);
                 qloffset = CalculateStaticOffset(LH, HANDTYPE.LEFT_HAND);
             }
             if (RH_Mode)
             {
-                RH.alignmentCheck(HANDTYPE.RIGHT_HAND);
+                RH.OnCloseFingerAlignment(HANDTYPE.RIGHT_HAND);
                 qroffset = CalculateStaticOffset(RH, HANDTYPE.RIGHT_HAND);
-            }
-        }
-
-
-        //数据手套软件OK手势校准。
-        public void OnAlignThumb()
-        {
-            if (LH_Mode)
-            {
-                Transform obj_thumb = fingerTransformArray[(int)VRTRIXBones.L_Thumb_3];
-                Transform obj_index = fingerTransformArray[(int)VRTRIXBones.L_Index_3];
-                ql_thumb_offset[2] = Quaternion.Inverse(obj_thumb.rotation * Quaternion.Inverse(ql_thumb_offset[2]))
-                    * obj_index.rotation * new Quaternion(0.25f, 0.7842f, 0.4962f, 0.2760f); 
-            }
-            if (RH_Mode)
-            {
-                Transform obj_thumb = fingerTransformArray[(int)VRTRIXBones.R_Thumb_3];
-                Transform obj_index = fingerTransformArray[(int)VRTRIXBones.R_Index_3];
-                qr_thumb_offset[2] = Quaternion.Inverse(obj_thumb.rotation * Quaternion.Inverse(qr_thumb_offset[2]))
-                    * obj_index.rotation * new Quaternion(0.1216f, 0.9043f, 0.3097f, 0.2673f); 
             }
         }
 
@@ -445,7 +417,8 @@ namespace VRTRIX
                 return Quaternion.identity;
             }
         }
-
+        
+        //手腕关节位置赋值函数，通过手腕外加的定位物体位置计算手部关节位置。（如果模型为全身骨骼，无需使用该函数）
         private void SetPosition(VRTRIXBones bone, Vector3 pos, Quaternion rot, Vector3 offset)
         {
             Transform obj = fingerTransformArray[(int)bone];
@@ -455,10 +428,7 @@ namespace VRTRIX
             }
         }
 
-        //手部关节赋值函数，每一帧都会调用，通过从数据手套硬件获取当前姿态，进一步进行处理，然后给模型赋值。
-        //重要参数：
-        //     ql_modeloffset:该参数指的是模型左手坐标系和左手手套传感器硬件坐标系之间的四元数偏差，往往这个偏差为绕x/y/z轴旋转+/-90，+-/180度，需要根据具体情况而定。
-        //     qr_modeloffset:该参数指的是模型右手坐标系和右手手套传感器硬件坐标系之间的四元数偏差，往往这个偏差为绕x/y/z轴旋转+/-90，+-/180度，需要根据具体情况而定。
+        //手部关节旋转赋值函数，每一帧都会调用，通过从数据手套硬件获取当前姿态，进一步进行处理，然后给模型赋值。
         private void SetRotation(VRTRIXBones bone, Quaternion rotation, bool valid, HANDTYPE type)
         {
             Transform obj = fingerTransformArray[(int)bone];
@@ -474,28 +444,15 @@ namespace VRTRIX
                             rotation = new Quaternion(quat_vec.x, quat_vec.y, quat_vec.z, rotation.w);
                             if (IsVREnabled)
                             {
+                                //当VR环境下，根据固定在手腕上tracker的方向对齐手背方向。
                                 obj.rotation = (bone == VRTRIXBones.L_Hand) ? CalculateDynamicOffset(LH_tracker, LH, HANDTYPE.LEFT_HAND) * rotation :
                                                                          CalculateDynamicOffset(LH_tracker, LH, HANDTYPE.LEFT_HAND)* rotation * Quaternion.Euler(ql_modeloffset);
                             }
                             else
                             {
+                                //当3D环境下，根据相机视角方向对齐手背方向。
                                 obj.rotation = (bone == VRTRIXBones.L_Hand) ? qloffset * rotation :
                                                                          qloffset * rotation * Quaternion.Euler(ql_modeloffset);
-                                //该语句的含义为由手套得到的raw data先经过ql的旋转，再经过计算得到的当前该帧下手背和摄像机的旋转差值的作用之后得到的最终旋转，
-                                //该最终的旋转就会直接赋值给骨骼模型。
-                            }
-
-                            if (bone == VRTRIXBones.L_Thumb_1)
-                            {
-                                obj.rotation = obj.rotation * ql_thumb_offset[0];
-                            }
-                            else if(bone == VRTRIXBones.L_Thumb_2)
-                            {
-                                obj.rotation = obj.rotation * ql_thumb_offset[1];
-                            }
-                            else if(bone == VRTRIXBones.L_Thumb_3)
-                            {
-                                obj.rotation = obj.rotation * ql_thumb_offset[2];
                             }
                         }
                         else if (type == HANDTYPE.RIGHT_HAND)
@@ -511,21 +468,6 @@ namespace VRTRIX
                             {
                                 obj.rotation = (bone == VRTRIXBones.R_Hand) ? qroffset * rotation :
                                                                          qroffset * rotation * Quaternion.Euler(qr_modeloffset);
-                                //该语句的含义为由手套得到的raw data先经过qr的旋转，再经过计算得到的当前该帧下手背和摄像机的旋转差值的作用之后得到的最终旋转，
-                                //该最终的旋转就会直接赋值给骨骼模型。
-                            }
-
-                            if (bone == VRTRIXBones.R_Thumb_1)
-                            {
-                                obj.rotation = obj.rotation * qr_thumb_offset[0];
-                            }
-                            else if(bone == VRTRIXBones.R_Thumb_2)
-                            {
-                                obj.rotation = obj.rotation * qr_thumb_offset[1];
-                            }
-                            else if(bone == VRTRIXBones.R_Thumb_3)
-                            {
-                                obj.rotation = obj.rotation * qr_thumb_offset[2];
                             }
                         }
                     }

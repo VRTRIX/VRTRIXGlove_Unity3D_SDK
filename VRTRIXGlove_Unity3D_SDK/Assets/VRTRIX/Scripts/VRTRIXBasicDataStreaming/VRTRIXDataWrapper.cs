@@ -49,7 +49,6 @@ namespace VRTRIX {
     {
         //Define Useful Constant
         private const string ReaderImportor = "VRTRIX_IMU";
-        private const int baud_rate = 1000000;
 
         //Define Useful Parameters & Variables
         private IntPtr sp;
@@ -65,6 +64,7 @@ namespace VRTRIX {
         private Quaternion[] data = new Quaternion[16];
         private Quaternion L_thumb_offset = new Quaternion(0.49673f, 0.409576f, 0.286788f, 0.709406f); //(sin(70/2), 0, 0, cos(70/2))*(0, sin(60/2), 0, cos(60/2))
         private Quaternion R_thumb_offset = new Quaternion(-0.49673f, -0.409576f, 0.286788f, 0.709406f); //(sin(-70/2), 0, 0, cos(-70/2))*(0, sin(-60/2), 0, cos(-60/2))
+   
         private VRTRIXGloveStatus stat = VRTRIXGloveStatus.CLOSED;
 
         [StructLayout(LayoutKind.Sequential)]
@@ -85,58 +85,52 @@ namespace VRTRIX {
         public static ReceivedEventCallback receivedEventCallback;
 
         #region Functions API
-        /// <summary>
-        /// Get right hand serial port information.
-        /// </summary>
-        /// <param name="buf">Returned port information</param>
-        /// <param name="id">Input id of data glove</param>
-        /// <returns>Whether the right hand receiver is presented.</returns>
-        [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        public static extern bool get_RH_port(byte[] buf, int id);
-        /// <summary>
-        /// Get left hand serial port information.
-        /// </summary>
-        /// <param name="buf">Returned port information</param>
-        /// <param name="id">Input id of data glove</param>
-        /// <returns>Whether the left hand receiver is presented.</returns>
-        [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        public static extern bool get_LH_port(byte[] buf, int id);
-        /// <summary>
-        /// Initializtion of the serial port
         /// </summary>
         /// <param name="AdvancedMode">Unlock the yaw of fingers if set true</param>
         /// <returns>The serial port object as IntPtr</returns>
         [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        public static extern IntPtr init_port(bool AdvancedMode);
+        public static extern IntPtr InitDataGlove(bool AdvancedMode);
         /// <summary>
         /// Open the serial port
         /// </summary>
         /// <param name="sp">The serial port object</param>
-        /// <param name="com_port_name">com_port_name.</param>
-        /// <param name="baud_rate">baud_rate.</param>
+        /// <param name="glove_id">Data glove index id (from 0 - 15), if anything larger is set,then only one pair of glove is supported</param>
         /// <param name="type">Hand type.</param>
+        /// <returns>Whether the port is opened successfully</returns>
         [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        public static extern bool open_port(IntPtr sp, byte[] com_port_name, int baud_rate, HANDTYPE type);
+        public static extern bool OpenPort(IntPtr sp, int glove_id, HANDTYPE type);
         /// <summary>
-        /// Write data to the serial port
+        /// Read the data from serial port asynchronously.
         /// </summary>
         /// <param name="sp">The serial port object</param>
-        /// <param name="buf">Data to be written</param>
+        /// <returns>Whether the read process successfully</returns>
         [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        public static extern int data_write(IntPtr sp, byte[] buf);
+        public static extern void StartStreaming(IntPtr sp);
         /// <summary>
         /// Close the serial port
         /// </summary>
         /// <param name="sp">The serial port object</param>
         /// <returns>Whether the serial port is closed successfully</returns>
         [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        public static extern bool close_port(IntPtr sp);
+        public static extern bool ClosePort(IntPtr sp);
         /// <summary>
-        /// Align the fingers
+        /// Save calibration result to hardware
         /// </summary>
         /// <param name="sp">The serial port object</param>
         [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        public static extern void alignment_check(IntPtr sp);
+        public static extern void OnSaveCalibration(IntPtr sp);
+        /// <summary>
+        /// Align the close finger pose
+        /// </summary>
+        /// <param name="sp">The serial port object</param>
+        [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+        public static extern void OnCloseFingerAlignment(IntPtr sp);
+        /// <summary>
+        /// Align the OK finger pose
+        /// </summary>
+        /// <param name="sp">The serial port object</param>
+        [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+        public static extern void OnOkPoseAlignment(IntPtr sp);
         /// <summary>
         /// Register receiving and parsed frame calculation data callback
         /// </summary>
@@ -151,13 +145,6 @@ namespace VRTRIX {
         /// <param name="receivedEventCallback">received event callback.</param>
         [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, EntryPoint = "RegisterEventCallback")]
         public static extern void RegisterEventCallback(IntPtr sp, ReceivedEventCallback receivedEventCallback);
-        /// <summary>
-        /// Read the data from serial port asynchronously.
-        /// </summary>
-        /// <param name="sp">The serial port object</param>
-        /// <returns>Whether the read process successfully</returns>
-        [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        public static extern void StartStreaming(IntPtr sp);
         /// <summary>
         /// Vibrate the data glove for given time period.
         /// </summary>
@@ -176,12 +163,11 @@ namespace VRTRIX {
         public VRTRIXDataWrapper(bool AdvancedMode, int GloveIndex)
         {
             this.index = GloveIndex;
-            sp = init_port(AdvancedMode);
+            sp = InitDataGlove(AdvancedMode);
         }
 
         public bool Init(HANDTYPE type)
         {
-            byte[] buf = new byte[300];
             for (int i = 0; i < 6; i++)
             {
                 valid[i] = true;
@@ -193,56 +179,31 @@ namespace VRTRIX {
 
             if (sp != null)
             {
-                if (type == HANDTYPE.RIGHT_HAND)
+                try
                 {
-                    try
+                    if (type == HANDTYPE.RIGHT_HAND)
                     {
                         Debug.Log("Try to connect RH index: " + index);
-                        if (get_RH_port(buf, index))
-                        {
-                            Debug.Log("Try to opening RH Port: " + System.Text.Encoding.ASCII.GetString(buf));
-                            if (open_port(sp, buf, baud_rate, type))
-                            {
-                                Debug.Log("COM_PORT Opened: " + System.Text.Encoding.ASCII.GetString(buf));
-                                port_opened = true;
-                                stat = VRTRIXGloveStatus.NORMAL;
-                            }
-                            else
-                            {
-                                Debug.Log("COM_PORT Open Failed");
-                            }
-                        }
                     }
-                    catch (Exception e)
-                    {
-                        Debug.Log(e + " Exception caught.");
-                    }
-                }
-                else if (type == HANDTYPE.LEFT_HAND)
-                {
-                    try
+                    else if(type == HANDTYPE.LEFT_HAND)
                     {
                         Debug.Log("Try to connect LH index: " + index);
-                        if (get_LH_port(buf, index))
-                        {
-                            Debug.Log("Try to opening LH Port: " + System.Text.Encoding.ASCII.GetString(buf));
-                            if (open_port(sp, buf, baud_rate, type))
-                            {
-                                Debug.Log("COM_PORT Opened: " + System.Text.Encoding.ASCII.GetString(buf));
-                                port_opened = true;
-                                stat = VRTRIXGloveStatus.NORMAL;
-                            }
-                            else
-                            {
-                                Debug.Log("COM_PORT Open Failed");
-                            }
-                        }
                     }
-                    catch (Exception e)
+                    
+                    if (OpenPort(this.sp, index, type))
                     {
-                        Debug.Log(e + " Exception caught.");
+                        port_opened = true;
+                        stat = VRTRIXGloveStatus.NORMAL;
                     }
-
+                    else
+                    {
+                        Debug.Log("PORT Open Failed");
+                    }
+                    return port_opened;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
                 }
             }
             return port_opened;
@@ -250,7 +211,7 @@ namespace VRTRIX {
         public bool ClosePort()
         {
             stat = VRTRIXGloveStatus.CLOSED;
-            return (close_port(this.sp));
+            return (ClosePort(this.sp));
         }
         private static void MarshalUnmananagedArray2Struct<VRTRIX_Quat>(IntPtr unmanagedArray, int length, out VRTRIX_Quat[] mangagedArray)
         {
@@ -264,7 +225,7 @@ namespace VRTRIX {
             }
         }
 
-        public void registerCallBack()
+        public void RegisterCallBack()
         {
             receivedDataCallback =
             (IntPtr pUserParam, IntPtr ptr, int data_rate, byte radio_strength, IntPtr cal_score_ptr, float battery, int hand_type, int radio_channel) =>
@@ -314,25 +275,6 @@ namespace VRTRIX {
                 RegisterDataCallback(pUserParam, this.sp, receivedDataCallback);
                 RegisterEventCallback(this.sp, receivedEventCallback);
             }
-        }
-
-        public bool sendData(string s)
-        {
-            byte[] buf = Encoding.ASCII.GetBytes(s);
-            return (data_write(sp, buf) == s.Length);
-        }
-        public bool calibration()
-        {
-            return sendData("c");
-        }
-        public bool vibrate()
-        {
-            return sendData("v");
-        }
-        
-        public void vibratePeriod(int msDurationMillisec)
-        {
-            VibratePeriod(sp, msDurationMillisec);
         }
         public VRTRIXGloveStatus GetReceivedStatus()
         {
@@ -504,8 +446,6 @@ namespace VRTRIX {
                     return data[4];
 
 
-
-
                 case VRTRIXBones.L_Forearm:
                     return data[5];
                 case VRTRIXBones.L_Hand:
@@ -549,17 +489,27 @@ namespace VRTRIX {
             }
 
         }
-        public void alignmentCheck(HANDTYPE type)
+
+        public void OnSaveCalibration()
         {
-            alignment_check(sp);
+            OnSaveCalibration(this.sp);
+        }
+        
+        public void VibratePeriod(int msDurationMillisec)
+        {
+            VibratePeriod(sp, msDurationMillisec);
+        }
+        public void OnCloseFingerAlignment(HANDTYPE type)
+        {
+            OnCloseFingerAlignment(sp);
         }
 
-        public void startStreaming()
+        public void StartStreaming()
         {
             StartStreaming(sp);
         }
 
-        public void channelHopping()
+        public void ChannelHopping()
         {
             ChannelHopping(sp);
         }
