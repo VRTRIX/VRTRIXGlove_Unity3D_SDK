@@ -19,48 +19,47 @@ namespace VRTRIX
         PAIR,
         NONE
     };
+
     public enum VRTRIXBones
     {
-        R_Arm = 1,
-        R_Forearm = 2,
-        R_Hand = 3,
-        R_Thumb_1 = 4,
-        R_Thumb_2 = 5,
-        R_Thumb_3 = 6,
-        R_Index_1 = 7,
-        R_Index_2 = 8,
-        R_Index_3 = 9,
-        R_Middle_1 = 10,
-        R_Middle_2 = 11,
-        R_Middle_3 = 12,
-        R_Ring_1 = 13,
-        R_Ring_2 = 14,
-        R_Ring_3 = 15,
-        R_Pinky_1 = 16,
-        R_Pinky_2 = 17,
-        R_Pinky_3 = 18,
+        R_Hand = 0,
+        R_Thumb_1 = 1,
+        R_Thumb_2 = 2,
+        R_Thumb_3 = 3,
+        R_Index_1 = 4,
+        R_Index_2 = 5,
+        R_Index_3 = 6,
+        R_Middle_1 = 7,
+        R_Middle_2 = 8,
+        R_Middle_3 = 9,
+        R_Ring_1 = 10,
+        R_Ring_2 = 11,
+        R_Ring_3 = 12,
+        R_Pinky_1 = 13,
+        R_Pinky_2 = 14,
+        R_Pinky_3 = 15,
 
-        L_Arm = 19,
-        L_Forearm = 20,
-        L_Hand = 21,
-        L_Thumb_1 = 22,
-        L_Thumb_2 = 23,
-        L_Thumb_3 = 24,
-        L_Index_1 = 25,
-        L_Index_2 = 26,
-        L_Index_3 = 27,
-        L_Middle_1 = 28,
-        L_Middle_2 = 29,
-        L_Middle_3 = 30,
-        L_Ring_1 = 31,
-        L_Ring_2 = 32,
-        L_Ring_3 = 33,
-        L_Pinky_1 = 34,
-        L_Pinky_2 = 35,
-        L_Pinky_3 = 36,
-        NumOfBones = 37
+        L_Hand = 16,
+        L_Thumb_1 = 17,
+        L_Thumb_2 = 18,
+        L_Thumb_3 = 19,
+        L_Index_1 = 20,
+        L_Index_2 = 21,
+        L_Index_3 = 22,
+        L_Middle_1 = 23,
+        L_Middle_2 = 24,
+        L_Middle_3 = 25,
+        L_Ring_1 = 26,
+        L_Ring_2 = 27,
+        L_Ring_3 = 28,
+        L_Pinky_1 = 29,
+        L_Pinky_2 = 30,
+        L_Pinky_3 = 31,
+
+        R_Arm = 32,
+        L_Arm = 33,
+        NumOfBones = 34
     }
-
 
 
     public class VRTRIXUtilities
@@ -80,7 +79,6 @@ namespace VRTRIX
                     return i;
                 }
             }
-
             return -1;
         }
 

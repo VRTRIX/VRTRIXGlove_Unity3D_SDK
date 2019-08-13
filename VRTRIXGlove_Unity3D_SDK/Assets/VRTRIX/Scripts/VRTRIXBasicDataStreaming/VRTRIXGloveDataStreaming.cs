@@ -13,6 +13,7 @@ using Valve.VR;
 
 namespace VRTRIX
 {
+    [RequireComponent(typeof(VRTRIXBoneMapping))]
     public class VRTRIXGloveDataStreaming : MonoBehaviour
     {
  
@@ -116,27 +117,27 @@ namespace VRTRIX
                     SetPosition(VRTRIXBones.R_Arm, RH_tracker.transform.position, RH_tracker.transform.rotation, RHTrackerOffset);
                 }
                 //以下是设置右手每个骨骼节点全局旋转(global rotation)；
-                SetRotation(VRTRIXBones.R_Hand, RH.GetReceivedRotation(VRTRIXBones.R_Hand), RH.DataValidStatus(VRTRIXBones.R_Hand), HANDTYPE.RIGHT_HAND);
+                SetRotation(VRTRIXBones.R_Hand, RH.GetReceivedRotation(VRTRIXBones.R_Hand), HANDTYPE.RIGHT_HAND);
 
-                SetRotation(VRTRIXBones.R_Thumb_1, RH.GetReceivedRotation(VRTRIXBones.R_Thumb_1), RH.DataValidStatus(VRTRIXBones.R_Thumb_1), HANDTYPE.RIGHT_HAND);
-                SetRotation(VRTRIXBones.R_Thumb_2, RH.GetReceivedRotation(VRTRIXBones.R_Thumb_2), RH.DataValidStatus(VRTRIXBones.R_Thumb_2), HANDTYPE.RIGHT_HAND);
-                SetRotation(VRTRIXBones.R_Thumb_3, RH.GetReceivedRotation(VRTRIXBones.R_Thumb_3), RH.DataValidStatus(VRTRIXBones.R_Thumb_3), HANDTYPE.RIGHT_HAND);
+                SetRotation(VRTRIXBones.R_Thumb_1, RH.GetReceivedRotation(VRTRIXBones.R_Thumb_1), HANDTYPE.RIGHT_HAND);
+                SetRotation(VRTRIXBones.R_Thumb_2, RH.GetReceivedRotation(VRTRIXBones.R_Thumb_2), HANDTYPE.RIGHT_HAND);
+                SetRotation(VRTRIXBones.R_Thumb_3, RH.GetReceivedRotation(VRTRIXBones.R_Thumb_3), HANDTYPE.RIGHT_HAND);
 
-                SetRotation(VRTRIXBones.R_Index_1, RH.GetReceivedRotation(VRTRIXBones.R_Index_1), RH.DataValidStatus(VRTRIXBones.R_Index_1), HANDTYPE.RIGHT_HAND);
-                SetRotation(VRTRIXBones.R_Index_2, RH.GetReceivedRotation(VRTRIXBones.R_Index_2), RH.DataValidStatus(VRTRIXBones.R_Index_2), HANDTYPE.RIGHT_HAND);
-                SetRotation(VRTRIXBones.R_Index_3, RH.GetReceivedRotation(VRTRIXBones.R_Index_3), RH.DataValidStatus(VRTRIXBones.R_Index_3), HANDTYPE.RIGHT_HAND);
+                SetRotation(VRTRIXBones.R_Index_1, RH.GetReceivedRotation(VRTRIXBones.R_Index_1), HANDTYPE.RIGHT_HAND);
+                SetRotation(VRTRIXBones.R_Index_2, RH.GetReceivedRotation(VRTRIXBones.R_Index_2), HANDTYPE.RIGHT_HAND);
+                SetRotation(VRTRIXBones.R_Index_3, RH.GetReceivedRotation(VRTRIXBones.R_Index_3), HANDTYPE.RIGHT_HAND);
 
-                SetRotation(VRTRIXBones.R_Middle_1, RH.GetReceivedRotation(VRTRIXBones.R_Middle_1), RH.DataValidStatus(VRTRIXBones.R_Middle_1), HANDTYPE.RIGHT_HAND);
-                SetRotation(VRTRIXBones.R_Middle_2, RH.GetReceivedRotation(VRTRIXBones.R_Middle_2), RH.DataValidStatus(VRTRIXBones.R_Middle_2), HANDTYPE.RIGHT_HAND);
-                SetRotation(VRTRIXBones.R_Middle_3, RH.GetReceivedRotation(VRTRIXBones.R_Middle_3), RH.DataValidStatus(VRTRIXBones.R_Middle_3), HANDTYPE.RIGHT_HAND);
+                SetRotation(VRTRIXBones.R_Middle_1, RH.GetReceivedRotation(VRTRIXBones.R_Middle_1), HANDTYPE.RIGHT_HAND);
+                SetRotation(VRTRIXBones.R_Middle_2, RH.GetReceivedRotation(VRTRIXBones.R_Middle_2), HANDTYPE.RIGHT_HAND);
+                SetRotation(VRTRIXBones.R_Middle_3, RH.GetReceivedRotation(VRTRIXBones.R_Middle_3), HANDTYPE.RIGHT_HAND);
 
-                SetRotation(VRTRIXBones.R_Ring_1, RH.GetReceivedRotation(VRTRIXBones.R_Ring_1), RH.DataValidStatus(VRTRIXBones.R_Ring_1), HANDTYPE.RIGHT_HAND);
-                SetRotation(VRTRIXBones.R_Ring_2, RH.GetReceivedRotation(VRTRIXBones.R_Ring_2), RH.DataValidStatus(VRTRIXBones.R_Ring_2), HANDTYPE.RIGHT_HAND);
-                SetRotation(VRTRIXBones.R_Ring_3, RH.GetReceivedRotation(VRTRIXBones.R_Ring_3), RH.DataValidStatus(VRTRIXBones.R_Ring_3), HANDTYPE.RIGHT_HAND);
+                SetRotation(VRTRIXBones.R_Ring_1, RH.GetReceivedRotation(VRTRIXBones.R_Ring_1), HANDTYPE.RIGHT_HAND);
+                SetRotation(VRTRIXBones.R_Ring_2, RH.GetReceivedRotation(VRTRIXBones.R_Ring_2), HANDTYPE.RIGHT_HAND);
+                SetRotation(VRTRIXBones.R_Ring_3, RH.GetReceivedRotation(VRTRIXBones.R_Ring_3), HANDTYPE.RIGHT_HAND);
 
-                SetRotation(VRTRIXBones.R_Pinky_1, RH.GetReceivedRotation(VRTRIXBones.R_Pinky_1), RH.DataValidStatus(VRTRIXBones.R_Pinky_1), HANDTYPE.RIGHT_HAND);
-                SetRotation(VRTRIXBones.R_Pinky_2, RH.GetReceivedRotation(VRTRIXBones.R_Pinky_2), RH.DataValidStatus(VRTRIXBones.R_Pinky_2), HANDTYPE.RIGHT_HAND);
-                SetRotation(VRTRIXBones.R_Pinky_3, RH.GetReceivedRotation(VRTRIXBones.R_Pinky_3), RH.DataValidStatus(VRTRIXBones.R_Pinky_3), HANDTYPE.RIGHT_HAND);
+                SetRotation(VRTRIXBones.R_Pinky_1, RH.GetReceivedRotation(VRTRIXBones.R_Pinky_1), HANDTYPE.RIGHT_HAND);
+                SetRotation(VRTRIXBones.R_Pinky_2, RH.GetReceivedRotation(VRTRIXBones.R_Pinky_2), HANDTYPE.RIGHT_HAND);
+                SetRotation(VRTRIXBones.R_Pinky_3, RH.GetReceivedRotation(VRTRIXBones.R_Pinky_3), HANDTYPE.RIGHT_HAND);
 
                 RH_Gesture = GloveGesture.GestureDetection(RH, HANDTYPE.RIGHT_HAND);
             }
@@ -156,31 +157,31 @@ namespace VRTRIX
                     SetPosition(VRTRIXBones.L_Arm, LH_tracker.transform.position, LH_tracker.transform.rotation, LHTrackerOffset);
                 }
                 //以下是设置左手每个骨骼节点全局旋转(global rotation)；
-                SetRotation(VRTRIXBones.L_Hand, LH.GetReceivedRotation(VRTRIXBones.L_Hand), LH.DataValidStatus(VRTRIXBones.L_Hand), HANDTYPE.LEFT_HAND);
+                SetRotation(VRTRIXBones.L_Hand, LH.GetReceivedRotation(VRTRIXBones.L_Hand), HANDTYPE.LEFT_HAND);
 
-                SetRotation(VRTRIXBones.L_Thumb_1, LH.GetReceivedRotation(VRTRIXBones.L_Thumb_1), LH.DataValidStatus(VRTRIXBones.L_Thumb_1), HANDTYPE.LEFT_HAND);
-                SetRotation(VRTRIXBones.L_Thumb_2, LH.GetReceivedRotation(VRTRIXBones.L_Thumb_2), LH.DataValidStatus(VRTRIXBones.L_Thumb_2), HANDTYPE.LEFT_HAND);
-                SetRotation(VRTRIXBones.L_Thumb_3, LH.GetReceivedRotation(VRTRIXBones.L_Thumb_3), LH.DataValidStatus(VRTRIXBones.L_Thumb_3), HANDTYPE.LEFT_HAND);
-
-
-                SetRotation(VRTRIXBones.L_Index_1, LH.GetReceivedRotation(VRTRIXBones.L_Index_1), LH.DataValidStatus(VRTRIXBones.L_Index_1), HANDTYPE.LEFT_HAND);
-                SetRotation(VRTRIXBones.L_Index_2, LH.GetReceivedRotation(VRTRIXBones.L_Index_2), LH.DataValidStatus(VRTRIXBones.L_Index_2), HANDTYPE.LEFT_HAND);
-                SetRotation(VRTRIXBones.L_Index_3, LH.GetReceivedRotation(VRTRIXBones.L_Index_3), LH.DataValidStatus(VRTRIXBones.L_Index_3), HANDTYPE.LEFT_HAND);
+                SetRotation(VRTRIXBones.L_Thumb_1, LH.GetReceivedRotation(VRTRIXBones.L_Thumb_1), HANDTYPE.LEFT_HAND);
+                SetRotation(VRTRIXBones.L_Thumb_2, LH.GetReceivedRotation(VRTRIXBones.L_Thumb_2), HANDTYPE.LEFT_HAND);
+                SetRotation(VRTRIXBones.L_Thumb_3, LH.GetReceivedRotation(VRTRIXBones.L_Thumb_3), HANDTYPE.LEFT_HAND);
 
 
-                SetRotation(VRTRIXBones.L_Middle_1, LH.GetReceivedRotation(VRTRIXBones.L_Middle_1), LH.DataValidStatus(VRTRIXBones.L_Middle_1), HANDTYPE.LEFT_HAND);
-                SetRotation(VRTRIXBones.L_Middle_2, LH.GetReceivedRotation(VRTRIXBones.L_Middle_2), LH.DataValidStatus(VRTRIXBones.L_Middle_2), HANDTYPE.LEFT_HAND);
-                SetRotation(VRTRIXBones.L_Middle_3, LH.GetReceivedRotation(VRTRIXBones.L_Middle_3), LH.DataValidStatus(VRTRIXBones.L_Middle_3), HANDTYPE.LEFT_HAND);
+                SetRotation(VRTRIXBones.L_Index_1, LH.GetReceivedRotation(VRTRIXBones.L_Index_1), HANDTYPE.LEFT_HAND);
+                SetRotation(VRTRIXBones.L_Index_2, LH.GetReceivedRotation(VRTRIXBones.L_Index_2), HANDTYPE.LEFT_HAND);
+                SetRotation(VRTRIXBones.L_Index_3, LH.GetReceivedRotation(VRTRIXBones.L_Index_3), HANDTYPE.LEFT_HAND);
 
 
-                SetRotation(VRTRIXBones.L_Ring_1, LH.GetReceivedRotation(VRTRIXBones.L_Ring_1), LH.DataValidStatus(VRTRIXBones.L_Ring_1), HANDTYPE.LEFT_HAND);
-                SetRotation(VRTRIXBones.L_Ring_2, LH.GetReceivedRotation(VRTRIXBones.L_Ring_2), LH.DataValidStatus(VRTRIXBones.L_Ring_2), HANDTYPE.LEFT_HAND);
-                SetRotation(VRTRIXBones.L_Ring_3, LH.GetReceivedRotation(VRTRIXBones.L_Ring_3), LH.DataValidStatus(VRTRIXBones.L_Ring_3), HANDTYPE.LEFT_HAND);
+                SetRotation(VRTRIXBones.L_Middle_1, LH.GetReceivedRotation(VRTRIXBones.L_Middle_1), HANDTYPE.LEFT_HAND);
+                SetRotation(VRTRIXBones.L_Middle_2, LH.GetReceivedRotation(VRTRIXBones.L_Middle_2), HANDTYPE.LEFT_HAND);
+                SetRotation(VRTRIXBones.L_Middle_3, LH.GetReceivedRotation(VRTRIXBones.L_Middle_3), HANDTYPE.LEFT_HAND);
 
 
-                SetRotation(VRTRIXBones.L_Pinky_1, LH.GetReceivedRotation(VRTRIXBones.L_Pinky_1), LH.DataValidStatus(VRTRIXBones.L_Pinky_1), HANDTYPE.LEFT_HAND);
-                SetRotation(VRTRIXBones.L_Pinky_2, LH.GetReceivedRotation(VRTRIXBones.L_Pinky_2), LH.DataValidStatus(VRTRIXBones.L_Pinky_2), HANDTYPE.LEFT_HAND);
-                SetRotation(VRTRIXBones.L_Pinky_3, LH.GetReceivedRotation(VRTRIXBones.L_Pinky_3), LH.DataValidStatus(VRTRIXBones.L_Pinky_3), HANDTYPE.LEFT_HAND);
+                SetRotation(VRTRIXBones.L_Ring_1, LH.GetReceivedRotation(VRTRIXBones.L_Ring_1), HANDTYPE.LEFT_HAND);
+                SetRotation(VRTRIXBones.L_Ring_2, LH.GetReceivedRotation(VRTRIXBones.L_Ring_2), HANDTYPE.LEFT_HAND);
+                SetRotation(VRTRIXBones.L_Ring_3, LH.GetReceivedRotation(VRTRIXBones.L_Ring_3), HANDTYPE.LEFT_HAND);
+
+
+                SetRotation(VRTRIXBones.L_Pinky_1, LH.GetReceivedRotation(VRTRIXBones.L_Pinky_1), HANDTYPE.LEFT_HAND);
+                SetRotation(VRTRIXBones.L_Pinky_2, LH.GetReceivedRotation(VRTRIXBones.L_Pinky_2), HANDTYPE.LEFT_HAND);
+                SetRotation(VRTRIXBones.L_Pinky_3, LH.GetReceivedRotation(VRTRIXBones.L_Pinky_3), HANDTYPE.LEFT_HAND);
 
                 LH_Gesture = GloveGesture.GestureDetection(LH, HANDTYPE.LEFT_HAND);
             }
@@ -228,7 +229,6 @@ namespace VRTRIX
                 {
                     OnChannelHopping();
                 }
-
             }
         }
 
@@ -429,46 +429,43 @@ namespace VRTRIX
         }
 
         //手部关节旋转赋值函数，每一帧都会调用，通过从数据手套硬件获取当前姿态，进一步进行处理，然后给模型赋值。
-        private void SetRotation(VRTRIXBones bone, Quaternion rotation, bool valid, HANDTYPE type)
+        private void SetRotation(VRTRIXBones bone, Quaternion rotation, HANDTYPE type)
         {
             Transform obj = fingerTransformArray[(int)bone];
             if (obj != null)
             {
                 if (!float.IsNaN(rotation.x) && !float.IsNaN(rotation.y) && !float.IsNaN(rotation.z) && !float.IsNaN(rotation.w))
                 {
-                    if (valid)
+                    if (type == HANDTYPE.LEFT_HAND)
                     {
-                        if (type == HANDTYPE.LEFT_HAND)
+                        Vector3 quat_vec = ml_axisoffset.MultiplyVector(new Vector3(rotation.x, rotation.y, rotation.z));
+                        rotation = new Quaternion(quat_vec.x, quat_vec.y, quat_vec.z, rotation.w);
+                        if (IsVREnabled)
                         {
-                            Vector3 quat_vec = ml_axisoffset.MultiplyVector(new Vector3(rotation.x, rotation.y, rotation.z));
-                            rotation = new Quaternion(quat_vec.x, quat_vec.y, quat_vec.z, rotation.w);
-                            if (IsVREnabled)
-                            {
-                                //当VR环境下，根据固定在手腕上tracker的方向对齐手背方向。
-                                obj.rotation = (bone == VRTRIXBones.L_Hand) ? CalculateDynamicOffset(LH_tracker, LH, HANDTYPE.LEFT_HAND) * rotation :
-                                                                         CalculateDynamicOffset(LH_tracker, LH, HANDTYPE.LEFT_HAND)* rotation * Quaternion.Euler(ql_modeloffset);
-                            }
-                            else
-                            {
-                                //当3D环境下，根据相机视角方向对齐手背方向。
-                                obj.rotation = (bone == VRTRIXBones.L_Hand) ? qloffset * rotation :
-                                                                         qloffset * rotation * Quaternion.Euler(ql_modeloffset);
-                            }
+                            //当VR环境下，根据固定在手腕上tracker的方向对齐手背方向。
+                            obj.rotation = (bone == VRTRIXBones.L_Hand) ? CalculateDynamicOffset(LH_tracker, LH, HANDTYPE.LEFT_HAND) * rotation :
+                                                                     CalculateDynamicOffset(LH_tracker, LH, HANDTYPE.LEFT_HAND)* rotation * Quaternion.Euler(ql_modeloffset);
                         }
-                        else if (type == HANDTYPE.RIGHT_HAND)
+                        else
                         {
-                            Vector3 quat_vec = mr_axisoffset.MultiplyVector(new Vector3(rotation.x, rotation.y, rotation.z));
-                            rotation = new Quaternion(quat_vec.x, quat_vec.y, quat_vec.z, rotation.w);
-                            if (IsVREnabled)
-                            {
-                                obj.rotation = (bone == VRTRIXBones.R_Hand) ? CalculateDynamicOffset(RH_tracker, RH, HANDTYPE.RIGHT_HAND)* rotation :
-                                                                                CalculateDynamicOffset(RH_tracker, RH, HANDTYPE.RIGHT_HAND)* rotation * Quaternion.Euler(qr_modeloffset);
-                            }
-                            else
-                            {
-                                obj.rotation = (bone == VRTRIXBones.R_Hand) ? qroffset * rotation :
-                                                                         qroffset * rotation * Quaternion.Euler(qr_modeloffset);
-                            }
+                            //当3D环境下，根据相机视角方向对齐手背方向。
+                            obj.rotation = (bone == VRTRIXBones.L_Hand) ? qloffset * rotation :
+                                                                     qloffset * rotation * Quaternion.Euler(ql_modeloffset);
+                        }
+                    }
+                    else if (type == HANDTYPE.RIGHT_HAND)
+                    {
+                        Vector3 quat_vec = mr_axisoffset.MultiplyVector(new Vector3(rotation.x, rotation.y, rotation.z));
+                        rotation = new Quaternion(quat_vec.x, quat_vec.y, quat_vec.z, rotation.w);
+                        if (IsVREnabled)
+                        {
+                            obj.rotation = (bone == VRTRIXBones.R_Hand) ? CalculateDynamicOffset(RH_tracker, RH, HANDTYPE.RIGHT_HAND)* rotation :
+                                                                            CalculateDynamicOffset(RH_tracker, RH, HANDTYPE.RIGHT_HAND)* rotation * Quaternion.Euler(qr_modeloffset);
+                        }
+                        else
+                        {
+                            obj.rotation = (bone == VRTRIXBones.R_Hand) ? qroffset * rotation :
+                                                                     qroffset * rotation * Quaternion.Euler(qr_modeloffset);
                         }
                     }
                 }
@@ -482,7 +479,7 @@ namespace VRTRIX
 
         public int GetCalScore(VRTRIXBones bone)
         {
-            if ((int)bone < 19)
+            if ((int)bone < 16)
             {
                 return RH.GetReceivedCalScore(bone);
             }
@@ -616,8 +613,7 @@ namespace VRTRIX
         private Transform[] FindFingerTransform()
         {
             Transform[] transform_array = new Transform[(int)VRTRIXBones.NumOfBones];
-            transform_array[0] = null;
-            for(int i = 1; i < (int)VRTRIXBones.NumOfBones; ++i)
+            for(int i = 0; i < (int)VRTRIXBones.NumOfBones; ++i)
             {
                 string bone_name = VRTRIXUtilities.GetBoneName(i);
                 if (GetComponent("VRTRIXBoneMapping"))
@@ -627,15 +623,8 @@ namespace VRTRIX
                     {
                         transform_array[i] = bone.transform;
                     }
+                    //print(bone);
                 }
-                else
-                {
-                    Transform parent = (i < 19) ? transform.GetChild(1) : transform.GetChild(0);
-                    Transform obj = TransformDeepChildExtension.FindDeepChild(parent, bone_name);
-                    transform_array[i] = obj;
-                }
-
-                //print(obj);
             }
             return transform_array;
         }
@@ -703,28 +692,6 @@ namespace VRTRIX
         }
 
     }
-    public static class TransformDeepChildExtension
-    {
-        //Breadth-first search
-        public static Transform FindDeepChild(this Transform aParent, string aName)
-        {
-            Queue<Transform> queue = new Queue<Transform>();
-            queue.Enqueue(aParent);
-            while (queue.Count > 0)
-            {
-                var c = queue.Dequeue();
-                if (c.name == aName)
-                {
-                    return c;
-                }
-                
-                foreach(Transform t in c)
-                queue.Enqueue(t);
-            }
-            return null;
-        }    
-    }
-
 }
 
 

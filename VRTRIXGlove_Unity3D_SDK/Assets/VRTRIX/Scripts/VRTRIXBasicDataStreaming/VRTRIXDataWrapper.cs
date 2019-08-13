@@ -60,11 +60,7 @@ namespace VRTRIX {
         public int radio_channel;
         private int[] calscore = new int[6];
         private bool port_opened = false;
-        private bool[] valid = new bool[6];
         private Quaternion[] data = new Quaternion[16];
-        private Quaternion L_thumb_offset = new Quaternion(0.49673f, 0.409576f, 0.286788f, 0.709406f); //(sin(70/2), 0, 0, cos(70/2))*(0, sin(60/2), 0, cos(60/2))
-        private Quaternion R_thumb_offset = new Quaternion(-0.49673f, -0.409576f, 0.286788f, 0.709406f); //(sin(-70/2), 0, 0, cos(-70/2))*(0, sin(-60/2), 0, cos(-60/2))
-   
         private VRTRIXGloveStatus stat = VRTRIXGloveStatus.CLOSED;
 
         [StructLayout(LayoutKind.Sequential)]
@@ -168,10 +164,6 @@ namespace VRTRIX {
 
         public bool Init(HANDTYPE type)
         {
-            for (int i = 0; i < 6; i++)
-            {
-                valid[i] = true;
-            }
             for (int i = 0; i < 16; i++)
             {
                 data[i] = Quaternion.identity;
@@ -288,33 +280,17 @@ namespace VRTRIX {
 
         public float GetReceivedGestureAngle (VRTRIXBones bone)
         {
-            switch (bone)
+            Quaternion fingerOffest = Quaternion.identity;
+            if (bone == VRTRIXBones.L_Thumb_2)
             {
-                case VRTRIXBones.R_Index_2:
-                    return (Quaternion.Inverse(data[3]) * data[5]).eulerAngles.z;
-                case VRTRIXBones.R_Middle_2:
-                    return (Quaternion.Inverse(data[2]) * data[5]).eulerAngles.z;
-                case VRTRIXBones.R_Ring_2:
-                    return (Quaternion.Inverse(data[1]) * data[5]).eulerAngles.z;
-                case VRTRIXBones.R_Pinky_2:
-                    return (Quaternion.Inverse(data[0]) * data[5]).eulerAngles.z;
-                case VRTRIXBones.R_Thumb_2:
-                    return (Quaternion.Inverse(data[4]) * (data[5] * R_thumb_offset)).eulerAngles.z;
-
-                case VRTRIXBones.L_Index_2:
-                    return (Quaternion.Inverse(data[3]) * data[5]).eulerAngles.z;
-                case VRTRIXBones.L_Middle_2:
-                    return (Quaternion.Inverse(data[2]) * data[5]).eulerAngles.z;
-                case VRTRIXBones.L_Ring_2:
-                    return (Quaternion.Inverse(data[1]) * data[5]).eulerAngles.z;
-                case VRTRIXBones.L_Pinky_2:
-                    return (Quaternion.Inverse(data[0]) * data[5]).eulerAngles.z;
-                case VRTRIXBones.L_Thumb_2:
-                    return (Quaternion.Inverse(data[4]) * (data[5] * L_thumb_offset)).eulerAngles.z;
-
-                default:
-                    return 0f;
+                fingerOffest = new Quaternion(0.49673f, 0.409576f, 0.286788f, 0.709406f); //(sin(70/2), 0, 0, cos(70/2))*(0, sin(60/2), 0, cos(60/2))
             }
+            else if(bone == VRTRIXBones.R_Thumb_2)
+            {
+                fingerOffest = new Quaternion(-0.49673f, -0.409576f, 0.286788f, 0.709406f); //(sin(-70/2), 0, 0, cos(-70/2))*(0, sin(-60/2), 0, cos(-60/2))
+            }
+            return ((int)bone < 16) ? (Quaternion.Inverse(data[(int)bone]) * (data[(int)VRTRIXBones.R_Hand] * fingerOffest)).eulerAngles.z :
+                                      (Quaternion.Inverse(data[(int)bone - 16]) * (data[(int)VRTRIXBones.L_Hand - 16] * fingerOffest)).eulerAngles.z ;
         }
         public int GetReceivedDataRate()
         {
@@ -373,121 +349,12 @@ namespace VRTRIX {
         {
             return (calscore[0] + calscore[1] + calscore[2] + calscore[3] + calscore[4] + calscore[5]) / 6;
         }
-        public bool DataValidStatus (VRTRIXBones bone)
-        {
-            switch (bone)
-            {
-                case VRTRIXBones.R_Index_1:
-                    return valid[3];
-                case VRTRIXBones.R_Middle_1:
-                    return valid[2];
-                case VRTRIXBones.R_Ring_1:
-                    return valid[1];
-                case VRTRIXBones.R_Pinky_1:
-                    return valid[0];
-                case VRTRIXBones.R_Thumb_1:
-                    return valid[4];
 
-
-                case VRTRIXBones.L_Index_1:
-                    return valid[3];
-                case VRTRIXBones.L_Middle_1:
-                    return valid[2];
-                case VRTRIXBones.L_Ring_1:
-                    return valid[1];
-                case VRTRIXBones.L_Pinky_1:
-                    return valid[0];
-                case VRTRIXBones.L_Thumb_1:
-                    return valid[4];
-
-                default:
-                    return true;
-            }
-        }
         public Quaternion GetReceivedRotation(VRTRIXBones bone)
         {
-            switch (bone)
-            {
-                case VRTRIXBones.R_Forearm:
-                    return data[5];
-                case VRTRIXBones.R_Hand:
-                    return data[5];
-                case VRTRIXBones.R_Index_2:
-                    return data[3];
-                case VRTRIXBones.R_Middle_2:
-                    return data[2];
-                case VRTRIXBones.R_Ring_2:
-                    return data[1];
-                case VRTRIXBones.R_Pinky_2:
-                    return data[0];
-                case VRTRIXBones.R_Thumb_2:
-                    return data[15];
-
-                case VRTRIXBones.R_Index_1:
-                    return data[9];
-                case VRTRIXBones.R_Middle_1:
-                    return data[8];
-                case VRTRIXBones.R_Ring_1:
-                    return data[7];
-                case VRTRIXBones.R_Pinky_1:
-                    return data[6];
-                case VRTRIXBones.R_Thumb_1:
-                    return data[10];
-
-                case VRTRIXBones.R_Index_3:
-                    return data[14];
-                case VRTRIXBones.R_Middle_3:
-                    return data[13];
-                case VRTRIXBones.R_Ring_3:
-                    return data[12];
-                case VRTRIXBones.R_Pinky_3:
-                    return data[11];
-                case VRTRIXBones.R_Thumb_3:
-                    return data[4];
-
-
-                case VRTRIXBones.L_Forearm:
-                    return data[5];
-                case VRTRIXBones.L_Hand:
-                    return data[5];
-                case VRTRIXBones.L_Index_2:
-                    return data[3];
-                case VRTRIXBones.L_Middle_2:
-                    return data[2];
-                case VRTRIXBones.L_Ring_2:
-                    return data[1];
-                case VRTRIXBones.L_Pinky_2:
-                    return data[0];
-                case VRTRIXBones.L_Thumb_2:
-                    return data[15];
-
-                case VRTRIXBones.L_Index_1:
-                    return data[9];
-                case VRTRIXBones.L_Middle_1:
-                    return data[8];
-                case VRTRIXBones.L_Ring_1:
-                    return data[7];
-                case VRTRIXBones.L_Pinky_1:
-                    return data[6];
-                case VRTRIXBones.L_Thumb_1:
-                    return data[10];
-
-                case VRTRIXBones.L_Index_3:
-                    return data[14];
-                case VRTRIXBones.L_Middle_3:
-                    return data[13];
-                case VRTRIXBones.L_Ring_3:
-                    return data[12];
-                case VRTRIXBones.L_Pinky_3:
-                    return data[11];
-                case VRTRIXBones.L_Thumb_3:
-                    return data[4];
-
-
-                default:
-                    return Quaternion.identity;
-            }
-
+            if ((int)bone < (int)VRTRIXBones.L_Hand) return data[(int)bone];
+            else if ((int)bone < (int)VRTRIXBones.R_Arm) return data[(int)bone - 16];
+            else return Quaternion.identity;
         }
 
         public void OnSaveCalibration()
