@@ -23,31 +23,31 @@ namespace VRTRIX
             if (GetScissorsButtonDown(HANDTYPE.LEFT_HAND) || GetScissorsButtonDown(HANDTYPE.RIGHT_HAND))
             {
                 print("Scissors!");
-                m_Scissors.GetComponent<Renderer>().materials[0].color = new Color(99f/255f, 1f, 1f, 1f);
+                m_Scissors.GetComponentInChildren<Renderer>().materials[0].color = new Color(99f/255f, 1f, 1f, 1f);
             }
             else
             {
-                m_Scissors.GetComponent<Renderer>().materials[0].color = Color.white;
+                m_Scissors.GetComponentInChildren<Renderer>().materials[0].color = Color.white;
             }
 
             if (GetRockButtonDown(HANDTYPE.LEFT_HAND) || GetRockButtonDown(HANDTYPE.RIGHT_HAND))
             {
                 print("Rock!");
-                m_Rock.GetComponent<Renderer>().materials[0].color = new Color(0f, 1f, 146f / 255f, 1f);
+                m_Rock.GetComponentInChildren<Renderer>().materials[0].color = new Color(0f, 1f, 146f / 255f, 1f);
             }
             else
             {
-                m_Rock.GetComponent<Renderer>().materials[0].color = Color.white;
+                m_Rock.GetComponentInChildren<Renderer>().materials[0].color = Color.white;
             }
 
             if (GetPaperButtonDown(HANDTYPE.LEFT_HAND) || GetPaperButtonDown(HANDTYPE.RIGHT_HAND))
             {
                 print("Paper!");
-                m_Paper.GetComponent<Renderer>().materials[0].color = new Color(1f, 1f, 157f / 255f, 1f);
+                m_Paper.GetComponentInChildren<Renderer>().materials[0].color = new Color(1f, 1f, 157f / 255f, 1f);
             }
             else
             {
-                m_Paper.GetComponent<Renderer>().materials[0].color = Color.white;
+                m_Paper.GetComponentInChildren<Renderer>().materials[0].color = Color.white;
             }
         }
 

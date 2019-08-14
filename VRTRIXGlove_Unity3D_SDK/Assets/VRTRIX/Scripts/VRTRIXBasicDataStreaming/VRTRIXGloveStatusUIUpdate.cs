@@ -12,6 +12,7 @@ namespace VRTRIX
     public class VRTRIXGloveStatusUIUpdate : MonoBehaviour
     {
         [Header("UIComponent")]
+        public GameObject m_AdvancedModeToggle;
         public GameObject m_FPS;
         public GameObject m_MODE;
         public GameObject m_Status;
@@ -172,6 +173,10 @@ namespace VRTRIX
             m_LRing.GetComponent<Text>().text = "L_RING:   " + glove3D.GetRotation(VRTRIXBones.L_Ring_2) + "    " + glove3D.GetCalScore(VRTRIXBones.L_Ring_2).ToString();
             m_LPinky.GetComponent<Text>().text = "L_PINKY:   " + glove3D.GetRotation(VRTRIXBones.L_Pinky_2) + "    " + glove3D.GetCalScore(VRTRIXBones.L_Pinky_2).ToString();
             
+        }
+        public void OnToggleAdvancedMode(bool enabled)
+        {
+            glove3D.SetAdvancedMode(enabled);
         }
         private static void RadioStrengthGUI(Image image, int radiostrength)
         {

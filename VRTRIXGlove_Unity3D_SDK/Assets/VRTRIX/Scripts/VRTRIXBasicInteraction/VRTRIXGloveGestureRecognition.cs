@@ -5,9 +5,6 @@
 //
 //=============================================================================
 
-
-using UnityEngine;
-
 namespace VRTRIX
 {
     public enum VRTRIXGloveGesture

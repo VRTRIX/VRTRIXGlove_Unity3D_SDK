@@ -8,7 +8,6 @@
 using UnityEngine;
 using System;
 using System.Threading;
-using System.Collections.Generic;
 using Valve.VR;
 
 namespace VRTRIX
@@ -16,10 +15,7 @@ namespace VRTRIX
     [RequireComponent(typeof(VRTRIXBoneMapping))]
     public class VRTRIXGloveDataStreaming : MonoBehaviour
     {
- 
         [Header("VR Settings")]
- 
-        // An example for a bool
         public bool IsVREnabled = false;
         [DrawIf("IsVREnabled", false)]
         public GameObject LH_ObjectToAlign, RH_ObjectToAlign;
@@ -30,31 +26,14 @@ namespace VRTRIX
         [DrawIf("IsVREnabled", true)]
         public Vector3 LHTrackerOffset = new Vector3(-0.01f, 0, -0.035f);
 
-        public bool AdvancedMode;
+        [Header("Glove Settings")]
+        public GLOVEVERSION version;
         public bool IsEnableMultipleGloves;
-        public enum GloveIndex
-	    {
-	    	None = -1,
-            Device0 = 0,
-	    	Device1 = 1,
-	    	Device2 = 2,
-	    	Device3 = 3,
-	    	Device4 = 4,
-	    	Device5 = 5,
-	    	Device6 = 6,
-	    	Device7 = 7,
-	    	Device8 = 8,
-	    	Device9 = 9,
-	    	Device10 = 10,
-	    	Device11 = 11,
-	    	Device12 = 12,
-	    	Device13 = 13,
-	    	Device14 = 14,
-	     	Device15 = 15,
-            MaxDeviceCount = 16
-    	}
         public GloveIndex Index;
-        public Vector3 ql_modeloffset, qr_modeloffset;
+
+        [Header("Model Mapping Settings")]
+        public Vector3 ql_modeloffset;
+        public Vector3 qr_modeloffset;
         public Vector3[] ql_axisoffset = new Vector3[3];
         public Vector3[] qr_axisoffset = new Vector3[3];
         public VRTRIXDataWrapper LH, RH;
@@ -67,15 +46,15 @@ namespace VRTRIX
         private bool LH_Mode, RH_Mode;
         private Transform[] fingerTransformArray;
         private Matrix4x4 ml_axisoffset, mr_axisoffset;
-
+        private  bool AdvancedMode = false;
         void Start()
         {
             if (!IsEnableMultipleGloves)
             {
                 Index = GloveIndex.MaxDeviceCount;
             }
-            LH = new VRTRIXDataWrapper(AdvancedMode, (int)Index);
-            RH = new VRTRIXDataWrapper(AdvancedMode, (int)Index);
+            LH = new VRTRIXDataWrapper(AdvancedMode, (int)Index, version);
+            RH = new VRTRIXDataWrapper(AdvancedMode, (int)Index, version);
             GloveGesture = new VRTRIXGloveGestureRecognition();
             fingerTransformArray = FindFingerTransform();
             for(int i = 0; i < 3; i++)
@@ -117,28 +96,10 @@ namespace VRTRIX
                     SetPosition(VRTRIXBones.R_Arm, RH_tracker.transform.position, RH_tracker.transform.rotation, RHTrackerOffset);
                 }
                 //以下是设置右手每个骨骼节点全局旋转(global rotation)；
-                SetRotation(VRTRIXBones.R_Hand, RH.GetReceivedRotation(VRTRIXBones.R_Hand), HANDTYPE.RIGHT_HAND);
-
-                SetRotation(VRTRIXBones.R_Thumb_1, RH.GetReceivedRotation(VRTRIXBones.R_Thumb_1), HANDTYPE.RIGHT_HAND);
-                SetRotation(VRTRIXBones.R_Thumb_2, RH.GetReceivedRotation(VRTRIXBones.R_Thumb_2), HANDTYPE.RIGHT_HAND);
-                SetRotation(VRTRIXBones.R_Thumb_3, RH.GetReceivedRotation(VRTRIXBones.R_Thumb_3), HANDTYPE.RIGHT_HAND);
-
-                SetRotation(VRTRIXBones.R_Index_1, RH.GetReceivedRotation(VRTRIXBones.R_Index_1), HANDTYPE.RIGHT_HAND);
-                SetRotation(VRTRIXBones.R_Index_2, RH.GetReceivedRotation(VRTRIXBones.R_Index_2), HANDTYPE.RIGHT_HAND);
-                SetRotation(VRTRIXBones.R_Index_3, RH.GetReceivedRotation(VRTRIXBones.R_Index_3), HANDTYPE.RIGHT_HAND);
-
-                SetRotation(VRTRIXBones.R_Middle_1, RH.GetReceivedRotation(VRTRIXBones.R_Middle_1), HANDTYPE.RIGHT_HAND);
-                SetRotation(VRTRIXBones.R_Middle_2, RH.GetReceivedRotation(VRTRIXBones.R_Middle_2), HANDTYPE.RIGHT_HAND);
-                SetRotation(VRTRIXBones.R_Middle_3, RH.GetReceivedRotation(VRTRIXBones.R_Middle_3), HANDTYPE.RIGHT_HAND);
-
-                SetRotation(VRTRIXBones.R_Ring_1, RH.GetReceivedRotation(VRTRIXBones.R_Ring_1), HANDTYPE.RIGHT_HAND);
-                SetRotation(VRTRIXBones.R_Ring_2, RH.GetReceivedRotation(VRTRIXBones.R_Ring_2), HANDTYPE.RIGHT_HAND);
-                SetRotation(VRTRIXBones.R_Ring_3, RH.GetReceivedRotation(VRTRIXBones.R_Ring_3), HANDTYPE.RIGHT_HAND);
-
-                SetRotation(VRTRIXBones.R_Pinky_1, RH.GetReceivedRotation(VRTRIXBones.R_Pinky_1), HANDTYPE.RIGHT_HAND);
-                SetRotation(VRTRIXBones.R_Pinky_2, RH.GetReceivedRotation(VRTRIXBones.R_Pinky_2), HANDTYPE.RIGHT_HAND);
-                SetRotation(VRTRIXBones.R_Pinky_3, RH.GetReceivedRotation(VRTRIXBones.R_Pinky_3), HANDTYPE.RIGHT_HAND);
-
+                for(int i = 0; i < (int)VRTRIXBones.L_Hand; ++i)
+                {
+                    SetRotation((VRTRIXBones)i, RH.GetReceivedRotation((VRTRIXBones)i), HANDTYPE.RIGHT_HAND);
+                }
                 RH_Gesture = GloveGesture.GestureDetection(RH, HANDTYPE.RIGHT_HAND);
             }
 
@@ -156,33 +117,12 @@ namespace VRTRIX
                 {
                     SetPosition(VRTRIXBones.L_Arm, LH_tracker.transform.position, LH_tracker.transform.rotation, LHTrackerOffset);
                 }
+
                 //以下是设置左手每个骨骼节点全局旋转(global rotation)；
-                SetRotation(VRTRIXBones.L_Hand, LH.GetReceivedRotation(VRTRIXBones.L_Hand), HANDTYPE.LEFT_HAND);
-
-                SetRotation(VRTRIXBones.L_Thumb_1, LH.GetReceivedRotation(VRTRIXBones.L_Thumb_1), HANDTYPE.LEFT_HAND);
-                SetRotation(VRTRIXBones.L_Thumb_2, LH.GetReceivedRotation(VRTRIXBones.L_Thumb_2), HANDTYPE.LEFT_HAND);
-                SetRotation(VRTRIXBones.L_Thumb_3, LH.GetReceivedRotation(VRTRIXBones.L_Thumb_3), HANDTYPE.LEFT_HAND);
-
-
-                SetRotation(VRTRIXBones.L_Index_1, LH.GetReceivedRotation(VRTRIXBones.L_Index_1), HANDTYPE.LEFT_HAND);
-                SetRotation(VRTRIXBones.L_Index_2, LH.GetReceivedRotation(VRTRIXBones.L_Index_2), HANDTYPE.LEFT_HAND);
-                SetRotation(VRTRIXBones.L_Index_3, LH.GetReceivedRotation(VRTRIXBones.L_Index_3), HANDTYPE.LEFT_HAND);
-
-
-                SetRotation(VRTRIXBones.L_Middle_1, LH.GetReceivedRotation(VRTRIXBones.L_Middle_1), HANDTYPE.LEFT_HAND);
-                SetRotation(VRTRIXBones.L_Middle_2, LH.GetReceivedRotation(VRTRIXBones.L_Middle_2), HANDTYPE.LEFT_HAND);
-                SetRotation(VRTRIXBones.L_Middle_3, LH.GetReceivedRotation(VRTRIXBones.L_Middle_3), HANDTYPE.LEFT_HAND);
-
-
-                SetRotation(VRTRIXBones.L_Ring_1, LH.GetReceivedRotation(VRTRIXBones.L_Ring_1), HANDTYPE.LEFT_HAND);
-                SetRotation(VRTRIXBones.L_Ring_2, LH.GetReceivedRotation(VRTRIXBones.L_Ring_2), HANDTYPE.LEFT_HAND);
-                SetRotation(VRTRIXBones.L_Ring_3, LH.GetReceivedRotation(VRTRIXBones.L_Ring_3), HANDTYPE.LEFT_HAND);
-
-
-                SetRotation(VRTRIXBones.L_Pinky_1, LH.GetReceivedRotation(VRTRIXBones.L_Pinky_1), HANDTYPE.LEFT_HAND);
-                SetRotation(VRTRIXBones.L_Pinky_2, LH.GetReceivedRotation(VRTRIXBones.L_Pinky_2), HANDTYPE.LEFT_HAND);
-                SetRotation(VRTRIXBones.L_Pinky_3, LH.GetReceivedRotation(VRTRIXBones.L_Pinky_3), HANDTYPE.LEFT_HAND);
-
+                for(int i = (int)VRTRIXBones.L_Hand; i < (int)VRTRIXBones.R_Arm; ++i)
+                {
+                    SetRotation((VRTRIXBones)i, LH.GetReceivedRotation((VRTRIXBones)i), HANDTYPE.LEFT_HAND);
+                }
                 LH_Gesture = GloveGesture.GestureDetection(LH, HANDTYPE.LEFT_HAND);
             }
         }
@@ -267,7 +207,7 @@ namespace VRTRIX
             {
                 if (LH.ClosePort())
                 {
-                    LH = new VRTRIXDataWrapper(AdvancedMode, (int)Index);
+                    LH = new VRTRIXDataWrapper(AdvancedMode, (int)Index, version);
                 }
                 LH_Mode = false;
             }
@@ -275,7 +215,7 @@ namespace VRTRIX
             {
                 if (RH.ClosePort())
                 {
-                    RH = new VRTRIXDataWrapper(AdvancedMode, (int)Index);
+                    RH = new VRTRIXDataWrapper(AdvancedMode, (int)Index, version);
                 }
                 RH_Mode = false;
             }
@@ -317,6 +257,20 @@ namespace VRTRIX
             if (RH_Mode)
             {
                 RH.ChannelHopping();
+            }
+        }
+
+
+        //数据手套五指张开解锁
+        public void SetAdvancedMode(bool bIsAdvancedMode)
+        {
+            if (LH_Mode)
+            {
+                LH.SetAdvancedMode(bIsAdvancedMode);
+            }
+            if (RH_Mode)
+            {
+                RH.SetAdvancedMode(bIsAdvancedMode);
             }
         }
 

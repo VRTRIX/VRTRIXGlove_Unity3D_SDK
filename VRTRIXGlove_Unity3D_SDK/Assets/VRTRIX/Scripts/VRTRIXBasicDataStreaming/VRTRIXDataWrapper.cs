@@ -11,10 +11,29 @@
 using System;
 using System.Runtime.InteropServices;
 using UnityEngine;
-using System.Text;
-using System.Timers;
 
 namespace VRTRIX {
+    public enum GloveIndex
+	{
+		None = -1,
+        Device0 = 0,
+		Device1 = 1,
+		Device2 = 2,
+		Device3 = 3,
+		Device4 = 4,
+		Device5 = 5,
+		Device6 = 6,
+		Device7 = 7,
+		Device8 = 8,
+		Device9 = 9,
+		Device10 = 10,
+		Device11 = 11,
+		Device12 = 12,
+		Device13 = 13,
+		Device14 = 14,
+	 	Device15 = 15,
+        MaxDeviceCount = 16
+    }
     public enum HANDTYPE
     {
         RIGHT_HAND,
@@ -22,6 +41,13 @@ namespace VRTRIX {
         BOTH_HAND,
         NONE
     };
+    public enum GLOVEVERSION
+    {
+        DK1,
+        DK2,
+        PRO
+    };
+
     public enum VRTRIXGloveStatus
     {
         CLOSED,
@@ -83,9 +109,10 @@ namespace VRTRIX {
         #region Functions API
         /// </summary>
         /// <param name="AdvancedMode">Unlock the yaw of fingers if set true</param>
+        /// <param name="AdvancedMode">Specify the data glove hardware version</param>
         /// <returns>The serial port object as IntPtr</returns>
         [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        public static extern IntPtr InitDataGlove(bool AdvancedMode);
+        public static extern IntPtr InitDataGlove(bool AdvancedMode, GLOVEVERSION HardwareVersion);
         /// <summary>
         /// Open the serial port
         /// </summary>
@@ -153,13 +180,19 @@ namespace VRTRIX {
         /// <param name="sp">The serial port object</param>
         [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         public static extern void ChannelHopping(IntPtr sp);
-
+        /// <summary>
+        /// Set Advanced Mode.
+        /// </summary>
+        /// <param name="sp">The serial port object</param>
+        /// <param name="bIsAdvancedMode">The boolean value to set</param
+        [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+        public static extern void SetAdvancedMode(IntPtr sp, bool bIsAdvancedMode);
         #endregion
 
-        public VRTRIXDataWrapper(bool AdvancedMode, int GloveIndex)
+        public VRTRIXDataWrapper(bool AdvancedMode, int GloveIndex, GLOVEVERSION HardwareVersion)
         {
             this.index = GloveIndex;
-            sp = InitDataGlove(AdvancedMode);
+            sp = InitDataGlove(AdvancedMode, HardwareVersion);
         }
 
         public bool Init(HANDTYPE type)
@@ -381,6 +414,10 @@ namespace VRTRIX {
             ChannelHopping(sp);
         }
 
+        public void SetAdvancedMode(bool bIsAdvancedMode)
+        {
+            SetAdvancedMode(sp, bIsAdvancedMode);
+        }
     }
 }
 
