@@ -1,7 +1,7 @@
 # Introduction [中文][chinese]
 
 <p align="center">
-  <img src="https://github.com/VRTRIX/VRTRIXGlove_Unity3D_SDK/blob/master/docs/img/digital_glove.jpg?raw=true"/>
+  <img src="https://github.com/VRTRIX/VRTRIXGlove_Unity3D_SDK/blob/master/docs/img/digital_glove.png"/>
 </p>
 
 
