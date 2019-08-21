@@ -36,6 +36,12 @@ namespace VRTRIX
         public Vector3 qr_modeloffset;
         public Vector3[] ql_axisoffset = new Vector3[3];
         public Vector3[] qr_axisoffset = new Vector3[3];
+
+        [Header("Thumb Parameters")]
+        public Vector3[] thumb_offset = new Vector3[3];
+        public double thumb_proximal_slerp;
+        public double thumb_middle_slerp;
+
         public VRTRIXDataWrapper LH, RH;
         private GameObject LH_tracker, RH_tracker;
         private VRTRIXGloveGestureRecognition GloveGesture;
@@ -84,7 +90,6 @@ namespace VRTRIX
         {
             if (RH_Mode && RH.GetReceivedStatus() == VRTRIXGloveStatus.NORMAL)
             {
-
                 if (RH.GetReceivedRotation(VRTRIXBones.R_Hand) != Quaternion.identity && !qroffset_cal)
                 {
                     qroffset = CalculateStaticOffset(RH, HANDTYPE.RIGHT_HAND);
@@ -182,6 +187,10 @@ namespace VRTRIX
                 if (LH_Mode)
                 {
                     print("Left hand glove connected!");
+                    LH.SetThumbOffset(thumb_offset[0], VRTRIXBones.L_Thumb_1);
+                    LH.SetThumbOffset(thumb_offset[1], VRTRIXBones.L_Thumb_2);
+                    LH.SetThumbOffset(thumb_offset[2], VRTRIXBones.L_Thumb_3);
+                    LH.SetThumbSlerpRate(thumb_proximal_slerp, thumb_middle_slerp);
                     LH.RegisterCallBack();
                     LH.StartStreaming();
                 }
@@ -189,6 +198,10 @@ namespace VRTRIX
                 if (RH_Mode)
                 {
                     print("Right hand glove connected!");
+                    RH.SetThumbOffset(thumb_offset[0], VRTRIXBones.R_Thumb_1);
+                    RH.SetThumbOffset(thumb_offset[1], VRTRIXBones.R_Thumb_2);
+                    RH.SetThumbOffset(thumb_offset[2], VRTRIXBones.R_Thumb_3);
+                    RH.SetThumbSlerpRate(thumb_proximal_slerp, thumb_middle_slerp);
                     RH.RegisterCallBack();
                     RH.StartStreaming();
                 }

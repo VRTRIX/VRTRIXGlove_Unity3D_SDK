@@ -187,6 +187,41 @@ namespace VRTRIX {
         /// <param name="bIsAdvancedMode">The boolean value to set</param
         [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         public static extern void SetAdvancedMode(IntPtr sp, bool bIsAdvancedMode);
+        /// <summary>
+        /// Set Proximal Thumb Offset.
+        /// </summary>
+        /// <param name="sp">The serial port object</param>
+        /// <param name="offset_x">x-axis offset to set</param>
+        /// <param name="offset_y">y-axis offset to set</param>
+        /// <param name="offset_z">z-axis offset to set</param>
+        [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+        public static extern void SetProximalThumbOffset(IntPtr sp, double offset_x, double offset_y, double offset_z);
+        /// <summary>
+        /// Set Intermediate Thumb Offset.
+        /// </summary>
+        /// <param name="sp">The serial port object</param>
+        /// <param name="offset_x">x-axis offset to set</param>
+        /// <param name="offset_y">y-axis offset to set</param>
+        /// <param name="offset_z">z-axis offset to set</param>
+        [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+        public static extern void SetIntermediateThumbOffset(IntPtr sp, double offset_x, double offset_y, double offset_z);
+        /// <summary>
+        /// Set Distal Thumb Offset.
+        /// </summary>
+        /// <param name="sp">The serial port object</param>
+        /// <param name="offset_x">x-axis offset to set</param>
+        /// <param name="offset_y">y-axis offset to set</param>
+        /// <param name="offset_z">z-axis offset to set</param>
+        [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+        public static extern void SetDistalThumbOffset(IntPtr sp, double offset_x, double offset_y, double offset_z);
+        /// <summary>
+        /// Set Thumb Slerp Rate.
+        /// </summary>
+        /// <param name="sp">The serial port object</param>
+        /// <param name="slerp_proximal">thumb proximal joint slerp rate to set</param>
+        /// <param name="slerp_middle">thumb middle joint slerp rate to set</param>
+        [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+        public static extern void SetThumbSlerpRate(IntPtr sp, double slerp_proximal, double slerp_middle);
         #endregion
 
         public VRTRIXDataWrapper(bool AdvancedMode, int GloveIndex, GLOVEVERSION HardwareVersion)
@@ -417,6 +452,24 @@ namespace VRTRIX {
         public void SetAdvancedMode(bool bIsAdvancedMode)
         {
             SetAdvancedMode(sp, bIsAdvancedMode);
+        }
+
+        public void SetThumbOffset(Vector3 offset, VRTRIXBones joint)
+        {
+            switch (joint)
+            {
+                case (VRTRIXBones.R_Thumb_1): SetProximalThumbOffset(sp, offset.x, offset.y, offset.z); break;
+                case (VRTRIXBones.R_Thumb_2): SetIntermediateThumbOffset(sp, offset.x, offset.y, offset.z); break;
+                case (VRTRIXBones.R_Thumb_3): SetDistalThumbOffset(sp, offset.x, offset.y, offset.z); break;
+                case (VRTRIXBones.L_Thumb_1): SetProximalThumbOffset(sp, offset.x, offset.y, offset.z); break;
+                case (VRTRIXBones.L_Thumb_2): SetIntermediateThumbOffset(sp, offset.x, offset.y, offset.z); break;
+                case (VRTRIXBones.L_Thumb_3): SetDistalThumbOffset(sp, offset.x, offset.y, offset.z); break;
+            }
+        }
+
+        public void SetThumbSlerpRate(double slerp_proximal, double slerp_middle)
+        {
+            SetThumbSlerpRate(sp, slerp_proximal, slerp_middle);
         }
     }
 }

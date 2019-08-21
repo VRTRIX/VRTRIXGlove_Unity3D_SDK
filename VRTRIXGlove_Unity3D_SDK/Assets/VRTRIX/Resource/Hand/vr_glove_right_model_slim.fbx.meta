@@ -73,7 +73,12 @@ ModelImporter:
     4300000: vr_glove_right_slim
     9500000: //RootNode
     13700000: vr_glove_right_slim
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: blinn1
+    second: {fileID: 2100000, guid: bf0415f8cb6f33a45bb44a59b7bdcdcc, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
