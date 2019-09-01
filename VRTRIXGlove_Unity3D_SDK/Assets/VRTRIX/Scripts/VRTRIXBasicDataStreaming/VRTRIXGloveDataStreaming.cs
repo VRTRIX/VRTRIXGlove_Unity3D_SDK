@@ -13,33 +13,64 @@ using Valve.VR;
 namespace VRTRIX
 {
     [RequireComponent(typeof(VRTRIXBoneMapping))]
+
+    //!  VRTRIX Data Glove data streaming class. 
+    /*!
+        A basic data streaming class for demonstration.
+    */
     public class VRTRIXGloveDataStreaming : MonoBehaviour
     {
         [Header("VR Settings")]
+        //! VR environment enable flag, set to true if run the demo in VR headset
         public bool IsVREnabled = false;
+
         [DrawIf("IsVREnabled", false)]
-        public GameObject LH_ObjectToAlign, RH_ObjectToAlign;
+        //! If VR is NOT enabled, wrist joint need an object to align, which can be the camera, or parent joint of wrist(if a full body model is used), or can just be any other game objects.
+        public GameObject LH_ObjectToAlign;
+
+        [DrawIf("IsVREnabled", false)]
+        //! If VR is NOT enabled, wrist joint need an object to align, which can be the camera, or parent joint of wrist(if a full body model is used), or can just be any other game objects.
+        public GameObject RH_ObjectToAlign;
 
         [DrawIf("IsVREnabled", true)]
+        //! If VR is enabled, HTC tracker is the default wrist tracking hardware, which is fixed to side part of data glove, this offset represents the offset between tracker origin to right wrist joint origin.
         public Vector3 RHTrackerOffset = new Vector3(0.01f, 0, -0.035f);
 
         [DrawIf("IsVREnabled", true)]
+        //! If VR is enabled, HTC tracker is the default wrist tracking hardware, which is fixed to side part of data glove, this offset represents the offset between tracker origin to left wrist joint origin.
         public Vector3 LHTrackerOffset = new Vector3(-0.01f, 0, -0.035f);
 
         [Header("Glove Settings")]
+        //! Hardware version of VRTRIX data gloves, currently DK1, DK2 and PRO are supported.
         public GLOVEVERSION version;
+
+        //! Mutiple gloves enable flag, set to true if run multiple gloves on the same PC.
         public bool IsEnableMultipleGloves;
+
+        //! If mutiple gloves mode is enbaled, specify different index for different pair of gloves. Otherwise, just select None.
         public GloveIndex Index;
 
         [Header("Model Mapping Settings")]
+        //! Model mapping parameters for left hand, only used when finger joint axis definition is different from wrist joint, otherwise, just set to 0,0,0.
         public Vector3 ql_modeloffset;
+
+        //! Model mapping parameters for right hand, only used when finger joint axis definition is different from wrist joint, otherwise, just set to 0,0,0.
         public Vector3 qr_modeloffset;
+
+        //! Model mapping parameters for left hand, only used when wrist joint axis definition is different from hardware wrist joint, otherwise, just set to identity matrix {(1,0,0),(0,1,0),(0,0,1)}. Please read the sdk tutorial documentation to learn how to set this parameter properly.
         public Vector3[] ql_axisoffset = new Vector3[3];
+
+        //! Model mapping parameters for right hand, only used when wrist joint axis definition is different from hardware wrist joint, otherwise, just set to identity matrix {(1,0,0),(0,1,0),(0,0,1)}. Please read the sdk tutorial documentation to learn how to set this parameter properly.
         public Vector3[] qr_axisoffset = new Vector3[3];
 
         [Header("Thumb Parameters")]
+        //! Model mapping parameters for thumb joint, used to tune thumb offset between the model and hardware sensor placement. Please read the sdk tutorial documentation to learn how to set this parameter properly.
         public Vector3[] thumb_offset = new Vector3[3];
+
+        //! Model mapping parameters for thumb proximal joint, used to tune thumb slerp algorithm parameter. Please read the sdk tutorial documentation to learn how to set this parameter properly.
         public double thumb_proximal_slerp;
+
+        //! Model mapping parameters for thumb middle joint, used to tune thumb slerp algorithm parameter. Please read the sdk tutorial documentation to learn how to set this parameter properly.
         public double thumb_middle_slerp;
 
         public VRTRIXDataWrapper LH, RH;
@@ -53,6 +84,7 @@ namespace VRTRIX
         private Transform[] fingerTransformArray;
         private Matrix4x4 ml_axisoffset, mr_axisoffset;
         private  bool AdvancedMode = false;
+
         void Start()
         {
             if (!IsEnableMultipleGloves)
@@ -84,7 +116,6 @@ namespace VRTRIX
                 }
             }
         }
-
 
         void Update()
         {
@@ -178,6 +209,7 @@ namespace VRTRIX
         }
 
         //数据手套初始化，硬件连接
+        //! Connect data glove and initialization.
         public void OnConnectGlove()
         {
             if (IsVREnabled && LH_tracker == null && RH_tracker == null) return;
@@ -212,8 +244,9 @@ namespace VRTRIX
                 print("Exception caught: " + e);
             }
         }
-
+        
         //数据手套反初始化，硬件断开连接
+        //! Disconnect data glove and uninitialization.
         public void OnDisconnectGlove()
         {
             if (LH_Mode)
@@ -235,6 +268,7 @@ namespace VRTRIX
         }
 
         //数据手套硬件地磁校准数据储存，仅在磁场大幅度变化后使用。
+        //! Save hardware calibration parameters in IMU, only used in magnetic field changed dramatically.
         public void OnHardwareCalibrate()
         {
             if (LH_Mode)
@@ -248,6 +282,7 @@ namespace VRTRIX
         }
 
         //数据手套振动
+        //! Trigger a haptic vibration on data glove.
         public void OnVibrate()
         {
             if (LH_Mode)
@@ -261,6 +296,7 @@ namespace VRTRIX
         }
 
         //数据手套手动跳频
+        //! Switch radio channel of data glove. Only used for testing/debuging. Automatic channel switching is enabled by default in normal mode.
         public void OnChannelHopping()
         {
             if (LH_Mode)
@@ -275,6 +311,10 @@ namespace VRTRIX
 
 
         //数据手套五指张开解锁
+        //! Activate advanced mode so that finger's yaw data will be unlocked.
+        /*! 
+         * \param bIsAdvancedMode Advanced mode will be activated if set to true.
+         */
         public void SetAdvancedMode(bool bIsAdvancedMode)
         {
             if (LH_Mode)
@@ -288,6 +328,7 @@ namespace VRTRIX
         }
 
         //数据手套软件对齐手指及设置手背初始方向。
+        //! Align five fingers to closed gesture (only if advanced mode is set to true). Also align wrist to the game object chosen.
         public void OnAlignFingers()
         {
             if (LH_Mode)
@@ -303,6 +344,7 @@ namespace VRTRIX
         }
 
         //程序退出
+        //! Application quit operation. 
         void OnApplicationQuit()
         {
             if (LH_Mode && LH.GetReceivedStatus() != VRTRIXGloveStatus.CLOSED)
@@ -312,6 +354,202 @@ namespace VRTRIX
             if (RH_Mode && RH.GetReceivedStatus() != VRTRIXGloveStatus.CLOSED)
             {
                 RH.ClosePort();
+            }
+        }
+
+        //! Get current rotation of specific joint
+        /*! 
+         * \param bone specific joint of hand.
+         * \return current rotation of specific joint.
+         */
+        public Quaternion GetRotation(VRTRIXBones bone)
+        {
+            return fingerTransformArray[(int)bone].rotation;
+        }
+
+        //获取磁场校准水平，值越小代表效果越好
+        //! Get current calibration score for specific IMU sensor
+        /*! 
+         * \param bone specific joint of hand.
+         * \return current calibration score for specific IMU sensor. Lower value of score means better calibration performance.
+         */
+        public int GetCalScore(VRTRIXBones bone)
+        {
+            if ((int)bone < 16)
+            {
+                return RH.GetReceivedCalScore(bone);
+            }
+            else
+            {
+                return LH.GetReceivedCalScore(bone);
+            }
+        }
+
+        //获取信号强度，值越大代表信号越强
+        //! Get radio strength of data glove 
+        /*! 
+         * \param type Data glove hand type.
+         * \return radio strength of data glove. Higher value of score means better radio strength.         
+         */
+        public int GetReceiveRadioStrength(HANDTYPE type)
+        {
+            switch (type)
+            {
+                case HANDTYPE.RIGHT_HAND:
+                    {
+                        return RH.GetReceiveRadioStrength();
+                    }
+                case HANDTYPE.LEFT_HAND:
+                    {
+                        return LH.GetReceiveRadioStrength();
+                    }
+                default:
+                    return 0;
+            }
+        }
+
+        //获取当前通信信道，1-100共100个信道
+        //! Get current radio channel of data glove used
+        /*! 
+         * \param type Data glove hand type.
+         * \return current radio channel of data glove used.         
+         */
+        public int GetReceiveRadioChannel(HANDTYPE type)
+        {
+            switch (type)
+            {
+                case HANDTYPE.RIGHT_HAND:
+                    {
+                        return RH.GetReceiveRadioChannel();
+                    }
+                case HANDTYPE.LEFT_HAND:
+                    {
+                        return LH.GetReceiveRadioChannel();
+                    }
+                default:
+                    return 0;
+            }
+        }
+        //获取电量
+        //! Get current battery level in percentage of data glove
+        /*! 
+         * \param type Data glove hand type.
+         * \return current battery level in percentage of data glove.         
+         */
+        public float GetBatteryLevel(HANDTYPE type)
+        {
+            switch (type)
+            {
+                case HANDTYPE.RIGHT_HAND:
+                    {
+                        return RH.GetReceiveBattery();
+                    }
+                case HANDTYPE.LEFT_HAND:
+                    {
+                        return LH.GetReceiveBattery();
+                    }
+                default:
+                    return 0;
+            }
+        }
+        //获取磁场校准水平均值
+        //! Get current calibration score average value
+        /*! 
+         * \param type Data glove hand type.
+         * \return current calibration score average value.
+         */
+        public int GetReceivedCalScoreMean(HANDTYPE type)
+        {
+            switch (type)
+            {
+                case HANDTYPE.RIGHT_HAND:
+                    {
+                        return RH.GetReceivedCalScoreMean();
+                    }
+                case HANDTYPE.LEFT_HAND:
+                    {
+                        return LH.GetReceivedCalScoreMean();
+                    }
+                default:
+                    return 0;
+            }
+        }
+
+        //获取实际帧率
+        //! Get data rate received per second 
+        /*! 
+         * \param type Data glove hand type.
+         * \return data rate received per second.         
+         */
+        public int GetReceivedDataRate(HANDTYPE type)
+        {
+            switch (type)
+            {
+                case HANDTYPE.RIGHT_HAND:
+                    {
+                        return RH.GetReceivedDataRate();
+                    }
+                case HANDTYPE.LEFT_HAND:
+                    {
+                        return LH.GetReceivedDataRate();
+                    }
+                default:
+                    return 0;
+            }
+        }
+
+        //获取连接状态
+        //! Get data glove connection status 
+        /*! 
+         * \param type Data glove hand type.
+         * \return data glove connection status.         
+         */
+        public bool GetGloveConnectionStat(HANDTYPE type)
+        {
+            return GetReceivedStatus(type) == VRTRIXGloveStatus.NORMAL;
+        }
+
+        //! Get data glove status 
+        /*! 
+         * \param type Data glove hand type.
+         * \return data glove status.         
+         */
+        public VRTRIXGloveStatus GetReceivedStatus(HANDTYPE type)
+        {
+            switch (type)
+            {
+                case HANDTYPE.RIGHT_HAND:
+                    {
+                        return RH.GetReceivedStatus();
+                    }
+                case HANDTYPE.LEFT_HAND:
+                    {
+                        return LH.GetReceivedStatus();
+                    }
+                default:
+                    return VRTRIXGloveStatus.CLOSED;
+            }
+        }
+        
+        //获取姿态
+        //! Get the gesture detected
+        /*! 
+         * \param type Data glove hand type.
+         * \return the gesture detected.         
+         */
+        public VRTRIXGloveGesture GetGesture(HANDTYPE type)
+        {
+            if (type == HANDTYPE.LEFT_HAND && LH_Mode)
+            {
+                return LH_Gesture;
+            }
+            else if (type == HANDTYPE.RIGHT_HAND && RH_Mode)
+            {
+                return RH_Gesture;
+            }
+            else
+            {
+                return VRTRIXGloveGesture.BUTTONNONE;
             }
         }
 
@@ -354,7 +592,6 @@ namespace VRTRIX
                 return Quaternion.identity;
             }
         }
-
 
         //用于计算左手/右手腕关节姿态（由动捕设备得到）和左手手背姿态（由数据手套得到）之间的四元数差值，该方法为动态调用，即每一帧都会调用该计算。
         //适用于：当动捕设备有腕关节/手背节点时
@@ -438,145 +675,6 @@ namespace VRTRIX
                 }
             }
         }
-
-        public Quaternion GetRotation(VRTRIXBones bone)
-        {
-            return fingerTransformArray[(int)bone].rotation;
-        }
-
-        public int GetCalScore(VRTRIXBones bone)
-        {
-            if ((int)bone < 16)
-            {
-                return RH.GetReceivedCalScore(bone);
-            }
-            else
-            {
-                return LH.GetReceivedCalScore(bone);
-            }
-        }
-
-        public int GetReceiveRadioStrength(HANDTYPE type)
-        {
-            switch (type)
-            {
-                case HANDTYPE.RIGHT_HAND:
-                    {
-                        return RH.GetReceiveRadioStrength();
-                    }
-                case HANDTYPE.LEFT_HAND:
-                    {
-                        return LH.GetReceiveRadioStrength();
-                    }
-                default:
-                    return 0;
-            }
-        }
-
-        public int GetReceiveRadioChannel(HANDTYPE type)
-        {
-            switch (type)
-            {
-                case HANDTYPE.RIGHT_HAND:
-                    {
-                        return RH.GetReceiveRadioChannel();
-                    }
-                case HANDTYPE.LEFT_HAND:
-                    {
-                        return LH.GetReceiveRadioChannel();
-                    }
-                default:
-                    return 0;
-            }
-        }
-        public float GetBatteryLevel(HANDTYPE type)
-        {
-            switch (type)
-            {
-                case HANDTYPE.RIGHT_HAND:
-                    {
-                        return RH.GetReceiveBattery();
-                    }
-                case HANDTYPE.LEFT_HAND:
-                    {
-                        return LH.GetReceiveBattery();
-                    }
-                default:
-                    return 0;
-            }
-        }
-
-        public int GetReceivedCalScoreMean(HANDTYPE type)
-        {
-            switch (type)
-            {
-                case HANDTYPE.RIGHT_HAND:
-                    {
-                        return RH.GetReceivedCalScoreMean();
-                    }
-                case HANDTYPE.LEFT_HAND:
-                    {
-                        return LH.GetReceivedCalScoreMean();
-                    }
-                default:
-                    return 0;
-            }
-        }
-
-        public int GetReceivedDataRate(HANDTYPE type)
-        {
-            switch (type)
-            {
-                case HANDTYPE.RIGHT_HAND:
-                    {
-                        return RH.GetReceivedDataRate();
-                    }
-                case HANDTYPE.LEFT_HAND:
-                    {
-                        return LH.GetReceivedDataRate();
-                    }
-                default:
-                    return 0;
-            }
-        }
-
-        public bool GetGloveConnectionStat(HANDTYPE type)
-        {
-            return GetReceivedStatus(type) == VRTRIXGloveStatus.NORMAL;
-        }
-        public VRTRIXGloveStatus GetReceivedStatus(HANDTYPE type)
-        {
-            switch (type)
-            {
-                case HANDTYPE.RIGHT_HAND:
-                    {
-                        return RH.GetReceivedStatus();
-                    }
-                case HANDTYPE.LEFT_HAND:
-                    {
-                        return LH.GetReceivedStatus();
-                    }
-                default:
-                    return VRTRIXGloveStatus.CLOSED;
-            }
-        }
-
-        public VRTRIXGloveGesture GetGesture(HANDTYPE type)
-        {
-            if (type == HANDTYPE.LEFT_HAND && LH_Mode)
-            {
-                return LH_Gesture;
-            }
-            else if (type == HANDTYPE.RIGHT_HAND && RH_Mode)
-            {
-                return RH_Gesture;
-            }
-            else
-            {
-                return VRTRIXGloveGesture.BUTTONNONE;
-            }
-        }
-
         private Transform[] FindFingerTransform()
         {
             Transform[] transform_array = new Transform[(int)VRTRIXBones.NumOfBones];
@@ -595,7 +693,13 @@ namespace VRTRIX
             }
             return transform_array;
         }
-
+        
+        //! Check the tracked device model name stored in hardware config to find specific hardware type. (SteamVR Tracking support)
+        /*! 
+         * \param type Hand type to check(if wrist tracker for data glove is the hardware to check).
+         * \param device Device type to check(if other kind of interactive hardware to check).
+         * \return the gameobject of the tracked device.
+         */
         public static GameObject CheckDeviceModelName(HANDTYPE type = HANDTYPE.NONE, InteractiveDevice device = InteractiveDevice.NONE)
         {
             var system = OpenVR.System;
@@ -657,7 +761,6 @@ namespace VRTRIX
             }
             return null;
         }
-
     }
 }
 

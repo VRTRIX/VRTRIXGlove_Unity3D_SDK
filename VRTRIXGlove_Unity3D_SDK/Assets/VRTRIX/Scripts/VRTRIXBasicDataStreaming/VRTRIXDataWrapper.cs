@@ -13,6 +13,8 @@ using System.Runtime.InteropServices;
 using UnityEngine;
 
 namespace VRTRIX {
+    //! GloveIndex enum.
+    /*! Enum of supported gloves hardware index. */
     public enum GloveIndex
 	{
 		None = -1,
@@ -34,6 +36,9 @@ namespace VRTRIX {
 	 	Device15 = 15,
         MaxDeviceCount = 16
     }
+    
+    //! Hand type enum.
+    /*! The chirality of the hand, used to identify data glove attribute. */
     public enum HANDTYPE
     {
         RIGHT_HAND,
@@ -41,13 +46,18 @@ namespace VRTRIX {
         BOTH_HAND,
         NONE
     };
+
+    //! Glove hardware version.
+    /*! Supported hardware version, currently DK1, DK2 & PRO are supported. */
     public enum GLOVEVERSION
     {
         DK1,
         DK2,
         PRO
     };
-
+    
+    //! Glove connection status.
+    /*! Define the glove connection status. */
     public enum VRTRIXGloveStatus
     {
         CLOSED,
@@ -56,6 +66,9 @@ namespace VRTRIX {
         DISCONNECTED,
         MAGANOMALY
     };
+
+    //! Glove event enum.
+    /*! Define the glove events while running. */
     public enum VRTRIXGloveEvent
     {
  	    VRTRIXGloveEvent_None = 0,
@@ -71,6 +84,11 @@ namespace VRTRIX {
  		VRTRIXGloveEvent_TrackerDisconnected = 10,
  		VRTRIXGloveEvent_ChannelHopping = 11,
     }
+    
+    //!  VRTRIX Data Glove data wrapper class. 
+    /*!
+        A wrapper class to communicate with low-level unmanaged C++ API.
+    */
     public class VRTRIXDataWrapper
     {
         //Define Useful Constant
@@ -82,34 +100,54 @@ namespace VRTRIX {
         private int data_rate;
         private int radio_strength;
         private float battery;
-        public HANDTYPE hand_type;
-        public int radio_channel;
+        private HANDTYPE hand_type;
+        private int radio_channel;
         private int[] calscore = new int[6];
         private bool port_opened = false;
         private Quaternion[] data = new Quaternion[16];
         private VRTRIXGloveStatus stat = VRTRIXGloveStatus.CLOSED;
 
+        //! Quaternion data struction used in unmanaged C++ API.
         [StructLayout(LayoutKind.Sequential)]
         public struct VRTRIX_Quat
         {
-            public float qx;
-            public float qy;
-            public float qz;
-            public float qw;
+            public float qx; //!< x component in quaternion
+            public float qy; //!< y component in quaternion
+            public float qz; //!< z component in quaternion
+            public float qw; //!< w component in quaternion
         }
 
+        //! The delegate data receive function called inside unmanaged C++ API.
+        /*! 
+         * \param pUserParam Pointer of the user defined parameter which registered previously.
+         * \param ptr Array of the data received, where contains all joint rotation values.
+         * \param data_rate Data rate per second.
+         * \param radio_strength Radio transmission strength in dB
+         * \param cal_score_ptr Array of the calibration score received.
+         * \param battery Current battery level in percentage.
+         * \param hand_type The hand type of current hand pose.
+         * \param radio_channel Current radio channel used by wireless transmission.
+         */
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
         public delegate void ReceivedDataCallback(IntPtr pUserParam, IntPtr ptr, int data_rate, byte radio_strength, IntPtr cal_score_ptr, float battery, int hand_type, int radio_channel);
         public static ReceivedDataCallback receivedDataCallback;
 
+
+        //! The delegate event receive function called inside unmanaged C++ API.
+        /*! 
+         * \param pUserParam Pointer of the user defined parameter which registered previously.
+         * \param pEvent Enum of current event received.
+         */
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
         public delegate void ReceivedEventCallback(IntPtr pUserParam, IntPtr pEvent);
         public static ReceivedEventCallback receivedEventCallback;
 
         #region Functions API
+        /// <summary>
+        /// Intialize the data glove and returns the interface pointer.
         /// </summary>
         /// <param name="AdvancedMode">Unlock the yaw of fingers if set true</param>
-        /// <param name="AdvancedMode">Specify the data glove hardware version</param>
+        /// <param name="HardwareVersion">Specify the data glove hardware version</param>
         /// <returns>The serial port object as IntPtr</returns>
         [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         public static extern IntPtr InitDataGlove(bool AdvancedMode, GLOVEVERSION HardwareVersion);
@@ -157,6 +195,7 @@ namespace VRTRIX {
         /// <summary>
         /// Register receiving and parsed frame calculation data callback
         /// </summary>
+        /// <param name="pUserParam">User defined parameter/pointer passed into plugin interface, which will return in callback function.</param>
         /// <param name="sp">The serial port object</param>
         /// <param name="receivedDataCallback">received data callback.</param>
         [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, EntryPoint = "RegisterDataCallback")]
@@ -172,6 +211,7 @@ namespace VRTRIX {
         /// Vibrate the data glove for given time period.
         /// </summary>
         /// <param name="sp">The serial port object</param>
+        /// <param name="msDurationMillisec">Vibration duration in milliseconds</param>
         [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         public static extern void VibratePeriod(IntPtr sp, int msDurationMillisec);
         /// <summary>
@@ -184,7 +224,7 @@ namespace VRTRIX {
         /// Set Advanced Mode.
         /// </summary>
         /// <param name="sp">The serial port object</param>
-        /// <param name="bIsAdvancedMode">The boolean value to set</param
+        /// <param name="bIsAdvancedMode">The boolean value to set</param>
         [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         public static extern void SetAdvancedMode(IntPtr sp, bool bIsAdvancedMode);
         /// <summary>
@@ -224,12 +264,25 @@ namespace VRTRIX {
         public static extern void SetThumbSlerpRate(IntPtr sp, double slerp_proximal, double slerp_middle);
         #endregion
 
+
+        //! Wrapper class construction method
+        /*! 
+         * \param AdvancedMode Whether the advanced mode is activated
+         * \param GloveIndex Data glove index (Maximum is 15, if larger number is set, then only one pair of glove per PC is supported).
+         * \param HardwareVersion Data glove hardware version, currently DK1, DK2 and PRO are supported.
+         */
         public VRTRIXDataWrapper(bool AdvancedMode, int GloveIndex, GLOVEVERSION HardwareVersion)
         {
             this.index = GloveIndex;
             sp = InitDataGlove(AdvancedMode, HardwareVersion);
         }
 
+
+        //! Initialization method
+        /*! 
+         * \param type Data glove hand type.
+         * \return whether data glove is initialized successfully.         
+         */
         public bool Init(HANDTYPE type)
         {
             for (int i = 0; i < 16; i++)
@@ -268,23 +321,18 @@ namespace VRTRIX {
             }
             return port_opened;
         }
+
+        //! Close port to stop data streaming.
+        /*! 
+         * \return whether data streaming is stopped successfully.         
+         */
         public bool ClosePort()
         {
             stat = VRTRIXGloveStatus.CLOSED;
             return (ClosePort(this.sp));
         }
-        private static void MarshalUnmananagedArray2Struct<VRTRIX_Quat>(IntPtr unmanagedArray, int length, out VRTRIX_Quat[] mangagedArray)
-        {
-            var size = Marshal.SizeOf(typeof(VRTRIX_Quat));
-            mangagedArray = new VRTRIX_Quat[length];
 
-            for (int i = 0; i < length; i++)
-            {
-                IntPtr ins = new IntPtr(unmanagedArray.ToInt64() + i * size);
-                mangagedArray[i] = (VRTRIX_Quat)Marshal.PtrToStructure(ins, typeof(VRTRIX_Quat));
-            }
-        }
-
+        //! Register call back function to the C++ umanaged dll.
         public void RegisterCallBack()
         {
             receivedDataCallback =
@@ -336,16 +384,22 @@ namespace VRTRIX {
                 RegisterEventCallback(this.sp, receivedEventCallback);
             }
         }
+
+
+        //! Get data glove status 
+        /*! 
+         * \return data glove status.         
+         */
         public VRTRIXGloveStatus GetReceivedStatus()
         {
             return stat;
         }
 
-        public void SetReceivedStatus(VRTRIXGloveStatus stat)
-        {
-            this.stat = stat;
-        }
-
+        //! Get the angle between specific joint and wrist joint to detect gesture
+        /*! 
+         * \param bone specific joint of hand.
+         * \return the gesture angle for specific joint.         
+         */
         public float GetReceivedGestureAngle (VRTRIXBones bone)
         {
             Quaternion fingerOffest = Quaternion.identity;
@@ -360,25 +414,48 @@ namespace VRTRIX {
             return ((int)bone < 16) ? (Quaternion.Inverse(data[(int)bone]) * (data[(int)VRTRIXBones.R_Hand] * fingerOffest)).eulerAngles.z :
                                       (Quaternion.Inverse(data[(int)bone - 16]) * (data[(int)VRTRIXBones.L_Hand - 16] * fingerOffest)).eulerAngles.z ;
         }
+
+        //! Get data rate received per second 
+        /*! 
+         * \return data rate received per second.         
+         */
         public int GetReceivedDataRate()
         {
             return data_rate;
         }
 
+        //! Get radio strength of data glove 
+        /*! 
+         * \return radio strength of data glove.         
+         */
         public int GetReceiveRadioStrength()
         {
             return -(int)radio_strength;
         }
-
+        
+        //! Get current radio channel of data glove used
+        /*! 
+         * \return current radio channel of data glove used.         
+         */
         public int GetReceiveRadioChannel()
         {
             return radio_channel;
         }
-
+        
+        //! Get current battery level in percentage of data glove
+        /*! 
+         * \return current battery level in percentage of data glove.         
+         */
         public float GetReceiveBattery()
         {
             return battery;
         }
+
+        //! Get current calibration score for specific IMU sensor
+        /*! 
+         * \param bone specific joint of hand.
+         * \return current calibration score for specific IMU sensor. Lower value of score means better calibration performance.
+         */
         public int GetReceivedCalScore(VRTRIXBones bone)
         {
             switch (bone)
@@ -413,11 +490,21 @@ namespace VRTRIX {
                     return 0;
             }
         }
+
+        //! Get current calibration score average value
+        /*! 
+         * \return current calibration score average value.
+         */
         public int GetReceivedCalScoreMean()
         {
             return (calscore[0] + calscore[1] + calscore[2] + calscore[3] + calscore[4] + calscore[5]) / 6;
         }
 
+        //! Get current rotation for specfic joint
+        /*! 
+         * \param bone specific joint of hand.
+         * \return current calibration score average value.
+         */
         public Quaternion GetReceivedRotation(VRTRIXBones bone)
         {
             if ((int)bone < (int)VRTRIXBones.L_Hand) return data[(int)bone];
@@ -425,35 +512,56 @@ namespace VRTRIX {
             else return Quaternion.identity;
         }
 
+        //! Save calibration parameters to hardware flash
         public void OnSaveCalibration()
         {
             OnSaveCalibration(this.sp);
         }
         
+        //! Trigger a haptic vibration for a certain period
+        /*! 
+         * \param msDurationMillisec vibration period
+         */
         public void VibratePeriod(int msDurationMillisec)
         {
             VibratePeriod(sp, msDurationMillisec);
         }
+
+        //! Align current gesture to finger close pose, used for calibration when advanced mode is activated
+        /*! 
+         * \param type Hand type of data glove
+         */
         public void OnCloseFingerAlignment(HANDTYPE type)
         {
             OnCloseFingerAlignment(sp);
         }
-
+        
+        //! Start data streaming of data glove
         public void StartStreaming()
         {
             StartStreaming(sp);
         }
-
+        
+        //! Trigger channel switching mannually, only used in testing/debuging.
         public void ChannelHopping()
         {
             ChannelHopping(sp);
         }
-
+        
+        //! Activate advanced mode so that finger's yaw data will be unlocked.
+        /*! 
+         * \param bIsAdvancedMode Advanced mode will be activated if set to true.
+         */
         public void SetAdvancedMode(bool bIsAdvancedMode)
         {
             SetAdvancedMode(sp, bIsAdvancedMode);
         }
 
+        //! Set thumb offset to counteract the difference between hands & gloves sensor installation.
+        /*! 
+         * \param offset Offset vector to set.
+         * \param joint the specific thumb joint to set.
+         */
         public void SetThumbOffset(Vector3 offset, VRTRIXBones joint)
         {
             switch (joint)
@@ -466,11 +574,29 @@ namespace VRTRIX {
                 case (VRTRIXBones.L_Thumb_3): SetDistalThumbOffset(sp, offset.x, offset.y, offset.z); break;
             }
         }
-
+        
+        //! Set thumb slerp rate to counteract the difference between hands & gloves sensor installation.
+        /*! 
+         * \param slerp_proximal Proximal joint slerp rate to set.
+         * \param slerp_middle Middle joint slerp rate to set.
+         */
         public void SetThumbSlerpRate(double slerp_proximal, double slerp_middle)
         {
             SetThumbSlerpRate(sp, slerp_proximal, slerp_middle);
         }
+
+        private static void MarshalUnmananagedArray2Struct<VRTRIX_Quat>(IntPtr unmanagedArray, int length, out VRTRIX_Quat[] mangagedArray)
+        {
+            var size = Marshal.SizeOf(typeof(VRTRIX_Quat));
+            mangagedArray = new VRTRIX_Quat[length];
+
+            for (int i = 0; i < length; i++)
+            {
+                IntPtr ins = new IntPtr(unmanagedArray.ToInt64() + i * size);
+                mangagedArray[i] = (VRTRIX_Quat)Marshal.PtrToStructure(ins, typeof(VRTRIX_Quat));
+            }
+        }
+
     }
 }
 

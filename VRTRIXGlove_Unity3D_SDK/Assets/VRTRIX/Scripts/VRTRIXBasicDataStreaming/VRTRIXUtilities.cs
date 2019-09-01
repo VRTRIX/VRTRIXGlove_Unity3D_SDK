@@ -8,14 +8,8 @@ using System;
 
 namespace VRTRIX
 {
-    public enum VRTRIXGloveRunningMode
-    {
-        LEFT,
-        RIGHT,
-        PAIR,
-        NONE
-    };
-
+    //! Hand joints enum.
+    /*! Enum of joints for both hands. */
     public enum VRTRIXBones
     {
         R_Hand = 0,
@@ -57,15 +51,24 @@ namespace VRTRIX
         NumOfBones = 34
     }
 
-
+    //! Bone utility functions class
     public class VRTRIXUtilities
     {
-
+        //! Get current bone name for specific bone ID
+        /*! 
+         * \param id id of bone.
+         * \return current bone name for specific bone ID.
+         */
         public static string GetBoneName(int id)
         {
             return Enum.GetName(typeof(VRTRIXBones), (VRTRIXBones)id);
         }
 
+        //! Get current bone index for specific bone name
+        /*! 
+         * \param name Bone name.
+         * \return current bone index for specific bone name.
+         */
         public static int GetBoneIndex(string name)
         {
             for (int i = 0; i < (int)VRTRIXBones.NumOfBones; ++i)
