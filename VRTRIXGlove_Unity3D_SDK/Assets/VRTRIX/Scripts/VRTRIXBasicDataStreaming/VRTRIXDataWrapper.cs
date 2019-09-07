@@ -228,6 +228,13 @@ namespace VRTRIX {
         [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         public static extern void SetAdvancedMode(IntPtr sp, bool bIsAdvancedMode);
         /// <summary>
+        /// Set data gloves hardware version.
+        /// </summary>
+        /// <param name="sp">The serial port object</param>
+        /// <param name="version">Data glove hardware version to set</param>
+        [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+        public static extern void SetHardwareVersion(IntPtr sp, GLOVEVERSION version);
+        /// <summary>
         /// Set Proximal Thumb Offset.
         /// </summary>
         /// <param name="sp">The serial port object</param>
@@ -556,6 +563,16 @@ namespace VRTRIX {
         {
             SetAdvancedMode(sp, bIsAdvancedMode);
         }
+
+        //! Set data gloves hardware version.
+        /*! 
+         * \param version Data glove hardware version.
+         */
+        public void SetHardwareVersion(GLOVEVERSION version)
+        {
+            SetHardwareVersion(sp, version);
+        }
+
 
         //! Set thumb offset to counteract the difference between hands & gloves sensor installation.
         /*! 

@@ -64,8 +64,11 @@ namespace VRTRIX
         public Vector3[] qr_axisoffset = new Vector3[3];
 
         [Header("Thumb Parameters")]
-        //! Model mapping parameters for thumb joint, used to tune thumb offset between the model and hardware sensor placement. Please read the sdk tutorial documentation to learn how to set this parameter properly.
-        public Vector3[] thumb_offset = new Vector3[3];
+        //! Model mapping parameters for left thumb joint, used to tune thumb offset between the model and hardware sensor placement. Please read the sdk tutorial documentation to learn how to set this parameter properly.
+        public Vector3[] thumb_offset_L = new Vector3[3];
+        
+        //! Model mapping parameters for right thumb joint, used to tune thumb offset between the model and hardware sensor placement. Please read the sdk tutorial documentation to learn how to set this parameter properly.
+        public Vector3[] thumb_offset_R = new Vector3[3];
 
         //! Model mapping parameters for thumb proximal joint, used to tune thumb slerp algorithm parameter. Please read the sdk tutorial documentation to learn how to set this parameter properly.
         public double thumb_proximal_slerp;
@@ -219,9 +222,9 @@ namespace VRTRIX
                 if (LH_Mode)
                 {
                     print("Left hand glove connected!");
-                    LH.SetThumbOffset(thumb_offset[0], VRTRIXBones.L_Thumb_1);
-                    LH.SetThumbOffset(thumb_offset[1], VRTRIXBones.L_Thumb_2);
-                    LH.SetThumbOffset(thumb_offset[2], VRTRIXBones.L_Thumb_3);
+                    LH.SetThumbOffset(thumb_offset_L[0], VRTRIXBones.L_Thumb_1);
+                    LH.SetThumbOffset(thumb_offset_L[1], VRTRIXBones.L_Thumb_2);
+                    LH.SetThumbOffset(thumb_offset_L[2], VRTRIXBones.L_Thumb_3);
                     LH.SetThumbSlerpRate(thumb_proximal_slerp, thumb_middle_slerp);
                     LH.RegisterCallBack();
                     LH.StartStreaming();
@@ -230,9 +233,9 @@ namespace VRTRIX
                 if (RH_Mode)
                 {
                     print("Right hand glove connected!");
-                    RH.SetThumbOffset(thumb_offset[0], VRTRIXBones.R_Thumb_1);
-                    RH.SetThumbOffset(thumb_offset[1], VRTRIXBones.R_Thumb_2);
-                    RH.SetThumbOffset(thumb_offset[2], VRTRIXBones.R_Thumb_3);
+                    RH.SetThumbOffset(thumb_offset_R[0], VRTRIXBones.R_Thumb_1);
+                    RH.SetThumbOffset(thumb_offset_R[1], VRTRIXBones.R_Thumb_2);
+                    RH.SetThumbOffset(thumb_offset_R[2], VRTRIXBones.R_Thumb_3);
                     RH.SetThumbSlerpRate(thumb_proximal_slerp, thumb_middle_slerp);
                     RH.RegisterCallBack();
                     RH.StartStreaming();
@@ -324,6 +327,23 @@ namespace VRTRIX
             if (RH_Mode)
             {
                 RH.SetAdvancedMode(bIsAdvancedMode);
+            }
+        }
+
+        //改变数据手套硬件版本
+        //! Set data gloves hardware version.
+        /*! 
+         * \param version Data glove hardware version.
+         */
+        public void SetHardwareVersion(GLOVEVERSION version)
+        {
+            if (LH_Mode)
+            {
+                LH.SetHardwareVersion(version);
+            }
+            if (RH_Mode)
+            {
+                RH.SetHardwareVersion(version);
             }
         }
 

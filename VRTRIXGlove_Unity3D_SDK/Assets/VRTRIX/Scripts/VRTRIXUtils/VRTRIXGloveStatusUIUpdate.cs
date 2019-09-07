@@ -69,112 +69,112 @@ namespace VRTRIX
         {
             try
             {
-                 if (m_timeCounter < m_refreshTime)
-                 {
-                     m_timeCounter += Time.deltaTime;
-                     m_radioStrengthRH += glove3D.GetReceiveRadioStrength(HANDTYPE.RIGHT_HAND);
-                     m_radioStrengthLH += glove3D.GetReceiveRadioStrength(HANDTYPE.LEFT_HAND);
-            
-                     if (glove3D.GetGloveConnectionStat(HANDTYPE.RIGHT_HAND))
-                     {
-                         if (m_lastFrameArriveTime < 0.016f)
-                         {
-                             m_lastFrameArriveTime += Time.deltaTime;
-                         }
-                         else
-                         {
-                             if (m_lastFrameQuat != glove3D.GetRotation(VRTRIXBones.R_Hand))
-                             {
-                                 m_dataFrameCounter++;
-                             }
-                             m_lastFrameArriveTime = 0;
-                             m_lastFrameQuat = glove3D.GetRotation(VRTRIXBones.R_Hand);
-                         }
-                     }
-                     m_frameCounter++;
-                 }
-                 else
-                 {
-                     //Debug.Log("Data Frame: " + m_dataFrameCounter);
-                     //m_FPS.GetComponent<Text>().text = "FRAME RATE:   " + m_dataFrameCounter.ToString() + " fps";
-                     m_lastFramerate = (float)m_frameCounter / m_timeCounter;
-                     m_RHRadio.GetComponent<Text>().text = "Radio Strength:  " + (m_radioStrengthRH/m_frameCounter).ToString() + " dB";
-                     m_LHRadio.GetComponent<Text>().text = "Radio Strength:  " + (m_radioStrengthLH/m_frameCounter).ToString() + " dB";
- 
-                     RadioStrengthGUI(m_RHRadioBar.GetComponent<Image>(), m_radioStrengthRH/m_frameCounter);
-                     RadioStrengthGUI(m_LHRadioBar.GetComponent<Image>(), m_radioStrengthLH/m_frameCounter);
+                if (m_timeCounter < m_refreshTime)
+                {
+                    m_timeCounter += Time.deltaTime;
+                    m_radioStrengthRH += glove3D.GetReceiveRadioStrength(HANDTYPE.RIGHT_HAND);
+                    m_radioStrengthLH += glove3D.GetReceiveRadioStrength(HANDTYPE.LEFT_HAND);
 
-                     m_frameCounter = 0;
-                     m_dataFrameCounter = 0;
-                     m_timeCounter = 0.0f;
-                     m_radioStrengthRH = 0;
-                     m_radioStrengthLH = 0;
-                 }
-                 m_FPS.GetComponent<Text>().text = "FRAME RATE:   " + m_lastFramerate.ToString() + " fps";
+                    if (glove3D.GetGloveConnectionStat(HANDTYPE.RIGHT_HAND))
+                    {
+                        if (m_lastFrameArriveTime < 0.016f)
+                        {
+                            m_lastFrameArriveTime += Time.deltaTime;
+                        }
+                        else
+                        {
+                            if (m_lastFrameQuat != glove3D.GetRotation(VRTRIXBones.R_Hand))
+                            {
+                                m_dataFrameCounter++;
+                            }
+                            m_lastFrameArriveTime = 0;
+                            m_lastFrameQuat = glove3D.GetRotation(VRTRIXBones.R_Hand);
+                        }
+                    }
+                    m_frameCounter++;
+                }
+                else
+                {
+                    //Debug.Log("Data Frame: " + m_dataFrameCounter);
+                    //m_FPS.GetComponent<Text>().text = "FRAME RATE:   " + m_dataFrameCounter.ToString() + " fps";
+                    m_lastFramerate = (float)m_frameCounter / m_timeCounter;
+                    m_RHRadio.GetComponent<Text>().text = "Radio Strength:  " + (m_radioStrengthRH / m_frameCounter).ToString() + " dB";
+                    m_LHRadio.GetComponent<Text>().text = "Radio Strength:  " + (m_radioStrengthLH / m_frameCounter).ToString() + " dB";
 
-                 if (glove3D.GetGloveConnectionStat(HANDTYPE.RIGHT_HAND) || glove3D.GetGloveConnectionStat(HANDTYPE.LEFT_HAND))
-                 {
-                     m_Status.GetComponent<Text>().text = "GLOVE STATUS:   CONNECTED";
-                 }
-                 else
-                 {
-                     m_MODE.GetComponent<Text>().text = "MODE:   NONE";
-                     m_Status.GetComponent<Text>().text = "GLOVE STATUS:   DISCONNECTED";
-                 }
+                    RadioStrengthGUI(m_RHRadioBar.GetComponent<Image>(), m_radioStrengthRH / m_frameCounter);
+                    RadioStrengthGUI(m_LHRadioBar.GetComponent<Image>(), m_radioStrengthLH / m_frameCounter);
 
-                 if (glove3D.GetGloveConnectionStat(HANDTYPE.RIGHT_HAND))
-                 {
-                     m_MODE.GetComponent<Text>().text = "MODE:   RIGHT ONLY";
-                     m_RHStatus.GetComponent<Text>().text = "RIGHT HAND STATUS: CONNECTED";
-                 }
-                 else
-                 {
-                     m_RHStatus.GetComponent<Text>().text = "RIGHT HAND STATUS: DISCONNECTED";
-                 }
+                    m_frameCounter = 0;
+                    m_dataFrameCounter = 0;
+                    m_timeCounter = 0.0f;
+                    m_radioStrengthRH = 0;
+                    m_radioStrengthLH = 0;
+                }
+                m_FPS.GetComponent<Text>().text = "FRAME RATE:   " + m_lastFramerate.ToString() + " fps";
 
-                 if(glove3D.GetGloveConnectionStat(HANDTYPE.LEFT_HAND))
-                 {
-                     m_MODE.GetComponent<Text>().text = "MODE:   LEFT ONLY";
-                     m_LHStatus.GetComponent<Text>().text = "LEFT HAND STATUS: CONNECTED";
-                 }
-                 else
-                 {
-                     m_LHStatus.GetComponent<Text>().text = "LEFT HAND STATUS: DISCONNECTED";
-                 }
+                if (glove3D.GetGloveConnectionStat(HANDTYPE.RIGHT_HAND) || glove3D.GetGloveConnectionStat(HANDTYPE.LEFT_HAND))
+                {
+                    m_Status.GetComponent<Text>().text = "GLOVE STATUS:   CONNECTED";
+                }
+                else
+                {
+                    m_MODE.GetComponent<Text>().text = "MODE:   NONE";
+                    m_Status.GetComponent<Text>().text = "GLOVE STATUS:   DISCONNECTED";
+                }
 
-                 if (glove3D.GetGloveConnectionStat(HANDTYPE.RIGHT_HAND) && glove3D.GetGloveConnectionStat(HANDTYPE.LEFT_HAND))
-                 {
-                     m_MODE.GetComponent<Text>().text = "MODE:   PAIR";
-                 }
+                if (glove3D.GetGloveConnectionStat(HANDTYPE.RIGHT_HAND))
+                {
+                    m_MODE.GetComponent<Text>().text = "MODE:   RIGHT ONLY";
+                    m_RHStatus.GetComponent<Text>().text = "RIGHT HAND STATUS: CONNECTED";
+                }
+                else
+                {
+                    m_RHStatus.GetComponent<Text>().text = "RIGHT HAND STATUS: DISCONNECTED";
+                }
 
-                 //Right hand parameters
-                 m_RHCal.GetComponent<Text>().text = "Cal Score:  " + glove3D.GetReceivedCalScoreMean(HANDTYPE.RIGHT_HAND).ToString();
-                 CalScoreGUI(m_RHCalBar.GetComponent<Image>(), glove3D.GetReceivedCalScoreMean(HANDTYPE.RIGHT_HAND));
-                 m_RHBattery.GetComponent<Text>().text = "Battery:  " + glove3D.GetBatteryLevel(HANDTYPE.RIGHT_HAND).ToString() + " %";
-                 m_RHRadioChannel.GetComponent<Text>().text = "Channel: " + glove3D.GetReceiveRadioChannel(HANDTYPE.RIGHT_HAND).ToString();
+                if (glove3D.GetGloveConnectionStat(HANDTYPE.LEFT_HAND))
+                {
+                    m_MODE.GetComponent<Text>().text = "MODE:   LEFT ONLY";
+                    m_LHStatus.GetComponent<Text>().text = "LEFT HAND STATUS: CONNECTED";
+                }
+                else
+                {
+                    m_LHStatus.GetComponent<Text>().text = "LEFT HAND STATUS: DISCONNECTED";
+                }
 
-                 m_RHDataRate.GetComponent<Text>().text = "RIGHT HAND DATA RATE: " + glove3D.GetReceivedDataRate(HANDTYPE.RIGHT_HAND).ToString() + "/s";
+                if (glove3D.GetGloveConnectionStat(HANDTYPE.RIGHT_HAND) && glove3D.GetGloveConnectionStat(HANDTYPE.LEFT_HAND))
+                {
+                    m_MODE.GetComponent<Text>().text = "MODE:   PAIR";
+                }
 
-                 m_RHand.GetComponent<Text>().text = "R_Hand   " + glove3D.GetRotation(VRTRIXBones.R_Hand).ToString() + "    " + glove3D.GetCalScore(VRTRIXBones.R_Hand).ToString();
-                 m_RThumb.GetComponent<Text>().text = "R_Thumb   " + glove3D.GetRotation(VRTRIXBones.R_Thumb_2).ToString() + "    " + glove3D.GetCalScore(VRTRIXBones.R_Thumb_2).ToString();
-                 m_RIndex.GetComponent<Text>().text = "R_Index   " + glove3D.GetRotation(VRTRIXBones.R_Index_2).ToString() + "    " + glove3D.GetCalScore(VRTRIXBones.R_Index_2).ToString();
-                 m_RMiddle.GetComponent<Text>().text = "R_Middle   " + glove3D.GetRotation(VRTRIXBones.R_Middle_2).ToString() + "    " + glove3D.GetCalScore(VRTRIXBones.R_Middle_2).ToString();
-                 m_RRing.GetComponent<Text>().text = "R_Ring   " + glove3D.GetRotation(VRTRIXBones.R_Ring_2).ToString() + "    " + glove3D.GetCalScore(VRTRIXBones.R_Ring_2).ToString();
-                 m_RPinky.GetComponent<Text>().text = "R_Pinky   " + glove3D.GetRotation(VRTRIXBones.R_Pinky_2).ToString() + "    " + glove3D.GetCalScore(VRTRIXBones.R_Pinky_2).ToString();
+                //Right hand parameters
+                m_RHCal.GetComponent<Text>().text = "Cal Score:  " + glove3D.GetReceivedCalScoreMean(HANDTYPE.RIGHT_HAND).ToString();
+                CalScoreGUI(m_RHCalBar.GetComponent<Image>(), glove3D.GetReceivedCalScoreMean(HANDTYPE.RIGHT_HAND));
+                m_RHBattery.GetComponent<Text>().text = "Battery:  " + glove3D.GetBatteryLevel(HANDTYPE.RIGHT_HAND).ToString() + " %";
+                m_RHRadioChannel.GetComponent<Text>().text = "Channel: " + glove3D.GetReceiveRadioChannel(HANDTYPE.RIGHT_HAND).ToString();
 
-                 //Left hand parameters
-                 m_LHCal.GetComponent<Text>().text = "Cal Score:  " + glove3D.GetReceivedCalScoreMean(HANDTYPE.LEFT_HAND).ToString();
-                 CalScoreGUI(m_LHCalBar.GetComponent<Image>(), glove3D.GetReceivedCalScoreMean(HANDTYPE.LEFT_HAND));
-                 m_LHBattery.GetComponent<Text>().text = "Battery:  " + glove3D.GetBatteryLevel(HANDTYPE.LEFT_HAND).ToString() + " %";
-                 m_LHRadioChannel.GetComponent<Text>().text = "Channel: " + glove3D.GetReceiveRadioChannel(HANDTYPE.LEFT_HAND).ToString();
-                 m_LHDataRate.GetComponent<Text>().text = "LEFT HAND DATA RATE: " + glove3D.GetReceivedDataRate(HANDTYPE.LEFT_HAND).ToString() + "/s";
+                m_RHDataRate.GetComponent<Text>().text = "RIGHT HAND DATA RATE: " + glove3D.GetReceivedDataRate(HANDTYPE.RIGHT_HAND).ToString() + "/s";
 
-                 m_LHand.GetComponent<Text>().text = "L_HAND:   " + glove3D.GetRotation(VRTRIXBones.L_Hand) + "    " + glove3D.GetCalScore(VRTRIXBones.L_Hand).ToString();
-                 m_LThumb.GetComponent<Text>().text = "L_THUMB:   " + glove3D.GetRotation(VRTRIXBones.L_Thumb_2) + "    " + glove3D.GetCalScore(VRTRIXBones.L_Thumb_2).ToString();
-                 m_LIndex.GetComponent<Text>().text = "L_INDEX:   " + glove3D.GetRotation(VRTRIXBones.L_Index_2) + "    " + glove3D.GetCalScore(VRTRIXBones.L_Index_2).ToString();
-                 m_LMiddle.GetComponent<Text>().text = "L_MIDDLE:   " + glove3D.GetRotation(VRTRIXBones.L_Index_2) + "    " + glove3D.GetCalScore(VRTRIXBones.L_Index_2).ToString();
-                 m_LRing.GetComponent<Text>().text = "L_RING:   " + glove3D.GetRotation(VRTRIXBones.L_Ring_2) + "    " + glove3D.GetCalScore(VRTRIXBones.L_Ring_2).ToString();
-                 m_LPinky.GetComponent<Text>().text = "L_PINKY:   " + glove3D.GetRotation(VRTRIXBones.L_Pinky_2) + "    " + glove3D.GetCalScore(VRTRIXBones.L_Pinky_2).ToString();
+                m_RHand.GetComponent<Text>().text = "R_Hand   " + glove3D.GetRotation(VRTRIXBones.R_Hand).ToString() + "    " + glove3D.GetCalScore(VRTRIXBones.R_Hand).ToString();
+                m_RThumb.GetComponent<Text>().text = "R_Thumb   " + glove3D.GetRotation(VRTRIXBones.R_Thumb_2).ToString() + "    " + glove3D.GetCalScore(VRTRIXBones.R_Thumb_2).ToString();
+                m_RIndex.GetComponent<Text>().text = "R_Index   " + glove3D.GetRotation(VRTRIXBones.R_Index_2).ToString() + "    " + glove3D.GetCalScore(VRTRIXBones.R_Index_2).ToString();
+                m_RMiddle.GetComponent<Text>().text = "R_Middle   " + glove3D.GetRotation(VRTRIXBones.R_Middle_2).ToString() + "    " + glove3D.GetCalScore(VRTRIXBones.R_Middle_2).ToString();
+                m_RRing.GetComponent<Text>().text = "R_Ring   " + glove3D.GetRotation(VRTRIXBones.R_Ring_2).ToString() + "    " + glove3D.GetCalScore(VRTRIXBones.R_Ring_2).ToString();
+                m_RPinky.GetComponent<Text>().text = "R_Pinky   " + glove3D.GetRotation(VRTRIXBones.R_Pinky_2).ToString() + "    " + glove3D.GetCalScore(VRTRIXBones.R_Pinky_2).ToString();
+
+                //Left hand parameters
+                m_LHCal.GetComponent<Text>().text = "Cal Score:  " + glove3D.GetReceivedCalScoreMean(HANDTYPE.LEFT_HAND).ToString();
+                CalScoreGUI(m_LHCalBar.GetComponent<Image>(), glove3D.GetReceivedCalScoreMean(HANDTYPE.LEFT_HAND));
+                m_LHBattery.GetComponent<Text>().text = "Battery:  " + glove3D.GetBatteryLevel(HANDTYPE.LEFT_HAND).ToString() + " %";
+                m_LHRadioChannel.GetComponent<Text>().text = "Channel: " + glove3D.GetReceiveRadioChannel(HANDTYPE.LEFT_HAND).ToString();
+                m_LHDataRate.GetComponent<Text>().text = "LEFT HAND DATA RATE: " + glove3D.GetReceivedDataRate(HANDTYPE.LEFT_HAND).ToString() + "/s";
+
+                m_LHand.GetComponent<Text>().text = "L_HAND:   " + glove3D.GetRotation(VRTRIXBones.L_Hand) + "    " + glove3D.GetCalScore(VRTRIXBones.L_Hand).ToString();
+                m_LThumb.GetComponent<Text>().text = "L_THUMB:   " + glove3D.GetRotation(VRTRIXBones.L_Thumb_2) + "    " + glove3D.GetCalScore(VRTRIXBones.L_Thumb_2).ToString();
+                m_LIndex.GetComponent<Text>().text = "L_INDEX:   " + glove3D.GetRotation(VRTRIXBones.L_Index_2) + "    " + glove3D.GetCalScore(VRTRIXBones.L_Index_2).ToString();
+                m_LMiddle.GetComponent<Text>().text = "L_MIDDLE:   " + glove3D.GetRotation(VRTRIXBones.L_Index_2) + "    " + glove3D.GetCalScore(VRTRIXBones.L_Index_2).ToString();
+                m_LRing.GetComponent<Text>().text = "L_RING:   " + glove3D.GetRotation(VRTRIXBones.L_Ring_2) + "    " + glove3D.GetCalScore(VRTRIXBones.L_Ring_2).ToString();
+                m_LPinky.GetComponent<Text>().text = "L_PINKY:   " + glove3D.GetRotation(VRTRIXBones.L_Pinky_2) + "    " + glove3D.GetCalScore(VRTRIXBones.L_Pinky_2).ToString();
             }
             catch (Exception e)
             {
@@ -184,6 +184,23 @@ namespace VRTRIX
         public void OnToggleAdvancedMode(bool enabled)
         {
             glove3D.SetAdvancedMode(enabled);
+        }
+
+        public void OnSelectHardwareVersion(int index)
+        {
+            if (index == 0)
+            {
+                glove3D.SetHardwareVersion(GLOVEVERSION.DK1);
+            }
+            else if (index == 1)
+            {
+                glove3D.SetHardwareVersion(GLOVEVERSION.DK2);
+            }
+            else if (index == 2)
+            {
+                glove3D.SetHardwareVersion(GLOVEVERSION.PRO);
+            }
+
         }
         private static void RadioStrengthGUI(Image image, int radiostrength)
         {
