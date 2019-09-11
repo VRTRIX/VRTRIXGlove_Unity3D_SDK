@@ -1,7 +1,7 @@
 # 功能介绍 [English][english]
 
 <p align="center">
-  <img src="https://github.com/VRTRIX/VRTRIXGlove_Unity3D_SDK/blob/master/docs/img/digital_glove.jpg?raw=true"/>
+  <img src="https://github.com/VRTRIX/VRTRIXGlove_Unity3D_SDK/blob/master/docs/img/digital_glove.png"/>
 </p>
 
 VRTRIX 数据手套基于高精度惯性传感器，定位手指各关节和手腕动作与姿态。每只手套上分布有6个传感器，双手共12个，可以实时高精度低延迟输出全手所有关节的运动姿态。
