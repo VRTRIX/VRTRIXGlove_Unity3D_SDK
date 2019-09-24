@@ -1,7 +1,7 @@
 # 功能介绍 [English][english]
 
 <p align="center">
-  <img src="https://github.com/VRTRIX/VRTRIXGlove_Unity3D_SDK/blob/master/docs/img/digital_glove.jpg?raw=true"/>
+  <img src="https://github.com/VRTRIX/VRTRIXGlove_Unity3D_SDK/blob/master/docs/img/digital_glove.png"/>
 </p>
 
 VRTRIX 数据手套基于高精度惯性传感器，定位手指各关节和手腕动作与姿态。每只手套上分布有6个传感器，双手共12个，可以实时高精度低延迟输出全手所有关节的运动姿态。
@@ -15,6 +15,39 @@ VRTRIX 惯性传感器模块采用九轴传感器（3轴陀螺仪，3轴加速�
 **请前往我们github的[release页面][devsite]下载最新的稳定版本Unity3D插件。**
 
 **如果想获得更多详细的关于该插件的使用方法和信息，请前往我们github的[维基页面][wiki]。**
+
+# 示例场景
+以下为手部模型在Unity中通过数据手套驱动，实时渲染效果。
+
+## 3D 场景演示
+![](https://github.com/VRTRIX/VRTRIXGlove_Unity3D_SDK/blob/master/docs/img/pair_hand.gif?raw=true)
+
+## OK 姿态演示
+![](https://github.com/VRTRIX/VRTRIXGlove_Unity3D_SDK/blob/master/docs/img/ok_pose.gif)
+
+## 五指航向角张开演示
+![](https://github.com/VRTRIX/VRTRIXGlove_Unity3D_SDK/blob/master/docs/img/yaw_open.gif)
+
+## 手势识别演示
+![](https://github.com/VRTRIX/VRTRIXGlove_Unity3D_SDK/blob/master/docs/img/gesture_recognition.gif)
+
+## 六自由度VR场景演示（含腕部追踪）
+![](https://github.com/VRTRIX/VRTRIXGlove_Unity3D_SDK/blob/master/docs/img/vr_hand.gif?raw=true)
+
+## 手势识别VR场景中实现传送
+![](https://github.com/VRTRIX/VRTRIXGlove_Unity3D_SDK/blob/master/docs/img/teleport.gif?raw=true)
+
+## 手势识别VR场景中实现交互
+![](https://github.com/VRTRIX/VRTRIXGlove_Unity3D_SDK/blob/master/docs/img/interactable.gif?raw=true)
+
+## 手势识别VR场景中实现抓取
+![](https://github.com/VRTRIX/VRTRIXGlove_Unity3D_SDK/blob/master/docs/img/grab1.gif?raw=true)
+
+## 手势识别VR场景中实现投掷
+![](https://github.com/VRTRIX/VRTRIXGlove_Unity3D_SDK/blob/master/docs/img/throw.gif?raw=true)
+
+## 手势识别VR场景中实现按键点击
+![](https://github.com/VRTRIX/VRTRIXGlove_Unity3D_SDK/blob/master/docs/img/button.gif?raw=true)
 
 ## 支持
 
