@@ -269,6 +269,20 @@ namespace VRTRIX {
         /// <param name="slerp_middle">thumb middle joint slerp rate to set</param>
         [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         public static extern void SetThumbSlerpRate(IntPtr sp, double slerp_proximal, double slerp_middle);
+        /// <summary>
+        /// Set finger spacing when advanced mode is NOT enabled.
+        /// </summary>
+        /// <param name="sp">The serial port object</param>
+        /// <param name="spacing">spacing value to set</param>
+        [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+        public static extern void SetFingerSpacing(IntPtr sp, double spacing);
+        /// <summary>
+        /// Set final finger spacing when fingers are fully bended.
+        /// </summary>
+        /// <param name="sp">The serial port object</param>
+        /// <param name="spacing">spacing value to set</param>
+        [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+        public static extern void SetFinalFingerSpacing(IntPtr sp, double spacing);
         #endregion
 
 
@@ -601,6 +615,26 @@ namespace VRTRIX {
         {
             SetThumbSlerpRate(sp, slerp_proximal, slerp_middle);
         }
+
+
+        //! Set finger spacing when advanced mode is NOT enabled.
+        /*! 
+         * \param spacing spacing value to set.
+         */
+        public void SetFingerSpacing(double spacing)
+        {
+            SetFingerSpacing(sp, spacing);
+        }
+
+        //! Set final finger spacing when fingers are fully bended.
+        /*! 
+         * \param spacing spacing value to set.
+         */
+        public void SetFinalFingerSpacing(double spacing)
+        {
+            SetFinalFingerSpacing(sp, spacing);
+        }
+
 
         private static void MarshalUnmananagedArray2Struct<VRTRIX_Quat>(IntPtr unmanagedArray, int length, out VRTRIX_Quat[] mangagedArray)
         {

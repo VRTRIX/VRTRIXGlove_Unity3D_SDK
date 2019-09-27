@@ -76,6 +76,14 @@ namespace VRTRIX
         //! Model mapping parameters for thumb middle joint, used to tune thumb slerp algorithm parameter. Please read the sdk tutorial documentation to learn how to set this parameter properly.
         public double thumb_middle_slerp;
 
+        [Header("Finger Parameters")]
+        //! Finger spacing when advanced mode is NOT enabled. Please read the sdk tutorial documentation to learn how to set this parameter properly.
+        public double finger_spacing;
+
+        //! Finger spacing when four fingers are fully bended. Please read the sdk tutorial documentation to learn how to set this parameter properly.
+        public double final_finger_spacing;
+
+
         public VRTRIXDataWrapper LH, RH;
         private GameObject LH_tracker, RH_tracker;
         private VRTRIXGloveGestureRecognition GloveGesture;
@@ -139,6 +147,13 @@ namespace VRTRIX
                 {
                     SetRotation((VRTRIXBones)i, RH.GetReceivedRotation((VRTRIXBones)i), HANDTYPE.RIGHT_HAND);
                 }
+
+                RH.SetThumbOffset(thumb_offset_R[0], VRTRIXBones.R_Thumb_1);
+                RH.SetThumbOffset(thumb_offset_R[1], VRTRIXBones.R_Thumb_2);
+                RH.SetThumbOffset(thumb_offset_R[2], VRTRIXBones.R_Thumb_3);
+                RH.SetThumbSlerpRate(thumb_proximal_slerp, thumb_middle_slerp);
+                RH.SetFinalFingerSpacing(final_finger_spacing);
+                RH.SetFingerSpacing(finger_spacing);
                 RH_Gesture = GloveGesture.GestureDetection(RH, HANDTYPE.RIGHT_HAND);
             }
 
@@ -162,6 +177,13 @@ namespace VRTRIX
                 {
                     SetRotation((VRTRIXBones)i, LH.GetReceivedRotation((VRTRIXBones)i), HANDTYPE.LEFT_HAND);
                 }
+
+                LH.SetThumbOffset(thumb_offset_L[0], VRTRIXBones.L_Thumb_1);
+                LH.SetThumbOffset(thumb_offset_L[1], VRTRIXBones.L_Thumb_2);
+                LH.SetThumbOffset(thumb_offset_L[2], VRTRIXBones.L_Thumb_3);
+                LH.SetThumbSlerpRate(thumb_proximal_slerp, thumb_middle_slerp);
+                LH.SetFinalFingerSpacing(final_finger_spacing);
+                LH.SetFingerSpacing(finger_spacing);
                 LH_Gesture = GloveGesture.GestureDetection(LH, HANDTYPE.LEFT_HAND);
             }
         }

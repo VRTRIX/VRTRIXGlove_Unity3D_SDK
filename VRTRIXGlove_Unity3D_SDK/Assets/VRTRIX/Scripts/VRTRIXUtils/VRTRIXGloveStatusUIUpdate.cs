@@ -29,11 +29,16 @@ namespace VRTRIX
         public GameObject m_RHCal;
         public GameObject m_LHCalBar;
         public GameObject m_RHCalBar;
+        public GameObject m_LHCalStat;
+        public GameObject m_RHCalStat;
 
         public GameObject m_LHDataRate;
         public GameObject m_RHDataRate;
         public GameObject m_LHStatus;
         public GameObject m_RHStatus;
+        public GameObject[] m_LFingerCalStat = new GameObject[6];
+        public GameObject[] m_RFingerCalStat = new GameObject[6];
+
         public GameObject m_LHand;
         public GameObject m_LThumb;
         public GameObject m_LIndex;
@@ -148,33 +153,51 @@ namespace VRTRIX
                 }
 
                 //Right hand parameters
-                m_RHCal.GetComponent<Text>().text = "Cal Score:  " + glove3D.GetReceivedCalScoreMean(HANDTYPE.RIGHT_HAND).ToString();
+                m_RHCalStat.SetActive(glove3D.GetReceivedCalScoreMean(HANDTYPE.RIGHT_HAND) > 5 && glove3D.GetGloveConnectionStat(HANDTYPE.RIGHT_HAND));
                 CalScoreGUI(m_RHCalBar.GetComponent<Image>(), glove3D.GetReceivedCalScoreMean(HANDTYPE.RIGHT_HAND));
                 m_RHBattery.GetComponent<Text>().text = "Battery:  " + glove3D.GetBatteryLevel(HANDTYPE.RIGHT_HAND).ToString() + " %";
                 m_RHRadioChannel.GetComponent<Text>().text = "Channel: " + glove3D.GetReceiveRadioChannel(HANDTYPE.RIGHT_HAND).ToString();
 
                 m_RHDataRate.GetComponent<Text>().text = "RIGHT HAND DATA RATE: " + glove3D.GetReceivedDataRate(HANDTYPE.RIGHT_HAND).ToString() + "/s";
 
-                m_RHand.GetComponent<Text>().text = "R_Hand   " + glove3D.GetRotation(VRTRIXBones.R_Hand).ToString() + "    " + glove3D.GetCalScore(VRTRIXBones.R_Hand).ToString();
-                m_RThumb.GetComponent<Text>().text = "R_Thumb   " + glove3D.GetRotation(VRTRIXBones.R_Thumb_2).ToString() + "    " + glove3D.GetCalScore(VRTRIXBones.R_Thumb_2).ToString();
-                m_RIndex.GetComponent<Text>().text = "R_Index   " + glove3D.GetRotation(VRTRIXBones.R_Index_2).ToString() + "    " + glove3D.GetCalScore(VRTRIXBones.R_Index_2).ToString();
-                m_RMiddle.GetComponent<Text>().text = "R_Middle   " + glove3D.GetRotation(VRTRIXBones.R_Middle_2).ToString() + "    " + glove3D.GetCalScore(VRTRIXBones.R_Middle_2).ToString();
-                m_RRing.GetComponent<Text>().text = "R_Ring   " + glove3D.GetRotation(VRTRIXBones.R_Ring_2).ToString() + "    " + glove3D.GetCalScore(VRTRIXBones.R_Ring_2).ToString();
-                m_RPinky.GetComponent<Text>().text = "R_Pinky   " + glove3D.GetRotation(VRTRIXBones.R_Pinky_2).ToString() + "    " + glove3D.GetCalScore(VRTRIXBones.R_Pinky_2).ToString();
+                m_RHand.GetComponent<Text>().text = "R_Hand   " + glove3D.GetRotation(VRTRIXBones.R_Hand).ToString("F2");
+                m_RThumb.GetComponent<Text>().text = "R_Thumb   " + glove3D.GetRotation(VRTRIXBones.R_Thumb_2).ToString("F2");
+                m_RIndex.GetComponent<Text>().text = "R_Index   " + glove3D.GetRotation(VRTRIXBones.R_Index_2).ToString("F2");
+                m_RMiddle.GetComponent<Text>().text = "R_Middle   " + glove3D.GetRotation(VRTRIXBones.R_Middle_2).ToString("F2");
+                m_RRing.GetComponent<Text>().text = "R_Ring   " + glove3D.GetRotation(VRTRIXBones.R_Ring_2).ToString("F2");
+                m_RPinky.GetComponent<Text>().text = "R_Pinky   " + glove3D.GetRotation(VRTRIXBones.R_Pinky_2).ToString("F2");
+
+                m_RFingerCalStat[0].SetActive(glove3D.GetCalScore(VRTRIXBones.R_Hand) > 5 && glove3D.GetGloveConnectionStat(HANDTYPE.RIGHT_HAND));
+                m_RFingerCalStat[1].SetActive(glove3D.GetCalScore(VRTRIXBones.R_Index_2) > 5 && glove3D.GetGloveConnectionStat(HANDTYPE.RIGHT_HAND));
+                m_RFingerCalStat[2].SetActive(glove3D.GetCalScore(VRTRIXBones.R_Middle_2) > 5 && glove3D.GetGloveConnectionStat(HANDTYPE.RIGHT_HAND));
+                m_RFingerCalStat[3].SetActive(glove3D.GetCalScore(VRTRIXBones.R_Ring_2) > 5 && glove3D.GetGloveConnectionStat(HANDTYPE.RIGHT_HAND));
+                m_RFingerCalStat[4].SetActive(glove3D.GetCalScore(VRTRIXBones.R_Pinky_2) > 5 && glove3D.GetGloveConnectionStat(HANDTYPE.RIGHT_HAND));
+                m_RFingerCalStat[5].SetActive(glove3D.GetCalScore(VRTRIXBones.R_Thumb_2) > 5 && glove3D.GetGloveConnectionStat(HANDTYPE.RIGHT_HAND));
+
 
                 //Left hand parameters
-                m_LHCal.GetComponent<Text>().text = "Cal Score:  " + glove3D.GetReceivedCalScoreMean(HANDTYPE.LEFT_HAND).ToString();
+                m_LHCalStat.SetActive(glove3D.GetReceivedCalScoreMean(HANDTYPE.LEFT_HAND) > 5 && glove3D.GetGloveConnectionStat(HANDTYPE.LEFT_HAND));
                 CalScoreGUI(m_LHCalBar.GetComponent<Image>(), glove3D.GetReceivedCalScoreMean(HANDTYPE.LEFT_HAND));
                 m_LHBattery.GetComponent<Text>().text = "Battery:  " + glove3D.GetBatteryLevel(HANDTYPE.LEFT_HAND).ToString() + " %";
                 m_LHRadioChannel.GetComponent<Text>().text = "Channel: " + glove3D.GetReceiveRadioChannel(HANDTYPE.LEFT_HAND).ToString();
                 m_LHDataRate.GetComponent<Text>().text = "LEFT HAND DATA RATE: " + glove3D.GetReceivedDataRate(HANDTYPE.LEFT_HAND).ToString() + "/s";
 
-                m_LHand.GetComponent<Text>().text = "L_HAND:   " + glove3D.GetRotation(VRTRIXBones.L_Hand) + "    " + glove3D.GetCalScore(VRTRIXBones.L_Hand).ToString();
-                m_LThumb.GetComponent<Text>().text = "L_THUMB:   " + glove3D.GetRotation(VRTRIXBones.L_Thumb_2) + "    " + glove3D.GetCalScore(VRTRIXBones.L_Thumb_2).ToString();
-                m_LIndex.GetComponent<Text>().text = "L_INDEX:   " + glove3D.GetRotation(VRTRIXBones.L_Index_2) + "    " + glove3D.GetCalScore(VRTRIXBones.L_Index_2).ToString();
-                m_LMiddle.GetComponent<Text>().text = "L_MIDDLE:   " + glove3D.GetRotation(VRTRIXBones.L_Index_2) + "    " + glove3D.GetCalScore(VRTRIXBones.L_Index_2).ToString();
-                m_LRing.GetComponent<Text>().text = "L_RING:   " + glove3D.GetRotation(VRTRIXBones.L_Ring_2) + "    " + glove3D.GetCalScore(VRTRIXBones.L_Ring_2).ToString();
-                m_LPinky.GetComponent<Text>().text = "L_PINKY:   " + glove3D.GetRotation(VRTRIXBones.L_Pinky_2) + "    " + glove3D.GetCalScore(VRTRIXBones.L_Pinky_2).ToString();
+                m_LHand.GetComponent<Text>().text = "L_HAND:   " + glove3D.GetRotation(VRTRIXBones.L_Hand).ToString("F2");
+                m_LThumb.GetComponent<Text>().text = "L_THUMB:   " + glove3D.GetRotation(VRTRIXBones.L_Thumb_2).ToString("F2");
+                m_LIndex.GetComponent<Text>().text = "L_INDEX:   " + glove3D.GetRotation(VRTRIXBones.L_Index_2).ToString("F2");
+                m_LMiddle.GetComponent<Text>().text = "L_MIDDLE:   " + glove3D.GetRotation(VRTRIXBones.L_Index_2).ToString("F2");
+                m_LRing.GetComponent<Text>().text = "L_RING:   " + glove3D.GetRotation(VRTRIXBones.L_Ring_2).ToString("F2");
+                m_LPinky.GetComponent<Text>().text = "L_PINKY:   " + glove3D.GetRotation(VRTRIXBones.L_Pinky_2).ToString("F2");
+
+                
+                m_LFingerCalStat[0].SetActive(glove3D.GetCalScore(VRTRIXBones.L_Hand) > 5 && glove3D.GetGloveConnectionStat(HANDTYPE.LEFT_HAND));
+                m_LFingerCalStat[1].SetActive(glove3D.GetCalScore(VRTRIXBones.L_Index_2) > 5 && glove3D.GetGloveConnectionStat(HANDTYPE.LEFT_HAND));
+                m_LFingerCalStat[2].SetActive(glove3D.GetCalScore(VRTRIXBones.L_Middle_2) > 5 && glove3D.GetGloveConnectionStat(HANDTYPE.LEFT_HAND));
+                m_LFingerCalStat[3].SetActive(glove3D.GetCalScore(VRTRIXBones.L_Ring_2) > 5 && glove3D.GetGloveConnectionStat(HANDTYPE.LEFT_HAND));
+                m_LFingerCalStat[4].SetActive(glove3D.GetCalScore(VRTRIXBones.L_Pinky_2) > 5 && glove3D.GetGloveConnectionStat(HANDTYPE.LEFT_HAND));
+                m_LFingerCalStat[5].SetActive(glove3D.GetCalScore(VRTRIXBones.L_Thumb_2) > 5 && glove3D.GetGloveConnectionStat(HANDTYPE.LEFT_HAND));
+
+
             }
             catch (Exception e)
             {

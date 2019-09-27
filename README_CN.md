@@ -25,6 +25,9 @@ VRTRIX 惯性传感器模块采用九轴传感器（3轴陀螺仪，3轴加速�
 ## OK 姿态演示
 ![](https://github.com/VRTRIX/VRTRIXGlove_Unity3D_SDK/blob/master/docs/img/ok_pose.gif)
 
+## 拇指姿态演示
+![](https://github.com/VRTRIX/VRTRIXGlove_Unity3D_SDK/blob/master/docs/img/thumb_pose.gif)
+
 ## 五指航向角张开演示
 ![](https://github.com/VRTRIX/VRTRIXGlove_Unity3D_SDK/blob/master/docs/img/yaw_open.gif)
 

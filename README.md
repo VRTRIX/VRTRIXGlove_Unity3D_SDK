@@ -26,6 +26,9 @@ Following are the demo scenes that driving hand model in Unity with VRTRIX Data 
 ## OK Pose Demonstration
 ![](https://github.com/VRTRIX/VRTRIXGlove_Unity3D_SDK/blob/master/docs/img/ok_pose.gif)
 
+## Thumb Pose Demonstration
+![](https://github.com/VRTRIX/VRTRIXGlove_Unity3D_SDK/blob/master/docs/img/thumb_pose.gif)
+
 ## Finger Heading Demonstration
 ![](https://github.com/VRTRIX/VRTRIXGlove_Unity3D_SDK/blob/master/docs/img/yaw_open.gif)
 
