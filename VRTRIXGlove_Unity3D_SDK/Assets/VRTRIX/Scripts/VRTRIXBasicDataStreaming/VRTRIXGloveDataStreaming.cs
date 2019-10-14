@@ -196,37 +196,43 @@ namespace VRTRIX
 
             if (GetReceivedStatus(HANDTYPE.LEFT_HAND) == VRTRIXGloveStatus.CLOSED && GetReceivedStatus(HANDTYPE.RIGHT_HAND) == VRTRIXGloveStatus.CLOSED)
             {
-                if (GUI.Button(new Rect(0, 0, Screen.width / 8, Screen.height / 8), "Connect", buttonStyle))
+                if (GUI.Button(new Rect(0, 0, Screen.width / 10, Screen.height / 10), "Connect", buttonStyle))
                 {
                     OnConnectGlove();
                 }
             }
             else
             {
-                if (GUI.Button(new Rect(0, 0, Screen.width / 8, Screen.height / 8), "Disconnect", buttonStyle))
+                if (GUI.Button(new Rect(0, 0, Screen.width / 10, Screen.height / 10), "Disconnect", buttonStyle))
                 {
                     OnDisconnectGlove();
                 }
             }
 
-            if (GUI.Button(new Rect(0, Screen.height / 8, Screen.width / 8, Screen.height / 8), "Reset", buttonStyle))
+            if (GUI.Button(new Rect(0, Screen.height / 10, Screen.width / 10, Screen.height / 10), "Reset View", buttonStyle))
             {
-                OnAlignFingers();
+                OnAlignWrist();
             }
+
 
             if (!IsVREnabled)
             {
-                if (GUI.Button(new Rect(0, Screen.height * (2.0f / 8.0f), Screen.width / 8, Screen.height / 8), "Hardware Calibrate", buttonStyle))
+                if (GUI.Button(new Rect(0, Screen.height * (2.0f / 10.0f), Screen.width / 10, Screen.height / 10), "Align Fingers", buttonStyle))
+                {
+                    OnAlignFingers();
+                }
+
+                if (GUI.Button(new Rect(0, Screen.height * (3.0f / 10.0f), Screen.width / 10, Screen.height / 10), "Save Calibration", buttonStyle))
                 {
                     OnHardwareCalibrate();
                 }
     
-                if (GUI.Button(new Rect(0, Screen.height * (3.0f / 8.0f), Screen.width / 8, Screen.height / 8), "Vibrate", buttonStyle))
+                if (GUI.Button(new Rect(0, Screen.height * (4.0f / 10.0f), Screen.width / 10, Screen.height / 10), "Trigger Haptic", buttonStyle))
                 {
                     OnVibrate();
                 }
     
-                if (GUI.Button(new Rect(0, Screen.height * (4.0f / 8.0f), Screen.width / 8, Screen.height / 8), "Channel Hopping", buttonStyle))
+                if (GUI.Button(new Rect(0, Screen.height * (5.0f / 10.0f), Screen.width / 10, Screen.height / 10), "Channel Hopping", buttonStyle))
                 {
                     OnChannelHopping();
                 }
@@ -369,19 +375,31 @@ namespace VRTRIX
             }
         }
 
-        //数据手套软件对齐手指及设置手背初始方向。
+        //数据手套设置手背初始方向。
+        //! Align five fingers to closed gesture (only if advanced mode is set to true). Also align wrist to the game object chosen.
+        public void OnAlignWrist()
+        {
+            if (LH_Mode)
+            {
+                qloffset = CalculateStaticOffset(LH, HANDTYPE.LEFT_HAND);
+            }
+            if (RH_Mode)
+            {
+                qroffset = CalculateStaticOffset(RH, HANDTYPE.RIGHT_HAND);
+            }
+        }
+
+        //数据手套软件对齐四指。
         //! Align five fingers to closed gesture (only if advanced mode is set to true). Also align wrist to the game object chosen.
         public void OnAlignFingers()
         {
             if (LH_Mode)
             {
                 LH.OnCloseFingerAlignment(HANDTYPE.LEFT_HAND);
-                qloffset = CalculateStaticOffset(LH, HANDTYPE.LEFT_HAND);
             }
             if (RH_Mode)
             {
                 RH.OnCloseFingerAlignment(HANDTYPE.RIGHT_HAND);
-                qroffset = CalculateStaticOffset(RH, HANDTYPE.RIGHT_HAND);
             }
         }
 
