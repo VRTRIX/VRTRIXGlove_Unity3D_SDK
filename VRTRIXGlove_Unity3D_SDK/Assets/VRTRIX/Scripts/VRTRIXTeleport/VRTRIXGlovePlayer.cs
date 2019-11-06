@@ -227,6 +227,7 @@ namespace VRTRIX
                 Transform hmd = hmdTransform;
                 if (hmd)
                 {
+                    print("hmd is " + hmd);
                     return trackingOriginTransform.position + Vector3.ProjectOnPlane(hmd.position - trackingOriginTransform.position, trackingOriginTransform.up);
                 }
                 return trackingOriginTransform.position;
