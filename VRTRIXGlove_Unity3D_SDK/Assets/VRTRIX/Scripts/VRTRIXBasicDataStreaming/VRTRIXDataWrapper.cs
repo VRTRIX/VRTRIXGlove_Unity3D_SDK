@@ -306,6 +306,7 @@ namespace VRTRIX {
          */
         public bool Init(HANDTYPE type)
         {
+            hand_type = type;
             for (int i = 0; i < 16; i++)
             {
                 data[i] = Quaternion.identity;
@@ -327,11 +328,11 @@ namespace VRTRIX {
                     if (OpenPort(this.sp, index, type))
                     {
                         port_opened = true;
-                        stat = VRTRIXGloveStatus.NORMAL;
+                        stat = VRTRIXGloveStatus.DISCONNECTED;
                     }
                     else
                     {
-                        Debug.Log("PORT Open Failed");
+                        Debug.LogError("PORT Open Failed");
                     }
                     return port_opened;
                 }
@@ -384,16 +385,37 @@ namespace VRTRIX {
                 if (gloveEvent == VRTRIXGloveEvent.VRTRIXGloveEvent_Connected)
                 {
                     objDataGlove.stat= VRTRIXGloveStatus.NORMAL;
-                    Debug.Log("VRTRIXGloveEvent_Connected");
+                    if (objDataGlove.hand_type == HANDTYPE.RIGHT_HAND)
+                    {
+                        Debug.Log("Right hand event: VRTRIXGloveEvent_Connected");
+                    }
+                    else if(objDataGlove.hand_type == HANDTYPE.LEFT_HAND)
+                    {
+                        Debug.Log("Left hand event: VRTRIXGloveEvent_Connected");
+                    }
                 }
                 else if (gloveEvent == VRTRIXGloveEvent.VRTRIXGloveEvent_Disconnected)
                 {
                     objDataGlove.stat = VRTRIXGloveStatus.DISCONNECTED;
-                    Debug.Log("VRTRIXGloveEvent_Disconnected");
+                    if (objDataGlove.hand_type == HANDTYPE.RIGHT_HAND)
+                    {
+                        Debug.Log("Right hand event: VRTRIXGloveEvent_Disconnected");
+                    }
+                    else if(objDataGlove.hand_type == HANDTYPE.LEFT_HAND)
+                    {
+                        Debug.Log("Left hand event: VRTRIXGloveEvent_Disconnected");
+                    }
                 }
                 else if (gloveEvent == VRTRIXGloveEvent.VRTRIXGloveEvent_ChannelHopping)
                 {
-                    Debug.Log("VRTRIXGloveEvent_ChannelHopping");
+                    if (objDataGlove.hand_type == HANDTYPE.RIGHT_HAND)
+                    {
+                        Debug.Log("Right hand event: VRTRIXGloveEvent_ChannelHopping");
+                    }
+                    else if(objDataGlove.hand_type == HANDTYPE.LEFT_HAND)
+                    {
+                        Debug.Log("Left hand event: VRTRIXGloveEvent_ChannelHopping");
+                    }
                 }
             };
 

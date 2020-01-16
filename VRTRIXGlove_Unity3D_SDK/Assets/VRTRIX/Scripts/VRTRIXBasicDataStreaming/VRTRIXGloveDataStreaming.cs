@@ -249,7 +249,6 @@ namespace VRTRIX
                 LH_Mode = LH.Init(HANDTYPE.LEFT_HAND);
                 if (LH_Mode)
                 {
-                    print("Left hand glove connected!");
                     LH.SetThumbOffset(thumb_offset_L[0], VRTRIXBones.L_Thumb_1);
                     LH.SetThumbOffset(thumb_offset_L[1], VRTRIXBones.L_Thumb_2);
                     LH.SetThumbOffset(thumb_offset_L[2], VRTRIXBones.L_Thumb_3);
@@ -260,7 +259,6 @@ namespace VRTRIX
                 RH_Mode = RH.Init(HANDTYPE.RIGHT_HAND);
                 if (RH_Mode)
                 {
-                    print("Right hand glove connected!");
                     RH.SetThumbOffset(thumb_offset_R[0], VRTRIXBones.R_Thumb_1);
                     RH.SetThumbOffset(thumb_offset_R[1], VRTRIXBones.R_Thumb_2);
                     RH.SetThumbOffset(thumb_offset_R[2], VRTRIXBones.R_Thumb_3);

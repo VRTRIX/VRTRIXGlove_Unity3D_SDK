@@ -70,7 +70,7 @@ namespace VRTRIX
         }
 
         // Update is called once per frame
-        void FixedUpdate()
+        void Update()
         {
             try
             {
@@ -100,9 +100,7 @@ namespace VRTRIX
                 }
                 else
                 {
-                    //Debug.Log("Data Frame: " + m_dataFrameCounter);
-                    //m_FPS.GetComponent<Text>().text = "FRAME RATE:   " + m_dataFrameCounter.ToString() + " fps";
-                    m_lastFramerate = (float)m_frameCounter / m_timeCounter;
+                    m_lastFramerate = (int)Math.Ceiling((float)m_frameCounter / m_timeCounter);
                     m_RHRadio.GetComponent<Text>().text = "Radio Strength:  " + (m_radioStrengthRH / m_frameCounter).ToString() + " dB";
                     m_LHRadio.GetComponent<Text>().text = "Radio Strength:  " + (m_radioStrengthLH / m_frameCounter).ToString() + " dB";
 
