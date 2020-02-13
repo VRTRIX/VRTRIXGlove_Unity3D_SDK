@@ -232,10 +232,10 @@ namespace VRTRIX
                     OnVibrate();
                 }
     
-                if (GUI.Button(new Rect(0, Screen.height * (5.0f / 10.0f), Screen.width / 10, Screen.height / 10), "Channel Hopping", buttonStyle))
-                {
-                    OnChannelHopping();
-                }
+                //if (GUI.Button(new Rect(0, Screen.height * (5.0f / 10.0f), Screen.width / 10, Screen.height / 10), "Channel Hopping", buttonStyle))
+                //{
+                //    OnChannelHopping();
+                //}
             }
         }
 
