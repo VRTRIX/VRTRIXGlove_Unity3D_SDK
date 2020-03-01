@@ -36,15 +36,16 @@ namespace VRTRIX {
 	 	Device15 = 15,
         MaxDeviceCount = 16
     }
-    
+
     //! Hand type enum.
     /*! The chirality of the hand, used to identify data glove attribute. */
     public enum HANDTYPE
     {
-        RIGHT_HAND,
+        NONE,
+        OTHER_HAND,
         LEFT_HAND,
-        BOTH_HAND,
-        NONE
+        RIGHT_HAND,
+        BOTH_HAND,  // Currently not supported
     };
 
     //! Glove hardware version.
@@ -71,18 +72,14 @@ namespace VRTRIX {
     /*! Define the glove events while running. */
     public enum VRTRIXGloveEvent
     {
- 	    VRTRIXGloveEvent_None = 0,
- 		VRTRIXGloveEvent_Idle = 1,
- 		VRTRIXGloveEvent_Connected = 2,
- 		VRTRIXGloveEvent_Disconnected = 3,
- 		VRTRIXGloveEvent_PortClosed = 4,
- 		VRTRIXGloveEvent_LowBattery = 5,
- 		VRTRIXGloveEvent_BatteryFull = 6,
- 		VRTRIXGloveEvent_Paired = 7,
- 		VRTRIXGloveEvent_MagAbnormal = 8,
- 		VRTRIXGloveEvent_TrackerConnected = 9,
- 		VRTRIXGloveEvent_TrackerDisconnected = 10,
- 		VRTRIXGloveEvent_ChannelHopping = 11,
+        VRTRIXGloveEvent_None,
+        VRTRIXGloveEvent_Connected,
+        VRTRIXGloveEvent_Disconnected,
+        VRTRIXGloveEvent_ChannelHopping,
+        VRTRIXGloveEvent_LowBattery,
+        VRTRIXGloveEvent_BatteryFull,
+        VRTRIXGloveEvent_Paired,
+        VRTRIXGloveEvent_MagAbnormal,
     }
     
     //!  VRTRIX Data Glove data wrapper class. 
@@ -92,7 +89,7 @@ namespace VRTRIX {
     public class VRTRIXDataWrapper
     {
         //Define Useful Constant
-        private const string ReaderImportor = "VRTRIX_IMU";
+        private const string ReaderImportor = "VRTRIXGlove_UnityPlugin";
 
         //Define Useful Parameters & Variables
         private IntPtr sp;
@@ -129,7 +126,7 @@ namespace VRTRIX {
          * \param radio_channel Current radio channel used by wireless transmission.
          */
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        public delegate void ReceivedDataCallback(IntPtr pUserParam, IntPtr ptr, int data_rate, byte radio_strength, IntPtr cal_score_ptr, float battery, int hand_type, int radio_channel);
+        public delegate void ReceivedDataCallback(IntPtr pUserParam, IntPtr ptr, int data_rate, byte radio_strength, IntPtr cal_score_ptr, float battery, HANDTYPE hand_type, int radio_channel);
         public static ReceivedDataCallback receivedDataCallback;
 
 
@@ -139,7 +136,7 @@ namespace VRTRIX {
          * \param pEvent Enum of current event received.
          */
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        public delegate void ReceivedEventCallback(IntPtr pUserParam, IntPtr pEvent);
+        public delegate void ReceivedEventCallback(IntPtr pUserParam, VRTRIXGloveEvent pEvent);
         public static ReceivedEventCallback receivedEventCallback;
 
         #region Functions API
@@ -150,7 +147,7 @@ namespace VRTRIX {
         /// <param name="HardwareVersion">Specify the data glove hardware version</param>
         /// <returns>The serial port object as IntPtr</returns>
         [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        public static extern IntPtr InitDataGlove(bool AdvancedMode, GLOVEVERSION HardwareVersion);
+        public static extern IntPtr Init(bool AdvancedMode, GLOVEVERSION HardwareVersion);
         /// <summary>
         /// Open the serial port
         /// </summary>
@@ -295,7 +292,7 @@ namespace VRTRIX {
         public VRTRIXDataWrapper(bool AdvancedMode, int GloveIndex, GLOVEVERSION HardwareVersion)
         {
             this.index = GloveIndex;
-            sp = InitDataGlove(AdvancedMode, HardwareVersion);
+            sp = Init(AdvancedMode, HardwareVersion);
         }
 
 
@@ -358,7 +355,7 @@ namespace VRTRIX {
         public void RegisterCallBack()
         {
             receivedDataCallback =
-            (IntPtr pUserParam, IntPtr ptr, int data_rate, byte radio_strength, IntPtr cal_score_ptr, float battery, int hand_type, int radio_channel) =>
+            (IntPtr pUserParam, IntPtr ptr, int data_rate, byte radio_strength, IntPtr cal_score_ptr, float battery, HANDTYPE hand_type, int radio_channel) =>
             {
                 GCHandle handle_consume = (GCHandle)pUserParam;
                 VRTRIXDataWrapper objDataGlove = (handle_consume.Target as VRTRIXDataWrapper);
@@ -371,18 +368,17 @@ namespace VRTRIX {
                 objDataGlove.data_rate = data_rate;
                 objDataGlove.radio_strength = radio_strength;
                 objDataGlove.battery = battery;
-                objDataGlove.hand_type = (HANDTYPE)hand_type;
+                objDataGlove.hand_type = hand_type;
                 objDataGlove.radio_channel = radio_channel;
                 Marshal.Copy(cal_score_ptr, objDataGlove.calscore, 0, 6);
             };
 
             receivedEventCallback =
-            (IntPtr pUserParam, IntPtr pEvent) =>
+            (IntPtr pUserParam, VRTRIXGloveEvent pEvent) =>
             {
                 GCHandle handle_consume = (GCHandle)pUserParam;
                 VRTRIXDataWrapper objDataGlove = (handle_consume.Target as VRTRIXDataWrapper);
-                VRTRIXGloveEvent gloveEvent = (VRTRIXGloveEvent)pEvent;
-                if (gloveEvent == VRTRIXGloveEvent.VRTRIXGloveEvent_Connected)
+                if (pEvent == VRTRIXGloveEvent.VRTRIXGloveEvent_Connected)
                 {
                     objDataGlove.stat= VRTRIXGloveStatus.NORMAL;
                     if (objDataGlove.hand_type == HANDTYPE.RIGHT_HAND)
@@ -394,7 +390,7 @@ namespace VRTRIX {
                         Debug.Log("Left hand event: VRTRIXGloveEvent_Connected");
                     }
                 }
-                else if (gloveEvent == VRTRIXGloveEvent.VRTRIXGloveEvent_Disconnected)
+                else if (pEvent == VRTRIXGloveEvent.VRTRIXGloveEvent_Disconnected)
                 {
                     objDataGlove.stat = VRTRIXGloveStatus.DISCONNECTED;
                     if (objDataGlove.hand_type == HANDTYPE.RIGHT_HAND)
@@ -406,7 +402,7 @@ namespace VRTRIX {
                         Debug.Log("Left hand event: VRTRIXGloveEvent_Disconnected");
                     }
                 }
-                else if (gloveEvent == VRTRIXGloveEvent.VRTRIXGloveEvent_ChannelHopping)
+                else if (pEvent == VRTRIXGloveEvent.VRTRIXGloveEvent_ChannelHopping)
                 {
                     if (objDataGlove.hand_type == HANDTYPE.RIGHT_HAND)
                     {
