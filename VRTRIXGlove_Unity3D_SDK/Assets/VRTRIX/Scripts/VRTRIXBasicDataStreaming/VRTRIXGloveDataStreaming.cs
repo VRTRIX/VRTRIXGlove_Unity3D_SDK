@@ -8,6 +8,7 @@
 using UnityEngine;
 using System;
 using System.Threading;
+using System.Collections.Generic;
 using Valve.VR;
 
 namespace VRTRIX
@@ -83,6 +84,22 @@ namespace VRTRIX
         //! Finger spacing when four fingers are fully bended. Please read the sdk tutorial documentation to learn how to set this parameter properly.
         public double final_finger_spacing;
 
+        [Header("Gesture Recognition Parameters")]
+        //! Finger spacing when advanced mode is NOT enabled. Please read the sdk tutorial documentation to learn how to set this parameter properly.
+        public double finger_bendup_threshold;
+
+        //! Finger spacing when four fingers are fully bended. Please read the sdk tutorial documentation to learn how to set this parameter properly.
+        public double finger_benddown_threshold;
+
+        public double finger_curved_threshold;
+
+        //! Finger spacing when advanced mode is NOT enabled. Please read the sdk tutorial documentation to learn how to set this parameter properly.
+        public double thumb_bendup_threshold;
+
+        //! Finger spacing when four fingers are fully bended. Please read the sdk tutorial documentation to learn how to set this parameter properly.
+        public double thumb_benddown_threshold;
+
+        public double thumb_curved_threshold;
 
         public VRTRIXDataWrapper LH, RH;
         private GameObject LH_tracker, RH_tracker;
@@ -90,7 +107,7 @@ namespace VRTRIX
         private Thread LH_receivedData, RH_receivedData;
         private Quaternion qloffset, qroffset;
         private bool qloffset_cal, qroffset_cal;
-        private VRTRIXGloveGesture LH_Gesture, RH_Gesture = VRTRIXGloveGesture.BUTTONNONE;
+        private VRTRIXGloveGesture LH_Gesture, RH_Gesture = VRTRIXGloveGesture.BUTTONINVALID;
         private bool LH_Mode, RH_Mode;
         private Transform[] fingerTransformArray;
         private Matrix4x4 ml_axisoffset, mr_axisoffset;
@@ -104,7 +121,23 @@ namespace VRTRIX
             }
             LH = new VRTRIXDataWrapper(AdvancedMode, (int)Index, version);
             RH = new VRTRIXDataWrapper(AdvancedMode, (int)Index, version);
-            GloveGesture = new VRTRIXGloveGestureRecognition();
+            Dictionary<VRTRIXBones, VRTRIXFingerStatusThreshold> thresholdMap = new Dictionary<VRTRIXBones, VRTRIXFingerStatusThreshold>();
+            for (int i = 0; i < (int)VRTRIXBones.NumOfBones - 2; ++i)
+            {
+                if(i == (int)VRTRIXBones.R_Thumb_1 || i == (int)VRTRIXBones.R_Thumb_2 || i == (int)VRTRIXBones.R_Thumb_3 ||
+                   i == (int)VRTRIXBones.L_Thumb_1 || i == (int)VRTRIXBones.L_Thumb_2 || i == (int)VRTRIXBones.L_Thumb_3)
+                {
+                    VRTRIXFingerStatusThreshold threshold = new VRTRIXFingerStatusThreshold(thumb_bendup_threshold, thumb_benddown_threshold, thumb_curved_threshold);
+                    thresholdMap.Add((VRTRIXBones)i, threshold);
+                }
+                else
+                {
+                    VRTRIXFingerStatusThreshold threshold = new VRTRIXFingerStatusThreshold(finger_bendup_threshold, finger_benddown_threshold, finger_curved_threshold);
+                    thresholdMap.Add((VRTRIXBones)i, threshold);
+                }
+            }
+
+            GloveGesture = new VRTRIXGloveGestureRecognition(thresholdMap);
             fingerTransformArray = FindFingerTransform();
             for(int i = 0; i < 3; i++)
             {
@@ -253,6 +286,7 @@ namespace VRTRIX
                     LH.SetThumbOffset(thumb_offset_L[1], VRTRIXBones.L_Thumb_2);
                     LH.SetThumbOffset(thumb_offset_L[2], VRTRIXBones.L_Thumb_3);
                     LH.SetThumbSlerpRate(thumb_proximal_slerp, thumb_middle_slerp);
+                    LH.SetRadioChannelLimit(99, 83);
                     LH.RegisterCallBack();
                     LH.StartStreaming();
                 }
@@ -263,6 +297,7 @@ namespace VRTRIX
                     RH.SetThumbOffset(thumb_offset_R[1], VRTRIXBones.R_Thumb_2);
                     RH.SetThumbOffset(thumb_offset_R[2], VRTRIXBones.R_Thumb_3);
                     RH.SetThumbSlerpRate(thumb_proximal_slerp, thumb_middle_slerp);
+                    RH.SetRadioChannelLimit(99, 83);
                     RH.RegisterCallBack();
                     RH.StartStreaming();
                 }
@@ -607,7 +642,7 @@ namespace VRTRIX
             }
             else
             {
-                return VRTRIXGloveGesture.BUTTONNONE;
+                return VRTRIXGloveGesture.BUTTONINVALID;
             }
         }
 

@@ -53,17 +53,17 @@ namespace VRTRIX
 
         private bool GetScissorsButtonDown(HANDTYPE type)
         {
-            return glove3D.GetGesture(type) == VRTRIXGloveGesture.BUTTONTELEPORT;
+            return (glove3D.GetGesture(type) & VRTRIXGloveGesture.BUTTONSCISSOR) != VRTRIXGloveGesture.BUTTONINVALID;
         }
 
         private bool GetRockButtonDown(HANDTYPE type)
         {
-            return glove3D.GetGesture(type) == VRTRIXGloveGesture.BUTTONGRAB;
+            return (glove3D.GetGesture(type) & VRTRIXGloveGesture.BUTTONROCK) != VRTRIXGloveGesture.BUTTONINVALID;
         }
 
         private bool GetPaperButtonDown(HANDTYPE type)
         {
-            return glove3D.GetGesture(type) == VRTRIXGloveGesture.BUTTONPAPER;
+            return (glove3D.GetGesture(type) & VRTRIXGloveGesture.BUTTONPAPER) != VRTRIXGloveGesture.BUTTONINVALID;
         }
     }
 }

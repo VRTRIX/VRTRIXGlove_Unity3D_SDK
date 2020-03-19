@@ -50,7 +50,28 @@ namespace VRTRIX
         L_Arm = 33,
         NumOfBones = 34
     }
-
+    //! Hand joints enum.
+    /*! Enum of joints for single hand. */
+    public enum JOINT
+    {
+        Wrist_Joint,
+        Thumb_Proximal,
+        Thumb_Intermediate,
+        Thumb_Distal,
+        Index_Proximal,
+        Index_Intermediate,
+        Index_Distal,
+        Middle_Proximal,
+        Middle_Intermediate,
+        Middle_Distal,
+        Ring_Proximal,
+        Ring_Intermediate,
+        Ring_Distal,
+        Pinky_Proximal,
+        Pinky_Intermediate,
+        Pinky_Distal,
+        Joint_MAX = 16
+    };
     //! Bone utility functions class
     public class VRTRIXUtilities
     {

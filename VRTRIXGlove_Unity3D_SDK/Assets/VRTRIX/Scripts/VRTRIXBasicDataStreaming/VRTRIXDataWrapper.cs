@@ -190,6 +190,21 @@ namespace VRTRIX {
         [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         public static extern void OnOkPoseAlignment(IntPtr sp);
         /// <summary>
+        /// Set radio channel limit for data gloves(valid upperBound and lowerBound between 0-100)
+        /// </summary>
+        /// <param name="sp">The serial port object</param>
+        /// <param name="upperBound">The upper bound of radio channel</param>
+        /// <param name="lowerBound">The lower bound of radio channel</param>
+        [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+        public static extern void SetRadioChannelLimit(IntPtr sp, int upperBound, int lowerBound);
+        /// <summary>
+        /// Get the finger current bend angle. 
+        /// </summary>
+        /// <param name="sp">The serial port object</param>
+        /// <param name="finger">The finger specified for bend angle</param>
+        [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+        public static extern double GetFingerBendAngle(IntPtr sp, JOINT finger);
+        /// <summary>
         /// Register receiving and parsed frame calculation data callback
         /// </summary>
         /// <param name="pUserParam">User defined parameter/pointer passed into plugin interface, which will return in callback function.</param>
@@ -439,19 +454,17 @@ namespace VRTRIX {
          * \param bone specific joint of hand.
          * \return the gesture angle for specific joint.         
          */
-        public float GetReceivedGestureAngle (VRTRIXBones bone)
+        public double GetReceivedGestureAngle (VRTRIXBones bone)
         {
-            Quaternion fingerOffest = Quaternion.identity;
-            if (bone == VRTRIXBones.L_Thumb_2)
+            if(hand_type == HANDTYPE.LEFT_HAND)
             {
-                fingerOffest = new Quaternion(0.49673f, 0.409576f, 0.286788f, 0.709406f); //(sin(70/2), 0, 0, cos(70/2))*(0, sin(60/2), 0, cos(60/2))
+                return GetFingerBendAngle(this.sp, (JOINT)(bone - 16));
             }
-            else if(bone == VRTRIXBones.R_Thumb_2)
+            else if (hand_type == HANDTYPE.RIGHT_HAND)
             {
-                fingerOffest = new Quaternion(-0.49673f, -0.409576f, 0.286788f, 0.709406f); //(sin(-70/2), 0, 0, cos(-70/2))*(0, sin(-60/2), 0, cos(-60/2))
+                return GetFingerBendAngle(this.sp, (JOINT)(bone));
             }
-            return ((int)bone < 16) ? (Quaternion.Inverse(data[(int)bone]) * (data[(int)VRTRIXBones.R_Hand] * fingerOffest)).eulerAngles.z :
-                                      (Quaternion.Inverse(data[(int)bone - 16]) * (data[(int)VRTRIXBones.L_Hand - 16] * fingerOffest)).eulerAngles.z ;
+            return 0;
         }
 
         //! Get data rate received per second 
@@ -653,6 +666,15 @@ namespace VRTRIX {
             SetFinalFingerSpacing(sp, spacing);
         }
 
+        //! Set radio channel limit for data gloves.
+        /*! 
+         * \param upperBound The upper bound of radio channel.
+         * \param lowerBound The lower bound of radio channel.
+         */
+        public void SetRadioChannelLimit(int upperBound, int lowerBound)
+        {
+            SetRadioChannelLimit(this.sp, upperBound, lowerBound);
+        }
 
         private static void MarshalUnmananagedArray2Struct<VRTRIX_Quat>(IntPtr unmanagedArray, int length, out VRTRIX_Quat[] mangagedArray)
         {
