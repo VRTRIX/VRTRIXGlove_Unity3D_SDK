@@ -22,7 +22,7 @@ namespace VRTRIX
         {
             if (GetScissorsButtonDown(HANDTYPE.LEFT_HAND) || GetScissorsButtonDown(HANDTYPE.RIGHT_HAND))
             {
-                print("Scissors!");
+                //print("Scissors!");
                 m_Scissors.GetComponentInChildren<Renderer>().materials[0].color = new Color(99f/255f, 1f, 1f, 1f);
             }
             else
@@ -32,7 +32,7 @@ namespace VRTRIX
 
             if (GetRockButtonDown(HANDTYPE.LEFT_HAND) || GetRockButtonDown(HANDTYPE.RIGHT_HAND))
             {
-                print("Rock!");
+                //print("Rock!");
                 m_Rock.GetComponentInChildren<Renderer>().materials[0].color = new Color(0f, 1f, 146f / 255f, 1f);
             }
             else
@@ -42,7 +42,7 @@ namespace VRTRIX
 
             if (GetPaperButtonDown(HANDTYPE.LEFT_HAND) || GetPaperButtonDown(HANDTYPE.RIGHT_HAND))
             {
-                print("Paper!");
+                //print("Paper!");
                 m_Paper.GetComponentInChildren<Renderer>().materials[0].color = new Color(1f, 1f, 157f / 255f, 1f);
             }
             else

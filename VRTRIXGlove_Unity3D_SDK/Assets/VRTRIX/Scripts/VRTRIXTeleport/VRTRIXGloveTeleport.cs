@@ -896,11 +896,11 @@ namespace VRTRIX
 
             if (teleportingToMarker.ShouldMovePlayer())
             {
-                Debug.Log("Moving Player");
+                //Debug.Log("Moving Player");
                 Vector3 playerFeetOffset = player.trackingOriginTransform.position - player.feetPositionGuess;
-                Debug.Log("playerFeetOffset: " + playerFeetOffset);
+                //Debug.Log("playerFeetOffset: " + playerFeetOffset);
                 player.trackingOriginTransform.position = teleportPosition + playerFeetOffset;
-                Debug.Log("trackingOriginTransform: " + player.trackingOriginTransform.position);
+                //Debug.Log("trackingOriginTransform: " + player.trackingOriginTransform.position);
                 
             }
             else

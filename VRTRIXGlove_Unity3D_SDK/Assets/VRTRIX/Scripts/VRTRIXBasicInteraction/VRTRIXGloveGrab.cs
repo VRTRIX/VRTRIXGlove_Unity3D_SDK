@@ -23,17 +23,22 @@ namespace VRTRIX {
         public VRTRIXGloveGrab otherHand;
         public Transform teleportArcStartTransform;
         public Transform hoverSphereTransform;
+        public Transform thumbSphereTransform;
+        public Transform indexSphereTransform;
         public Transform objectAttachTransform;
         public float hoverSphereRadius = 0.05f;
+        public float fingerSphereRadius = 0.01f;
         public LayerMask hoverLayerMask = -1;
         public float hoverUpdateInterval = 0.1f;
         public bool hoverLocked { get; private set; }
-
-        private int prevOverlappingColliders = 0;
+        public bool fingertipTouchLocked { get; private set; }
 
         private const int ColliderArraySize = 16;
         private Collider[] overlappingColliders;
+        private Collider[] indexOverlappingColliders;
+        private Collider[] thumbOverlappingColliders;
         private VRTRIXInteractable _hoveringInteractable;
+        private VRTRIXInteractable _fingertipTouchInteractable;
         private VRTRIXGloveDataStreaming gloveVR;
         // The flags used to determine how an object is attached to the hand.
         [Flags]
@@ -67,12 +72,6 @@ namespace VRTRIX {
                     {
                         Debug.Log("HoverEnd " + _hoveringInteractable.gameObject);
                         _hoveringInteractable.SendMessage("OnHandHoverEnd", this, SendMessageOptions.DontRequireReceiver);
-
-                        //Note: The _hoveringInteractable can change after sending the OnHandHoverEnd message so we need to check it again before broadcasting this message
-                        if (_hoveringInteractable != null)
-                        {
-                            this.BroadcastMessage("OnParentHandHoverEnd", _hoveringInteractable, SendMessageOptions.DontRequireReceiver); // let objects attached to the hand know that a hover has ended
-                        }
                     }
 
                     _hoveringInteractable = value;
@@ -81,21 +80,41 @@ namespace VRTRIX {
                     {
                         Debug.Log("HoverBegin " + _hoveringInteractable.gameObject);
                         _hoveringInteractable.SendMessage("OnHandHoverBegin", this, SendMessageOptions.DontRequireReceiver);
-
-                        //Note: The _hoveringInteractable can change after sending the OnHandHoverBegin message so we need to check it again before broadcasting this message
-                        if (_hoveringInteractable != null)
-                        {
-                            this.BroadcastMessage("OnParentHandHoverBegin", _hoveringInteractable, SendMessageOptions.DontRequireReceiver); // let objects attached to the hand know that a hover has begun
-                        }
                     }
                 }
             }
         }
 
+        public VRTRIXInteractable fingertipTouchInteractable
+        {
+            get { return _fingertipTouchInteractable; }
+            set
+            {
+                if (_fingertipTouchInteractable != value)
+                {
+                    if (_fingertipTouchInteractable != null)
+                    {
+                        Debug.Log("FingertipTouchEnd " + _fingertipTouchInteractable.gameObject);
+                        _fingertipTouchInteractable.SendMessage("OnFingertipTouchEnd", this, SendMessageOptions.DontRequireReceiver);
+                    }
+
+                    _fingertipTouchInteractable = value;
+
+                    if (_fingertipTouchInteractable != null)
+                    {
+                        Debug.Log("FingertipTouchBegin " + _fingertipTouchInteractable.gameObject);
+                        _fingertipTouchInteractable.SendMessage("OnFingertipTouchBegin", this, SendMessageOptions.DontRequireReceiver);
+                    }
+                }
+            }
+        }
+         
         // Use this for initialization
         void Start()
         {
             overlappingColliders = new Collider[ColliderArraySize];
+            indexOverlappingColliders = new Collider[ColliderArraySize];
+            thumbOverlappingColliders = new Collider[ColliderArraySize];
             gloveVR = GetComponentInParent<VRTRIXGloveDataStreaming>();
         }
 
@@ -112,7 +131,10 @@ namespace VRTRIX {
             {
                 hoveringInteractable.SendMessage("HandHoverUpdate", this, SendMessageOptions.DontRequireReceiver);
             }
-
+            if (fingertipTouchInteractable)
+            {
+                fingertipTouchInteractable.SendMessage("FingertipTouchUpdate", this, SendMessageOptions.DontRequireReceiver);
+            }
         }
 
         void LateUpdate()
@@ -123,13 +145,15 @@ namespace VRTRIX {
             //    AttachObject(controllerObject);
             //}
             UpdateHovering();
+            UpdateFingertipTouching();
         }
 
         void OnDrawGizmos()
         {
             Gizmos.color = new Color(0.5f, 1.0f, 0.5f, 0.9f);
-            Transform sphereTransform = hoverSphereTransform ? hoverSphereTransform : this.transform;
-            Gizmos.DrawWireSphere(sphereTransform.position, hoverSphereRadius);
+            Gizmos.DrawWireSphere(hoverSphereTransform.position, hoverSphereRadius);
+            Gizmos.DrawWireSphere(thumbSphereTransform.position, fingerSphereRadius);
+            Gizmos.DrawWireSphere(indexSphereTransform.position, fingerSphereRadius);
         }
 
         //-------------------------------------------------
@@ -149,17 +173,8 @@ namespace VRTRIX {
 
         private void UpdateHovering()
         {
-            //if ((noSteamVRFallbackCamera == null) && (controller == null))
-            //{
-            //    return;
-            //}
-
             if (hoverLocked)
                 return;
-
-            //if (applicationLostFocusObject.activeSelf)
-            //    return;
-
 
             float closestDistance = float.MaxValue;
             VRTRIXInteractable closestInteractable = null;
@@ -184,9 +199,6 @@ namespace VRTRIX {
                 Quaternion.identity,
                 hoverLayerMask.value
             );
-
-            // DebugVar
-            int iActualColliderCount = 0;
 
             foreach (Collider collider in overlappingColliders)
             {
@@ -224,25 +236,104 @@ namespace VRTRIX {
                     closestDistance = distance;
                     closestInteractable = contacting;
                 }
-                iActualColliderCount++;
             }
 
             // Hover on this one
             hoveringInteractable = closestInteractable;
-            //if(closestInteractable != null)
-            //{
-            //    Debug.Log(closestInteractable.gameObject);
-            //}
-
-
-            if (iActualColliderCount > 0 && iActualColliderCount != prevOverlappingColliders)
-            {
-                prevOverlappingColliders = iActualColliderCount;
-                Debug.Log("Found " + iActualColliderCount + " overlapping colliders.");
-            }
         }
 
+        private void UpdateFingertipTouching()
+        {
+            //if (fingertipTouchLocked)
+            //    return;
+            VRTRIXInteractable indexClosestInteractable = null;
+            VRTRIXInteractable thumbClosestInteractable = null;
 
+            // Pick the closest hovering
+            float flHoverRadiusScale = transform.lossyScale.x;
+            float flScaledSphereRadius = fingerSphereRadius * flHoverRadiusScale;
+            // if we're close to the floor, increase the radius to make things easier to pick up
+            float handDiff = Mathf.Abs(transform.position.y);
+            float boxMult = Util.RemapNumberClamped(handDiff, 0.0f, 0.5f * flHoverRadiusScale, 5.0f, 1.0f) * flHoverRadiusScale;
+
+            // null out old vals
+            for (int i = 0; i < indexOverlappingColliders.Length; ++i)
+            {
+                indexOverlappingColliders[i] = null;
+            }
+            float closestDistance = float.MaxValue;
+            Physics.OverlapBoxNonAlloc(
+                indexSphereTransform.position - new Vector3(0, flScaledSphereRadius * boxMult - flScaledSphereRadius, 0),
+                new Vector3(flScaledSphereRadius, flScaledSphereRadius * boxMult * 2.0f, flScaledSphereRadius),
+                indexOverlappingColliders,
+                Quaternion.identity,
+                hoverLayerMask.value
+            );
+
+            foreach (Collider collider in indexOverlappingColliders)
+            {
+                if (collider == null)
+                    continue;
+
+                VRTRIXInteractable contacting = collider.GetComponentInParent<VRTRIXInteractable>();
+
+                // Yeah, it's null, skip
+                if (contacting == null)
+                    continue;
+
+                // Best candidate so far...
+                float distance = Vector3.Distance(contacting.transform.position, hoverSphereTransform.position);
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    indexClosestInteractable = contacting;
+                }
+            }
+
+            // null out old vals
+            for (int i = 0; i < thumbOverlappingColliders.Length; ++i)
+            {
+                thumbOverlappingColliders[i] = null;
+            }
+            closestDistance = float.MaxValue;
+            Physics.OverlapBoxNonAlloc(
+               thumbSphereTransform.position - new Vector3(0, flScaledSphereRadius * boxMult - flScaledSphereRadius, 0),
+               new Vector3(flScaledSphereRadius, flScaledSphereRadius * boxMult * 2.0f, flScaledSphereRadius),
+               thumbOverlappingColliders,
+               Quaternion.identity,
+               hoverLayerMask.value
+           );
+
+            foreach (Collider collider in thumbOverlappingColliders)
+            {
+                if (collider == null)
+                    continue;
+
+                VRTRIXInteractable contacting = collider.GetComponentInParent<VRTRIXInteractable>();
+
+                // Yeah, it's null, skip
+                if (contacting == null)
+                    continue;
+
+                // Best candidate so far...
+                float distance = Vector3.Distance(contacting.transform.position, hoverSphereTransform.position);
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    thumbClosestInteractable = contacting;
+                }
+            }
+
+            // Hover on this one
+            if (indexClosestInteractable != null && indexClosestInteractable == thumbClosestInteractable)
+            {
+                fingertipTouchInteractable = indexClosestInteractable;
+            }
+            else if(indexClosestInteractable == null || thumbClosestInteractable == null)
+            {
+                fingertipTouchInteractable = null;
+            }
+        }
 
         //-------------------------------------------------
         // Attach a GameObject to this GameObject
@@ -499,41 +590,41 @@ namespace VRTRIX {
 
         public bool GetStandardInteractionButton()
         {
-            return gloveVR.GetGesture(this.GetHandType()) == VRTRIXGloveGesture.BUTTONGRAB;
+            return (gloveVR.GetGesture(this.GetHandType()) & VRTRIXGloveGesture.BUTTONGRAB) != VRTRIXGloveGesture.BUTTONINVALID;
         }
 
         public bool GetStandardInteractionButtonDown()
         {
-            return gloveVR.GetGesture(this.GetHandType()) == VRTRIXGloveGesture.BUTTONGRAB;
+            return (gloveVR.GetGesture(this.GetHandType()) & VRTRIXGloveGesture.BUTTONGRAB) != VRTRIXGloveGesture.BUTTONINVALID;
         }
         //-------------------------------------------------
         // Was the standard interaction button just released? In VR, this is a trigger press. In 2D fallback, this is a mouse left-click.
         //-------------------------------------------------
         public bool GetStandardInteractionButtonUp()
         {
-            return gloveVR.GetGesture(this.GetHandType()) != VRTRIXGloveGesture.BUTTONGRAB;
+            return (gloveVR.GetGesture(this.GetHandType()) & VRTRIXGloveGesture.BUTTONGRAB) != VRTRIXGloveGesture.BUTTONINVALID;
         }
 
         public bool GetPressButtonDown()
         {
-            return gloveVR.GetGesture(this.GetHandType()) == VRTRIXGloveGesture.BUTTONCLICK;
+            return (gloveVR.GetGesture(this.GetHandType()) & VRTRIXGloveGesture.BUTTONCLICK) != VRTRIXGloveGesture.BUTTONINVALID;
         }
 
         public bool GetTeleportButton()
         {
-            return gloveVR.GetGesture(this.GetHandType()) == VRTRIXGloveGesture.BUTTONTELEPORT;
+            return (gloveVR.GetGesture(this.GetHandType()) & VRTRIXGloveGesture.BUTTONTELEPORT) != VRTRIXGloveGesture.BUTTONINVALID;
         }
 
         public bool GetTeleportButtonDown()
         {
-            return gloveVR.GetGesture(this.GetHandType()) == VRTRIXGloveGesture.BUTTONTELEPORT;
+            return (gloveVR.GetGesture(this.GetHandType()) & VRTRIXGloveGesture.BUTTONTELEPORT) != VRTRIXGloveGesture.BUTTONINVALID;
         }
         //-------------------------------------------------
         // Was the standard interaction button just released? In VR, this is a trigger press. In 2D fallback, this is a mouse left-click.
         //-------------------------------------------------
         public bool GetTeleportButtonUp()
         {
-            return gloveVR.GetGesture(this.GetHandType()) != VRTRIXGloveGesture.BUTTONTELEPORT;
+            return (gloveVR.GetGesture(this.GetHandType()) & VRTRIXGloveGesture.BUTTONTELEPORT) == VRTRIXGloveGesture.BUTTONINVALID;
         }
 
 
@@ -574,6 +665,43 @@ namespace VRTRIX {
             {
                 hoverLocked = false;
             }
+        }
+
+        //-------------------------------------------------
+        // Continue to hover over this object indefinitely, whether or not the Hand moves out of its interaction trigger volume.
+        //
+        // interactable - The Interactable to hover over indefinitely.
+        //-------------------------------------------------
+        public void FingertipTouchLock(VRTRIXInteractable interactable)
+        {
+            //Debug.Log("FingertipTouchLock " + interactable);
+            fingertipTouchLocked = true;
+            fingertipTouchInteractable = interactable;
+        }
+
+
+        //-------------------------------------------------
+        // Stop hovering over this object indefinitely.
+        //
+        // interactable - The hover-locked Interactable to stop hovering over indefinitely.
+        //-------------------------------------------------
+        public void FingertipTouchUnlock(VRTRIXInteractable interactable)
+        {
+            //Debug.Log("FingertipTouchUnlock " + interactable);
+            if (fingertipTouchInteractable == interactable)
+            {
+                fingertipTouchLocked = false;
+            }
+        }
+
+        public Transform getThumbtipTransform()
+        {
+            return thumbSphereTransform;
+        }
+
+        public Transform getIndextipTransform()
+        {
+            return indexSphereTransform;
         }
     }
 

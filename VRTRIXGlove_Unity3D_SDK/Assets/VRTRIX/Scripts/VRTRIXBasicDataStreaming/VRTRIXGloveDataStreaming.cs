@@ -103,7 +103,7 @@ namespace VRTRIX
 
         public VRTRIXDataWrapper LH, RH;
         private GameObject LH_tracker, RH_tracker;
-        private VRTRIXGloveGestureRecognition GloveGesture;
+        private VRTRIXGloveGestureRecognition gestureDetector;
         private Thread LH_receivedData, RH_receivedData;
         private Quaternion qloffset, qroffset;
         private bool qloffset_cal, qroffset_cal;
@@ -137,7 +137,7 @@ namespace VRTRIX
                 }
             }
 
-            GloveGesture = new VRTRIXGloveGestureRecognition(thresholdMap);
+            gestureDetector = new VRTRIXGloveGestureRecognition(thresholdMap);
             fingerTransformArray = FindFingerTransform();
             for(int i = 0; i < 3; i++)
             {
@@ -187,7 +187,7 @@ namespace VRTRIX
                 RH.SetThumbSlerpRate(thumb_proximal_slerp, thumb_middle_slerp);
                 RH.SetFinalFingerSpacing(final_finger_spacing);
                 RH.SetFingerSpacing(finger_spacing);
-                RH_Gesture = GloveGesture.GestureDetection(RH, HANDTYPE.RIGHT_HAND);
+                RH_Gesture = gestureDetector.GestureDetection(RH, HANDTYPE.RIGHT_HAND);
             }
 
 
@@ -217,7 +217,7 @@ namespace VRTRIX
                 LH.SetThumbSlerpRate(thumb_proximal_slerp, thumb_middle_slerp);
                 LH.SetFinalFingerSpacing(final_finger_spacing);
                 LH.SetFingerSpacing(finger_spacing);
-                LH_Gesture = GloveGesture.GestureDetection(LH, HANDTYPE.LEFT_HAND);
+                LH_Gesture = gestureDetector.GestureDetection(LH, HANDTYPE.LEFT_HAND);
             }
         }
 
@@ -276,7 +276,7 @@ namespace VRTRIX
         //! Connect data glove and initialization.
         public void OnConnectGlove()
         {
-            if (IsVREnabled && LH_tracker == null && RH_tracker == null) return;
+            if (IsVREnabled && (LH_tracker == null || RH_tracker == null)) return;
             try
             {
                 LH_Mode = LH.Init(HANDTYPE.LEFT_HAND);
