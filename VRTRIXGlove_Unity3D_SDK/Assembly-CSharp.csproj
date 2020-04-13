@@ -113,6 +113,7 @@
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXBasicInteraction\VRTRIXGloveHideOnHandFocus.cs" />
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXBasicInteraction\VRTRIXGloveHoverEvents.cs" />
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXBasicInteraction\VRTRIXGloveInterationObject.cs" />
+    <Compile Include="Assets\VRTRIX\Scripts\VRTRIXBasicInteraction\VRTRIXGloveScrewObject.cs" />
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXBasicInteraction\VRTRIXGloveThrowable.cs" />
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXBasicInteraction\VRTRIXGloveUIElement.cs" />
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXBasicInteraction\VRTRIXInteractable.cs" />
@@ -139,7 +140,6 @@
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXUtils\VRTRIXCameraFollow.cs" />
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXUtils\VRTRIXGloveStatusUIUpdate.cs" />
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXUtils\VRTRIXMultipleConnection.cs" />
-    <Compile Include="Assets\VRTRIXGloveScrewObject.cs" />
     <None Include="Assets\VRTRIX\Resource\Shaders\SteamVR_Fade.shader" />
     <None Include="Assets\VRTRIX\Resource\Shaders\SteamVR_ClearAll.shader" />
     <None Include="Assets\VRTRIX\Resource\Shaders\ControllerButtonHints.shader" />

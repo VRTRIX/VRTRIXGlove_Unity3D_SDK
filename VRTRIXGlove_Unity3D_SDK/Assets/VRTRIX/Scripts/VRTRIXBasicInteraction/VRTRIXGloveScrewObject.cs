@@ -54,12 +54,13 @@ namespace VRTRIX
             Transform thumbtip = hand.getThumbtipTransform();
             Transform indextip = hand.getIndextipTransform();
             lastThumbFingertipVector = thumbtip.position - this.transform.position;
-            lastThumbFingertipVector.y = 0;
+            lastThumbFingertipVector = Vector3.ProjectOnPlane(lastThumbFingertipVector, rotateAxis);
             lastThumbFingertipVector.Normalize();
+
+
             lastIndexFingertipVector = indextip.position - this.transform.position;
-            lastIndexFingertipVector.y = 0;
+            lastIndexFingertipVector = Vector3.ProjectOnPlane(lastIndexFingertipVector, rotateAxis);
             lastIndexFingertipVector.Normalize();
-            //hand.FingertipTouchLock(GetComponent<VRTRIXInteractable>());
         }
 
         //-------------------------------------------------
@@ -80,24 +81,23 @@ namespace VRTRIX
             Transform indextip = hand.getIndextipTransform();
 
             Vector3 curIndexFingertipVector = indextip.position - this.transform.position;
-            curIndexFingertipVector.y = 0;
+            curIndexFingertipVector = Vector3.ProjectOnPlane(curIndexFingertipVector, rotateAxis);
             curIndexFingertipVector.Normalize();
 
             Vector3 curThumbFingertipVector = thumbtip.position - this.transform.position;
-            curThumbFingertipVector.y = 0;
+            curThumbFingertipVector = Vector3.ProjectOnPlane(curThumbFingertipVector, rotateAxis);
             curThumbFingertipVector.Normalize();
 
             double indexAngle = GetAngle(lastIndexFingertipVector, curIndexFingertipVector, rotateAxis);
             double thumbAngle = GetAngle(lastThumbFingertipVector, curThumbFingertipVector, rotateAxis);
-            Debug.Log("indexAngle: " + indexAngle.ToString("F4"));
-            Debug.Log("thumbAngle: " + thumbAngle.ToString("F4"));
+            if (Mathf.Abs((float)indexAngle) < 2 || Mathf.Abs((float)thumbAngle) < 2 || Mathf.Abs((float)indexAngle) > 60 || Mathf.Abs((float)thumbAngle) > 60) return;
+
             if(thumbAngle > 0)
             {
                 this.transform.RotateAround(this.transform.position, rotateAxis, (float)indexAngle * 0.5f);
                 if (IsVerticleMovement)
                 {
                     Vector3 newPosition = ObjectToMove.transform.position + new Vector3(0, -(float)indexAngle * 0.5f * speed / 10000f, 0);
-                    Debug.Log("delta: " + (newPosition - origObjectPosition).y.ToString("F4"));
                     if ((newPosition - origObjectPosition).y <= upMaxOffset && (newPosition - origObjectPosition).y >= downMaxOffset)
                     {
                         ObjectToMove.transform.position = newPosition;
@@ -110,15 +110,12 @@ namespace VRTRIX
                 if (IsVerticleMovement)
                 {
                     Vector3 newPosition = ObjectToMove.transform.position + new Vector3(0, -(float)thumbAngle * 0.5f * speed / 10000f, 0);
-                    Debug.Log("delta: " + (newPosition - origObjectPosition).y.ToString("F4"));
                     if ((newPosition - origObjectPosition).y <= upMaxOffset && (newPosition - origObjectPosition).y >= downMaxOffset)
                     {
                         ObjectToMove.transform.position = newPosition;
                     }
                 }
             }
-            Debug.Log("ObjectToMove: " + ObjectToMove.transform.position.ToString("F4"));
-
             lastIndexFingertipVector = curIndexFingertipVector;
             lastThumbFingertipVector = curThumbFingertipVector;
         }
