@@ -79,9 +79,6 @@ namespace VRTRIX
         //! Model mapping parameters for thumb proximal joint, used to tune thumb slerp algorithm parameter. Please read the sdk tutorial documentation to learn how to set this parameter properly.
         public double thumb_proximal_slerp;
 
-        //! Model mapping parameters for thumb middle joint, used to tune thumb slerp algorithm parameter. Please read the sdk tutorial documentation to learn how to set this parameter properly.
-        public double thumb_middle_slerp;
-
         [Header("Finger Parameters")]
         //! Finger spacing when advanced mode is NOT enabled. Please read the sdk tutorial documentation to learn how to set this parameter properly.
         public double finger_spacing;
@@ -101,7 +98,7 @@ namespace VRTRIX
         private Transform[] fingerTransformArray;
         private Matrix4x4 ml_axisoffset, mr_axisoffset;
         private  bool AdvancedMode = false;
-
+        private double thumb_middle_slerp = 0;
         void Start()
         {
             if (!IsEnableMultipleGloves)
@@ -241,6 +238,17 @@ namespace VRTRIX
                 }
     
                 if (GUI.Button(new Rect(0, Screen.height * (5.0f / 10.0f), Screen.width / 10, Screen.height / 10), "OK Pose Calibration", buttonStyle))
+                {
+                    OnOkPoseCalibration();
+                }
+            }
+            else
+            {
+                if (GUI.Button(new Rect(0, Screen.height * (2.0f / 10.0f), Screen.width / 10, Screen.height / 10), "Close Finger Calibration", buttonStyle))
+                {
+                    OnCloseFingerCalibration();
+                }
+                if (GUI.Button(new Rect(0, Screen.height * (3.0f / 10.0f), Screen.width / 10, Screen.height / 10), "OK Pose Calibration", buttonStyle))
                 {
                     OnOkPoseCalibration();
                 }
