@@ -21,8 +21,6 @@ namespace VRTRIX
         public GameObject m_RHRadio;
         public GameObject m_LHBattery;
         public GameObject m_RHBattery;
-        public GameObject m_LHRadioChannel;
-        public GameObject m_RHRadioChannel;
         public GameObject m_LHRadioBar;
         public GameObject m_RHRadioBar;
         public GameObject m_LHCal;
@@ -154,8 +152,7 @@ namespace VRTRIX
                 m_RHCalStat.SetActive(glove3D.GetReceivedCalScoreMean(HANDTYPE.RIGHT_HAND) > 5 && glove3D.GetGloveConnectionStat(HANDTYPE.RIGHT_HAND));
                 CalScoreGUI(m_RHCalBar.GetComponent<Image>(), glove3D.GetReceivedCalScoreMean(HANDTYPE.RIGHT_HAND));
                 m_RHBattery.GetComponent<Text>().text = "Battery:  " + glove3D.GetBatteryLevel(HANDTYPE.RIGHT_HAND).ToString() + " %";
-                m_RHRadioChannel.GetComponent<Text>().text = "Channel: " + glove3D.GetReceiveRadioChannel(HANDTYPE.RIGHT_HAND).ToString();
-
+                
                 m_RHDataRate.GetComponent<Text>().text = "RIGHT HAND DATA RATE: " + glove3D.GetReceivedDataRate(HANDTYPE.RIGHT_HAND).ToString() + "/s";
 
                 m_RHand.GetComponent<Text>().text = "R_Hand   " + glove3D.GetRotation(VRTRIXBones.R_Hand).ToString("F2");
@@ -177,7 +174,6 @@ namespace VRTRIX
                 m_LHCalStat.SetActive(glove3D.GetReceivedCalScoreMean(HANDTYPE.LEFT_HAND) > 5 && glove3D.GetGloveConnectionStat(HANDTYPE.LEFT_HAND));
                 CalScoreGUI(m_LHCalBar.GetComponent<Image>(), glove3D.GetReceivedCalScoreMean(HANDTYPE.LEFT_HAND));
                 m_LHBattery.GetComponent<Text>().text = "Battery:  " + glove3D.GetBatteryLevel(HANDTYPE.LEFT_HAND).ToString() + " %";
-                m_LHRadioChannel.GetComponent<Text>().text = "Channel: " + glove3D.GetReceiveRadioChannel(HANDTYPE.LEFT_HAND).ToString();
                 m_LHDataRate.GetComponent<Text>().text = "LEFT HAND DATA RATE: " + glove3D.GetReceivedDataRate(HANDTYPE.LEFT_HAND).ToString() + "/s";
 
                 m_LHand.GetComponent<Text>().text = "L_HAND:   " + glove3D.GetRotation(VRTRIXBones.L_Hand).ToString("F2");
