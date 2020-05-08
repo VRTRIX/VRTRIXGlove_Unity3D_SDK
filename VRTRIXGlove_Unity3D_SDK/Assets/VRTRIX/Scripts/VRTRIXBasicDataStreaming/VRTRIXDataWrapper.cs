@@ -92,12 +92,15 @@ namespace VRTRIX {
         private const string ReaderImportor = "VRTRIXGlove_UnityPlugin";
 
         //Define Useful Parameters & Variables
+        public int glove_index;
+        public HANDTYPE hand_type;
+        public bool advanced_mode;
+        public GLOVEVERSION hardware_version;
+
         private IntPtr glove;
-        private int glove_index;
         private int data_rate;
         private int radio_strength;
         private float battery;
-        private HANDTYPE hand_type;
         private int radio_channel;
         private int calscore;
         private bool port_opened = false;
@@ -295,6 +298,8 @@ namespace VRTRIX {
         {
             // Create a data glove object
             glove = Init(AdvancedMode, HardwareVersion, Type);
+            advanced_mode = AdvancedMode;
+            hardware_version = HardwareVersion;
             hand_type = Type;
         }
 
@@ -359,6 +364,7 @@ namespace VRTRIX {
                 else if (pEvent == VRTRIXGloveEvent.VRTRIXGloveEvent_Disconnected)
                 {
                     objDataGlove.stat = VRTRIXGloveStatus.DISCONNECTED;
+                    objDataGlove.data_rate = 0;
                     if (objDataGlove.hand_type == HANDTYPE.RIGHT_HAND)
                     {
                         Debug.Log("Right hand event: VRTRIXGloveEvent_Disconnected");

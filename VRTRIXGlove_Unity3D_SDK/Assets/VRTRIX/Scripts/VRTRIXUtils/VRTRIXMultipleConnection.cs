@@ -67,7 +67,7 @@ namespace VRTRIX
                         if(glove.GetReceivedStatus(HANDTYPE.LEFT_HAND) ==VRTRIXGloveStatus.NORMAL
                             ||glove.GetReceivedStatus(HANDTYPE.RIGHT_HAND) == VRTRIXGloveStatus.NORMAL)
                         {
-                            glove.OnAlignFingers();
+                            glove.OnAlignFingers(HANDTYPE.BOTH_HAND);
                         }
                     }
                 }
@@ -78,7 +78,7 @@ namespace VRTRIX
                         if(glove.GetReceivedStatus(HANDTYPE.LEFT_HAND) ==VRTRIXGloveStatus.NORMAL
                             ||glove.GetReceivedStatus(HANDTYPE.RIGHT_HAND) == VRTRIXGloveStatus.NORMAL)
                         {
-                            glove.OnVibrate();
+                            glove.OnVibrate(HANDTYPE.BOTH_HAND);
                         }
                     }
                 }

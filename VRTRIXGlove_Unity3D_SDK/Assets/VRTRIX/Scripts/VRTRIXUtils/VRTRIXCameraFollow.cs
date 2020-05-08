@@ -38,7 +38,7 @@ public class VRTRIXCameraFollow : MonoBehaviour {
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(1))
         {
             // Get mouse origin
             //mouseOrigin = Input.mousePosition;
@@ -47,7 +47,7 @@ public class VRTRIXCameraFollow : MonoBehaviour {
 
 
         // Disable movements on button release
-        if (!Input.GetMouseButton(0)) isRotating = false;
+        if (!Input.GetMouseButton(1)) isRotating = false;
 
         if (isRotating)
         {
