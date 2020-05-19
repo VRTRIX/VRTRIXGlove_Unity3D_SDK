@@ -306,7 +306,7 @@ namespace VRTRIX
             {
                 m_FingerSpacingSlider.GetComponent<Slider>().interactable = true;
                 m_FingerCurvedSpacingSlider.GetComponent<Slider>().interactable = true;
-                m_AlignFingerButton.GetComponent<Button>().interactable = false;
+                m_AlignFingerButton.GetComponent<Button>().interactable = true;
             }
 
             m_FingerSpacingSlider.GetComponent<Slider>().value = (float)glove3D.finger_spacing;

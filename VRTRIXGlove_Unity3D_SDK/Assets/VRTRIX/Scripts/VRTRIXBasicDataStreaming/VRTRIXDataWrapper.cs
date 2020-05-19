@@ -105,6 +105,7 @@ namespace VRTRIX {
         private int calscore;
         private bool port_opened = false;
         private Quaternion[] data = new Quaternion[16];
+        private VRTRIX_Vector wristData;
         private VRTRIXGloveStatus stat = VRTRIXGloveStatus.CLOSED;
 
         //! Quaternion data struction used in unmanaged C++ API.
@@ -117,10 +118,20 @@ namespace VRTRIX {
             public float qw; //!< w component in quaternion
         }
 
+        //! Vector data struction used in unmanaged C++ API.
+        [StructLayout(LayoutKind.Sequential)]
+        public struct VRTRIX_Vector
+        {
+            public float x; //!< x component in vector
+            public float y; //!< y component in vector
+            public float z; //!< z component in vector
+        }
+
         //! The delegate data receive function called inside unmanaged C++ API.
         /*! 
          * \param pUserParam Pointer of the user defined parameter which registered previously.
-         * \param ptr Array of the data received, where contains all joint rotation values.
+         * \param joint_quat Array of the data received, where contains all joint rotation values.
+         * \param wrist_data Wrist data received, where contains all joint translation values.
          * \param data_rate Data rate per second.
          * \param radio_strength Radio transmission strength in dB
          * \param cal_score_ptr Array of the calibration score received.
@@ -129,7 +140,7 @@ namespace VRTRIX {
          * \param radio_channel Current radio channel used by wireless transmission.
          */
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        public delegate void ReceivedDataCallback(IntPtr pUserParam, IntPtr ptr, int data_rate, int radio_strength, int cal_score, float battery, HANDTYPE hand_type, int radio_channel);
+        public delegate void ReceivedDataCallback(IntPtr pUserParam, IntPtr joint_quat, IntPtr wrist_data, int data_rate, int radio_strength, int cal_score, float battery, HANDTYPE hand_type, int radio_channel);
         public static ReceivedDataCallback receivedDataCallback;
 
 
@@ -325,17 +336,21 @@ namespace VRTRIX {
         public void RegisterCallBack()
         {
             receivedDataCallback =
-            (IntPtr pUserParam, IntPtr ptr, int data_rate, int radio_strength, int cal_score, float battery, HANDTYPE hand_type, int radio_channel) =>
+            (IntPtr pUserParam, IntPtr joint_quat, IntPtr wrist_data, int data_rate, int radio_strength, int cal_score, float battery, HANDTYPE hand_type, int radio_channel) =>
             {
                 GCHandle handle_consume = (GCHandle)pUserParam;
                 VRTRIXDataWrapper objDataGlove = (handle_consume.Target as VRTRIXDataWrapper);
                 VRTRIX_Quat[] quat = new VRTRIX_Quat[16];
-                MarshalUnmananagedArray2Struct<VRTRIX_Quat>(ptr, 16, out quat);
+                MarshalUnmananagedArray2Struct<VRTRIX_Quat>(joint_quat, 16, out quat);
                 for (int i = 0; i < 16; i++)
                 {
                     objDataGlove.data[i] = new Quaternion(quat[i].qx, quat[i].qy, quat[i].qz, quat[i].qw);
                     //Debug.Log(hand_type.ToString() + " Received data_rate: " + quat[i].qw.ToString() + "," + quat[i].qx.ToString() + "," + quat[i].qy.ToString() + "," + quat[i].qz.ToString());
                 }
+                VRTRIX_Vector wrist;
+                MarshalUnmananagedStruct<VRTRIX_Vector>(wrist_data, out wrist);
+                //Debug.Log(hand_type.ToString() + " Received wrist data: " + wrist.x.ToString() + "," + wrist.y.ToString() + "," + wrist.z.ToString());
+                objDataGlove.wristData = wrist;
                 objDataGlove.data_rate = data_rate;
                 objDataGlove.radio_strength = radio_strength;
                 objDataGlove.battery = battery;
@@ -483,6 +498,15 @@ namespace VRTRIX {
             else return Quaternion.identity;
         }
 
+        //! Get current position for wrist joint
+        /*! 
+         * \return current position for wrist joint.
+         */
+        public Vector3 GetReceivedTranslation()
+        {
+            return new Vector3(wristData.x/1000, wristData.y / 1000, wristData.z / 1000);
+        }
+
         //! Save calibration parameters to hardware flash
         public void OnSaveCalibration()
         {
@@ -600,6 +624,10 @@ namespace VRTRIX {
                 IntPtr ins = new IntPtr(unmanagedArray.ToInt64() + i * size);
                 mangagedArray[i] = (VRTRIX_Quat)Marshal.PtrToStructure(ins, typeof(VRTRIX_Quat));
             }
+        }
+        private static void MarshalUnmananagedStruct<VRTRIX_Vector>(IntPtr unmanagedStruct, out VRTRIX_Vector mangagedStruct)
+        {
+            mangagedStruct = (VRTRIX_Vector)Marshal.PtrToStructure(unmanagedStruct, typeof(VRTRIX_Vector));
         }
 
     }

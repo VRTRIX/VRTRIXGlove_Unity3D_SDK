@@ -26,6 +26,9 @@ namespace VRTRIX
         public bool IsVREnabled = false;
 
         [DrawIf("IsVREnabled", false)]
+        public GameObject camera;
+
+        [DrawIf("IsVREnabled", false)]
         //! If VR is NOT enabled, wrist joint need an object to align, which can be the camera, or parent joint of wrist(if a full body model is used), or can just be any other game objects.
         public GameObject LH_ObjectToAlign;
 
@@ -105,9 +108,11 @@ namespace VRTRIX
         private GameObject LH_tracker, RH_tracker;
         private VRTRIXGloveGestureRecognition gestureDetector;
         private Thread LH_receivedData, RH_receivedData;
-        private Quaternion qloffset, qroffset;
+        private Quaternion qloffset = Quaternion.identity;
+        private Quaternion qroffset = Quaternion.identity;
         private bool qloffset_cal, qroffset_cal;
-        private VRTRIXGloveGesture LH_Gesture, RH_Gesture = VRTRIXGloveGesture.BUTTONINVALID;
+        private VRTRIXGloveGesture LH_Gesture = VRTRIXGloveGesture.BUTTONINVALID;
+        private VRTRIXGloveGesture RH_Gesture = VRTRIXGloveGesture.BUTTONINVALID;
         private Transform[] fingerTransformArray;
         private Matrix4x4 ml_axisoffset, mr_axisoffset;
         private bool AdvancedMode = false;
@@ -182,8 +187,8 @@ namespace VRTRIX
                 if (!qroffset_cal && IsValidQuat(RH.GetReceivedRotation(VRTRIXBones.R_Hand)))
                 {
                     if (IsVREnabled && RH_tracker.transform.rotation == Quaternion.identity) return;
-                    PerformAlgorithmTuning(HANDTYPE.RIGHT_HAND);
-                    RH.SetRadioChannelLimit(99, 83);
+                    //PerformAlgorithmTuning(HANDTYPE.RIGHT_HAND);
+                    //RH.SetRadioChannelLimit(99, 83);
 
                     qroffset = CalculateStaticOffset(RH, HANDTYPE.RIGHT_HAND);
                     qroffset_cal = true;
@@ -193,8 +198,17 @@ namespace VRTRIX
                 {
                     SetPosition(VRTRIXBones.R_Arm, RH_tracker.transform.position, RH_tracker.transform.rotation, RHTrackerOffset);
                 }
+                else
+                {
+                    Transform obj = fingerTransformArray[(int)VRTRIXBones.R_Arm];
+                    if (obj != null)
+                    {
+                        Vector3 translation = RH.GetReceivedTranslation();
+                        obj.position = new Vector3(-translation.x, translation.y, translation.z);
+                    }
+                }
                 //以下是设置右手每个骨骼节点全局旋转(global rotation)；
-                for(int i = 0; i < (int)VRTRIXBones.L_Hand; ++i)
+                for (int i = 0; i < (int)VRTRIXBones.L_Hand; ++i)
                 {
                     SetRotation((VRTRIXBones)i, RH.GetReceivedRotation((VRTRIXBones)i), HANDTYPE.RIGHT_HAND);
                 }
@@ -208,8 +222,8 @@ namespace VRTRIX
                 if (!qloffset_cal && IsValidQuat(LH.GetReceivedRotation(VRTRIXBones.L_Hand)))
                 {
                     if (IsVREnabled && LH_tracker.transform.rotation == Quaternion.identity) return;
-                    PerformAlgorithmTuning(HANDTYPE.LEFT_HAND);
-                    LH.SetRadioChannelLimit(99, 83);
+                    //PerformAlgorithmTuning(HANDTYPE.LEFT_HAND);
+                    //LH.SetRadioChannelLimit(99, 83);
 
                     qloffset = CalculateStaticOffset(LH, HANDTYPE.LEFT_HAND);
                     qloffset_cal = true;
@@ -218,6 +232,15 @@ namespace VRTRIX
                 if (IsVREnabled && LH_tracker != null)
                 {
                     SetPosition(VRTRIXBones.L_Arm, LH_tracker.transform.position, LH_tracker.transform.rotation, LHTrackerOffset);
+                }
+                else
+                {
+                    Transform obj = fingerTransformArray[(int)VRTRIXBones.L_Arm];
+                    if (obj != null)
+                    {
+                        Vector3 translation = LH.GetReceivedTranslation();
+                        obj.position = new Vector3(-translation.x, translation.y, translation.z);
+                    }
                 }
 
                 //以下是设置左手每个骨骼节点全局旋转(global rotation)；
@@ -340,21 +363,8 @@ namespace VRTRIX
         //! Align five fingers to closed gesture (only if advanced mode is set to true). Also align wrist to the game object chosen.
         public void OnAlignWrist(HANDTYPE type)
         {
-            if (type == HANDTYPE.LEFT_HAND && LH.GetReceivedStatus() == VRTRIXGloveStatus.NORMAL)
-            {
-                qloffset = CalculateStaticOffset(LH, HANDTYPE.LEFT_HAND);
-            }
-            if (type == HANDTYPE.RIGHT_HAND && RH.GetReceivedStatus() == VRTRIXGloveStatus.NORMAL)
-            {
-                qroffset = CalculateStaticOffset(RH, HANDTYPE.RIGHT_HAND);
-            }
-            if (type == HANDTYPE.BOTH_HAND
-                && LH.GetReceivedStatus() == VRTRIXGloveStatus.NORMAL
-                && RH.GetReceivedStatus() == VRTRIXGloveStatus.NORMAL)
-            {
-                qloffset = CalculateStaticOffset(LH, HANDTYPE.LEFT_HAND);
-                qroffset = CalculateStaticOffset(RH, HANDTYPE.RIGHT_HAND);
-            }
+            qloffset = CalculateStaticOffset(LH, HANDTYPE.LEFT_HAND);
+            qroffset = CalculateStaticOffset(RH, HANDTYPE.RIGHT_HAND);
         }
 
         //数据手套软件对齐四指。
@@ -620,19 +630,25 @@ namespace VRTRIX
         //适用于：当动捕设备没有腕关节/手背节点或者只单独使用手套，无其他定位硬件设备时。
         private Quaternion CalculateStaticOffset(VRTRIXDataWrapper glove, HANDTYPE type)
         {
+            Quaternion offset;
             if (type == HANDTYPE.RIGHT_HAND)
             {
                 if (IsVREnabled)
                 {
                     float angle_offset = RH_tracker.transform.rotation.eulerAngles.z;
-                    return Quaternion.AngleAxis(-angle_offset, Vector3.forward); 
+                    offset = Quaternion.AngleAxis(-angle_offset, Vector3.forward); 
                 }
                 else
                 {
                     Quaternion rotation = glove.GetReceivedRotation(VRTRIXBones.R_Hand);
                     Vector3 quat_vec = mr_axisoffset.MultiplyVector(new Vector3(rotation.x, rotation.y, rotation.z));
                     rotation = new Quaternion(quat_vec.x, quat_vec.y, quat_vec.z, rotation.w);
-                    return RH_ObjectToAlign.transform.rotation * Quaternion.Inverse(rotation);
+                    offset = RH_ObjectToAlign.transform.rotation * Quaternion.Inverse(rotation);
+
+                    //Vector3 translation = glove.GetReceivedTranslation();
+                    //translation = new Vector3(-translation.x, translation.y, translation.z);
+                    //camera.transform.position = translation + RH_ObjectToAlign.transform.rotation * new Vector3(0, 0, -0.5f);
+                    //camera.transform.rotation = RH_ObjectToAlign.transform.rotation * Quaternion.Euler(0, 0, -90);
                 }
             }
             else if (type == HANDTYPE.LEFT_HAND)
@@ -640,20 +656,26 @@ namespace VRTRIX
                 if (IsVREnabled)
                 {
                     float angle_offset = LH_tracker.transform.rotation.eulerAngles.z;
-                    return Quaternion.AngleAxis(-angle_offset, Vector3.forward); 
+                    offset = Quaternion.AngleAxis(-angle_offset, Vector3.forward); 
                 }
                 else
                 {
                     Quaternion rotation = glove.GetReceivedRotation(VRTRIXBones.L_Hand);
                     Vector3 quat_vec = ml_axisoffset.MultiplyVector(new Vector3(rotation.x, rotation.y, rotation.z));
                     rotation = new Quaternion(quat_vec.x, quat_vec.y, quat_vec.z, rotation.w);
-                    return LH_ObjectToAlign.transform.rotation * Quaternion.Inverse(rotation);
+                    offset = LH_ObjectToAlign.transform.rotation * Quaternion.Inverse(rotation);
+
+                    Vector3 translation = glove.GetReceivedTranslation();
+                    translation = new Vector3(-translation.x, translation.y, translation.z);
+                    camera.transform.position = translation + LH_ObjectToAlign.transform.rotation * new Vector3(0, 0, -0.5f);
+                    camera.transform.rotation = LH_ObjectToAlign.transform.rotation * Quaternion.Euler(0, 0, 90);
                 }
             }
             else
             {
-                return Quaternion.identity;
+                offset = Quaternion.identity;
             }
+            return offset;
         }
 
         //用于计算左手/右手腕关节姿态（由动捕设备得到）和左手手背姿态（由数据手套得到）之间的四元数差值，该方法为动态调用，即每一帧都会调用该计算。
@@ -716,7 +738,7 @@ namespace VRTRIX
                         else
                         {
                             //当3D环境下，根据相机视角方向对齐手背方向。
-                            obj.rotation = (bone == VRTRIXBones.L_Hand) ? qloffset * rotation :
+                            obj.rotation = (bone == VRTRIXBones.L_Hand) ? qloffset * rotation:
                                                                      qloffset * rotation * Quaternion.Euler(ql_modeloffset);
                         }
                     }
@@ -724,6 +746,7 @@ namespace VRTRIX
                     {
                         Vector3 quat_vec = mr_axisoffset.MultiplyVector(new Vector3(rotation.x, rotation.y, rotation.z));
                         rotation = new Quaternion(quat_vec.x, quat_vec.y, quat_vec.z, rotation.w);
+
                         if (IsVREnabled)
                         {
                             obj.rotation = (bone == VRTRIXBones.R_Hand) ? CalculateDynamicOffset(RH_tracker, RH, HANDTYPE.RIGHT_HAND)* rotation :
