@@ -48,8 +48,8 @@ namespace VRTRIX
         private GameObject m_HandTypeDropDown;
         private GameObject m_FingerSpacingSlider;
         private GameObject m_FingerCurvedSpacingSlider;
-        private GameObject m_ThumbProximalSlerpSlider;
-        private GameObject m_ThumbMiddleSlerpSlider;
+        //private GameObject m_ThumbProximalSlerpSlider;
+        //private GameObject m_ThumbMiddleSlerpSlider;
 
         private GameObject m_ThumbProximalOffsetXSlider;
         private GameObject m_ThumbProximalOffsetYSlider;
@@ -111,8 +111,8 @@ namespace VRTRIX
             m_HandTypeDropDown = FindDeepChild(m_canvas.gameObject.transform, "HandTypeDropDown").gameObject;
             m_FingerSpacingSlider = FindDeepChild(m_canvas.gameObject.transform, "FingerSpacingSlider").gameObject;
             m_FingerCurvedSpacingSlider = FindDeepChild(m_canvas.gameObject.transform, "FingerCurvedSpacingSlider").gameObject;
-            m_ThumbProximalSlerpSlider = FindDeepChild(m_canvas.gameObject.transform, "ThumbProximalSlerpSlider").gameObject;
-            m_ThumbMiddleSlerpSlider = FindDeepChild(m_canvas.gameObject.transform, "ThumbMiddleSlerpSlider").gameObject;
+            //m_ThumbProximalSlerpSlider = FindDeepChild(m_canvas.gameObject.transform, "ThumbProximalSlerpSlider").gameObject;
+            //m_ThumbMiddleSlerpSlider = FindDeepChild(m_canvas.gameObject.transform, "ThumbMiddleSlerpSlider").gameObject;
 
             m_ThumbProximalOffsetXSlider = FindDeepChild(m_canvas.gameObject.transform, "ThumbProximalOffsetXSlider").gameObject;
             m_ThumbProximalOffsetYSlider = FindDeepChild(m_canvas.gameObject.transform, "ThumbProximalOffsetYSlider").gameObject;
@@ -138,11 +138,12 @@ namespace VRTRIX
             m_ParametersPanel.SetActive(false);
 
             UpdateUIValue((HANDTYPE)m_HandTypeDropDown.GetComponent<Dropdown>().value + 2);
+            m_HandTypeDropDown.GetComponent<Dropdown>().onValueChanged.AddListener(OnHandTypeDropDownChanged);
             m_AdvancedModeToggle.GetComponent<Toggle>().onValueChanged.AddListener(OnToggleAdvancedMode);
             m_FingerSpacingSlider.GetComponent<Slider>().onValueChanged.AddListener(OnFingerSpacingChanged);
             m_FingerCurvedSpacingSlider.GetComponent<Slider>().onValueChanged.AddListener(OnFingerCurvedSpacingChanged);
-            m_ThumbProximalSlerpSlider.GetComponent<Slider>().onValueChanged.AddListener(OnThumbProximalSlerpChanged);
-            m_ThumbMiddleSlerpSlider.GetComponent<Slider>().onValueChanged.AddListener(OnThumbMiddleSlerpChanged);
+            //m_ThumbProximalSlerpSlider.GetComponent<Slider>().onValueChanged.AddListener(OnThumbProximalSlerpChanged);
+            //m_ThumbMiddleSlerpSlider.GetComponent<Slider>().onValueChanged.AddListener(OnThumbMiddleSlerpChanged);
 
             m_ThumbProximalOffsetXSlider.GetComponent<Slider>().onValueChanged.AddListener(OnThumbProximalOffsetXChanged);
             m_ThumbProximalOffsetYSlider.GetComponent<Slider>().onValueChanged.AddListener(OnThumbProximalOffsetYChanged);
@@ -300,13 +301,20 @@ namespace VRTRIX
             {
                 m_FingerSpacingSlider.GetComponent<Slider>().interactable = false;
                 m_FingerCurvedSpacingSlider.GetComponent<Slider>().interactable = false;
-                m_AlignFingerButton.GetComponent<Button>().interactable = true;
             }
             else
             {
                 m_FingerSpacingSlider.GetComponent<Slider>().interactable = true;
                 m_FingerCurvedSpacingSlider.GetComponent<Slider>().interactable = true;
-                m_AlignFingerButton.GetComponent<Button>().interactable = true;
+            }
+
+            if(type == HANDTYPE.LEFT_HAND)
+            {
+                m_AlignFingerButton.GetComponent<Button>().GetComponentInChildren<Text>().text = "Coordinate Calibration";
+            }
+            else if (type == HANDTYPE.RIGHT_HAND)
+            {
+                m_AlignFingerButton.GetComponent<Button>().GetComponentInChildren<Text>().text = "Align Fingers";
             }
 
             m_FingerSpacingSlider.GetComponent<Slider>().value = (float)glove3D.finger_spacing;
@@ -315,11 +323,11 @@ namespace VRTRIX
             m_FingerCurvedSpacingSlider.GetComponent<Slider>().value = (float)glove3D.final_finger_spacing;
             m_FingerCurvedSpacingSlider.transform.Find("CurvedSpacing").GetComponent<Text>().text = glove3D.final_finger_spacing.ToString("F1");
 
-            m_ThumbProximalSlerpSlider.GetComponent<Slider>().value = (float)glove3D.thumb_proximal_slerp;
-            m_ThumbProximalSlerpSlider.transform.Find("ThumbProximalSlerp").GetComponent<Text>().text = glove3D.thumb_proximal_slerp.ToString("F1");
+            //m_ThumbProximalSlerpSlider.GetComponent<Slider>().value = (float)glove3D.thumb_proximal_slerp;
+            //m_ThumbProximalSlerpSlider.transform.Find("ThumbProximalSlerp").GetComponent<Text>().text = glove3D.thumb_proximal_slerp.ToString("F1");
 
-            m_ThumbMiddleSlerpSlider.GetComponent<Slider>().value = (float)glove3D.thumb_middle_slerp;
-            m_ThumbMiddleSlerpSlider.transform.Find("ThumbMiddleSlerp").GetComponent<Text>().text = glove3D.thumb_middle_slerp.ToString("F1");
+            //m_ThumbMiddleSlerpSlider.GetComponent<Slider>().value = (float)glove3D.thumb_middle_slerp;
+            //m_ThumbMiddleSlerpSlider.transform.Find("ThumbMiddleSlerp").GetComponent<Text>().text = glove3D.thumb_middle_slerp.ToString("F1");
 
             if(type == HANDTYPE.LEFT_HAND)
             {
