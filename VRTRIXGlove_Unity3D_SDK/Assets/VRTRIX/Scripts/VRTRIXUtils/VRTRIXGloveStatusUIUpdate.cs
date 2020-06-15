@@ -28,7 +28,7 @@ namespace VRTRIX
         private GameObject m_RHResetButton;
         private GameObject m_ParameterPanelToggle;
         private GameObject m_ParametersPanel;
-        
+
         private GameObject m_Status;
         private GameObject m_LHRadio;
         private GameObject m_RHRadio;
@@ -138,6 +138,7 @@ namespace VRTRIX
             m_ParametersPanel.SetActive(false);
 
             UpdateUIValue((HANDTYPE)m_HandTypeDropDown.GetComponent<Dropdown>().value + 2);
+            m_HandTypeDropDown.GetComponent<Dropdown>().onValueChanged.AddListener(OnToggleHandType);
             m_AdvancedModeToggle.GetComponent<Toggle>().onValueChanged.AddListener(OnToggleAdvancedMode);
             m_FingerSpacingSlider.GetComponent<Slider>().onValueChanged.AddListener(OnFingerSpacingChanged);
             m_FingerCurvedSpacingSlider.GetComponent<Slider>().onValueChanged.AddListener(OnFingerCurvedSpacingChanged);
@@ -198,7 +199,7 @@ namespace VRTRIX
                 //Right hand parameters
                 m_RHCalStat.SetActive(glove3D.GetReceivedCalScoreMean(HANDTYPE.RIGHT_HAND) > 5 && glove3D.GetGloveConnectionStat(HANDTYPE.RIGHT_HAND));
                 CalScoreGUI(m_RHCalBar.GetComponent<Image>(), glove3D.GetReceivedCalScoreMean(HANDTYPE.RIGHT_HAND));
-                m_RHBattery.GetComponent<Text>().text = "Battery:  " + glove3D.GetBatteryLevel(HANDTYPE.RIGHT_HAND).ToString() + " %";        
+                m_RHBattery.GetComponent<Text>().text = "Battery:  " + glove3D.GetBatteryLevel(HANDTYPE.RIGHT_HAND).ToString() + " %";
                 m_RHDataRate.GetComponent<Text>().text = "Data Rate: " + glove3D.GetReceivedDataRate(HANDTYPE.RIGHT_HAND).ToString() + "/s";
 
 
@@ -213,6 +214,11 @@ namespace VRTRIX
                 Console.WriteLine(e);
             }
         }
+        public void OnToggleHandType(int index)
+        {
+            UpdateUIValue((HANDTYPE)m_HandTypeDropDown.GetComponent<Dropdown>().value + 2);
+        }
+
         public void OnToggleAdvancedMode(bool enabled)
         {
             glove3D.SetAdvancedMode(enabled);
@@ -321,13 +327,13 @@ namespace VRTRIX
             m_ThumbMiddleSlerpSlider.GetComponent<Slider>().value = (float)glove3D.thumb_middle_slerp;
             m_ThumbMiddleSlerpSlider.transform.Find("ThumbMiddleSlerp").GetComponent<Text>().text = glove3D.thumb_middle_slerp.ToString("F1");
 
-            if(type == HANDTYPE.LEFT_HAND)
+            if (type == HANDTYPE.LEFT_HAND)
             {
                 thumb_offset[0] = glove3D.thumb_offset_L[0];
                 thumb_offset[1] = glove3D.thumb_offset_L[1];
                 thumb_offset[2] = glove3D.thumb_offset_L[2];
             }
-            else if(type == HANDTYPE.RIGHT_HAND)
+            else if (type == HANDTYPE.RIGHT_HAND)
             {
                 thumb_offset[0] = glove3D.thumb_offset_R[0];
                 thumb_offset[1] = glove3D.thumb_offset_R[1];
@@ -376,8 +382,8 @@ namespace VRTRIX
         {
             HANDTYPE type = (HANDTYPE)m_HandTypeDropDown.GetComponent<Dropdown>().value + 2;
             glove3D.finger_spacing = value;
-            if(type == HANDTYPE.LEFT_HAND) glove3D.LH.SetFingerSpacing(value);
-            else if(type == HANDTYPE.RIGHT_HAND) glove3D.RH.SetFingerSpacing(value);
+            if (type == HANDTYPE.LEFT_HAND) glove3D.LH.SetFingerSpacing(value);
+            else if (type == HANDTYPE.RIGHT_HAND) glove3D.RH.SetFingerSpacing(value);
             UpdateUIValue(type);
         }
 
@@ -606,4 +612,4 @@ namespace VRTRIX
         }
     }
 }
-    
+
