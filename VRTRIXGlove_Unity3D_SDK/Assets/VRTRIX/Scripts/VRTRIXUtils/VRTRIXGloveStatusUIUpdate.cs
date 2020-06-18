@@ -295,18 +295,24 @@ namespace VRTRIX
         {
             m_AdvancedModeToggle.GetComponent<Toggle>().isOn = glove3D.AdvancedMode;
             m_HardwareVersionDropDown.GetComponent<Dropdown>().value = (int)glove3D.version;
-
+            GLOVEVERSION version = (GLOVEVERSION)m_HardwareVersionDropDown.GetComponent<Dropdown>().value;
             if (m_AdvancedModeToggle.GetComponent<Toggle>().isOn)
             {
                 m_FingerSpacingSlider.GetComponent<Slider>().interactable = false;
                 m_FingerCurvedSpacingSlider.GetComponent<Slider>().interactable = false;
-                m_AlignFingerButton.GetComponent<Button>().interactable = true;
+                if(version < GLOVEVERSION.PRO7)
+                {
+                    m_AlignFingerButton.GetComponent<Button>().interactable = true;
+                }
             }
             else
             {
                 m_FingerSpacingSlider.GetComponent<Slider>().interactable = true;
                 m_FingerCurvedSpacingSlider.GetComponent<Slider>().interactable = true;
-                m_AlignFingerButton.GetComponent<Button>().interactable = false;
+                if (version < GLOVEVERSION.PRO7)
+                {
+                    m_AlignFingerButton.GetComponent<Button>().interactable = false;
+                }
             }
 
             m_FingerSpacingSlider.GetComponent<Slider>().value = (float)glove3D.finger_spacing;
