@@ -41,9 +41,17 @@ namespace VRTRIX
         //! If VR is enabled, HTC tracker is the default wrist tracking hardware, which is fixed to side part of data glove, this offset represents the offset between tracker origin to left wrist joint origin.
         public Vector3 LHTrackerOffset = new Vector3(-0.01f, 0, -0.035f);
 
+
+        [Header("MoCap Settings")]
+        //! Mocap enable flag, set to true if integrate with Mocap, use mocap wrist data.
+        public bool IsMoCapEnabled = false;
+
         [Header("Glove Settings")]
         //! Hardware version of VRTRIX data gloves, currently DK1, DK2 and PRO are supported.
         public GLOVEVERSION version;
+
+        //! Advanced mode toggle.
+        public bool AdvancedMode;
 
         //! Mutiple gloves enable flag, set to true if run multiple gloves on the same PC.
         public bool IsEnableMultipleGloves;
@@ -110,21 +118,13 @@ namespace VRTRIX
         private VRTRIXGloveGesture LH_Gesture, RH_Gesture = VRTRIXGloveGesture.BUTTONINVALID;
         private Transform[] fingerTransformArray;
         private Matrix4x4 ml_axisoffset, mr_axisoffset;
-        private bool AdvancedMode = false;
+
 
         void Start()
         {
             if (!IsEnableMultipleGloves)
             {
                 Index = GloveIndex.MaxDeviceCount;
-            }
-
-
-            VRTRIXGloveStatusUIUpdate UI = this.gameObject.GetComponent<VRTRIXGloveStatusUIUpdate>();
-            if (UI != null)
-            {
-                AdvancedMode = UI.GetAdvancedMode();
-                version = UI.GetHardwareVersion();
             }
 
             LH = new VRTRIXDataWrapper(AdvancedMode, version, HANDTYPE.LEFT_HAND);
@@ -169,6 +169,8 @@ namespace VRTRIX
                 }
             }
 
+
+            VRTRIXGloveStatusUIUpdate UI = this.gameObject.GetComponent<VRTRIXGloveStatusUIUpdate>();
             if (UI == null)
             {
                 OnConnectGlove();
@@ -196,6 +198,7 @@ namespace VRTRIX
                 //以下是设置右手每个骨骼节点全局旋转(global rotation)；
                 for(int i = 0; i < (int)VRTRIXBones.L_Hand; ++i)
                 {
+                    if (IsMoCapEnabled && i == (int)VRTRIXBones.R_Hand) continue;
                     SetRotation((VRTRIXBones)i, RH.GetReceivedRotation((VRTRIXBones)i), HANDTYPE.RIGHT_HAND);
                 }
                 RH_Gesture = gestureDetector.GestureDetection(RH, HANDTYPE.RIGHT_HAND);
@@ -223,6 +226,7 @@ namespace VRTRIX
                 //以下是设置左手每个骨骼节点全局旋转(global rotation)；
                 for(int i = (int)VRTRIXBones.L_Hand; i < (int)VRTRIXBones.R_Arm; ++i)
                 {
+                    if (IsMoCapEnabled && i == (int)VRTRIXBones.L_Hand) continue;
                     SetRotation((VRTRIXBones)i, LH.GetReceivedRotation((VRTRIXBones)i), HANDTYPE.LEFT_HAND);
                 }
                 LH_Gesture = gestureDetector.GestureDetection(LH, HANDTYPE.LEFT_HAND);
@@ -242,19 +246,13 @@ namespace VRTRIX
             {
                 ServerIP = UI.GetServerIP();
                 ServerPort = UI.GetServerPort();
-                AdvancedMode = UI.GetAdvancedMode();
-                version = UI.GetHardwareVersion();
             }
             if (LH.GetReceivedStatus() != VRTRIXGloveStatus.NORMAL)
             {
-                LH.hardware_version = version;
-                LH.advanced_mode = AdvancedMode;
                 LH.OnConnectDataGlove((int)Index, ServerIP, ServerPort);
             }
             if (RH.GetReceivedStatus() != VRTRIXGloveStatus.NORMAL)
             {
-                RH.hardware_version = version;
-                RH.advanced_mode = AdvancedMode;
                 RH.OnConnectDataGlove((int)Index, ServerIP, ServerPort);
             }
         }
@@ -656,9 +654,9 @@ namespace VRTRIX
             }
         }
 
-        //用于计算左手/右手腕关节姿态（由动捕设备得到）和左手手背姿态（由数据手套得到）之间的四元数差值，该方法为动态调用，即每一帧都会调用该计算。
-        //适用于：当动捕设备有腕关节/手背节点时
-        private Quaternion CalculateDynamicOffset(GameObject tracker, VRTRIXDataWrapper glove, HANDTYPE type)
+        //用于计算左手/右手腕关节姿态（由HTC Tracker得到）和左手手背姿态（由数据手套得到）之间的四元数差值，该方法为动态调用，即每一帧都会调用该计算。
+        //适用于：当腕关节/手背节点使用HTC Tracker进行追踪时
+        private Quaternion CalculateTrackerOffset(GameObject tracker, VRTRIXDataWrapper glove, HANDTYPE type)
         {
             //计算场景中角色右手腕在unity世界坐标系下的旋转与手套的右手腕在手套追踪系统中世界坐标系下右手腕的旋转之间的角度差值，意在匹配两个坐标系的方向；
             if (type == HANDTYPE.RIGHT_HAND)
@@ -684,7 +682,34 @@ namespace VRTRIX
                 return Quaternion.identity;
             }
         }
-        
+
+        //用于计算左手/右手腕关节姿态（由动捕设备得到）和左手手背姿态（由数据手套得到）之间的四元数差值，该方法为动态调用，即每一帧都会调用该计算。
+        //适用于：当动捕设备有腕关节/手背节点时
+        private Quaternion CalculateMocapOffset(GameObject wrist, VRTRIXDataWrapper glove, HANDTYPE type)
+        {
+            //计算场景中角色右手腕在unity世界坐标系下的旋转与手套的右手腕在手套追踪系统中世界坐标系下右手腕的旋转之间的角度差值，意在匹配两个坐标系的方向；
+            if (type == HANDTYPE.RIGHT_HAND)
+            {
+                Quaternion rotation = glove.GetReceivedRotation(VRTRIXBones.R_Hand);
+                Vector3 quat_vec = mr_axisoffset.MultiplyVector(new Vector3(rotation.x, rotation.y, rotation.z));
+                rotation = new Quaternion(quat_vec.x, quat_vec.y, quat_vec.z, rotation.w);
+                return wrist.transform.rotation * Quaternion.Inverse(rotation);
+            }
+
+            //计算场景中角色左手腕在unity世界坐标系下的旋转与手套的左手腕在手套追踪系统中世界坐标系下左手腕的旋转之间的角度差值，意在匹配两个坐标系的方向；
+            else if (type == HANDTYPE.LEFT_HAND)
+            {
+                Quaternion rotation = glove.GetReceivedRotation(VRTRIXBones.L_Hand);
+                Vector3 quat_vec = ml_axisoffset.MultiplyVector(new Vector3(rotation.x, rotation.y, rotation.z));
+                rotation = new Quaternion(quat_vec.x, quat_vec.y, quat_vec.z, rotation.w);
+                return wrist.transform.rotation * Quaternion.Inverse(rotation);
+            }
+            else
+            {
+                return Quaternion.identity;
+            }
+        }
+
         //手腕关节位置赋值函数，通过手腕外加的定位物体位置计算手部关节位置。（如果模型为全身骨骼，无需使用该函数）
         private void SetPosition(VRTRIXBones bone, Vector3 pos, Quaternion rot, Vector3 offset)
         {
@@ -710,8 +735,14 @@ namespace VRTRIX
                         if (IsVREnabled)
                         {
                             //当VR环境下，根据固定在手腕上tracker的方向对齐手背方向。
-                            obj.rotation = (bone == VRTRIXBones.L_Hand) ? CalculateDynamicOffset(LH_tracker, LH, HANDTYPE.LEFT_HAND) * rotation :
-                                                                     CalculateDynamicOffset(LH_tracker, LH, HANDTYPE.LEFT_HAND)* rotation * Quaternion.Euler(ql_modeloffset);
+                            obj.rotation = (bone == VRTRIXBones.L_Hand) ? CalculateTrackerOffset(LH_tracker, LH, HANDTYPE.LEFT_HAND) * rotation :
+                                                                     CalculateTrackerOffset(LH_tracker, LH, HANDTYPE.LEFT_HAND)* rotation * Quaternion.Euler(ql_modeloffset);
+                        }
+                        else if(IsMoCapEnabled)
+                        {
+                            //当开启动捕环境下，对齐动捕手腕方向。
+                            obj.rotation = (bone == VRTRIXBones.L_Hand) ? CalculateMocapOffset(fingerTransformArray[(int)VRTRIXBones.L_Hand].gameObject, LH, HANDTYPE.LEFT_HAND) * rotation :
+                                                                     CalculateMocapOffset(fingerTransformArray[(int)VRTRIXBones.L_Hand].gameObject, LH, HANDTYPE.LEFT_HAND) * rotation * Quaternion.Euler(ql_modeloffset);                 
                         }
                         else
                         {
@@ -726,8 +757,13 @@ namespace VRTRIX
                         rotation = new Quaternion(quat_vec.x, quat_vec.y, quat_vec.z, rotation.w);
                         if (IsVREnabled)
                         {
-                            obj.rotation = (bone == VRTRIXBones.R_Hand) ? CalculateDynamicOffset(RH_tracker, RH, HANDTYPE.RIGHT_HAND)* rotation :
-                                                                            CalculateDynamicOffset(RH_tracker, RH, HANDTYPE.RIGHT_HAND)* rotation * Quaternion.Euler(qr_modeloffset);
+                            obj.rotation = (bone == VRTRIXBones.R_Hand) ? CalculateTrackerOffset(RH_tracker, RH, HANDTYPE.RIGHT_HAND)* rotation :
+                                                                            CalculateTrackerOffset(RH_tracker, RH, HANDTYPE.RIGHT_HAND)* rotation * Quaternion.Euler(qr_modeloffset);
+                        }
+                        else if (IsMoCapEnabled)
+                        {
+                            obj.rotation = (bone == VRTRIXBones.R_Hand) ? CalculateMocapOffset(fingerTransformArray[(int)VRTRIXBones.R_Hand].gameObject, RH, HANDTYPE.RIGHT_HAND) * rotation :
+                                                                     CalculateMocapOffset(fingerTransformArray[(int)VRTRIXBones.R_Hand].gameObject, RH, HANDTYPE.RIGHT_HAND) * rotation * Quaternion.Euler(qr_modeloffset);
                         }
                         else
                         {

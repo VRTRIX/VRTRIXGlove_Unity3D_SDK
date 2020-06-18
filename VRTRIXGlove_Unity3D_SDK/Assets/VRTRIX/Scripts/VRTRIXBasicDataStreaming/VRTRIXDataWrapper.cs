@@ -54,7 +54,10 @@ namespace VRTRIX {
     {
         DK1,
         DK2,
-        PRO
+        PRO,
+        PRO7,
+        PRO11,
+        PRO12,
     };
     
     //! Glove connection status.
@@ -94,8 +97,8 @@ namespace VRTRIX {
         //Define Useful Parameters & Variables
         public int glove_index;
         public HANDTYPE hand_type;
-        public bool advanced_mode;
-        public GLOVEVERSION hardware_version;
+        private bool advanced_mode;
+        private GLOVEVERSION hardware_version;
 
         private IntPtr glove;
         private int data_rate;

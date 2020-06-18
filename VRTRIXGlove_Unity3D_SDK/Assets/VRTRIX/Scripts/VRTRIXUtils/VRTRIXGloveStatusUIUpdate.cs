@@ -137,6 +137,7 @@ namespace VRTRIX
             m_ParameterPanelToggle.GetComponent<Toggle>().onValueChanged.AddListener(OnToggleParamPanel);
             m_ParametersPanel.SetActive(false);
 
+
             UpdateUIValue((HANDTYPE)m_HandTypeDropDown.GetComponent<Dropdown>().value + 2);
             m_HandTypeDropDown.GetComponent<Dropdown>().onValueChanged.AddListener(OnToggleHandType);
             m_AdvancedModeToggle.GetComponent<Toggle>().onValueChanged.AddListener(OnToggleAdvancedMode);
@@ -228,19 +229,9 @@ namespace VRTRIX
 
         public void OnSelectHardwareVersion(int index)
         {
-            if (index == 0)
-            {
-                glove3D.SetHardwareVersion(GLOVEVERSION.DK1);
-            }
-            else if (index == 1)
-            {
-                glove3D.SetHardwareVersion(GLOVEVERSION.DK2);
-            }
-            else if (index == 2)
-            {
-                glove3D.SetHardwareVersion(GLOVEVERSION.PRO);
-            }
+            glove3D.SetHardwareVersion((GLOVEVERSION)index);
         }
+
         public void OnConnectGlovePressed()
         {
             glove3D.OnConnectGlove();
@@ -302,6 +293,9 @@ namespace VRTRIX
 
         public void UpdateUIValue(HANDTYPE type)
         {
+            m_AdvancedModeToggle.GetComponent<Toggle>().isOn = glove3D.AdvancedMode;
+            m_HardwareVersionDropDown.GetComponent<Dropdown>().value = (int)glove3D.version;
+
             if (m_AdvancedModeToggle.GetComponent<Toggle>().isOn)
             {
                 m_FingerSpacingSlider.GetComponent<Slider>().interactable = false;
