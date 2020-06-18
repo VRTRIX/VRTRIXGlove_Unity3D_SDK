@@ -383,6 +383,7 @@ namespace VRTRIX
          */
         public void SetAdvancedMode(bool bIsAdvancedMode)
         {
+            AdvancedMode = bIsAdvancedMode;
             if (LH.GetReceivedStatus() == VRTRIXGloveStatus.NORMAL)
             {
                 LH.SetAdvancedMode(bIsAdvancedMode);
@@ -400,6 +401,7 @@ namespace VRTRIX
          */
         public void SetHardwareVersion(GLOVEVERSION version)
         {
+            this.version = version;
             if (LH.GetReceivedStatus() == VRTRIXGloveStatus.NORMAL)
             {
                 LH.SetHardwareVersion(version);
