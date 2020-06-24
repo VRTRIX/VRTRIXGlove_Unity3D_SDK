@@ -8,6 +8,7 @@
 //          Updating Continously...
 //
 //=============================================================================
+using AOT;
 using System;
 using System.Runtime.InteropServices;
 using UnityEngine;
@@ -324,60 +325,62 @@ namespace VRTRIX {
             DisconnectDataGlove(glove);
         }
 
+        [MonoPInvokeCallback(typeof(ReceivedDataCallback))]
+        public static void OnReceivedData(IntPtr pUserParam, IntPtr ptr, int data_rate, int radio_strength, int cal_score, float battery, HANDTYPE hand_type, int radio_channel)
+        {
+            GCHandle handle_consume = (GCHandle)pUserParam;
+            VRTRIXDataWrapper objDataGlove = (handle_consume.Target as VRTRIXDataWrapper);
+            VRTRIX_Quat[] quat = new VRTRIX_Quat[16];
+            MarshalUnmananagedArray2Struct<VRTRIX_Quat>(ptr, 16, out quat);
+            for (int i = 0; i < 16; i++)
+            {
+                objDataGlove.data[i] = new Quaternion(quat[i].qx, quat[i].qy, quat[i].qz, quat[i].qw);
+                //Debug.Log(hand_type.ToString() + " Received data_rate: " + quat[i].qw.ToString() + "," + quat[i].qx.ToString() + "," + quat[i].qy.ToString() + "," + quat[i].qz.ToString());
+            }
+            objDataGlove.data_rate = data_rate;
+            objDataGlove.radio_strength = radio_strength;
+            objDataGlove.battery = battery;
+            objDataGlove.hand_type = hand_type;
+            objDataGlove.radio_channel = radio_channel;
+            objDataGlove.calscore = cal_score;
+        }
+
+        [MonoPInvokeCallback(typeof(ReceivedEventCallback))]
+        public static void OnReceivedEvent(IntPtr pUserParam, VRTRIXGloveEvent pEvent)
+        {
+            GCHandle handle_consume = (GCHandle)pUserParam;
+            VRTRIXDataWrapper objDataGlove = (handle_consume.Target as VRTRIXDataWrapper);
+            if (pEvent == VRTRIXGloveEvent.VRTRIXGloveEvent_Connected)
+            {
+                objDataGlove.stat = VRTRIXGloveStatus.NORMAL;
+                if (objDataGlove.hand_type == HANDTYPE.RIGHT_HAND)
+                {
+                    Debug.Log("Right hand event: VRTRIXGloveEvent_Connected");
+                }
+                else if (objDataGlove.hand_type == HANDTYPE.LEFT_HAND)
+                {
+                    Debug.Log("Left hand event: VRTRIXGloveEvent_Connected");
+                }
+            }
+            else if (pEvent == VRTRIXGloveEvent.VRTRIXGloveEvent_Disconnected)
+            {
+                objDataGlove.stat = VRTRIXGloveStatus.DISCONNECTED;
+                objDataGlove.data_rate = 0;
+                if (objDataGlove.hand_type == HANDTYPE.RIGHT_HAND)
+                {
+                    Debug.Log("Right hand event: VRTRIXGloveEvent_Disconnected");
+                }
+                else if (objDataGlove.hand_type == HANDTYPE.LEFT_HAND)
+                {
+                    Debug.Log("Left hand event: VRTRIXGloveEvent_Disconnected");
+                }
+            }
+        }
         //! Register call back function to the C++ umanaged dll.
         public void RegisterCallBack()
         {
-            receivedDataCallback =
-            (IntPtr pUserParam, IntPtr ptr, int data_rate, int radio_strength, int cal_score, float battery, HANDTYPE hand_type, int radio_channel) =>
-            {
-                GCHandle handle_consume = (GCHandle)pUserParam;
-                VRTRIXDataWrapper objDataGlove = (handle_consume.Target as VRTRIXDataWrapper);
-                VRTRIX_Quat[] quat = new VRTRIX_Quat[16];
-                MarshalUnmananagedArray2Struct<VRTRIX_Quat>(ptr, 16, out quat);
-                for (int i = 0; i < 16; i++)
-                {
-                    objDataGlove.data[i] = new Quaternion(quat[i].qx, quat[i].qy, quat[i].qz, quat[i].qw);
-                    //Debug.Log(hand_type.ToString() + " Received data_rate: " + quat[i].qw.ToString() + "," + quat[i].qx.ToString() + "," + quat[i].qy.ToString() + "," + quat[i].qz.ToString());
-                }
-                objDataGlove.data_rate = data_rate;
-                objDataGlove.radio_strength = radio_strength;
-                objDataGlove.battery = battery;
-                objDataGlove.hand_type = hand_type;
-                objDataGlove.radio_channel = radio_channel;
-                objDataGlove.calscore = cal_score;
-            };
-
-            receivedEventCallback =
-            (IntPtr pUserParam, VRTRIXGloveEvent pEvent) =>
-            {
-                GCHandle handle_consume = (GCHandle)pUserParam;
-                VRTRIXDataWrapper objDataGlove = (handle_consume.Target as VRTRIXDataWrapper);
-                if (pEvent == VRTRIXGloveEvent.VRTRIXGloveEvent_Connected)
-                {
-                    objDataGlove.stat= VRTRIXGloveStatus.NORMAL;
-                    if (objDataGlove.hand_type == HANDTYPE.RIGHT_HAND)
-                    {
-                        Debug.Log("Right hand event: VRTRIXGloveEvent_Connected");
-                    }
-                    else if(objDataGlove.hand_type == HANDTYPE.LEFT_HAND)
-                    {
-                        Debug.Log("Left hand event: VRTRIXGloveEvent_Connected");
-                    }
-                }
-                else if (pEvent == VRTRIXGloveEvent.VRTRIXGloveEvent_Disconnected)
-                {
-                    objDataGlove.stat = VRTRIXGloveStatus.DISCONNECTED;
-                    objDataGlove.data_rate = 0;
-                    if (objDataGlove.hand_type == HANDTYPE.RIGHT_HAND)
-                    {
-                        Debug.Log("Right hand event: VRTRIXGloveEvent_Disconnected");
-                    }
-                    else if(objDataGlove.hand_type == HANDTYPE.LEFT_HAND)
-                    {
-                        Debug.Log("Left hand event: VRTRIXGloveEvent_Disconnected");
-                    }
-                }
-            };
+            receivedDataCallback = OnReceivedData;
+            receivedEventCallback = OnReceivedEvent;
 
             if (glove != IntPtr.Zero)
             {
