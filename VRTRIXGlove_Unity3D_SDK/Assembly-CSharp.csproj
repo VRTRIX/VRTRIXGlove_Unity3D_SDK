@@ -139,7 +139,6 @@
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXUtils\FixedSizeQueue.cs" />
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXUtils\VRTRIXCameraFollow.cs" />
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXUtils\VRTRIXGloveStatusUIUpdate.cs" />
-    <Compile Include="Assets\VRTRIX\Scripts\VRTRIXUtils\VRTRIXMultipleConnection.cs" />
     <None Include="Assets\VRTRIX\Resource\Shaders\SteamVR_Fade.shader" />
     <None Include="Assets\VRTRIX\Resource\Shaders\SteamVR_ClearAll.shader" />
     <None Include="Assets\VRTRIX\Resource\Shaders\ControllerButtonHints.shader" />

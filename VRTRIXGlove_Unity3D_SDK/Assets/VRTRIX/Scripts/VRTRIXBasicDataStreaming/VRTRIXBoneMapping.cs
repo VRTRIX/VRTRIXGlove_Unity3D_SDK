@@ -8,12 +8,7 @@ using VRTRIX;
 public class VRTRIXBoneMapping : MonoBehaviour
 {
     public Transform[] MyCharacterFingers = new Transform[(int)VRTRIXBones.NumOfBones];
-    public static VRTRIXBoneMapping UniqueStance;
 
-    private void Awake()
-    {
-        UniqueStance = this;
-    }
     void Start ()
     {
        		

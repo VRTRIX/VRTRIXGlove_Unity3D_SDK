@@ -66,8 +66,8 @@ namespace VRTRIX {
     public enum VRTRIXGloveStatus
     {
         CLOSED,
-        NORMAL,
-        PAUSED,
+        CONNECTED,
+        TRYTORECONNECT,
         DISCONNECTED,
         MAGANOMALY
     };
@@ -312,17 +312,28 @@ namespace VRTRIX {
          * \param type Data glove hand type.
          * \return whether data glove is initialized successfully.         
          */
-        public void OnConnectDataGlove(int id, string serverIP, string Port)
+        public void OnConnectDataGlove(int id, string serverIP)
         {
             glove_index = id;
+            // Calculate port according to id
+            //Index      Port
+            //  0------ 11002
+            //  1------ 11003
+            //  2------ 11004
+            //  3------ 11005
+            //  4------ 11006
+            //  5------ 11007
+            int portNum = 11002 + id;
             // Register call back function
             RegisterCallBack();
-            ConnectDataGlove(glove, id, serverIP, Port);
+            Debug.Log("try to connect glove index " + id + " ip: " + serverIP);
+            ConnectDataGlove(glove, id, serverIP, portNum.ToString());
         }
 
         public void OnDisconnectDataGlove()
         {
             DisconnectDataGlove(glove);
+            stat = VRTRIXGloveStatus.DISCONNECTED;
         }
 
         [MonoPInvokeCallback(typeof(ReceivedDataCallback))]
@@ -352,7 +363,7 @@ namespace VRTRIX {
             VRTRIXDataWrapper objDataGlove = (handle_consume.Target as VRTRIXDataWrapper);
             if (pEvent == VRTRIXGloveEvent.VRTRIXGloveEvent_Connected)
             {
-                objDataGlove.stat = VRTRIXGloveStatus.NORMAL;
+                objDataGlove.stat = VRTRIXGloveStatus.CONNECTED;
                 if (objDataGlove.hand_type == HANDTYPE.RIGHT_HAND)
                 {
                     Debug.Log("Right hand event: VRTRIXGloveEvent_Connected");
@@ -360,6 +371,19 @@ namespace VRTRIX {
                 else if (objDataGlove.hand_type == HANDTYPE.LEFT_HAND)
                 {
                     Debug.Log("Left hand event: VRTRIXGloveEvent_Connected");
+                }
+            }
+            else if (pEvent == VRTRIXGloveEvent.VRTRIXGloveEvent_ConnectServerError)
+            {
+                objDataGlove.stat = VRTRIXGloveStatus.TRYTORECONNECT;
+                objDataGlove.data_rate = 0;
+                if (objDataGlove.hand_type == HANDTYPE.RIGHT_HAND)
+                {
+                    Debug.Log("Right hand event: VRTRIXGloveEvent_TryToReconnect");
+                }
+                else if (objDataGlove.hand_type == HANDTYPE.LEFT_HAND)
+                {
+                    Debug.Log("Left hand event: VRTRIXGloveEvent_TryToReconnect");
                 }
             }
             else if (pEvent == VRTRIXGloveEvent.VRTRIXGloveEvent_Disconnected)

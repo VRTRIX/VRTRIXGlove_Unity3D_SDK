@@ -53,11 +53,11 @@ namespace VRTRIX
         //! Advanced mode toggle.
         public bool AdvancedMode;
 
-        //! Mutiple gloves enable flag, set to true if run multiple gloves on the same PC.
-        public bool IsEnableMultipleGloves;
+        //! Data glove server ip address.
+        public string ServerIP;
 
         //! If mutiple gloves mode is enbaled, specify different index for different pair of gloves. Otherwise, just select None.
-        public GloveIndex Index;
+        public GloveIndex Index = GloveIndex.Device0;
 
         [Header("Model Mapping Settings")]
         //! Model mapping parameters for left hand, only used when finger joint axis definition is different from wrist joint, otherwise, just set to 0,0,0.
@@ -118,15 +118,12 @@ namespace VRTRIX
         private VRTRIXGloveGesture LH_Gesture, RH_Gesture = VRTRIXGloveGesture.BUTTONINVALID;
         private Transform[] fingerTransformArray;
         private Matrix4x4 ml_axisoffset, mr_axisoffset;
+        private Vector3[] thumb_offset_L_default = new Vector3[3];
+        private Vector3[] thumb_offset_R_default = new Vector3[3];
 
 
         void Start()
         {
-            if (!IsEnableMultipleGloves)
-            {
-                Index = GloveIndex.MaxDeviceCount;
-            }
-
             LH = new VRTRIXDataWrapper(AdvancedMode, version, HANDTYPE.LEFT_HAND);
             RH = new VRTRIXDataWrapper(AdvancedMode, version, HANDTYPE.RIGHT_HAND);
 
@@ -144,6 +141,12 @@ namespace VRTRIX
                     VRTRIXFingerStatusThreshold threshold = new VRTRIXFingerStatusThreshold(finger_bendup_threshold, finger_benddown_threshold, finger_curved_threshold);
                     thresholdMap.Add((VRTRIXBones)i, threshold);
                 }
+            }
+
+            for(int i = 0; i < 3; ++i)
+            {
+                thumb_offset_L_default[i] = thumb_offset_L[i];
+                thumb_offset_R_default[i] = thumb_offset_R[i];
             }
 
             gestureDetector = new VRTRIXGloveGestureRecognition(thresholdMap);
@@ -179,13 +182,12 @@ namespace VRTRIX
 
         void Update()
         {
-            if (RH.GetReceivedStatus() == VRTRIXGloveStatus.NORMAL)
+            if (RH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED)
             {
                 if (!qroffset_cal && IsValidQuat(RH.GetReceivedRotation(VRTRIXBones.R_Hand)))
                 {
                     if (IsVREnabled && RH_tracker.transform.rotation == Quaternion.identity) return;
                     PerformAlgorithmTuning(HANDTYPE.RIGHT_HAND);
-                    RH.SetRadioChannelLimit(99, 83);
 
                     qroffset = CalculateStaticOffset(RH, HANDTYPE.RIGHT_HAND);
                     qroffset_cal = true;
@@ -206,13 +208,12 @@ namespace VRTRIX
 
 
 
-            if (LH.GetReceivedStatus() == VRTRIXGloveStatus.NORMAL)
+            if (LH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED)
             {
                 if (!qloffset_cal && IsValidQuat(LH.GetReceivedRotation(VRTRIXBones.L_Hand)))
                 {
                     if (IsVREnabled && LH_tracker.transform.rotation == Quaternion.identity) return;
                     PerformAlgorithmTuning(HANDTYPE.LEFT_HAND);
-                    LH.SetRadioChannelLimit(99, 83);
 
                     qloffset = CalculateStaticOffset(LH, HANDTYPE.LEFT_HAND);
                     qloffset_cal = true;
@@ -238,22 +239,20 @@ namespace VRTRIX
         public void OnConnectGlove()
         {
             if (IsVREnabled && (LH_tracker == null || RH_tracker == null)) return;
-            string ServerIP = "127.0.0.1";
-            string ServerPort = "11002";
-
+            
             VRTRIXGloveStatusUIUpdate UI = this.gameObject.GetComponent<VRTRIXGloveStatusUIUpdate>();
             if( UI != null)
             {
                 ServerIP = UI.GetServerIP();
-                ServerPort = UI.GetServerPort();
+                Index = (GloveIndex)UI.GetGloveDeviceID();
             }
-            if (LH.GetReceivedStatus() != VRTRIXGloveStatus.NORMAL)
+            if (LH.GetReceivedStatus() != VRTRIXGloveStatus.CONNECTED && LH.GetReceivedStatus() != VRTRIXGloveStatus.TRYTORECONNECT)
             {
-                LH.OnConnectDataGlove((int)Index, ServerIP, ServerPort);
+                LH.OnConnectDataGlove((int)Index, ServerIP);
             }
-            if (RH.GetReceivedStatus() != VRTRIXGloveStatus.NORMAL)
+            if (RH.GetReceivedStatus() != VRTRIXGloveStatus.CONNECTED && RH.GetReceivedStatus() != VRTRIXGloveStatus.TRYTORECONNECT)
             {
-                RH.OnConnectDataGlove((int)Index, ServerIP, ServerPort);
+                RH.OnConnectDataGlove((int)Index, ServerIP);
             }
         }
         
@@ -261,11 +260,11 @@ namespace VRTRIX
         //! Disconnect data glove and uninitialization.
         public void OnDisconnectGlove()
         {
-            if (LH.GetReceivedStatus() == VRTRIXGloveStatus.NORMAL)
+            if (LH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED || LH.GetReceivedStatus() == VRTRIXGloveStatus.TRYTORECONNECT)
             {
                 LH.OnDisconnectDataGlove();
             }
-            if (RH.GetReceivedStatus() == VRTRIXGloveStatus.NORMAL)
+            if (RH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED || RH.GetReceivedStatus() == VRTRIXGloveStatus.TRYTORECONNECT)
             {
                 RH.OnDisconnectDataGlove();
             }
@@ -275,17 +274,17 @@ namespace VRTRIX
         //! Save hardware calibration parameters in IMU, only used in magnetic field changed dramatically.
         public void OnHardwareCalibrate(HANDTYPE type)
         {
-            if (LH.GetReceivedStatus() == VRTRIXGloveStatus.NORMAL && LH.GetReceivedStatus() == VRTRIXGloveStatus.NORMAL)
+            if (type == HANDTYPE.LEFT_HAND && LH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED && LH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED)
             {
                 LH.OnSaveCalibration();
             }
-            if (RH.GetReceivedStatus() == VRTRIXGloveStatus.NORMAL && RH.GetReceivedStatus() == VRTRIXGloveStatus.NORMAL)
+            if (type == HANDTYPE.RIGHT_HAND && RH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED && RH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED)
             {
                 RH.OnSaveCalibration();
             }
             if (type == HANDTYPE.BOTH_HAND
-                && LH.GetReceivedStatus() == VRTRIXGloveStatus.NORMAL
-                && RH.GetReceivedStatus() == VRTRIXGloveStatus.NORMAL)
+                && LH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED
+                && RH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED)
             {
                 LH.OnSaveCalibration();
                 RH.OnSaveCalibration();
@@ -296,17 +295,17 @@ namespace VRTRIX
         //! Trigger a haptic vibration on data glove.
         public void OnVibrate(HANDTYPE type)
         {
-            if (type == HANDTYPE.LEFT_HAND && LH.GetReceivedStatus() == VRTRIXGloveStatus.NORMAL)
+            if (type == HANDTYPE.LEFT_HAND && LH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED)
             {
                 LH.VibratePeriod(500);
             }
-            if (type == HANDTYPE.RIGHT_HAND && RH.GetReceivedStatus() == VRTRIXGloveStatus.NORMAL)
+            if (type == HANDTYPE.RIGHT_HAND && RH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED)
             {
                 RH.VibratePeriod(500);
             }
             if (type == HANDTYPE.BOTH_HAND
-                && LH.GetReceivedStatus() == VRTRIXGloveStatus.NORMAL
-                && RH.GetReceivedStatus() == VRTRIXGloveStatus.NORMAL)
+                && LH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED
+                && RH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED)
             {
                 LH.VibratePeriod(500);
                 RH.VibratePeriod(500);
@@ -317,17 +316,17 @@ namespace VRTRIX
         //! Switch radio channel of data glove. Only used for testing/debuging. Automatic channel switching is enabled by default in normal mode.
         public void OnChannelHopping(HANDTYPE type)
         {
-            if (LH.GetReceivedStatus() == VRTRIXGloveStatus.NORMAL && LH.GetReceivedStatus() == VRTRIXGloveStatus.NORMAL)
+            if (type == HANDTYPE.LEFT_HAND && LH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED && LH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED)
             {
                 LH.ChannelHopping();
             }
-            if (RH.GetReceivedStatus() == VRTRIXGloveStatus.NORMAL && RH.GetReceivedStatus() == VRTRIXGloveStatus.NORMAL)
+            if (type == HANDTYPE.RIGHT_HAND && RH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED && RH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED)
             {
                 RH.ChannelHopping();
             }
             if (type == HANDTYPE.BOTH_HAND
-                && LH.GetReceivedStatus() == VRTRIXGloveStatus.NORMAL
-                && RH.GetReceivedStatus() == VRTRIXGloveStatus.NORMAL)
+                && LH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED
+                && RH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED)
             {
                 LH.ChannelHopping();
                 RH.ChannelHopping();
@@ -338,17 +337,17 @@ namespace VRTRIX
         //! Align five fingers to closed gesture (only if advanced mode is set to true). Also align wrist to the game object chosen.
         public void OnAlignWrist(HANDTYPE type)
         {
-            if (type == HANDTYPE.LEFT_HAND && LH.GetReceivedStatus() == VRTRIXGloveStatus.NORMAL)
+            if (type == HANDTYPE.LEFT_HAND && LH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED)
             {
                 qloffset = CalculateStaticOffset(LH, HANDTYPE.LEFT_HAND);
             }
-            if (type == HANDTYPE.RIGHT_HAND && RH.GetReceivedStatus() == VRTRIXGloveStatus.NORMAL)
+            if (type == HANDTYPE.RIGHT_HAND && RH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED)
             {
                 qroffset = CalculateStaticOffset(RH, HANDTYPE.RIGHT_HAND);
             }
             if (type == HANDTYPE.BOTH_HAND
-                && LH.GetReceivedStatus() == VRTRIXGloveStatus.NORMAL
-                && RH.GetReceivedStatus() == VRTRIXGloveStatus.NORMAL)
+                && LH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED
+                && RH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED)
             {
                 qloffset = CalculateStaticOffset(LH, HANDTYPE.LEFT_HAND);
                 qroffset = CalculateStaticOffset(RH, HANDTYPE.RIGHT_HAND);
@@ -359,17 +358,17 @@ namespace VRTRIX
         //! Align five fingers to closed gesture (only if advanced mode is set to true). Also align wrist to the game object chosen.
         public void OnAlignFingers(HANDTYPE type)
         {
-            if (type == HANDTYPE.LEFT_HAND && LH.GetReceivedStatus() == VRTRIXGloveStatus.NORMAL)
+            if (type == HANDTYPE.LEFT_HAND && LH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED)
             {
                 LH.OnCloseFingerAlignment(HANDTYPE.LEFT_HAND);
             }
-            if (type == HANDTYPE.RIGHT_HAND && RH.GetReceivedStatus() == VRTRIXGloveStatus.NORMAL)
+            if (type == HANDTYPE.RIGHT_HAND && RH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED)
             {
                 RH.OnCloseFingerAlignment(HANDTYPE.RIGHT_HAND);
             }
             if (type == HANDTYPE.BOTH_HAND
-                && LH.GetReceivedStatus() == VRTRIXGloveStatus.NORMAL
-                && RH.GetReceivedStatus() == VRTRIXGloveStatus.NORMAL)
+                && LH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED
+                && RH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED)
             {
                 LH.OnCloseFingerAlignment(HANDTYPE.LEFT_HAND);
                 RH.OnCloseFingerAlignment(HANDTYPE.RIGHT_HAND);
@@ -384,11 +383,11 @@ namespace VRTRIX
         public void SetAdvancedMode(bool bIsAdvancedMode)
         {
             AdvancedMode = bIsAdvancedMode;
-            if (LH.GetReceivedStatus() == VRTRIXGloveStatus.NORMAL)
+            if (LH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED)
             {
                 LH.SetAdvancedMode(bIsAdvancedMode);
             }
-            if (RH.GetReceivedStatus() == VRTRIXGloveStatus.NORMAL)
+            if (RH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED)
             {
                 RH.SetAdvancedMode(bIsAdvancedMode);
             }
@@ -402,16 +401,36 @@ namespace VRTRIX
         public void SetHardwareVersion(GLOVEVERSION version)
         {
             this.version = version;
-            if (LH.GetReceivedStatus() == VRTRIXGloveStatus.NORMAL)
+            if (LH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED)
             {
                 LH.SetHardwareVersion(version);
             }
-            if (RH.GetReceivedStatus() == VRTRIXGloveStatus.NORMAL)
+            if (RH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED)
             {
                 RH.SetHardwareVersion(version);
             }
         }
 
+        public void OnResetThumbOffset()
+        {
+            for (int i = 0; i < 3; ++i)
+            {
+                thumb_offset_L[i] = thumb_offset_L_default[i];
+                thumb_offset_R[i] = thumb_offset_R_default[i];
+            }
+            if (LH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED)
+            {
+                LH.SetThumbOffset(thumb_offset_L[0], VRTRIXBones.L_Thumb_1);
+                LH.SetThumbOffset(thumb_offset_L[1], VRTRIXBones.L_Thumb_2);
+                LH.SetThumbOffset(thumb_offset_L[2], VRTRIXBones.L_Thumb_3);
+            }
+            if (RH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED)
+            {
+                RH.SetThumbOffset(thumb_offset_R[0], VRTRIXBones.R_Thumb_1);
+                RH.SetThumbOffset(thumb_offset_R[1], VRTRIXBones.R_Thumb_2);
+                RH.SetThumbOffset(thumb_offset_R[2], VRTRIXBones.R_Thumb_3);
+            }
+        }
 
         //程序退出
         //! Application quit operation. 
@@ -569,7 +588,7 @@ namespace VRTRIX
          */
         public bool GetGloveConnectionStat(HANDTYPE type)
         {
-            return GetReceivedStatus(type) == VRTRIXGloveStatus.NORMAL;
+            return GetReceivedStatus(type) == VRTRIXGloveStatus.CONNECTED;
         }
 
         //! Get data glove status 
@@ -602,11 +621,11 @@ namespace VRTRIX
          */
         public VRTRIXGloveGesture GetGesture(HANDTYPE type)
         {
-            if (type == HANDTYPE.LEFT_HAND && LH.GetReceivedStatus() == VRTRIXGloveStatus.NORMAL)
+            if (type == HANDTYPE.LEFT_HAND && LH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED)
             {
                 return LH_Gesture;
             }
-            else if (type == HANDTYPE.RIGHT_HAND && RH.GetReceivedStatus() == VRTRIXGloveStatus.NORMAL)
+            else if (type == HANDTYPE.RIGHT_HAND && RH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED)
             {
                 return RH_Gesture;
             }
@@ -734,6 +753,8 @@ namespace VRTRIX
                     {
                         Vector3 quat_vec = ml_axisoffset.MultiplyVector(new Vector3(rotation.x, rotation.y, rotation.z));
                         rotation = new Quaternion(quat_vec.x, quat_vec.y, quat_vec.z, rotation.w);
+
+
                         if (IsVREnabled)
                         {
                             //当VR环境下，根据固定在手腕上tracker的方向对齐手背方向。
@@ -808,9 +829,10 @@ namespace VRTRIX
             for(int i = 0; i < (int)VRTRIXBones.NumOfBones; ++i)
             {
                 string bone_name = VRTRIXUtilities.GetBoneName(i);
-                if (GetComponent("VRTRIXBoneMapping"))
+                VRTRIXBoneMapping map = gameObject.GetComponent(typeof(VRTRIXBoneMapping)) as VRTRIXBoneMapping;
+                if (map != null)
                 {
-                    GameObject bone = VRTRIXBoneMapping.UniqueStance.MapToVRTRIX_BoneName(bone_name);
+                    GameObject bone = map.MapToVRTRIX_BoneName(bone_name);
                     if(bone != null)
                     {
                         transform_array[i] = bone.transform;

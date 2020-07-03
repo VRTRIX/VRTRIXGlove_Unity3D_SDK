@@ -23,16 +23,10 @@ public class VRTRIXCameraFollow : MonoBehaviour {
     public float ROTSpeed = 10f;
     float rotationX = 0F;
     float rotationY = 0F;
-    private bool isPanning;     // Is the camera being panned?
     private bool isRotating;    // Is the camera being rotated?
-    private bool isZooming;     // Is the camera zooming?
-    private Vector3 mouseOrigin;    // Position of cursor when mouse dragging starts
     Quaternion originalRotation;
     void Start()
     {
-        //// Make the rigid body not change rotation
-        //if (rigidbody)
-        //    rigidbody.freezeRotation = true;
         originalRotation = transform.localRotation;
     }
 
@@ -40,11 +34,8 @@ public class VRTRIXCameraFollow : MonoBehaviour {
     {
         if (Input.GetMouseButtonDown(1))
         {
-            // Get mouse origin
-            //mouseOrigin = Input.mousePosition;
             isRotating = true;
         }
-
 
         // Disable movements on button release
         if (!Input.GetMouseButton(1)) isRotating = false;
@@ -87,19 +78,19 @@ public class VRTRIXCameraFollow : MonoBehaviour {
 
         if (Input.GetKey(KeyCode.DownArrow))
         {
-            transform.position += new Vector3(moveSpeed * Time.deltaTime, 0, 0);
+            transform.position -= transform.rotation * new Vector3(0, 0, moveSpeed * Time.deltaTime);
         }
         if (Input.GetKey(KeyCode.UpArrow))
         {
-            transform.position -= new Vector3(moveSpeed * Time.deltaTime, 0, 0);
+            transform.position += transform.rotation * new Vector3(0, 0, moveSpeed * Time.deltaTime);
         }
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            transform.position -= new Vector3(0, 0, moveSpeed * Time.deltaTime);
+            transform.position -= transform.rotation * new Vector3(moveSpeed * Time.deltaTime, 0, 0);
         }
         if (Input.GetKey(KeyCode.RightArrow))
         {
-            transform.position += new Vector3(0, 0, moveSpeed * Time.deltaTime);
+            transform.position += transform.rotation * new Vector3(moveSpeed * Time.deltaTime, 0, 0);
         }
 
     }
