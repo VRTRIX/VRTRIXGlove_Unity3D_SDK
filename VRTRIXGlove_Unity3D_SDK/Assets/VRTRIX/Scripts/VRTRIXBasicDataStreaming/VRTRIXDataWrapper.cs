@@ -10,8 +10,13 @@
 //=============================================================================
 using AOT;
 using System;
-using System.Runtime.InteropServices;
+using System.Net;
+using System.Net.Sockets;
+using System.Threading;
+using System.Text;
+using System.Timers;
 using UnityEngine;
+
 
 namespace VRTRIX {
     //! GloveIndex enum.
@@ -85,15 +90,64 @@ namespace VRTRIX {
         VRTRIXGloveEvent_Paired,
         VRTRIXGloveEvent_MagAbnormal,
     }
-    
+
+    public enum CommandType
+    {
+        CMD_STOP,
+        CMD_TriggerHaptics,
+        CMD_ToggleHaptics,
+        CMD_HardwareCalibration,
+        CMD_TPoseCalibration,
+        CMD_SetAdvancedMode,
+        CMD_SetHardwareVersion,
+        CMD_SetRadioLimit,
+        CMD_ChannelHopping,
+        CMD_AlgorithmTuning,  
+    };
+
+    //! Algorithm config type enum.
+    /*!	Enum values to pass into algorithm tuning methods.*/
+    public enum AlgorithmConfig
+    {
+        AlgorithmConfig_ProximalSlerpUp,
+        AlgorithmConfig_ProximalSlerpDown,
+        AlgorithmConfig_DistalSlerpUp,
+        AlgorithmConfig_DistalSlerpDown,
+        AlgorithmConfig_FingerSpcaing,
+        AlgorithmConfig_FingerBendUpThreshold,
+        AlgorithmConfig_FingerBendDownThreshold,
+        AlgorithmConfig_ThumbOffset,
+        AlgorithmConfig_FinalFingerSpacing,
+        AlgorithmConfig_ThumbSlerpOffset,
+        AlgorithmConfig_Max = 10,
+    };
+
+    // State object for receiving data from remote device.  
+    public class StateObject
+    {
+        // Client socket.  
+        public Socket workSocket = null;
+        // Size of receive buffer.  
+        public const int BufferSize = 273;
+        // Receive buffer.  
+        public byte[] buffer = new byte[BufferSize];
+    }
+
     //!  VRTRIX Data Glove data wrapper class. 
     /*!
         A wrapper class to communicate with low-level unmanaged C++ API.
     */
     public class VRTRIXDataWrapper
     {
-        //Define Useful Constant
-        private const string ReaderImportor = "VRTRIXGlove_UnityPlugin";
+        private Socket client;
+        private IPEndPoint remoteEP;
+        // ManualResetEvent instances signal completion.  
+        private static ManualResetEvent connectDone =
+            new ManualResetEvent(false);
+        private static ManualResetEvent sendDone =
+            new ManualResetEvent(false);
+        private static ManualResetEvent receiveDone =
+            new ManualResetEvent(false);
 
         //Define Useful Parameters & Variables
         public int glove_index;
@@ -101,195 +155,14 @@ namespace VRTRIX {
         private bool advanced_mode;
         private GLOVEVERSION hardware_version;
 
-        private IntPtr glove;
         private int data_rate;
+        private int packet_received;
+        private System.Timers.Timer dataCountTimer;
         private int radio_strength;
         private float battery;
-        private int radio_channel;
         private int calscore;
-        private bool port_opened = false;
         private Quaternion[] data = new Quaternion[16];
         private VRTRIXGloveStatus stat = VRTRIXGloveStatus.CLOSED;
-
-        //! Quaternion data struction used in unmanaged C++ API.
-        [StructLayout(LayoutKind.Sequential)]
-        public struct VRTRIX_Quat
-        {
-            public float qx; //!< x component in quaternion
-            public float qy; //!< y component in quaternion
-            public float qz; //!< z component in quaternion
-            public float qw; //!< w component in quaternion
-        }
-
-        //! The delegate data receive function called inside unmanaged C++ API.
-        /*! 
-         * \param pUserParam Pointer of the user defined parameter which registered previously.
-         * \param ptr Array of the data received, where contains all joint rotation values.
-         * \param data_rate Data rate per second.
-         * \param radio_strength Radio transmission strength in dB
-         * \param cal_score_ptr Array of the calibration score received.
-         * \param battery Current battery level in percentage.
-         * \param hand_type The hand type of current hand pose.
-         * \param radio_channel Current radio channel used by wireless transmission.
-         */
-        [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        public delegate void ReceivedDataCallback(IntPtr pUserParam, IntPtr ptr, int data_rate, int radio_strength, int cal_score, float battery, HANDTYPE hand_type, int radio_channel);
-        public static ReceivedDataCallback receivedDataCallback;
-
-
-        //! The delegate event receive function called inside unmanaged C++ API.
-        /*! 
-         * \param pUserParam Pointer of the user defined parameter which registered previously.
-         * \param pEvent Enum of current event received.
-         */
-        [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        public delegate void ReceivedEventCallback(IntPtr pUserParam, VRTRIXGloveEvent pEvent);
-        public static ReceivedEventCallback receivedEventCallback;
-
-        #region Functions API
-        /// <summary>
-        /// Intialize the data glove and returns the interface pointer.
-        /// </summary>
-        /// <param name="AdvancedMode">Unlock the yaw of fingers if set true</param>
-        /// <param name="HardwareVersion">Specify the data glove hardware version</param>
-        /// <param name="type">Hand type.</param>
-        /// <returns>The data glove object as IntPtr</returns>
-        [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        public static extern IntPtr Init(bool AdvancedMode, GLOVEVERSION HardwareVersion, HANDTYPE type);
-        /// <summary>
-        /// Connect data glove server and start data streaming
-        /// </summary>
-        /// <param name="glove">The data glove object</param>
-        /// <param name="glove_id">Data glove index id (from 0 - 15), if anything larger is set,then only one pair of glove is supported</param>
-        /// <param name="serverIP">Server IP</param>
-        /// <param name="port">Server Port</param>
-        [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        public static extern void ConnectDataGlove(IntPtr glove, int glove_id, string serverIP, string port);
-        /// <summary>
-        /// Disconnect from data glove server.
-        /// </summary>
-        /// <param name="glove">The data glove object</param>
-        [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        public static extern void DisconnectDataGlove(IntPtr glove);
-        /// <summary>
-        /// Save calibration result to hardware
-        /// </summary>
-        /// <param name="glove">The data glove object</param>
-        [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        public static extern void OnSaveCalibration(IntPtr glove);
-        /// <summary>
-        /// Align the close finger pose
-        /// </summary>
-        /// <param name="glove">The data glove object</param>
-        [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        public static extern void OnCloseFingerAlignment(IntPtr glove);
-        /// <summary>
-        /// Align the OK finger pose
-        /// </summary>
-        /// <param name="glove">The data glove object</param>
-        [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        public static extern void OnOkPoseAlignment(IntPtr glove);
-        /// <summary>
-        /// Set radio channel limit for data gloves(valid upperBound and lowerBound between 0-100)
-        /// </summary>
-        /// <param name="glove">The data glove object</param>
-        /// <param name="upperBound">The upper bound of radio channel</param>
-        /// <param name="lowerBound">The lower bound of radio channel</param>
-        [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        public static extern void SetRadioChannelLimit(IntPtr glove, int upperBound, int lowerBound);
-        /// <summary>
-        /// Register receiving and parsed frame calculation data callback
-        /// </summary>
-        /// <param name="pUserParam">User defined parameter/pointer passed into plugin interface, which will return in callback function.</param>
-        /// <param name="glove">The data glove object</param>
-        /// <param name="receivedDataCallback">received data callback.</param>
-        [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, EntryPoint = "RegisterDataCallback")]
-        public static extern void RegisterDataCallback(IntPtr pUserParam, IntPtr glove, ReceivedDataCallback receivedDataCallback);
-        /// <summary>
-        /// Register receiving hardware event callback
-        /// </summary>
-        /// <param name="glove">The data glove object</param>
-        /// <param name="receivedEventCallback">received event callback.</param>
-        [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, EntryPoint = "RegisterEventCallback")]
-        public static extern void RegisterEventCallback(IntPtr glove, ReceivedEventCallback receivedEventCallback);
-        /// <summary>
-        /// Vibrate the data glove for given time period.
-        /// </summary>
-        /// <param name="glove">The data glove object</param>
-        /// <param name="msDurationMillisec">Vibration duration in milliseconds</param>
-        [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        public static extern void VibratePeriod(IntPtr glove, int msDurationMillisec);
-        /// <summary>
-        /// Randomly channel hopping.
-        /// </summary>
-        /// <param name="glove">The data glove object</param>
-        [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        public static extern void ChannelHopping(IntPtr glove);
-        /// <summary>
-        /// Set Advanced Mode.
-        /// </summary>
-        /// <param name="glove">The data glove object</param>
-        /// <param name="bIsAdvancedMode">The boolean value to set</param>
-        [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        public static extern void SetAdvancedMode(IntPtr glove, bool bIsAdvancedMode);
-        /// <summary>
-        /// Set data gloves hardware version.
-        /// </summary>
-        /// <param name="glove">The data glove object</param>
-        /// <param name="version">Data glove hardware version to set</param>
-        [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        public static extern void SetHardwareVersion(IntPtr glove, GLOVEVERSION version);
-        /// <summary>
-        /// Set Proximal Thumb Offset.
-        /// </summary>
-        /// <param name="glove">The data glove object</param>
-        /// <param name="offset_x">x-axis offset to set</param>
-        /// <param name="offset_y">y-axis offset to set</param>
-        /// <param name="offset_z">z-axis offset to set</param>
-        [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        public static extern void SetProximalThumbOffset(IntPtr glove, double offset_x, double offset_y, double offset_z);
-        /// <summary>
-        /// Set Intermediate Thumb Offset.
-        /// </summary>
-        /// <param name="glove">The data glove object</param>
-        /// <param name="offset_x">x-axis offset to set</param>
-        /// <param name="offset_y">y-axis offset to set</param>
-        /// <param name="offset_z">z-axis offset to set</param>
-        [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        public static extern void SetIntermediateThumbOffset(IntPtr glove, double offset_x, double offset_y, double offset_z);
-        /// <summary>
-        /// Set Distal Thumb Offset.
-        /// </summary>
-        /// <param name="glove">The data glove object</param>
-        /// <param name="offset_x">x-axis offset to set</param>
-        /// <param name="offset_y">y-axis offset to set</param>
-        /// <param name="offset_z">z-axis offset to set</param>
-        [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        public static extern void SetDistalThumbOffset(IntPtr glove, double offset_x, double offset_y, double offset_z);
-        /// <summary>
-        /// Set Thumb Slerp Rate.
-        /// </summary>
-        /// <param name="glove">The data glove object</param>
-        /// <param name="slerp_proximal">thumb proximal joint slerp rate to set</param>
-        /// <param name="slerp_middle">thumb middle joint slerp rate to set</param>
-        [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        public static extern void SetThumbSlerpRate(IntPtr glove, double slerp_proximal, double slerp_middle);
-        /// <summary>
-        /// Set finger spacing when advanced mode is NOT enabled.
-        /// </summary>
-        /// <param name="glove">The data glove object</param>
-        /// <param name="spacing">spacing value to set</param>
-        [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        public static extern void SetFingerSpacing(IntPtr glove, double spacing);
-        /// <summary>
-        /// Set final finger spacing when fingers are fully bended.
-        /// </summary>
-        /// <param name="glove">The data glove object</param>
-        /// <param name="spacing">spacing value to set</param>
-        [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        public static extern void SetFinalFingerSpacing(IntPtr glove, double spacing);
-        #endregion
-
 
         //! Wrapper class construction method
         /*! 
@@ -300,8 +173,6 @@ namespace VRTRIX {
          */
         public VRTRIXDataWrapper(bool AdvancedMode, GLOVEVERSION HardwareVersion, HANDTYPE Type)
         {
-            // Create a data glove object
-            glove = Init(AdvancedMode, HardwareVersion, Type);
             advanced_mode = AdvancedMode;
             hardware_version = HardwareVersion;
             hand_type = Type;
@@ -324,97 +195,220 @@ namespace VRTRIX {
             //  4------ 11006
             //  5------ 11007
             int portNum = 11002 + id;
-            // Register call back function
-            RegisterCallBack();
-            Debug.Log("try to connect glove index " + id + " ip: " + serverIP);
-            ConnectDataGlove(glove, id, serverIP, portNum.ToString());
+
+            // Connect to a remote device.  
+            try
+            {
+                // Establish the remote endpoint for the socket. 
+                IPAddress ipAddress = IPAddress.Parse(serverIP);
+                remoteEP = new IPEndPoint(ipAddress, portNum);
+
+                // Create a TCP/IP socket.  
+                client = new Socket(ipAddress.AddressFamily,
+                    SocketType.Stream, ProtocolType.Tcp);
+
+                // Connect to the remote endpoint.  
+                client.BeginConnect(remoteEP,
+                    new AsyncCallback(ConnectCallback), client);
+            }
+            catch (Exception e)
+            {
+                Debug.Log(e.ToString());
+            }
         }
 
         public void OnDisconnectDataGlove()
         {
-            DisconnectDataGlove(glove);
+            // DisConnect from a remote device.  
+            try
+            {
+                if(stat == VRTRIXGloveStatus.CONNECTED)
+                {
+                    //Stop timer
+                    dataCountTimer.Stop();
+                    dataCountTimer.Close();
+
+                    // Release the socket.  
+                    client.Shutdown(SocketShutdown.Both);
+                    client.Close();
+                    Debug.Log("Socket Disconnected.");
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.Log(e.ToString());
+            }
             stat = VRTRIXGloveStatus.DISCONNECTED;
         }
 
-        [MonoPInvokeCallback(typeof(ReceivedDataCallback))]
-        public static void OnReceivedData(IntPtr pUserParam, IntPtr ptr, int data_rate, int radio_strength, int cal_score, float battery, HANDTYPE hand_type, int radio_channel)
-        {
-            GCHandle handle_consume = (GCHandle)pUserParam;
-            VRTRIXDataWrapper objDataGlove = (handle_consume.Target as VRTRIXDataWrapper);
-            VRTRIX_Quat[] quat = new VRTRIX_Quat[16];
-            MarshalUnmananagedArray2Struct<VRTRIX_Quat>(ptr, 16, out quat);
-            for (int i = 0; i < 16; i++)
-            {
-                objDataGlove.data[i] = new Quaternion(quat[i].qx, quat[i].qy, quat[i].qz, quat[i].qw);
-                //Debug.Log(hand_type.ToString() + " Received data_rate: " + quat[i].qw.ToString() + "," + quat[i].qx.ToString() + "," + quat[i].qy.ToString() + "," + quat[i].qz.ToString());
-            }
-            objDataGlove.data_rate = data_rate;
-            objDataGlove.radio_strength = radio_strength;
-            objDataGlove.battery = battery;
-            objDataGlove.hand_type = hand_type;
-            objDataGlove.radio_channel = radio_channel;
-            objDataGlove.calscore = cal_score;
-        }
 
-        [MonoPInvokeCallback(typeof(ReceivedEventCallback))]
-        public static void OnReceivedEvent(IntPtr pUserParam, VRTRIXGloveEvent pEvent)
-        {
-            GCHandle handle_consume = (GCHandle)pUserParam;
-            VRTRIXDataWrapper objDataGlove = (handle_consume.Target as VRTRIXDataWrapper);
-            if (pEvent == VRTRIXGloveEvent.VRTRIXGloveEvent_Connected)
-            {
-                objDataGlove.stat = VRTRIXGloveStatus.CONNECTED;
-                if (objDataGlove.hand_type == HANDTYPE.RIGHT_HAND)
-                {
-                    Debug.Log("Right hand event: VRTRIXGloveEvent_Connected");
-                }
-                else if (objDataGlove.hand_type == HANDTYPE.LEFT_HAND)
-                {
-                    Debug.Log("Left hand event: VRTRIXGloveEvent_Connected");
-                }
-            }
-            else if (pEvent == VRTRIXGloveEvent.VRTRIXGloveEvent_ConnectServerError)
-            {
-                objDataGlove.stat = VRTRIXGloveStatus.TRYTORECONNECT;
-                objDataGlove.data_rate = 0;
-                if (objDataGlove.hand_type == HANDTYPE.RIGHT_HAND)
-                {
-                    Debug.Log("Right hand event: VRTRIXGloveEvent_TryToReconnect");
-                }
-                else if (objDataGlove.hand_type == HANDTYPE.LEFT_HAND)
-                {
-                    Debug.Log("Left hand event: VRTRIXGloveEvent_TryToReconnect");
-                }
-            }
-            else if (pEvent == VRTRIXGloveEvent.VRTRIXGloveEvent_Disconnected)
-            {
-                objDataGlove.stat = VRTRIXGloveStatus.DISCONNECTED;
-                objDataGlove.data_rate = 0;
-                if (objDataGlove.hand_type == HANDTYPE.RIGHT_HAND)
-                {
-                    Debug.Log("Right hand event: VRTRIXGloveEvent_Disconnected");
-                }
-                else if (objDataGlove.hand_type == HANDTYPE.LEFT_HAND)
-                {
-                    Debug.Log("Left hand event: VRTRIXGloveEvent_Disconnected");
-                }
-            }
-        }
-        //! Register call back function to the C++ umanaged dll.
-        public void RegisterCallBack()
-        {
-            receivedDataCallback = OnReceivedData;
-            receivedEventCallback = OnReceivedEvent;
 
-            if (glove != IntPtr.Zero)
+        private void ConnectCallback(IAsyncResult ar)
+        {
+            try
             {
-                GCHandle handle_reg = GCHandle.Alloc(this);
-                IntPtr pUserParam = (IntPtr)handle_reg;
-                RegisterDataCallback(pUserParam, glove, receivedDataCallback);
-                RegisterEventCallback(glove, receivedEventCallback);
+                // Retrieve the socket from the state object.  
+                Socket client = (Socket)ar.AsyncState;
+
+                // Complete the connection.  
+                client.EndConnect(ar);
+
+                Debug.Log("Socket connected to "+
+                    client.RemoteEndPoint.ToString());
+
+                // Signal that the connection has been made.  
+                connectDone.Set();
+
+                stat = VRTRIXGloveStatus.CONNECTED;
+
+                // Receive the response from the remote server.  
+                Receive(client);
+                receiveDone.WaitOne();
+
+                // Create a 1s timer 
+                dataCountTimer = new System.Timers.Timer(1000);
+                // Hook up the Elapsed event for the timer.
+                dataCountTimer.Elapsed += OnRefreshDataRate;
+                dataCountTimer.Enabled = true;
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e.ToString());
+                if (stat == VRTRIXGloveStatus.DISCONNECTED) return;
+
+                stat = VRTRIXGloveStatus.TRYTORECONNECT;
+                Debug.Log("Try to reconnect socket...");
+
+                // Connect to the remote endpoint.  
+                client.BeginConnect(remoteEP,
+                    new AsyncCallback(ConnectCallback), client);
             }
         }
 
+        private void Receive(Socket client)
+        {
+            try
+            {
+                // Create the state object.  
+                StateObject state = new StateObject();
+                state.workSocket = client;
+
+                // Begin receiving the data from the remote device.  
+                client.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
+                    new AsyncCallback(ReceiveCallback), state);
+            }
+            catch (Exception e)
+            {
+                Debug.Log(e.ToString());
+            }
+        }
+
+        private void ReceiveCallback(IAsyncResult ar)
+        {
+            try
+            {
+                // Retrieve the state object and the client socket
+                // from the asynchronous state object.  
+                StateObject state = (StateObject)ar.AsyncState;
+                Socket client = state.workSocket;
+
+                // Read data from the remote device.  
+                int bytesRead = client.EndReceive(ar);
+
+                if (bytesRead > 0)
+                {
+                    if(bytesRead == StateObject.BufferSize)
+                    {
+                        ProcessData(state.buffer);
+                    }
+                    // Signal that all bytes have been received.  
+                    receiveDone.Set();
+
+                    Receive(client);
+                    receiveDone.WaitOne();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+        }
+
+        private void Send(Socket client, byte[] byteData)
+        {
+            // Begin sending the data to the remote device.  
+            client.BeginSend(byteData, 0, byteData.Length, 0,
+                new AsyncCallback(SendCallback), client);
+        }
+
+        private void SendCallback(IAsyncResult ar)
+        {
+            try
+            {
+                // Retrieve the socket from the state object.  
+                Socket client = (Socket)ar.AsyncState;
+
+                // Complete sending the data to the remote device.  
+                int bytesSent = client.EndSend(ar);
+                Console.WriteLine("Sent {0} bytes to server.", bytesSent);
+
+                // Signal that all bytes have been sent.  
+                sendDone.Set();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+        }
+
+        private void ProcessData(byte[] dataPacket)
+        {
+            string header = Encoding.ASCII.GetString(dataPacket, 0, 6);
+            if (header == "VRTRIX")
+            {
+                if (dataPacket[6] == 'L' && hand_type == HANDTYPE.LEFT_HAND)
+                {
+                    //Debug.Log("On Receive Left Hand Data Packet.");
+                    for (int i = 0; i < data.Length; ++i)
+                    {
+                        Quaternion quat;
+                        quat.w = BitConverter.ToSingle(dataPacket, 9 + 16 * i);
+                        quat.x = BitConverter.ToSingle(dataPacket, 13 + 16 * i);
+                        quat.y = BitConverter.ToSingle(dataPacket, 17 + 16 * i);
+                        quat.z = BitConverter.ToSingle(dataPacket, 21 + 16 * i);
+                        data[i] = quat;
+                    }
+                    radio_strength = -BitConverter.ToInt16(dataPacket, 265);
+                    battery = BitConverter.ToSingle(dataPacket, 267);
+                    calscore = BitConverter.ToInt16(dataPacket, 271);
+                    packet_received++;
+                }
+                else if (dataPacket[6] == 'R' && hand_type == HANDTYPE.RIGHT_HAND)
+                {
+                    //Debug.Log("On Receive Right Hand Data Packet.");
+                    for (int i = 0; i < data.Length; ++i)
+                    {
+                        Quaternion quat;
+                        quat.w = BitConverter.ToSingle(dataPacket, 9 + 16 * i);
+                        quat.x = BitConverter.ToSingle(dataPacket, 13 + 16 * i);
+                        quat.y = BitConverter.ToSingle(dataPacket, 17 + 16 * i);
+                        quat.z = BitConverter.ToSingle(dataPacket, 21 + 16 * i);
+                        data[i] = quat;
+                    }
+                    radio_strength = -BitConverter.ToInt16(dataPacket, 265);
+                    battery = BitConverter.ToSingle(dataPacket, 267);
+                    calscore = BitConverter.ToInt16(dataPacket, 271);
+                    packet_received++;
+                }
+            }
+        }
+
+        private void OnRefreshDataRate(object source, ElapsedEventArgs e)
+        {
+            //Debug.Log("packet_received: " + packet_received);
+            data_rate = packet_received;
+            packet_received = 0;
+        }
 
         //! Get data glove status 
         /*! 
@@ -464,15 +458,6 @@ namespace VRTRIX {
             return radio_strength;
         }
         
-        //! Get current radio channel of data glove used
-        /*! 
-         * \return current radio channel of data glove used.         
-         */
-        public int GetReceiveRadioChannel()
-        {
-            return radio_channel;
-        }
-        
         //! Get current battery level in percentage of data glove
         /*! 
          * \return current battery level in percentage of data glove.         
@@ -516,16 +501,54 @@ namespace VRTRIX {
         //! Save calibration parameters to hardware flash
         public void OnSaveCalibration()
         {
-            OnSaveCalibration(glove);
+            // Send calibration command to the remote server.  
+            var command = new byte[23];
+            Buffer.BlockCopy(BitConverter.GetBytes((UInt16)CommandType.CMD_HardwareCalibration), 0, command, 0, 2);
+            if(hand_type == HANDTYPE.RIGHT_HAND)
+            {
+                Buffer.BlockCopy(BitConverter.GetBytes((char)'R'), 0, command, 2, 1);
+            }
+            else if(hand_type == HANDTYPE.LEFT_HAND)
+            {
+                Buffer.BlockCopy(BitConverter.GetBytes((char)'L'), 0, command, 2, 1);
+            }
+            Buffer.BlockCopy(BitConverter.GetBytes((UInt16)0), 0, command, 3, 2);
+            Buffer.BlockCopy(BitConverter.GetBytes((UInt16)0), 0, command, 5, 2);
+            Buffer.BlockCopy(BitConverter.GetBytes((float)0.0), 0, command, 7, 4);
+            Buffer.BlockCopy(BitConverter.GetBytes((float)0.0), 0, command, 11, 4);
+            Buffer.BlockCopy(BitConverter.GetBytes((float)0.0), 0, command, 15, 4);
+            Buffer.BlockCopy(BitConverter.GetBytes((float)0.0), 0, command, 19, 4);
+
+            Send(client, command);
+            sendDone.WaitOne();
         }
-        
+
         //! Trigger a haptic vibration for a certain period
         /*! 
          * \param msDurationMillisec vibration period
          */
         public void VibratePeriod(int msDurationMillisec)
         {
-            VibratePeriod(glove, msDurationMillisec);
+            // Send vibrate command to the remote server.  
+            var command = new byte[23];
+            Buffer.BlockCopy(BitConverter.GetBytes((UInt16)CommandType.CMD_TriggerHaptics), 0, command, 0, 2);
+            if (hand_type == HANDTYPE.RIGHT_HAND)
+            {
+                Buffer.BlockCopy(BitConverter.GetBytes((char)'R'), 0, command, 2, 1);
+            }
+            else if (hand_type == HANDTYPE.LEFT_HAND)
+            {
+                Buffer.BlockCopy(BitConverter.GetBytes((char)'L'), 0, command, 2, 1);
+            }
+            Buffer.BlockCopy(BitConverter.GetBytes((UInt16)msDurationMillisec), 0, command, 3, 2);
+            Buffer.BlockCopy(BitConverter.GetBytes((UInt16)0), 0, command, 5, 2);
+            Buffer.BlockCopy(BitConverter.GetBytes((float)0.0), 0, command, 7, 4);
+            Buffer.BlockCopy(BitConverter.GetBytes((float)0.0), 0, command, 11, 4);
+            Buffer.BlockCopy(BitConverter.GetBytes((float)0.0), 0, command, 15, 4);
+            Buffer.BlockCopy(BitConverter.GetBytes((float)0.0), 0, command, 19, 4);
+
+            Send(client, command);
+            sendDone.WaitOne();
         }
 
         //! Align current gesture to finger close pose, used for calibration when advanced mode is activated
@@ -534,14 +557,26 @@ namespace VRTRIX {
          */
         public void OnCloseFingerAlignment(HANDTYPE type)
         {
-            OnCloseFingerAlignment(glove);
-        }
-        
-        
-        //! Trigger channel switching mannually, only used in testing/debuging.
-        public void ChannelHopping()
-        {
-            ChannelHopping(glove);
+            // Send t-pose calibration command to the remote server.  
+            var command = new byte[23];
+            Buffer.BlockCopy(BitConverter.GetBytes((UInt16)CommandType.CMD_TPoseCalibration), 0, command, 0, 2);
+            if (hand_type == HANDTYPE.RIGHT_HAND)
+            {
+                Buffer.BlockCopy(BitConverter.GetBytes((char)'R'), 0, command, 2, 1);
+            }
+            else if (hand_type == HANDTYPE.LEFT_HAND)
+            {
+                Buffer.BlockCopy(BitConverter.GetBytes((char)'L'), 0, command, 2, 1);
+            }
+            Buffer.BlockCopy(BitConverter.GetBytes((UInt16)0), 0, command, 3, 2);
+            Buffer.BlockCopy(BitConverter.GetBytes((UInt16)0), 0, command, 5, 2);
+            Buffer.BlockCopy(BitConverter.GetBytes((float)0.0), 0, command, 7, 4);
+            Buffer.BlockCopy(BitConverter.GetBytes((float)0.0), 0, command, 11, 4);
+            Buffer.BlockCopy(BitConverter.GetBytes((float)0.0), 0, command, 15, 4);
+            Buffer.BlockCopy(BitConverter.GetBytes((float)0.0), 0, command, 19, 4);
+
+            Send(client, command);
+            sendDone.WaitOne();
         }
         
         //! Activate advanced mode so that finger's yaw data will be unlocked.
@@ -550,7 +585,27 @@ namespace VRTRIX {
          */
         public void SetAdvancedMode(bool bIsAdvancedMode)
         {
-            SetAdvancedMode(glove, bIsAdvancedMode);
+            advanced_mode = bIsAdvancedMode;
+            // Send set advanced mode command to the remote server.  
+            var command = new byte[23];
+            Buffer.BlockCopy(BitConverter.GetBytes((UInt16)CommandType.CMD_SetAdvancedMode), 0, command, 0, 2);
+            if (hand_type == HANDTYPE.RIGHT_HAND)
+            {
+                Buffer.BlockCopy(BitConverter.GetBytes((char)'R'), 0, command, 2, 1);
+            }
+            else if (hand_type == HANDTYPE.LEFT_HAND)
+            {
+                Buffer.BlockCopy(BitConverter.GetBytes((char)'L'), 0, command, 2, 1);
+            }
+            Buffer.BlockCopy(BitConverter.GetBytes(Convert.ToInt16(bIsAdvancedMode)), 0, command, 3, 2);
+            Buffer.BlockCopy(BitConverter.GetBytes((UInt16)0), 0, command, 5, 2);
+            Buffer.BlockCopy(BitConverter.GetBytes((float)0.0), 0, command, 7, 4);
+            Buffer.BlockCopy(BitConverter.GetBytes((float)0.0), 0, command, 11, 4);
+            Buffer.BlockCopy(BitConverter.GetBytes((float)0.0), 0, command, 15, 4);
+            Buffer.BlockCopy(BitConverter.GetBytes((float)0.0), 0, command, 19, 4);
+
+            Send(client, command);
+            sendDone.WaitOne();
         }
 
         //! Set data gloves hardware version.
@@ -559,7 +614,27 @@ namespace VRTRIX {
          */
         public void SetHardwareVersion(GLOVEVERSION version)
         {
-            SetHardwareVersion(glove, version);
+            hardware_version = version;
+            // Send set hardware version command to the remote server.  
+            var command = new byte[23];
+            Buffer.BlockCopy(BitConverter.GetBytes((UInt16)CommandType.CMD_SetHardwareVersion), 0, command, 0, 2);
+            if (hand_type == HANDTYPE.RIGHT_HAND)
+            {
+                Buffer.BlockCopy(BitConverter.GetBytes((char)'R'), 0, command, 2, 1);
+            }
+            else if (hand_type == HANDTYPE.LEFT_HAND)
+            {
+                Buffer.BlockCopy(BitConverter.GetBytes((char)'L'), 0, command, 2, 1);
+            }
+            Buffer.BlockCopy(BitConverter.GetBytes((UInt16)version), 0, command, 3, 2);
+            Buffer.BlockCopy(BitConverter.GetBytes((UInt16)0), 0, command, 5, 2);
+            Buffer.BlockCopy(BitConverter.GetBytes((float)0.0), 0, command, 7, 4);
+            Buffer.BlockCopy(BitConverter.GetBytes((float)0.0), 0, command, 11, 4);
+            Buffer.BlockCopy(BitConverter.GetBytes((float)0.0), 0, command, 15, 4);
+            Buffer.BlockCopy(BitConverter.GetBytes((float)0.0), 0, command, 19, 4);
+
+            Send(client, command);
+            sendDone.WaitOne();
         }
 
 
@@ -570,15 +645,89 @@ namespace VRTRIX {
          */
         public void SetThumbOffset(Vector3 offset, VRTRIXBones joint)
         {
+            // Send set algorithm tuning command to the remote server.  
+            var command = new byte[23];
+            Buffer.BlockCopy(BitConverter.GetBytes((UInt16)CommandType.CMD_AlgorithmTuning), 0, command, 0, 2);
+            if (hand_type == HANDTYPE.RIGHT_HAND)
+            {
+                Buffer.BlockCopy(BitConverter.GetBytes((char)'R'), 0, command, 2, 1);
+            }
+            else if (hand_type == HANDTYPE.LEFT_HAND)
+            {
+                Buffer.BlockCopy(BitConverter.GetBytes((char)'L'), 0, command, 2, 1);
+            }
+
+
             switch (joint)
             {
-                case (VRTRIXBones.R_Thumb_1): SetProximalThumbOffset(glove, offset.x, offset.y, offset.z); break;
-                case (VRTRIXBones.R_Thumb_2): SetIntermediateThumbOffset(glove, offset.x, offset.y, offset.z); break;
-                case (VRTRIXBones.R_Thumb_3): SetDistalThumbOffset(glove, offset.x, offset.y, offset.z); break;
-                case (VRTRIXBones.L_Thumb_1): SetProximalThumbOffset(glove, offset.x, offset.y, offset.z); break;
-                case (VRTRIXBones.L_Thumb_2): SetIntermediateThumbOffset(glove, offset.x, offset.y, offset.z); break;
-                case (VRTRIXBones.L_Thumb_3): SetDistalThumbOffset(glove, offset.x, offset.y, offset.z); break;
+                case (VRTRIXBones.R_Thumb_1):
+                    {
+                        Buffer.BlockCopy(BitConverter.GetBytes((UInt16)VRTRIXBones.R_Thumb_1), 0, command, 3, 2);
+                        Buffer.BlockCopy(BitConverter.GetBytes((UInt16)AlgorithmConfig.AlgorithmConfig_ThumbOffset), 0, command, 5, 2);
+                        Buffer.BlockCopy(BitConverter.GetBytes((float)0.0), 0, command, 7, 4);
+                        Buffer.BlockCopy(BitConverter.GetBytes((float)offset.x), 0, command, 11, 4);
+                        Buffer.BlockCopy(BitConverter.GetBytes((float)offset.y), 0, command, 15, 4);
+                        Buffer.BlockCopy(BitConverter.GetBytes((float)offset.z), 0, command, 19, 4);
+                        break;
+                    }
+                case (VRTRIXBones.R_Thumb_2):
+                    {
+                        Buffer.BlockCopy(BitConverter.GetBytes((UInt16)VRTRIXBones.R_Thumb_2), 0, command, 3, 2);
+                        Buffer.BlockCopy(BitConverter.GetBytes((UInt16)AlgorithmConfig.AlgorithmConfig_ThumbOffset), 0, command, 5, 2);
+                        Buffer.BlockCopy(BitConverter.GetBytes((float)0.0), 0, command, 7, 4);
+                        Buffer.BlockCopy(BitConverter.GetBytes((float)offset.x), 0, command, 11, 4);
+                        Buffer.BlockCopy(BitConverter.GetBytes((float)offset.y), 0, command, 15, 4);
+                        Buffer.BlockCopy(BitConverter.GetBytes((float)offset.z), 0, command, 19, 4);
+                        break;
+                    }
+
+                case (VRTRIXBones.R_Thumb_3):
+                    {
+                        Buffer.BlockCopy(BitConverter.GetBytes((UInt16)VRTRIXBones.R_Thumb_3), 0, command, 3, 2);
+                        Buffer.BlockCopy(BitConverter.GetBytes((UInt16)AlgorithmConfig.AlgorithmConfig_ThumbOffset), 0, command, 5, 2);
+                        Buffer.BlockCopy(BitConverter.GetBytes((float)0.0), 0, command, 7, 4);
+                        Buffer.BlockCopy(BitConverter.GetBytes((float)offset.x), 0, command, 11, 4);
+                        Buffer.BlockCopy(BitConverter.GetBytes((float)offset.y), 0, command, 15, 4);
+                        Buffer.BlockCopy(BitConverter.GetBytes((float)offset.z), 0, command, 19, 4);
+                        break;
+                    }
+
+                case (VRTRIXBones.L_Thumb_1):
+                    {
+                        Buffer.BlockCopy(BitConverter.GetBytes((UInt16)VRTRIXBones.R_Thumb_1), 0, command, 3, 2);
+                        Buffer.BlockCopy(BitConverter.GetBytes((UInt16)AlgorithmConfig.AlgorithmConfig_ThumbOffset), 0, command, 5, 2);
+                        Buffer.BlockCopy(BitConverter.GetBytes((float)0.0), 0, command, 7, 4);
+                        Buffer.BlockCopy(BitConverter.GetBytes((float)offset.x), 0, command, 11, 4);
+                        Buffer.BlockCopy(BitConverter.GetBytes((float)offset.y), 0, command, 15, 4);
+                        Buffer.BlockCopy(BitConverter.GetBytes((float)offset.z), 0, command, 19, 4);
+                        break;
+                    }
+
+                case (VRTRIXBones.L_Thumb_2):
+                    {
+                        Buffer.BlockCopy(BitConverter.GetBytes((UInt16)VRTRIXBones.R_Thumb_2), 0, command, 3, 2);
+                        Buffer.BlockCopy(BitConverter.GetBytes((UInt16)AlgorithmConfig.AlgorithmConfig_ThumbOffset), 0, command, 5, 2);
+                        Buffer.BlockCopy(BitConverter.GetBytes((float)0.0), 0, command, 7, 4);
+                        Buffer.BlockCopy(BitConverter.GetBytes((float)offset.x), 0, command, 11, 4);
+                        Buffer.BlockCopy(BitConverter.GetBytes((float)offset.y), 0, command, 15, 4);
+                        Buffer.BlockCopy(BitConverter.GetBytes((float)offset.z), 0, command, 19, 4);
+                        break;
+                    }
+
+                case (VRTRIXBones.L_Thumb_3):
+                    {
+                        Buffer.BlockCopy(BitConverter.GetBytes((UInt16)VRTRIXBones.R_Thumb_3), 0, command, 3, 2);
+                        Buffer.BlockCopy(BitConverter.GetBytes((UInt16)AlgorithmConfig.AlgorithmConfig_ThumbOffset), 0, command, 5, 2);
+                        Buffer.BlockCopy(BitConverter.GetBytes((float)0.0), 0, command, 7, 4);
+                        Buffer.BlockCopy(BitConverter.GetBytes((float)offset.x), 0, command, 11, 4);
+                        Buffer.BlockCopy(BitConverter.GetBytes((float)offset.y), 0, command, 15, 4);
+                        Buffer.BlockCopy(BitConverter.GetBytes((float)offset.z), 0, command, 19, 4);
+                        break;
+                    }
             }
+
+            Send(client, command);
+            sendDone.WaitOne();
         }
         
         //! Set thumb slerp rate to counteract the difference between hands & gloves sensor installation.
@@ -588,7 +737,45 @@ namespace VRTRIX {
          */
         public void SetThumbSlerpRate(double slerp_proximal, double slerp_middle)
         {
-            SetThumbSlerpRate(glove, slerp_proximal, slerp_middle);
+            // Send set algorithm tuning command to the remote server.  
+            var command = new byte[23];
+            Buffer.BlockCopy(BitConverter.GetBytes((UInt16)CommandType.CMD_AlgorithmTuning), 0, command, 0, 2);
+            if (hand_type == HANDTYPE.RIGHT_HAND)
+            {
+                Buffer.BlockCopy(BitConverter.GetBytes((char)'R'), 0, command, 2, 1);
+            }
+            else if (hand_type == HANDTYPE.LEFT_HAND)
+            {
+                Buffer.BlockCopy(BitConverter.GetBytes((char)'L'), 0, command, 2, 1);
+            }
+            Buffer.BlockCopy(BitConverter.GetBytes((UInt16)VRTRIXBones.R_Thumb_1), 0, command, 3, 2);
+            Buffer.BlockCopy(BitConverter.GetBytes((UInt16)AlgorithmConfig.AlgorithmConfig_ProximalSlerpDown), 0, command, 5, 2);
+            Buffer.BlockCopy(BitConverter.GetBytes((float)slerp_proximal), 0, command, 7, 4);
+            Buffer.BlockCopy(BitConverter.GetBytes((float)0.0), 0, command, 11, 4);
+            Buffer.BlockCopy(BitConverter.GetBytes((float)0.0), 0, command, 15, 4);
+            Buffer.BlockCopy(BitConverter.GetBytes((float)0.0), 0, command, 19, 4);
+
+            Send(client, command);
+            sendDone.WaitOne();
+
+            Buffer.BlockCopy(BitConverter.GetBytes((UInt16)CommandType.CMD_AlgorithmTuning), 0, command, 0, 2);
+            if (hand_type == HANDTYPE.RIGHT_HAND)
+            {
+                Buffer.BlockCopy(BitConverter.GetBytes((char)'R'), 0, command, 2, 1);
+            }
+            else if (hand_type == HANDTYPE.LEFT_HAND)
+            {
+                Buffer.BlockCopy(BitConverter.GetBytes((char)'L'), 0, command, 2, 1);
+            }
+            Buffer.BlockCopy(BitConverter.GetBytes((UInt16)VRTRIXBones.R_Thumb_3), 0, command, 3, 2);
+            Buffer.BlockCopy(BitConverter.GetBytes((UInt16)AlgorithmConfig.AlgorithmConfig_DistalSlerpDown), 0, command, 5, 2);
+            Buffer.BlockCopy(BitConverter.GetBytes((float)slerp_middle), 0, command, 7, 4);
+            Buffer.BlockCopy(BitConverter.GetBytes((float)0.0), 0, command, 11, 4);
+            Buffer.BlockCopy(BitConverter.GetBytes((float)0.0), 0, command, 15, 4);
+            Buffer.BlockCopy(BitConverter.GetBytes((float)0.0), 0, command, 19, 4);
+
+            Send(client, command);
+            sendDone.WaitOne();
         }
 
 
@@ -598,7 +785,26 @@ namespace VRTRIX {
          */
         public void SetFingerSpacing(double spacing)
         {
-            SetFingerSpacing(glove, spacing);
+            // Send set algorithm tuning command to the remote server.  
+            var command = new byte[23];
+            Buffer.BlockCopy(BitConverter.GetBytes((UInt16)CommandType.CMD_AlgorithmTuning), 0, command, 0, 2);
+            if (hand_type == HANDTYPE.RIGHT_HAND)
+            {
+                Buffer.BlockCopy(BitConverter.GetBytes((char)'R'), 0, command, 2, 1);
+            }
+            else if (hand_type == HANDTYPE.LEFT_HAND)
+            {
+                Buffer.BlockCopy(BitConverter.GetBytes((char)'L'), 0, command, 2, 1);
+            }
+            Buffer.BlockCopy(BitConverter.GetBytes((UInt16)VRTRIXBones.R_Hand), 0, command, 3, 2);
+            Buffer.BlockCopy(BitConverter.GetBytes((UInt16)AlgorithmConfig.AlgorithmConfig_FingerSpcaing), 0, command, 5, 2);
+            Buffer.BlockCopy(BitConverter.GetBytes((float)spacing), 0, command, 7, 4);
+            Buffer.BlockCopy(BitConverter.GetBytes((float)0.0), 0, command, 11, 4);
+            Buffer.BlockCopy(BitConverter.GetBytes((float)0.0), 0, command, 15, 4);
+            Buffer.BlockCopy(BitConverter.GetBytes((float)0.0), 0, command, 19, 4);
+
+            Send(client, command);
+            sendDone.WaitOne();
         }
 
         //! Set final finger spacing when fingers are fully bended.
@@ -607,7 +813,26 @@ namespace VRTRIX {
          */
         public void SetFinalFingerSpacing(double spacing)
         {
-            SetFinalFingerSpacing(glove, spacing);
+            // Send set algorithm tuning command to the remote server.  
+            var command = new byte[23];
+            Buffer.BlockCopy(BitConverter.GetBytes((UInt16)CommandType.CMD_AlgorithmTuning), 0, command, 0, 2);
+            if (hand_type == HANDTYPE.RIGHT_HAND)
+            {
+                Buffer.BlockCopy(BitConverter.GetBytes((char)'R'), 0, command, 2, 1);
+            }
+            else if (hand_type == HANDTYPE.LEFT_HAND)
+            {
+                Buffer.BlockCopy(BitConverter.GetBytes((char)'L'), 0, command, 2, 1);
+            }
+            Buffer.BlockCopy(BitConverter.GetBytes((UInt16)VRTRIXBones.R_Hand), 0, command, 3, 2);
+            Buffer.BlockCopy(BitConverter.GetBytes((UInt16)AlgorithmConfig.AlgorithmConfig_FinalFingerSpacing), 0, command, 5, 2);
+            Buffer.BlockCopy(BitConverter.GetBytes((float)spacing), 0, command, 7, 4);
+            Buffer.BlockCopy(BitConverter.GetBytes((float)0.0), 0, command, 11, 4);
+            Buffer.BlockCopy(BitConverter.GetBytes((float)0.0), 0, command, 15, 4);
+            Buffer.BlockCopy(BitConverter.GetBytes((float)0.0), 0, command, 19, 4);
+
+            Send(client, command);
+            sendDone.WaitOne();
         }
 
         //! Set radio channel limit for data gloves.
@@ -617,19 +842,26 @@ namespace VRTRIX {
          */
         public void SetRadioChannelLimit(int upperBound, int lowerBound)
         {
-            SetRadioChannelLimit(glove, upperBound, lowerBound);
-        }
-
-        private static void MarshalUnmananagedArray2Struct<VRTRIX_Quat>(IntPtr unmanagedArray, int length, out VRTRIX_Quat[] mangagedArray)
-        {
-            var size = Marshal.SizeOf(typeof(VRTRIX_Quat));
-            mangagedArray = new VRTRIX_Quat[length];
-
-            for (int i = 0; i < length; i++)
+            // Send set hardware version command to the remote server.  
+            var command = new byte[23];
+            Buffer.BlockCopy(BitConverter.GetBytes((UInt16)CommandType.CMD_SetRadioLimit), 0, command, 0, 2);
+            if (hand_type == HANDTYPE.RIGHT_HAND)
             {
-                IntPtr ins = new IntPtr(unmanagedArray.ToInt64() + i * size);
-                mangagedArray[i] = (VRTRIX_Quat)Marshal.PtrToStructure(ins, typeof(VRTRIX_Quat));
+                Buffer.BlockCopy(BitConverter.GetBytes((char)'R'), 0, command, 2, 1);
             }
+            else if (hand_type == HANDTYPE.LEFT_HAND)
+            {
+                Buffer.BlockCopy(BitConverter.GetBytes((char)'L'), 0, command, 2, 1);
+            }
+            Buffer.BlockCopy(BitConverter.GetBytes((UInt16)lowerBound), 0, command, 3, 2);
+            Buffer.BlockCopy(BitConverter.GetBytes((UInt16)upperBound), 0, command, 5, 2);
+            Buffer.BlockCopy(BitConverter.GetBytes((float)0.0), 0, command, 7, 4);
+            Buffer.BlockCopy(BitConverter.GetBytes((float)0.0), 0, command, 11, 4);
+            Buffer.BlockCopy(BitConverter.GetBytes((float)0.0), 0, command, 15, 4);
+            Buffer.BlockCopy(BitConverter.GetBytes((float)0.0), 0, command, 19, 4);
+
+            Send(client, command);
+            sendDone.WaitOne();
         }
 
     }

@@ -312,27 +312,6 @@ namespace VRTRIX
             }
         }
 
-        //数据手套手动跳频
-        //! Switch radio channel of data glove. Only used for testing/debuging. Automatic channel switching is enabled by default in normal mode.
-        public void OnChannelHopping(HANDTYPE type)
-        {
-            if (type == HANDTYPE.LEFT_HAND && LH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED && LH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED)
-            {
-                LH.ChannelHopping();
-            }
-            if (type == HANDTYPE.RIGHT_HAND && RH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED && RH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED)
-            {
-                RH.ChannelHopping();
-            }
-            if (type == HANDTYPE.BOTH_HAND
-                && LH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED
-                && RH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED)
-            {
-                LH.ChannelHopping();
-                RH.ChannelHopping();
-            }
-        }
-
         //数据手套设置手背初始方向。
         //! Align five fingers to closed gesture (only if advanced mode is set to true). Also align wrist to the game object chosen.
         public void OnAlignWrist(HANDTYPE type)
@@ -490,28 +469,6 @@ namespace VRTRIX
             }
         }
 
-        //获取当前通信信道，1-100共100个信道
-        //! Get current radio channel of data glove used
-        /*! 
-         * \param type Data glove hand type.
-         * \return current radio channel of data glove used.         
-         */
-        public int GetReceiveRadioChannel(HANDTYPE type)
-        {
-            switch (type)
-            {
-                case HANDTYPE.RIGHT_HAND:
-                    {
-                        return RH.GetReceiveRadioChannel();
-                    }
-                case HANDTYPE.LEFT_HAND:
-                    {
-                        return LH.GetReceiveRadioChannel();
-                    }
-                default:
-                    return 0;
-            }
-        }
         //获取电量
         //! Get current battery level in percentage of data glove
         /*! 
