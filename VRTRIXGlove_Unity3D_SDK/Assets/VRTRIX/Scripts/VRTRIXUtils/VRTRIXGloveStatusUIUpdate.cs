@@ -20,7 +20,7 @@ namespace VRTRIX
         private GameObject m_FPS;
         private GameObject m_HardwareVersionDropDown;
         private GameObject m_ServerIP;
-        private GameObject m_ServerPort;
+        private GameObject m_GloveDeviceID;
         private GameObject m_ConnectButton;
         private GameObject m_LHHapticsButton;
         private GameObject m_RHHapticsButton;
@@ -51,15 +51,12 @@ namespace VRTRIX
         //private GameObject m_ThumbProximalSlerpSlider;
         //private GameObject m_ThumbMiddleSlerpSlider;
 
-        private GameObject m_ThumbProximalOffsetXSlider;
-        private GameObject m_ThumbProximalOffsetYSlider;
-        private GameObject m_ThumbProximalOffsetZSlider;
-        private GameObject m_ThumbMiddleOffsetXSlider;
-        private GameObject m_ThumbMiddleOffsetYSlider;
-        private GameObject m_ThumbMiddleOffsetZSlider;
-        private GameObject m_ThumbDistalOffsetXSlider;
-        private GameObject m_ThumbDistalOffsetYSlider;
-        private GameObject m_ThumbDistalOffsetZSlider;
+        private GameObject m_ThumbOffsetXSlider;
+        private GameObject m_ThumbOffsetYSlider;
+        private GameObject m_ThumbOffsetZSlider;
+        private GameObject m_ThumbOffsetSelectorDropdown;
+        private GameObject m_ThumbOffsetResetButton;
+
         private GameObject m_AlignFingerButton;
         private GameObject m_HardwareCalButton;
 
@@ -81,7 +78,7 @@ namespace VRTRIX
 
             m_HardwareVersionDropDown = FindDeepChild(m_canvas.gameObject.transform, "HardwareVersion").gameObject;
             m_ServerIP = FindDeepChild(m_canvas.gameObject.transform, "ServerIP").gameObject;
-            m_ServerPort = FindDeepChild(m_canvas.gameObject.transform, "ServerPort").gameObject;
+            m_GloveDeviceID = FindDeepChild(m_canvas.gameObject.transform, "GloveDeviceID").gameObject;
             m_AdvancedModeToggle = FindDeepChild(m_canvas.gameObject.transform, "AdvancedMode").gameObject;
             m_FPS = FindDeepChild(m_canvas.gameObject.transform, "FPS").gameObject;
             m_ConnectButton = FindDeepChild(m_canvas.gameObject.transform, "ConnectButton").gameObject;
@@ -114,20 +111,16 @@ namespace VRTRIX
             //m_ThumbProximalSlerpSlider = FindDeepChild(m_canvas.gameObject.transform, "ThumbProximalSlerpSlider").gameObject;
             //m_ThumbMiddleSlerpSlider = FindDeepChild(m_canvas.gameObject.transform, "ThumbMiddleSlerpSlider").gameObject;
 
-            m_ThumbProximalOffsetXSlider = FindDeepChild(m_canvas.gameObject.transform, "ThumbProximalOffsetXSlider").gameObject;
-            m_ThumbProximalOffsetYSlider = FindDeepChild(m_canvas.gameObject.transform, "ThumbProximalOffsetYSlider").gameObject;
-            m_ThumbProximalOffsetZSlider = FindDeepChild(m_canvas.gameObject.transform, "ThumbProximalOffsetZSlider").gameObject;
-            m_ThumbMiddleOffsetXSlider = FindDeepChild(m_canvas.gameObject.transform, "ThumbMiddleOffsetXSlider").gameObject;
-            m_ThumbMiddleOffsetYSlider = FindDeepChild(m_canvas.gameObject.transform, "ThumbMiddleOffsetYSlider").gameObject;
-            m_ThumbMiddleOffsetZSlider = FindDeepChild(m_canvas.gameObject.transform, "ThumbMiddleOffsetZSlider").gameObject;
-            m_ThumbDistalOffsetXSlider = FindDeepChild(m_canvas.gameObject.transform, "ThumbDistalOffsetXSlider").gameObject;
-            m_ThumbDistalOffsetYSlider = FindDeepChild(m_canvas.gameObject.transform, "ThumbDistalOffsetYSlider").gameObject;
-            m_ThumbDistalOffsetZSlider = FindDeepChild(m_canvas.gameObject.transform, "ThumbDistalOffsetZSlider").gameObject;
+            m_ThumbOffsetXSlider = FindDeepChild(m_canvas.gameObject.transform, "ThumbOffsetXSlider").gameObject;
+            m_ThumbOffsetYSlider = FindDeepChild(m_canvas.gameObject.transform, "ThumbOffsetYSlider").gameObject;
+            m_ThumbOffsetZSlider = FindDeepChild(m_canvas.gameObject.transform, "ThumbOffsetZSlider").gameObject;
+            m_ThumbOffsetSelectorDropdown = FindDeepChild(m_canvas.gameObject.transform, "ThumbOffsetSelectorDropdown").gameObject;
+            m_ThumbOffsetResetButton = FindDeepChild(m_canvas.gameObject.transform, "ThumbOffsetResetButton").gameObject;
+
             m_AlignFingerButton = FindDeepChild(m_canvas.gameObject.transform, "AlignFingerButton").gameObject;
             m_HardwareCalButton = FindDeepChild(m_canvas.gameObject.transform, "8FigureCalButton").gameObject;
 
             m_ServerIP.GetComponent<InputField>().text = "127.0.0.1";
-            m_ServerPort.GetComponent<InputField>().text = "11002";
             m_ConnectButton.GetComponentInChildren<Text>().text = "Connect";
             m_ConnectButton.GetComponent<Button>().onClick.AddListener(OnConnectGlovePressed);
             m_LHHapticsButton.GetComponent<Button>().onClick.AddListener(OnLHTriggerHapticsPressed);
@@ -145,15 +138,11 @@ namespace VRTRIX
             //m_ThumbProximalSlerpSlider.GetComponent<Slider>().onValueChanged.AddListener(OnThumbProximalSlerpChanged);
             //m_ThumbMiddleSlerpSlider.GetComponent<Slider>().onValueChanged.AddListener(OnThumbMiddleSlerpChanged);
 
-            m_ThumbProximalOffsetXSlider.GetComponent<Slider>().onValueChanged.AddListener(OnThumbProximalOffsetXChanged);
-            m_ThumbProximalOffsetYSlider.GetComponent<Slider>().onValueChanged.AddListener(OnThumbProximalOffsetYChanged);
-            m_ThumbProximalOffsetZSlider.GetComponent<Slider>().onValueChanged.AddListener(OnThumbProximalOffsetZChanged);
-            m_ThumbMiddleOffsetXSlider.GetComponent<Slider>().onValueChanged.AddListener(OnThumbMiddleOffsetXChanged);
-            m_ThumbMiddleOffsetYSlider.GetComponent<Slider>().onValueChanged.AddListener(OnThumbMiddleOffsetYChanged);
-            m_ThumbMiddleOffsetZSlider.GetComponent<Slider>().onValueChanged.AddListener(OnThumbMiddleOffsetZChanged);
-            m_ThumbDistalOffsetXSlider.GetComponent<Slider>().onValueChanged.AddListener(OnThumbDistalOffsetXChanged);
-            m_ThumbDistalOffsetYSlider.GetComponent<Slider>().onValueChanged.AddListener(OnThumbDistalOffsetYChanged);
-            m_ThumbDistalOffsetZSlider.GetComponent<Slider>().onValueChanged.AddListener(OnThumbDistalOffsetZChanged);
+            m_ThumbOffsetXSlider.GetComponent<Slider>().onValueChanged.AddListener(OnThumbOffsetXChanged);
+            m_ThumbOffsetYSlider.GetComponent<Slider>().onValueChanged.AddListener(OnThumbOffsetYChanged);
+            m_ThumbOffsetZSlider.GetComponent<Slider>().onValueChanged.AddListener(OnThumbOffsetZChanged);
+            m_ThumbOffsetSelectorDropdown.GetComponent<Dropdown>().onValueChanged.AddListener(OnToggleThumbIndex);
+            m_ThumbOffsetResetButton.GetComponent<Button>().onClick.AddListener(OnResetThumbOffset);
             m_AlignFingerButton.GetComponent<Button>().onClick.AddListener(OnAlignFinger);
             m_HardwareCalButton.GetComponent<Button>().onClick.AddListener(OnHardwareCal);
         }
@@ -270,6 +259,10 @@ namespace VRTRIX
         {
             FindDeepChild(m_canvas.gameObject.transform, "ParametersPanel").gameObject.SetActive(bIsEnabled);
         }
+        public void OnToggleThumbIndex(int index)
+        {
+            UpdateUIValue((HANDTYPE)m_HandTypeDropDown.GetComponent<Dropdown>().value + 2);
+        }
         public void OnHandTypeDropDownChanged(int index)
         {
             UpdateUIValue((HANDTYPE)index + 2);
@@ -279,10 +272,10 @@ namespace VRTRIX
             if (m_ServerIP == null) return "127.0.0.1";
             return m_ServerIP.GetComponent<InputField>().text;
         }
-        public string GetServerPort()
+        public int GetGloveDeviceID()
         {
-            if (m_ServerPort == null) return "11002";
-            return m_ServerPort.GetComponent<InputField>().text;
+            if (m_GloveDeviceID == null) return 0;
+            return m_GloveDeviceID.GetComponent<Dropdown>().value;
         }
         public bool GetAdvancedMode()
         {
@@ -341,32 +334,16 @@ namespace VRTRIX
                 thumb_offset[1] = glove3D.thumb_offset_R[1];
                 thumb_offset[2] = glove3D.thumb_offset_R[2];
             }
-            m_ThumbProximalOffsetXSlider.GetComponent<Slider>().value = (float)thumb_offset[0].x;
-            m_ThumbProximalOffsetXSlider.transform.Find("ThumbProximalOffsetX").GetComponent<Text>().text = thumb_offset[0].x.ToString("F1");
+            int index = m_ThumbOffsetSelectorDropdown.GetComponent<Dropdown>().value;
 
-            m_ThumbProximalOffsetYSlider.GetComponent<Slider>().value = (float)thumb_offset[0].y;
-            m_ThumbProximalOffsetYSlider.transform.Find("ThumbProximalOffsetY").GetComponent<Text>().text = thumb_offset[0].y.ToString("F1");
+            m_ThumbOffsetXSlider.GetComponent<Slider>().value = (float)thumb_offset[index].x;
+            m_ThumbOffsetXSlider.transform.Find("ThumbOffsetX").GetComponent<Text>().text = thumb_offset[index].x.ToString("F1");
 
-            m_ThumbProximalOffsetZSlider.GetComponent<Slider>().value = (float)thumb_offset[0].z;
-            m_ThumbProximalOffsetZSlider.transform.Find("ThumbProximalOffsetZ").GetComponent<Text>().text = thumb_offset[0].z.ToString("F1");
+            m_ThumbOffsetYSlider.GetComponent<Slider>().value = (float)thumb_offset[index].y;
+            m_ThumbOffsetYSlider.transform.Find("ThumbOffsetY").GetComponent<Text>().text = thumb_offset[index].y.ToString("F1");
 
-            m_ThumbMiddleOffsetXSlider.GetComponent<Slider>().value = (float)thumb_offset[1].x;
-            m_ThumbMiddleOffsetXSlider.transform.Find("ThumbMiddleOffsetX").GetComponent<Text>().text = thumb_offset[1].x.ToString("F1");
-
-            m_ThumbMiddleOffsetYSlider.GetComponent<Slider>().value = (float)thumb_offset[1].y;
-            m_ThumbMiddleOffsetYSlider.transform.Find("ThumbMiddleOffsetY").GetComponent<Text>().text = thumb_offset[1].y.ToString("F1");
-
-            m_ThumbMiddleOffsetZSlider.GetComponent<Slider>().value = (float)thumb_offset[1].z;
-            m_ThumbMiddleOffsetZSlider.transform.Find("ThumbMiddleOffsetZ").GetComponent<Text>().text = thumb_offset[1].z.ToString("F1");
-
-            m_ThumbDistalOffsetXSlider.GetComponent<Slider>().value = (float)thumb_offset[2].x;
-            m_ThumbDistalOffsetXSlider.transform.Find("ThumbDistalOffsetX").GetComponent<Text>().text = thumb_offset[2].x.ToString("F1");
-
-            m_ThumbDistalOffsetYSlider.GetComponent<Slider>().value = (float)thumb_offset[2].y;
-            m_ThumbDistalOffsetYSlider.transform.Find("ThumbDistalOffsetY").GetComponent<Text>().text = thumb_offset[2].y.ToString("F1");
-
-            m_ThumbDistalOffsetZSlider.GetComponent<Slider>().value = (float)thumb_offset[2].z;
-            m_ThumbDistalOffsetZSlider.transform.Find("ThumbDistalOffsetZ").GetComponent<Text>().text = thumb_offset[2].z.ToString("F1");
+            m_ThumbOffsetZSlider.GetComponent<Slider>().value = (float)thumb_offset[index].z;
+            m_ThumbOffsetZSlider.transform.Find("ThumbOffsetZ").GetComponent<Text>().text = thumb_offset[index].z.ToString("F1");
         }
 
         public void OnAlignFinger()
@@ -416,148 +393,61 @@ namespace VRTRIX
             UpdateUIValue(type);
         }
 
-        public void OnThumbProximalOffsetXChanged(float value)
+        public void OnThumbOffsetXChanged(float value)
         {
             HANDTYPE type = (HANDTYPE)m_HandTypeDropDown.GetComponent<Dropdown>().value + 2;
+            int index = m_ThumbOffsetSelectorDropdown.GetComponent<Dropdown>().value;
             if (type == HANDTYPE.LEFT_HAND)
             {
-                glove3D.thumb_offset_L[0].x = value;
-                glove3D.LH.SetThumbOffset(glove3D.thumb_offset_L[0], VRTRIXBones.L_Thumb_1);
+                glove3D.thumb_offset_L[index].x = value;
+                glove3D.LH.SetThumbOffset(glove3D.thumb_offset_L[index], VRTRIXBones.L_Thumb_1 + index);
             }
             else if (type == HANDTYPE.RIGHT_HAND)
             {
-                glove3D.thumb_offset_R[0].x = value;
-                glove3D.RH.SetThumbOffset(glove3D.thumb_offset_R[0], VRTRIXBones.R_Thumb_1);
+                glove3D.thumb_offset_R[index].x = value;
+                glove3D.RH.SetThumbOffset(glove3D.thumb_offset_R[index], VRTRIXBones.R_Thumb_1 + index);
             }
             UpdateUIValue(type);
         }
 
-        public void OnThumbProximalOffsetYChanged(float value)
+        public void OnThumbOffsetYChanged(float value)
         {
             HANDTYPE type = (HANDTYPE)m_HandTypeDropDown.GetComponent<Dropdown>().value + 2;
+            int index = m_ThumbOffsetSelectorDropdown.GetComponent<Dropdown>().value;
             if (type == HANDTYPE.LEFT_HAND)
             {
-                glove3D.thumb_offset_L[0].y = value;
-                glove3D.LH.SetThumbOffset(glove3D.thumb_offset_L[0], VRTRIXBones.L_Thumb_1);
+                glove3D.thumb_offset_L[index].y = value;
+                glove3D.LH.SetThumbOffset(glove3D.thumb_offset_L[index], VRTRIXBones.L_Thumb_1 + index);
             }
             else if (type == HANDTYPE.RIGHT_HAND)
             {
-                glove3D.thumb_offset_R[0].y = value;
-                glove3D.RH.SetThumbOffset(glove3D.thumb_offset_R[0], VRTRIXBones.R_Thumb_1);
+                glove3D.thumb_offset_R[+index].y = value;
+                glove3D.RH.SetThumbOffset(glove3D.thumb_offset_R[index], VRTRIXBones.R_Thumb_1 + index);
             }
             UpdateUIValue(type);
         }
 
-        public void OnThumbProximalOffsetZChanged(float value)
+        public void OnThumbOffsetZChanged(float value)
         {
             HANDTYPE type = (HANDTYPE)m_HandTypeDropDown.GetComponent<Dropdown>().value + 2;
+            int index = m_ThumbOffsetSelectorDropdown.GetComponent<Dropdown>().value;
             if (type == HANDTYPE.LEFT_HAND)
             {
-                glove3D.thumb_offset_L[0].z = value;
-                glove3D.LH.SetThumbOffset(glove3D.thumb_offset_L[0], VRTRIXBones.L_Thumb_1);
+                glove3D.thumb_offset_L[index].z = value;
+                glove3D.LH.SetThumbOffset(glove3D.thumb_offset_L[index], VRTRIXBones.L_Thumb_1 + index);
             }
             else if (type == HANDTYPE.RIGHT_HAND)
             {
-                glove3D.thumb_offset_R[0].z = value;
-                glove3D.RH.SetThumbOffset(glove3D.thumb_offset_R[0], VRTRIXBones.R_Thumb_1);
+                glove3D.thumb_offset_R[index].z = value;
+                glove3D.RH.SetThumbOffset(glove3D.thumb_offset_R[index], VRTRIXBones.R_Thumb_1 + index);
             }
             UpdateUIValue(type);
         }
 
-        public void OnThumbMiddleOffsetXChanged(float value)
+        public void OnResetThumbOffset()
         {
-            HANDTYPE type = (HANDTYPE)m_HandTypeDropDown.GetComponent<Dropdown>().value + 2;
-            if (type == HANDTYPE.LEFT_HAND)
-            {
-                glove3D.thumb_offset_L[1].x = value;
-                glove3D.LH.SetThumbOffset(glove3D.thumb_offset_L[1], VRTRIXBones.L_Thumb_2);
-            }
-            else if (type == HANDTYPE.RIGHT_HAND)
-            {
-                glove3D.thumb_offset_R[1].x = value;
-                glove3D.RH.SetThumbOffset(glove3D.thumb_offset_R[1], VRTRIXBones.R_Thumb_2);
-            }
-            UpdateUIValue(type);
-        }
-
-        public void OnThumbMiddleOffsetYChanged(float value)
-        {
-            HANDTYPE type = (HANDTYPE)m_HandTypeDropDown.GetComponent<Dropdown>().value + 2;
-            if (type == HANDTYPE.LEFT_HAND)
-            {
-                glove3D.thumb_offset_L[1].y = value;
-                glove3D.LH.SetThumbOffset(glove3D.thumb_offset_L[1], VRTRIXBones.L_Thumb_2);
-            }
-            else if (type == HANDTYPE.RIGHT_HAND)
-            {
-                glove3D.thumb_offset_R[1].y = value;
-                glove3D.RH.SetThumbOffset(glove3D.thumb_offset_R[1], VRTRIXBones.R_Thumb_2);
-            }
-            UpdateUIValue(type);
-        }
-
-        public void OnThumbMiddleOffsetZChanged(float value)
-        {
-            HANDTYPE type = (HANDTYPE)m_HandTypeDropDown.GetComponent<Dropdown>().value + 2;
-            if (type == HANDTYPE.LEFT_HAND)
-            {
-                glove3D.thumb_offset_L[1].z = value;
-                glove3D.LH.SetThumbOffset(glove3D.thumb_offset_L[1], VRTRIXBones.L_Thumb_2);
-            }
-            else if (type == HANDTYPE.RIGHT_HAND)
-            {
-                glove3D.thumb_offset_R[1].z = value;
-                glove3D.RH.SetThumbOffset(glove3D.thumb_offset_R[1], VRTRIXBones.R_Thumb_2);
-            }
-            UpdateUIValue(type);
-        }
-
-        public void OnThumbDistalOffsetXChanged(float value)
-        {
-            HANDTYPE type = (HANDTYPE)m_HandTypeDropDown.GetComponent<Dropdown>().value + 2;
-            if (type == HANDTYPE.LEFT_HAND)
-            {
-                glove3D.thumb_offset_L[2].x = value;
-                glove3D.LH.SetThumbOffset(glove3D.thumb_offset_L[2], VRTRIXBones.L_Thumb_3);
-            }
-            else if (type == HANDTYPE.RIGHT_HAND)
-            {
-                glove3D.thumb_offset_R[2].x = value;
-                glove3D.RH.SetThumbOffset(glove3D.thumb_offset_R[2], VRTRIXBones.R_Thumb_3);
-            }
-            UpdateUIValue(type);
-        }
-
-        public void OnThumbDistalOffsetYChanged(float value)
-        {
-            HANDTYPE type = (HANDTYPE)m_HandTypeDropDown.GetComponent<Dropdown>().value + 2;
-            if (type == HANDTYPE.LEFT_HAND)
-            {
-                glove3D.thumb_offset_L[2].y = value;
-                glove3D.LH.SetThumbOffset(glove3D.thumb_offset_L[2], VRTRIXBones.L_Thumb_3);
-            }
-            else if (type == HANDTYPE.RIGHT_HAND)
-            {
-                glove3D.thumb_offset_R[2].y = value;
-                glove3D.RH.SetThumbOffset(glove3D.thumb_offset_R[2], VRTRIXBones.R_Thumb_3);
-            }
-            UpdateUIValue(type);
-        }
-
-        public void OnThumbDistalOffsetZChanged(float value)
-        {
-            HANDTYPE type = (HANDTYPE)m_HandTypeDropDown.GetComponent<Dropdown>().value + 2;
-            if (type == HANDTYPE.LEFT_HAND)
-            {
-                glove3D.thumb_offset_L[2].z = value;
-                glove3D.LH.SetThumbOffset(glove3D.thumb_offset_L[2], VRTRIXBones.L_Thumb_3);
-            }
-            else if (type == HANDTYPE.RIGHT_HAND)
-            {
-                glove3D.thumb_offset_R[2].z = value;
-                glove3D.RH.SetThumbOffset(glove3D.thumb_offset_R[2], VRTRIXBones.R_Thumb_3);
-            }
-            UpdateUIValue(type);
+            glove3D.OnResetThumbOffset();
+            UpdateUIValue((HANDTYPE)m_HandTypeDropDown.GetComponent<Dropdown>().value + 2);
         }
 
         private static void RadioStrengthGUI(Image image, int radiostrength)

@@ -53,8 +53,8 @@ namespace VRTRIX
                 {
                     foreach(VRTRIXGloveDataStreaming glove in gloves)
                     {
-                        if(glove.GetReceivedStatus(HANDTYPE.LEFT_HAND) ==VRTRIXGloveStatus.NORMAL
-                            ||glove.GetReceivedStatus(HANDTYPE.RIGHT_HAND) == VRTRIXGloveStatus.NORMAL)
+                        if(glove.GetReceivedStatus(HANDTYPE.LEFT_HAND) ==VRTRIXGloveStatus.CONNECTED
+                            ||glove.GetReceivedStatus(HANDTYPE.RIGHT_HAND) == VRTRIXGloveStatus.CONNECTED)
                         {
                             glove.OnDisconnectGlove();
                         }
@@ -64,8 +64,8 @@ namespace VRTRIX
                 {
                     foreach(VRTRIXGloveDataStreaming glove in gloves)
                     {
-                        if(glove.GetReceivedStatus(HANDTYPE.LEFT_HAND) ==VRTRIXGloveStatus.NORMAL
-                            ||glove.GetReceivedStatus(HANDTYPE.RIGHT_HAND) == VRTRIXGloveStatus.NORMAL)
+                        if(glove.GetReceivedStatus(HANDTYPE.LEFT_HAND) ==VRTRIXGloveStatus.CONNECTED
+                            ||glove.GetReceivedStatus(HANDTYPE.RIGHT_HAND) == VRTRIXGloveStatus.CONNECTED)
                         {
                             glove.OnAlignFingers(HANDTYPE.BOTH_HAND);
                         }
@@ -75,8 +75,8 @@ namespace VRTRIX
                 {
                     foreach(VRTRIXGloveDataStreaming glove in gloves)
                     {
-                        if(glove.GetReceivedStatus(HANDTYPE.LEFT_HAND) ==VRTRIXGloveStatus.NORMAL
-                            ||glove.GetReceivedStatus(HANDTYPE.RIGHT_HAND) == VRTRIXGloveStatus.NORMAL)
+                        if(glove.GetReceivedStatus(HANDTYPE.LEFT_HAND) ==VRTRIXGloveStatus.CONNECTED
+                            ||glove.GetReceivedStatus(HANDTYPE.RIGHT_HAND) == VRTRIXGloveStatus.CONNECTED)
                         {
                             glove.OnVibrate(HANDTYPE.BOTH_HAND);
                         }
