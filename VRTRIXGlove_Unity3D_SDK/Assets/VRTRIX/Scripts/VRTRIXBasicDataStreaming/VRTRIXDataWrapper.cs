@@ -13,28 +13,29 @@ using System;
 using System.Runtime.InteropServices;
 using UnityEngine;
 
-namespace VRTRIX {
+namespace VRTRIX
+{
     //! GloveIndex enum.
     /*! Enum of supported gloves hardware index. */
     public enum GloveIndex
-	{
-		None = -1,
+    {
+        None = -1,
         Device0 = 0,
-		Device1 = 1,
-		Device2 = 2,
-		Device3 = 3,
-		Device4 = 4,
-		Device5 = 5,
-		Device6 = 6,
-		Device7 = 7,
-		Device8 = 8,
-		Device9 = 9,
-		Device10 = 10,
-		Device11 = 11,
-		Device12 = 12,
-		Device13 = 13,
-		Device14 = 14,
-	 	Device15 = 15,
+        Device1 = 1,
+        Device2 = 2,
+        Device3 = 3,
+        Device4 = 4,
+        Device5 = 5,
+        Device6 = 6,
+        Device7 = 7,
+        Device8 = 8,
+        Device9 = 9,
+        Device10 = 10,
+        Device11 = 11,
+        Device12 = 12,
+        Device13 = 13,
+        Device14 = 14,
+        Device15 = 15,
         MaxDeviceCount = 16
     }
 
@@ -60,7 +61,7 @@ namespace VRTRIX {
         PRO11,
         PRO12,
     };
-    
+
     //! Glove connection status.
     /*! Define the glove connection status. */
     public enum VRTRIXGloveStatus
@@ -85,7 +86,7 @@ namespace VRTRIX {
         VRTRIXGloveEvent_Paired,
         VRTRIXGloveEvent_MagAbnormal,
     }
-    
+
     //!  VRTRIX Data Glove data wrapper class. 
     /*!
         A wrapper class to communicate with low-level unmanaged C++ API.
@@ -288,6 +289,13 @@ namespace VRTRIX {
         /// <param name="spacing">spacing value to set</param>
         [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         public static extern void SetFinalFingerSpacing(IntPtr glove, double spacing);
+        /// <summary>
+        /// Set finger bend threshold.
+        /// </summary>
+        /// <param name="glove">The data glove object</param>
+        /// <param name="benddown_threshold">threshold value to set</param>
+        [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+        public static extern void SetBendDownThreshold(IntPtr glove, double benddown_threshold);
         #endregion
 
 
@@ -430,7 +438,7 @@ namespace VRTRIX {
          * \param bone specific joint of hand.
          * \return the gesture angle for specific joint.         
          */
-        public double GetReceivedGestureAngle (VRTRIXBones bone)
+        public double GetReceivedGestureAngle(VRTRIXBones bone)
         {
             Quaternion finger = GetReceivedRotation(bone);
             Quaternion wrist = Quaternion.identity;
@@ -463,7 +471,7 @@ namespace VRTRIX {
         {
             return radio_strength;
         }
-        
+
         //! Get current radio channel of data glove used
         /*! 
          * \return current radio channel of data glove used.         
@@ -472,7 +480,7 @@ namespace VRTRIX {
         {
             return radio_channel;
         }
-        
+
         //! Get current battery level in percentage of data glove
         /*! 
          * \return current battery level in percentage of data glove.         
@@ -518,7 +526,7 @@ namespace VRTRIX {
         {
             OnSaveCalibration(glove);
         }
-        
+
         //! Trigger a haptic vibration for a certain period
         /*! 
          * \param msDurationMillisec vibration period
@@ -536,14 +544,14 @@ namespace VRTRIX {
         {
             OnCloseFingerAlignment(glove);
         }
-        
-        
+
+
         //! Trigger channel switching mannually, only used in testing/debuging.
         public void ChannelHopping()
         {
             ChannelHopping(glove);
         }
-        
+
         //! Activate advanced mode so that finger's yaw data will be unlocked.
         /*! 
          * \param bIsAdvancedMode Advanced mode will be activated if set to true.
@@ -580,7 +588,7 @@ namespace VRTRIX {
                 case (VRTRIXBones.L_Thumb_3): SetDistalThumbOffset(glove, offset.x, offset.y, offset.z); break;
             }
         }
-        
+
         //! Set thumb slerp rate to counteract the difference between hands & gloves sensor installation.
         /*! 
          * \param slerp_proximal Proximal joint slerp rate to set.
@@ -610,6 +618,15 @@ namespace VRTRIX {
             SetFinalFingerSpacing(glove, spacing);
         }
 
+        //! Set finger bend threshold.
+        /*! 
+         * \param threshold threshold value to set.
+         */
+        public void SetBendDownThreshold(double threshold)
+        {
+            SetBendDownThreshold(glove, threshold);
+        }
+
         //! Set radio channel limit for data gloves.
         /*! 
          * \param upperBound The upper bound of radio channel.
@@ -634,5 +651,3 @@ namespace VRTRIX {
 
     }
 }
-
-
