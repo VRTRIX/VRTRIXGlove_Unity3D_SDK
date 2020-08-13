@@ -288,6 +288,13 @@ namespace VRTRIX {
         /// <param name="spacing">spacing value to set</param>
         [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         public static extern void SetFinalFingerSpacing(IntPtr glove, double spacing);
+        /// <summary>
+        /// Set finger bend threshold.
+        /// </summary>
+        /// <param name="glove">The data glove object</param>
+        /// <param name="benddown_threshold">threshold value to set</param>
+        [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+        public static extern void SetBendDownThreshold(IntPtr glove, double benddown_threshold);
         #endregion
 
 
@@ -608,6 +615,15 @@ namespace VRTRIX {
         public void SetFinalFingerSpacing(double spacing)
         {
             SetFinalFingerSpacing(glove, spacing);
+        }
+
+        //! Set finger bend threshold.
+        /*! 
+         * \param threshold threshold value to set.
+         */
+        public void SetBendDownThreshold(double threshold)
+        {
+            SetBendDownThreshold(glove, threshold);
         }
 
         //! Set radio channel limit for data gloves.
