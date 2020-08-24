@@ -70,7 +70,7 @@ namespace VRTRIX {
                 {
                     if (_hoveringInteractable != null)
                     {
-                        Debug.Log("HoverEnd " + _hoveringInteractable.gameObject);
+                        //Debug.Log("HoverEnd " + _hoveringInteractable.gameObject);
                         _hoveringInteractable.SendMessage("OnHandHoverEnd", this, SendMessageOptions.DontRequireReceiver);
                     }
 
@@ -78,7 +78,7 @@ namespace VRTRIX {
 
                     if (_hoveringInteractable != null)
                     {
-                        Debug.Log("HoverBegin " + _hoveringInteractable.gameObject);
+                        //Debug.Log("HoverBegin " + _hoveringInteractable.gameObject);
                         _hoveringInteractable.SendMessage("OnHandHoverBegin", this, SendMessageOptions.DontRequireReceiver);
                     }
                 }
@@ -94,7 +94,7 @@ namespace VRTRIX {
                 {
                     if (_fingertipTouchInteractable != null)
                     {
-                        Debug.Log("FingertipTouchEnd " + _fingertipTouchInteractable.gameObject);
+                        //Debug.Log("FingertipTouchEnd " + _fingertipTouchInteractable.gameObject);
                         _fingertipTouchInteractable.SendMessage("OnFingertipTouchEnd", this, SendMessageOptions.DontRequireReceiver);
                     }
 
@@ -102,7 +102,7 @@ namespace VRTRIX {
 
                     if (_fingertipTouchInteractable != null)
                     {
-                        Debug.Log("FingertipTouchBegin " + _fingertipTouchInteractable.gameObject);
+                        //Debug.Log("FingertipTouchBegin " + _fingertipTouchInteractable.gameObject);
                         _fingertipTouchInteractable.SendMessage("OnFingertipTouchBegin", this, SendMessageOptions.DontRequireReceiver);
                     }
                 }
@@ -702,6 +702,19 @@ namespace VRTRIX {
         public Transform getIndextipTransform()
         {
             return indexSphereTransform;
+        }
+
+        public Transform getWristTransform()
+        {
+            if(type == HANDTYPE.LEFT_HAND)
+            {
+                return gloveVR.GetTransform(VRTRIXBones.L_Hand);
+            }
+            else
+            {
+                return gloveVR.GetTransform(VRTRIXBones.R_Hand);
+            }
+
         }
     }
 

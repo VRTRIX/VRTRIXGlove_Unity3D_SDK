@@ -439,14 +439,14 @@ namespace VRTRIX
             OnDisconnectGlove();
         }
 
-        //! Get current rotation of specific joint
+        //! Get current transform of specific joint
         /*! 
          * \param bone specific joint of hand.
-         * \return current rotation of specific joint.
+         * \return current transform of specific joint.
          */
-        public Quaternion GetRotation(VRTRIXBones bone)
+        public Transform GetTransform(VRTRIXBones bone)
         {
-            return fingerTransformArray[(int)bone].rotation;
+            return fingerTransformArray[(int)bone];
         }
 
         //获取磁场校准水平，值越小代表效果越好
