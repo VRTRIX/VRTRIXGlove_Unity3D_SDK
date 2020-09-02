@@ -11,8 +11,14 @@ namespace VRTRIX
         public float minDeltaAngle = 0.5f;
         // Minimum delta angle (degree) required to consider as a full waving gesture
         public int minFramesWaving = 20;
+        // Maximum angle tolerent for wave left/right detection start gesture.
+        public float maxLRDetectionStartTolerent = 40.0f;
+        // Maximum angle tolerent for wave up/down detection start gesture.
+        public float maxUDDetectionStartTolerent = 40.0f;
         // Minimum duration between two detection of waving
         public float minDetectionInterval = 1;
+        // Show Debug Info
+        public bool IsShowDebugInfo = false;
 
         private int waveLFrameCount_RightHand = 0;
         private int waveRFrameCount_RightHand = 0;
@@ -24,13 +30,21 @@ namespace VRTRIX
         private int waveUFrameCount_LeftHand = 0;
         private int waveDFrameCount_LeftHand = 0;
 
-        private bool bIsDetectStarted_RightHand = false;
-        private Quaternion lastWristRotation_RightHand;
+        private bool bIsDetectLRStarted_RightHand = false;
+        private bool bIsDetectLRStarted_LeftHand = false;
+        private bool bIsDetectUDStarted_RightHand = false;
+        private bool bIsDetectUDStarted_LeftHand = false;
 
-        private bool bIsDetectStarted_LeftHand = false;
+        private Quaternion lastWristRotation_RightHand;
         private Quaternion lastWristRotation_LeftHand;
 
         private float lastDetectionTimeStamp;
+
+        public VRTRIXCustomEvents.VRTRIXEventHand onHandWaveLeftDetected;
+        public VRTRIXCustomEvents.VRTRIXEventHand onHandWaveRightDetected;
+        public VRTRIXCustomEvents.VRTRIXEventHand onHandWaveUpDetected;
+        public VRTRIXCustomEvents.VRTRIXEventHand onHandWaveDownDetected;
+        private VRTRIXGloveGrab currentHand;
         // Use this for initialization
         void Start()
         {
@@ -50,32 +64,51 @@ namespace VRTRIX
         //-------------------------------------------------
         private void OnHandHoverBegin(VRTRIXGloveGrab hand)
         {
+            currentHand = hand;
             //Debug.Log("OnHandHoverBegin " + hand.name);
-            bIsDetectStarted_RightHand = false;
+            bIsDetectLRStarted_RightHand = false;
             waveLFrameCount_RightHand = 0;
             waveRFrameCount_RightHand = 0;
 
-            bIsDetectStarted_LeftHand = false;
+            bIsDetectLRStarted_LeftHand = false;
             waveLFrameCount_LeftHand = 0;
             waveRFrameCount_LeftHand = 0;
 
+            bIsDetectUDStarted_RightHand = false;
+            waveUFrameCount_RightHand = 0;
+            waveDFrameCount_RightHand = 0;
+
+            bIsDetectUDStarted_LeftHand = false;
+            waveUFrameCount_LeftHand = 0;
+            waveDFrameCount_LeftHand = 0;
+
             Transform wrist = hand.getWristTransform();
-            if(hand.GetHandType() == HANDTYPE.RIGHT_HAND && wrist.rotation!= Quaternion.identity)
+            Vector3 wrist_yAxis = wrist.rotation * Vector3.up;
+            Vector3 wrist_xAxis = wrist.rotation * Vector3.right;
+            if (hand.GetHandType() == HANDTYPE.RIGHT_HAND && wrist.rotation!= Quaternion.identity)
             {
-                Vector3 wrist_yAxis = wrist.rotation * Vector3.up;
-                if (Vector3.Angle(wrist_yAxis, Vector3.up) < 20)
+                if (Vector3.Angle(wrist_yAxis, Vector3.up) < maxLRDetectionStartTolerent)
                 {
-                    bIsDetectStarted_RightHand = true;
-                    Debug.Log("[开始检测]: 右手处于开始检测姿态");
+                    bIsDetectLRStarted_RightHand = true;
+                    if(IsShowDebugInfo) Debug.Log("[开始检测]: 右手处于开始左右挥动检测姿态");
+                }
+                else if(Mathf.Abs(Vector3.Angle(wrist_yAxis, Vector3.up) - 90) < maxUDDetectionStartTolerent && Vector3.Dot(wrist_xAxis, Vector3.up) > 0)
+                {
+                    bIsDetectUDStarted_RightHand = true;
+                    if (IsShowDebugInfo) Debug.Log("[开始检测]: 右手处于开始上下挥动检测姿态");
                 }
             }
             else if(hand.GetHandType() == HANDTYPE.LEFT_HAND && wrist.rotation != Quaternion.identity)
             {
-                Vector3 wrist_yAxis = wrist.rotation * Vector3.up;
-                if (Vector3.Angle(wrist_yAxis, Vector3.up) < 20)
+                if (Vector3.Angle(wrist_yAxis, Vector3.up) < maxLRDetectionStartTolerent)
                 {
-                    bIsDetectStarted_LeftHand = true;
-                    Debug.Log("[开始检测]: 左手处于开始检测姿态");
+                    bIsDetectLRStarted_LeftHand = true;
+                    if (IsShowDebugInfo) Debug.Log("[开始检测]: 左手处于开始左右挥动检测姿态");
+                }
+                else if (Mathf.Abs(Vector3.Angle(wrist_yAxis, Vector3.up) - 90) < maxUDDetectionStartTolerent && Vector3.Dot(wrist_xAxis, Vector3.up) < 0)
+                {
+                    bIsDetectUDStarted_LeftHand = true;
+                    if (IsShowDebugInfo) Debug.Log("[开始检测]: 左手处于开始上下挥动检测姿态");
                 }
             }
         }
@@ -85,18 +118,41 @@ namespace VRTRIX
         //-------------------------------------------------
         private void OnHandHoverEnd(VRTRIXGloveGrab hand)
         {
+            currentHand = null;
             //Debug.Log("OnHandHoverEnd " + hand.name);
-            if(hand.GetHandType() == HANDTYPE.RIGHT_HAND)
+            if (hand.GetHandType() == HANDTYPE.RIGHT_HAND)
             {
-                bIsDetectStarted_RightHand = false;
+                if (bIsDetectLRStarted_RightHand)
+                {
+                    if (IsShowDebugInfo) Debug.Log("[结束检测]: 右手结束左右挥动姿态检测");
+                }
+                if (bIsDetectUDStarted_RightHand)
+                {
+                    if (IsShowDebugInfo) Debug.Log("[结束检测]: 右手结束上下挥动姿态检测");
+                }
+                bIsDetectLRStarted_RightHand = false;
+                bIsDetectUDStarted_RightHand = false;
                 waveLFrameCount_RightHand = 0;
                 waveRFrameCount_RightHand = 0;
+                waveUFrameCount_RightHand = 0;
+                waveDFrameCount_RightHand = 0;
             }
             else if (hand.GetHandType() == HANDTYPE.LEFT_HAND)
             {
-                bIsDetectStarted_LeftHand = false;
+                if (bIsDetectLRStarted_LeftHand)
+                {
+                    if (IsShowDebugInfo) Debug.Log("[结束检测]: 左手结束左右挥动姿态检测");
+                }
+                if (bIsDetectUDStarted_LeftHand)
+                {
+                    if (IsShowDebugInfo) Debug.Log("[结束检测]: 左手结束上下挥动姿态检测");
+                }
+                bIsDetectLRStarted_LeftHand = false;
+                bIsDetectUDStarted_LeftHand = false;
                 waveLFrameCount_LeftHand = 0;
                 waveRFrameCount_LeftHand = 0;
+                waveUFrameCount_RightHand = 0;
+                waveDFrameCount_RightHand = 0;
             }
         }
 
@@ -109,32 +165,47 @@ namespace VRTRIX
             if (hand.GetHandType() == HANDTYPE.RIGHT_HAND&& wrist.rotation!= Quaternion.identity)
             {
                 Vector3 wrist_yAxis = wrist.rotation * Vector3.up;
-                if (Vector3.Angle(wrist_yAxis, Vector3.up) < 40)
+                Vector3 wrist_xAxis = wrist.rotation * Vector3.right;
+                //左右挥手检测开始姿态
+                if (Vector3.Angle(wrist_yAxis, Vector3.up) < maxLRDetectionStartTolerent)
                 {
-                    if (!bIsDetectStarted_RightHand)
+                    if (!bIsDetectLRStarted_RightHand)
                     {
-                        bIsDetectStarted_RightHand = true;
-                        Debug.Log("[开始检测]: 右手处于开始检测姿态");
+                        bIsDetectLRStarted_RightHand = true;
+                        if (IsShowDebugInfo) Debug.Log("[开始检测]: 右手处于开始左右挥动检测姿态");
                     }
                 }
-                else if (bIsDetectStarted_RightHand)
+                else if (bIsDetectLRStarted_RightHand)
                 {
-                    bIsDetectStarted_RightHand = false;
+                    bIsDetectLRStarted_RightHand = false;
                     waveLFrameCount_RightHand = 0;
                     waveRFrameCount_RightHand = 0;
-                    Debug.Log("[结束检测]: 右手结束姿态检测");
+                    if (IsShowDebugInfo) Debug.Log("[结束检测]: 右手结束左右挥动姿态检测");
                 }
 
-                if (bIsDetectStarted_RightHand)
+                //上下挥手检测开始姿态
+                if (Mathf.Abs(Vector3.Angle(wrist_yAxis, Vector3.up) - 90) < maxUDDetectionStartTolerent)
                 {
-                    Quaternion currentWristRotation = wrist.rotation;
-                    if (lastWristRotation_RightHand == Quaternion.identity)
+                    if (!bIsDetectUDStarted_RightHand && Vector3.Dot(wrist_xAxis, Vector3.up) > 0)
                     {
-                        lastWristRotation_RightHand = currentWristRotation;
+                        bIsDetectUDStarted_RightHand = true;
+                        if (IsShowDebugInfo) Debug.Log("[开始检测]: 右手处于开始上下挥动检测姿态");
                     }
-                    else
+                }
+                else if (bIsDetectUDStarted_RightHand)
+                {
+                    bIsDetectUDStarted_RightHand = false;
+                    waveUFrameCount_RightHand = 0;
+                    waveDFrameCount_RightHand = 0;
+                    if (IsShowDebugInfo) Debug.Log("[结束检测]: 右手结束上下挥动姿态检测");
+                }
+
+                //左右挥手检测
+                if (bIsDetectLRStarted_RightHand)
+                {
+                    if (lastWristRotation_RightHand != Quaternion.identity)
                     {
-                        Vector3 deltaRotationZ = Vector3.Cross(lastWristRotation_RightHand * Vector3.forward, currentWristRotation * Vector3.forward);
+                        Vector3 deltaRotationZ = Vector3.Cross(lastWristRotation_RightHand * Vector3.forward, wrist.rotation * Vector3.forward);
                         if (deltaRotationZ.magnitude >= Mathf.Sin(Mathf.Deg2Rad * minDeltaAngle) && Vector3.Dot(deltaRotationZ, Vector3.up) < 0)
                         {
                             waveLFrameCount_RightHand++;
@@ -154,53 +225,110 @@ namespace VRTRIX
                             if (waveRFrameCount_RightHand < 0) waveRFrameCount_RightHand = 0;
                             if (waveLFrameCount_RightHand < 0) waveLFrameCount_RightHand = 0;
                         }
-                        lastWristRotation_RightHand = currentWristRotation;
                     }
                 }
                 if (waveLFrameCount_RightHand >= minFramesWaving && Time.time - lastDetectionTimeStamp > minDetectionInterval)
                 {
                     waveLFrameCount_RightHand = 0;
-                    Debug.Log("[检测成功]: 右手向左挥动!");
                     lastDetectionTimeStamp = Time.time;
+                    onHandWaveLeftDetected.Invoke(currentHand);
                 }
                 if (waveRFrameCount_RightHand >= minFramesWaving && Time.time - lastDetectionTimeStamp > minDetectionInterval)
                 {
                     waveRFrameCount_RightHand = 0;
-                    Debug.Log("[检测成功]: 右手向右挥动!");
                     lastDetectionTimeStamp = Time.time;
+                    onHandWaveRightDetected.Invoke(currentHand);
                 }
+
+                //上下挥手检测
+                if (bIsDetectUDStarted_RightHand)
+                {
+                    if (lastWristRotation_RightHand != Quaternion.identity)
+                    {
+                        Vector3 deltaRotationZ = Vector3.Cross(lastWristRotation_RightHand * Vector3.forward, wrist.rotation * Vector3.forward);
+                        if (deltaRotationZ.magnitude >= Mathf.Sin(Mathf.Deg2Rad * minDeltaAngle) && Vector3.Dot(deltaRotationZ, wrist.rotation * Vector3.up) < 0 && Mathf.Abs(Vector3.Angle(deltaRotationZ, wrist.rotation * Vector3.up) - 180) < 30)
+                        {
+                            waveDFrameCount_RightHand++;
+                            waveUFrameCount_RightHand--;
+                            if (waveUFrameCount_RightHand < 0) waveUFrameCount_RightHand = 0;
+
+                        }
+                        else if (deltaRotationZ.magnitude >= Mathf.Sin(Mathf.Deg2Rad * minDeltaAngle) && Vector3.Dot(deltaRotationZ, wrist.rotation * Vector3.up) > 0 && Vector3.Angle(deltaRotationZ, wrist.rotation * Vector3.up) < 30)
+                        {
+                            waveUFrameCount_RightHand++;
+                            waveDFrameCount_RightHand--;
+                            if (waveDFrameCount_RightHand < 0) waveDFrameCount_RightHand = 0;
+                        }
+                        else
+                        {
+                            waveUFrameCount_RightHand--;
+                            waveDFrameCount_RightHand--;
+                            if (waveUFrameCount_RightHand < 0) waveUFrameCount_RightHand = 0;
+                            if (waveDFrameCount_RightHand < 0) waveDFrameCount_RightHand = 0;
+                        }
+                    }
+                }
+                if (waveUFrameCount_RightHand >= minFramesWaving && Time.time - lastDetectionTimeStamp > minDetectionInterval)
+                {
+                    waveUFrameCount_RightHand = 0;
+                    lastDetectionTimeStamp = Time.time;
+                    onHandWaveUpDetected.Invoke(currentHand);
+                }
+                if (waveDFrameCount_RightHand >= minFramesWaving && Time.time - lastDetectionTimeStamp > minDetectionInterval)
+                {
+                    waveDFrameCount_RightHand = 0;
+                    lastDetectionTimeStamp = Time.time;
+                    onHandWaveDownDetected.Invoke(currentHand);
+                }
+
+                lastWristRotation_RightHand = wrist.rotation;
             }
 
 
             else if (hand.GetHandType() == HANDTYPE.LEFT_HAND && wrist.rotation != Quaternion.identity)
             {
                 Vector3 wrist_yAxis = wrist.rotation * Vector3.up;
-                if (Vector3.Angle(wrist_yAxis, Vector3.up) < 40)
+                Vector3 wrist_xAxis = wrist.rotation * Vector3.right;
+                //左右挥手检测开始姿态
+                if (Vector3.Angle(wrist_yAxis, Vector3.up) < maxLRDetectionStartTolerent)
                 {
-                    if (!bIsDetectStarted_LeftHand)
+                    if (!bIsDetectLRStarted_LeftHand)
                     {
-                        bIsDetectStarted_LeftHand = true;
-                        Debug.Log("[开始检测]: 左手处于开始检测姿态");
+                        bIsDetectLRStarted_LeftHand = true;
+                        if (IsShowDebugInfo) Debug.Log("[开始检测]: 左手处于开始左右挥动检测姿态");
                     }
                 }
-                else if (bIsDetectStarted_LeftHand)
+                else if (bIsDetectLRStarted_LeftHand)
                 {
-                    bIsDetectStarted_LeftHand = false;
+                    bIsDetectLRStarted_LeftHand = false;
                     waveLFrameCount_LeftHand = 0;
                     waveRFrameCount_LeftHand = 0;
-                    Debug.Log("[结束检测]: 左手结束姿态检测");
+                    if (IsShowDebugInfo) Debug.Log("[结束检测]: 左手结束左右挥动姿态检测");
                 }
 
-                if (bIsDetectStarted_LeftHand)
+                //上下挥手检测开始姿态
+                if (Mathf.Abs(Vector3.Angle(wrist_yAxis, Vector3.up) - 90) < maxUDDetectionStartTolerent)
                 {
-                    Quaternion currentWristRotation = wrist.rotation;
-                    if (lastWristRotation_LeftHand == Quaternion.identity)
+                    if (!bIsDetectUDStarted_LeftHand && Vector3.Dot(wrist_xAxis, Vector3.up) < 0)
                     {
-                        lastWristRotation_LeftHand = currentWristRotation;
+                        bIsDetectUDStarted_LeftHand = true;
+                        if (IsShowDebugInfo) Debug.Log("[开始检测]: 左手处于开始上下挥动检测姿态");
                     }
-                    else
+                }
+                else if (bIsDetectUDStarted_LeftHand)
+                {
+                    bIsDetectUDStarted_LeftHand = false;
+                    waveUFrameCount_LeftHand = 0;
+                    waveDFrameCount_LeftHand = 0;
+                    if (IsShowDebugInfo) Debug.Log("[结束检测]: 左手结束上下挥动姿态检测");
+                }
+
+                //左右挥手检测
+                if (bIsDetectLRStarted_LeftHand)
+                {
+                    if (lastWristRotation_LeftHand != Quaternion.identity)
                     {
-                        Vector3 deltaRotationZ = Vector3.Cross(lastWristRotation_LeftHand * Vector3.forward, currentWristRotation * Vector3.forward);
+                        Vector3 deltaRotationZ = Vector3.Cross(lastWristRotation_LeftHand * Vector3.forward, wrist.rotation * Vector3.forward);
                         if (deltaRotationZ.magnitude >= Mathf.Sin(Mathf.Deg2Rad * minDeltaAngle) && Vector3.Dot(deltaRotationZ, Vector3.up) < 0)
                         {
                             waveLFrameCount_LeftHand++;
@@ -220,31 +348,63 @@ namespace VRTRIX
                             if (waveRFrameCount_LeftHand < 0) waveRFrameCount_LeftHand = 0;
                             if (waveLFrameCount_LeftHand < 0) waveLFrameCount_LeftHand = 0;
                         }
-                        lastWristRotation_LeftHand = currentWristRotation;
                     }
                 }
                 if (waveLFrameCount_LeftHand >= minFramesWaving && Time.time - lastDetectionTimeStamp > minDetectionInterval)
                 {
                     waveLFrameCount_LeftHand = 0;
-                    Debug.Log("[检测成功]: 左手向左挥动!");
                     lastDetectionTimeStamp = Time.time;
+                    onHandWaveLeftDetected.Invoke(currentHand);
                 }
                 if (waveRFrameCount_LeftHand >= minFramesWaving && Time.time - lastDetectionTimeStamp > minDetectionInterval)
                 {
                     waveRFrameCount_LeftHand = 0;
-                    Debug.Log("[检测成功]: 左手向右挥动!");
                     lastDetectionTimeStamp = Time.time;
+                    onHandWaveRightDetected.Invoke(currentHand);
                 }
+
+                //上下挥手检测
+                if (bIsDetectUDStarted_LeftHand)
+                {
+                    if (lastWristRotation_LeftHand != Quaternion.identity)
+                    {
+                        Vector3 deltaRotationZ = Vector3.Cross(lastWristRotation_LeftHand * Vector3.forward, wrist.rotation * Vector3.forward);
+                        if (deltaRotationZ.magnitude >= Mathf.Sin(Mathf.Deg2Rad * minDeltaAngle) && Vector3.Dot(deltaRotationZ, wrist.rotation * Vector3.up) < 0 && Mathf.Abs(Vector3.Angle(deltaRotationZ, wrist.rotation * Vector3.up) - 180) < 30)
+                        {
+                            waveUFrameCount_LeftHand++;
+                            waveDFrameCount_LeftHand--;
+                            if (waveDFrameCount_LeftHand < 0) waveDFrameCount_LeftHand = 0;
+                        }
+                        else if (deltaRotationZ.magnitude >= Mathf.Sin(Mathf.Deg2Rad * minDeltaAngle) && Vector3.Dot(deltaRotationZ, wrist.rotation * Vector3.up) > 0 && Vector3.Angle(deltaRotationZ, wrist.rotation * Vector3.up) < 30)
+                        {
+                            waveDFrameCount_LeftHand++;
+                            waveUFrameCount_LeftHand--;
+                            if (waveUFrameCount_LeftHand < 0) waveUFrameCount_LeftHand = 0;
+                        }
+                        else
+                        {
+                            waveUFrameCount_LeftHand--;
+                            waveDFrameCount_LeftHand--;
+                            if (waveUFrameCount_LeftHand < 0) waveUFrameCount_LeftHand = 0;
+                            if (waveDFrameCount_LeftHand < 0) waveDFrameCount_LeftHand = 0;
+                        }
+                    }
+                }
+                if (waveUFrameCount_LeftHand >= minFramesWaving && Time.time - lastDetectionTimeStamp > minDetectionInterval)
+                {
+                    waveUFrameCount_LeftHand = 0;
+                    lastDetectionTimeStamp = Time.time;
+                    onHandWaveUpDetected.Invoke(currentHand);
+                }
+                if (waveDFrameCount_LeftHand >= minFramesWaving && Time.time - lastDetectionTimeStamp > minDetectionInterval)
+                {
+                    waveDFrameCount_LeftHand = 0;
+                    lastDetectionTimeStamp = Time.time;
+                    onHandWaveDownDetected.Invoke(currentHand);
+                }
+
+                lastWristRotation_LeftHand = wrist.rotation;
             }
-
-        }
-
-        /// <summary>
-        /// Returns the angle between two vectos
-        /// </summary>
-        public static double GetAngle(Vector3 A, Vector3 B, Vector3 normal)
-        {
-            return System.Math.Atan2(Vector3.Dot(Vector3.Cross(A, B), normal), Vector3.Dot(A, B)) * (180 / System.Math.PI);
         }
     }
 }

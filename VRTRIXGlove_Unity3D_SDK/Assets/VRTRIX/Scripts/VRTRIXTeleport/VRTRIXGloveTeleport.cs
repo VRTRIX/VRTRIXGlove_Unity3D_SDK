@@ -258,6 +258,7 @@ namespace VRTRIX
             //If something is attached to the hand that is preventing teleport
             if (allowTeleportWhileAttached && !allowTeleportWhileAttached.teleportAllowed)
             {
+                print("allowTeleportWhileAttached : " + allowTeleportWhileAttached);
                 HidePointer();
             }
             else
@@ -1047,10 +1048,10 @@ namespace VRTRIX
                 return false;
             }
 
-            if (hand.hoveringInteractable != null)
-            {
-                return false;
-            }
+            //if (hand.hoveringInteractable != null)
+            //{
+            //    return false;
+            //}
 
             //if (hand.noSteamVRFallbackCamera == null)
             //{

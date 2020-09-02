@@ -10,8 +10,6 @@ using System.Collections.Generic;
 namespace VRTRIX
 {
     public class VRTRIXGloveButtons : MonoBehaviour {
-        private Coroutine buttonHintCoroutine;
-        private Coroutine textHintCoroutine;
         private GameObject[] throwable;
         private Dictionary<GameObject, Vector3> throwable_transform;
         private Dictionary<GameObject, Quaternion> throwable_rotation;
