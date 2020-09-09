@@ -184,6 +184,7 @@ namespace VRTRIX
         {
             if (RH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED)
             {
+                if (IsVREnabled && RH_tracker == null) return;
                 if (!qroffset_cal && IsValidQuat(RH.GetReceivedRotation(VRTRIXBones.R_Hand)))
                 {
                     if (IsVREnabled && RH_tracker.transform.rotation == Quaternion.identity) return;
@@ -210,6 +211,7 @@ namespace VRTRIX
 
             if (LH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED)
             {
+                if (IsVREnabled && LH_tracker == null) return;
                 if (!qloffset_cal && IsValidQuat(LH.GetReceivedRotation(VRTRIXBones.L_Hand)))
                 {
                     if (IsVREnabled && LH_tracker.transform.rotation == Quaternion.identity) return;
@@ -238,8 +240,6 @@ namespace VRTRIX
         //! Connect data glove and initialization.
         public void OnConnectGlove()
         {
-            if (IsVREnabled && (LH_tracker == null || RH_tracker == null)) return;
-            
             VRTRIXGloveStatusUIUpdate UI = this.gameObject.GetComponent<VRTRIXGloveStatusUIUpdate>();
             if( UI != null)
             {
@@ -248,11 +248,17 @@ namespace VRTRIX
             }
             if (LH.GetReceivedStatus() != VRTRIXGloveStatus.CONNECTED && LH.GetReceivedStatus() != VRTRIXGloveStatus.TRYTORECONNECT)
             {
-                LH.OnConnectDataGlove((int)Index, ServerIP);
+                if((IsVREnabled && LH_tracker != null) || !IsVREnabled)
+                {
+                    LH.OnConnectDataGlove((int)Index, ServerIP);
+                }
             }
             if (RH.GetReceivedStatus() != VRTRIXGloveStatus.CONNECTED && RH.GetReceivedStatus() != VRTRIXGloveStatus.TRYTORECONNECT)
             {
-                RH.OnConnectDataGlove((int)Index, ServerIP);
+                if ((IsVREnabled && RH_tracker != null) || !IsVREnabled)
+                {
+                    RH.OnConnectDataGlove((int)Index, ServerIP);
+                }
             }
         }
         
