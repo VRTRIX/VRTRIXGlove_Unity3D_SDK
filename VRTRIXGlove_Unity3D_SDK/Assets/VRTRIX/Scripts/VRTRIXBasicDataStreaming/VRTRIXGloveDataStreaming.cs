@@ -184,6 +184,7 @@ namespace VRTRIX
         {
             if (RH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED)
             {
+                if (IsVREnabled && RH_tracker == null) return;
                 if (!qroffset_cal && IsValidQuat(RH.GetReceivedRotation(VRTRIXBones.R_Hand)))
                 {
                     if (IsVREnabled && RH_tracker.transform.rotation == Quaternion.identity) return;
@@ -198,7 +199,7 @@ namespace VRTRIX
                     SetPosition(VRTRIXBones.R_Arm, RH_tracker.transform.position, RH_tracker.transform.rotation, RHTrackerOffset);
                 }
                 //以下是设置右手每个骨骼节点全局旋转(global rotation)；
-                for(int i = 0; i < (int)VRTRIXBones.L_Hand; ++i)
+                for (int i = 0; i < (int)VRTRIXBones.L_Hand; ++i)
                 {
                     if (IsMoCapEnabled && i == (int)VRTRIXBones.R_Hand) continue;
                     SetRotation((VRTRIXBones)i, RH.GetReceivedRotation((VRTRIXBones)i), HANDTYPE.RIGHT_HAND);
@@ -210,6 +211,7 @@ namespace VRTRIX
 
             if (LH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED)
             {
+                if (IsVREnabled && LH_tracker == null) return;
                 if (!qloffset_cal && IsValidQuat(LH.GetReceivedRotation(VRTRIXBones.L_Hand)))
                 {
                     if (IsVREnabled && LH_tracker.transform.rotation == Quaternion.identity) return;
@@ -225,7 +227,7 @@ namespace VRTRIX
                 }
 
                 //以下是设置左手每个骨骼节点全局旋转(global rotation)；
-                for(int i = (int)VRTRIXBones.L_Hand; i < (int)VRTRIXBones.R_Arm; ++i)
+                for (int i = (int)VRTRIXBones.L_Hand; i < (int)VRTRIXBones.R_Arm; ++i)
                 {
                     if (IsMoCapEnabled && i == (int)VRTRIXBones.L_Hand) continue;
                     SetRotation((VRTRIXBones)i, LH.GetReceivedRotation((VRTRIXBones)i), HANDTYPE.LEFT_HAND);
@@ -238,24 +240,28 @@ namespace VRTRIX
         //! Connect data glove and initialization.
         public void OnConnectGlove()
         {
-            if (IsVREnabled && (LH_tracker == null || RH_tracker == null)) return;
-            
             VRTRIXGloveStatusUIUpdate UI = this.gameObject.GetComponent<VRTRIXGloveStatusUIUpdate>();
-            if( UI != null)
+            if (UI != null)
             {
                 ServerIP = UI.GetServerIP();
                 Index = (GloveIndex)UI.GetGloveDeviceID();
             }
             if (LH.GetReceivedStatus() != VRTRIXGloveStatus.CONNECTED && LH.GetReceivedStatus() != VRTRIXGloveStatus.TRYTORECONNECT)
             {
-                LH.OnConnectDataGlove((int)Index, ServerIP);
+                if ((IsVREnabled && LH_tracker != null) || !IsVREnabled)
+                {
+                    LH.OnConnectDataGlove((int)Index, ServerIP);
+                }
             }
             if (RH.GetReceivedStatus() != VRTRIXGloveStatus.CONNECTED && RH.GetReceivedStatus() != VRTRIXGloveStatus.TRYTORECONNECT)
             {
-                RH.OnConnectDataGlove((int)Index, ServerIP);
+                if ((IsVREnabled && RH_tracker != null) || !IsVREnabled)
+                {
+                    RH.OnConnectDataGlove((int)Index, ServerIP);
+                }
             }
         }
-        
+
         //数据手套反初始化，数据服务器断开连接
         //! Disconnect data glove and uninitialization.
         public void OnDisconnectGlove()
