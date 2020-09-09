@@ -184,55 +184,57 @@ namespace VRTRIX
         {
             if (RH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED)
             {
-                if (IsVREnabled && RH_tracker == null) return;
-                if (!qroffset_cal && IsValidQuat(RH.GetReceivedRotation(VRTRIXBones.R_Hand)))
+                if ((IsVREnabled && RH_tracker != null) || !IsVREnabled)
                 {
-                    if (IsVREnabled && RH_tracker.transform.rotation == Quaternion.identity) return;
-                    PerformAlgorithmTuning(HANDTYPE.RIGHT_HAND);
+                    if (!qroffset_cal && IsValidQuat(RH.GetReceivedRotation(VRTRIXBones.R_Hand)))
+                    {
+                        if (IsVREnabled && RH_tracker.transform.rotation == Quaternion.identity) return;
+                        PerformAlgorithmTuning(HANDTYPE.RIGHT_HAND);
 
-                    qroffset = CalculateStaticOffset(RH, HANDTYPE.RIGHT_HAND);
-                    qroffset_cal = true;
-                }
+                        qroffset = CalculateStaticOffset(RH, HANDTYPE.RIGHT_HAND);
+                        qroffset_cal = true;
+                    }
 
-                if (IsVREnabled && RH_tracker != null)
-                {
-                    SetPosition(VRTRIXBones.R_Arm, RH_tracker.transform.position, RH_tracker.transform.rotation, RHTrackerOffset);
+                    if (IsVREnabled && RH_tracker != null)
+                    {
+                        SetPosition(VRTRIXBones.R_Arm, RH_tracker.transform.position, RH_tracker.transform.rotation, RHTrackerOffset);
+                    }
+                    //以下是设置右手每个骨骼节点全局旋转(global rotation)；
+                    for (int i = 0; i < (int)VRTRIXBones.L_Hand; ++i)
+                    {
+                        if (IsMoCapEnabled && i == (int)VRTRIXBones.R_Hand) continue;
+                        SetRotation((VRTRIXBones)i, RH.GetReceivedRotation((VRTRIXBones)i), HANDTYPE.RIGHT_HAND);
+                    }
+                    RH_Gesture = gestureDetector.GestureDetection(RH, HANDTYPE.RIGHT_HAND);
                 }
-                //以下是设置右手每个骨骼节点全局旋转(global rotation)；
-                for (int i = 0; i < (int)VRTRIXBones.L_Hand; ++i)
-                {
-                    if (IsMoCapEnabled && i == (int)VRTRIXBones.R_Hand) continue;
-                    SetRotation((VRTRIXBones)i, RH.GetReceivedRotation((VRTRIXBones)i), HANDTYPE.RIGHT_HAND);
-                }
-                RH_Gesture = gestureDetector.GestureDetection(RH, HANDTYPE.RIGHT_HAND);
             }
-
-
 
             if (LH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED)
             {
-                if (IsVREnabled && LH_tracker == null) return;
-                if (!qloffset_cal && IsValidQuat(LH.GetReceivedRotation(VRTRIXBones.L_Hand)))
+                if ((IsVREnabled && LH_tracker != null) || !IsVREnabled)
                 {
-                    if (IsVREnabled && LH_tracker.transform.rotation == Quaternion.identity) return;
-                    PerformAlgorithmTuning(HANDTYPE.LEFT_HAND);
+                    if (!qloffset_cal && IsValidQuat(LH.GetReceivedRotation(VRTRIXBones.L_Hand)))
+                    {
+                        if (IsVREnabled && LH_tracker.transform.rotation == Quaternion.identity) return;
+                        PerformAlgorithmTuning(HANDTYPE.LEFT_HAND);
 
-                    qloffset = CalculateStaticOffset(LH, HANDTYPE.LEFT_HAND);
-                    qloffset_cal = true;
-                }
+                        qloffset = CalculateStaticOffset(LH, HANDTYPE.LEFT_HAND);
+                        qloffset_cal = true;
+                    }
 
-                if (IsVREnabled && LH_tracker != null)
-                {
-                    SetPosition(VRTRIXBones.L_Arm, LH_tracker.transform.position, LH_tracker.transform.rotation, LHTrackerOffset);
-                }
+                    if (IsVREnabled && LH_tracker != null)
+                    {
+                        SetPosition(VRTRIXBones.L_Arm, LH_tracker.transform.position, LH_tracker.transform.rotation, LHTrackerOffset);
+                    }
 
-                //以下是设置左手每个骨骼节点全局旋转(global rotation)；
-                for (int i = (int)VRTRIXBones.L_Hand; i < (int)VRTRIXBones.R_Arm; ++i)
-                {
-                    if (IsMoCapEnabled && i == (int)VRTRIXBones.L_Hand) continue;
-                    SetRotation((VRTRIXBones)i, LH.GetReceivedRotation((VRTRIXBones)i), HANDTYPE.LEFT_HAND);
+                    //以下是设置左手每个骨骼节点全局旋转(global rotation)；
+                    for (int i = (int)VRTRIXBones.L_Hand; i < (int)VRTRIXBones.R_Arm; ++i)
+                    {
+                        if (IsMoCapEnabled && i == (int)VRTRIXBones.L_Hand) continue;
+                        SetRotation((VRTRIXBones)i, LH.GetReceivedRotation((VRTRIXBones)i), HANDTYPE.LEFT_HAND);
+                    }
+                    LH_Gesture = gestureDetector.GestureDetection(LH, HANDTYPE.LEFT_HAND);
                 }
-                LH_Gesture = gestureDetector.GestureDetection(LH, HANDTYPE.LEFT_HAND);
             }
         }
 
@@ -647,12 +649,7 @@ namespace VRTRIX
         {
             if (type == HANDTYPE.RIGHT_HAND)
             {
-                if (IsVREnabled)
-                {
-                    float angle_offset = RH_tracker.transform.rotation.eulerAngles.z;
-                    return Quaternion.AngleAxis(-angle_offset, Vector3.forward); 
-                }
-                else
+                if (!IsVREnabled)
                 {
                     Quaternion rotation = glove.GetReceivedRotation(VRTRIXBones.R_Hand);
                     Vector3 quat_vec = mr_axisoffset.MultiplyVector(new Vector3(rotation.x, rotation.y, rotation.z));
@@ -662,12 +659,7 @@ namespace VRTRIX
             }
             else if (type == HANDTYPE.LEFT_HAND)
             {
-                if (IsVREnabled)
-                {
-                    float angle_offset = LH_tracker.transform.rotation.eulerAngles.z;
-                    return Quaternion.AngleAxis(-angle_offset, Vector3.forward); 
-                }
-                else
+                if (!IsVREnabled)
                 {
                     Quaternion rotation = glove.GetReceivedRotation(VRTRIXBones.L_Hand);
                     Vector3 quat_vec = ml_axisoffset.MultiplyVector(new Vector3(rotation.x, rotation.y, rotation.z));
@@ -675,10 +667,7 @@ namespace VRTRIX
                     return LH_ObjectToAlign.transform.rotation * Quaternion.Inverse(rotation);
                 }
             }
-            else
-            {
-                return Quaternion.identity;
-            }
+            return Quaternion.identity;
         }
 
         //用于计算左手/右手腕关节姿态（由HTC Tracker得到）和左手手背姿态（由数据手套得到）之间的四元数差值，该方法为动态调用，即每一帧都会调用该计算。
@@ -691,7 +680,7 @@ namespace VRTRIX
                 Quaternion rotation = glove.GetReceivedRotation(VRTRIXBones.R_Hand);
                 Vector3 quat_vec = mr_axisoffset.MultiplyVector(new Vector3(rotation.x, rotation.y, rotation.z));
                 rotation = new Quaternion(quat_vec.x, quat_vec.y, quat_vec.z, rotation.w);
-                Quaternion target =  tracker.transform.rotation * qroffset * Quaternion.Euler(0, -90, 90); 
+                Quaternion target =  tracker.transform.rotation * qroffset * Quaternion.Euler(-90, -90, 0); 
                 return target * Quaternion.Inverse(rotation);
             }
 
@@ -701,7 +690,7 @@ namespace VRTRIX
                 Quaternion rotation = glove.GetReceivedRotation(VRTRIXBones.L_Hand);
                 Vector3 quat_vec = ml_axisoffset.MultiplyVector(new Vector3(rotation.x, rotation.y, rotation.z));
                 rotation = new Quaternion(quat_vec.x, quat_vec.y, quat_vec.z, rotation.w);
-                Quaternion target =  tracker.transform.rotation * qloffset * Quaternion.Euler(0, 90, -90);
+                Quaternion target =  tracker.transform.rotation * qloffset * Quaternion.Euler(-90, 90, 0);
                 return target * Quaternion.Inverse(rotation);
             }
             else
@@ -874,14 +863,14 @@ namespace VRTRIX
                 var s = buffer.ToString();
                 if (type == HANDTYPE.LEFT_HAND)
                 {
-                    if (s.Contains("LH"))
+                    if (s.Contains("LH") && system.IsTrackedDeviceConnected((uint)i))
                     {
                         return GameObject.Find("Device" + i);
                     }
                 }
                 else if (type == HANDTYPE.RIGHT_HAND)
                 {
-                    if (s.Contains("RH"))
+                    if (s.Contains("RH") && system.IsTrackedDeviceConnected((uint)i))
                     {
                         return GameObject.Find("Device" + i);
                     }

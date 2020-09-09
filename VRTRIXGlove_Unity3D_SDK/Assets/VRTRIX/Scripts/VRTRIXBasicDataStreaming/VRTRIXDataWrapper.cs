@@ -107,7 +107,6 @@ namespace VRTRIX {
         private float battery;
         private int radio_channel;
         private int calscore;
-        private bool port_opened = false;
         private Quaternion[] data = new Quaternion[16];
         private VRTRIXGloveStatus stat = VRTRIXGloveStatus.CLOSED;
 
