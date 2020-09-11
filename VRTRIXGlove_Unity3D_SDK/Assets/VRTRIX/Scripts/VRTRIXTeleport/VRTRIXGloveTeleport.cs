@@ -6,7 +6,7 @@
 
 using UnityEngine;
 using UnityEngine.Events;
-using System.Collections;
+using Valve.VR;
 using Valve.VR.InteractionSystem;
 
 namespace VRTRIX

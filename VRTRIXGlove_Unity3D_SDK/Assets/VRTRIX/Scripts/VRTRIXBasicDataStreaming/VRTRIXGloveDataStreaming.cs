@@ -41,6 +41,14 @@ namespace VRTRIX
         //! If VR is enabled, HTC tracker is the default wrist tracking hardware, which is fixed to side part of data glove, this offset represents the offset between tracker origin to left wrist joint origin.
         public Vector3 LHTrackerOffset = new Vector3(-0.01f, 0, -0.035f);
 
+        [DrawIf("IsVREnabled", true)]
+        //! If VR is enabled, set the left hand tracker object
+        public GameObject LH_tracker;
+
+        [DrawIf("IsVREnabled", true)]
+        //! If VR is enabled, set the right hand tracker object
+        public GameObject RH_tracker;
+
 
         [Header("MoCap Settings")]
         //! Mocap enable flag, set to true if integrate with Mocap, use mocap wrist data.
@@ -110,7 +118,13 @@ namespace VRTRIX
         public double thumb_curved_threshold;
 
         public VRTRIXDataWrapper LH, RH;
-        private GameObject LH_tracker, RH_tracker;
+        private TrackedDevicePose_t[] poses = new TrackedDevicePose_t[OpenVR.k_unMaxTrackedDeviceCount];
+        private TrackedDevicePose_t[] gamePoses = new TrackedDevicePose_t[0];
+
+        private SteamVR_Events.Action newTrackerPosesAction;
+        private uint LH_tracker_index = OpenVR.k_unMaxTrackedDeviceCount;
+        private uint RH_tracker_index = OpenVR.k_unMaxTrackedDeviceCount;
+        private bool bIsLHTrackerFound, bIsRHTrackerFound;
         private VRTRIXGloveGestureRecognition gestureDetector;
         private Thread LH_receivedData, RH_receivedData;
         private Quaternion qloffset, qroffset;
@@ -124,6 +138,8 @@ namespace VRTRIX
 
         void Start()
         {
+            //LH_tracker = new GameObject();
+            //RH_tracker = new GameObject();
             LH = new VRTRIXDataWrapper(AdvancedMode, version, HANDTYPE.LEFT_HAND);
             RH = new VRTRIXDataWrapper(AdvancedMode, version, HANDTYPE.RIGHT_HAND);
 
@@ -163,8 +179,10 @@ namespace VRTRIX
             {
                 try
                 {
-                    RH_tracker = CheckDeviceModelName(HANDTYPE.RIGHT_HAND);
-                    LH_tracker = CheckDeviceModelName(HANDTYPE.LEFT_HAND);
+                    newTrackerPosesAction = SteamVR_Events.NewPosesAction(OnNewTrackerPoses);
+                    newTrackerPosesAction.enabled = true;
+                    CheckDeviceModelName(HANDTYPE.RIGHT_HAND);
+                    CheckDeviceModelName(HANDTYPE.LEFT_HAND);
                 }
                 catch (Exception e)
                 {
@@ -182,19 +200,31 @@ namespace VRTRIX
 
         void Update()
         {
+            if (IsVREnabled)
+            {
+                var compositor = OpenVR.Compositor;
+                if (compositor != null)
+                {
+                    compositor.GetLastPoses(poses, gamePoses);
+                    SteamVR_Events.NewPoses.Send(poses);
+                    SteamVR_Events.NewPosesApplied.Send();
+                }
+            }
+
             if (RH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED)
             {
-                if (IsVREnabled && RH_tracker == null) return;
                 if (!qroffset_cal && IsValidQuat(RH.GetReceivedRotation(VRTRIXBones.R_Hand)))
                 {
-                    if (IsVREnabled && RH_tracker.transform.rotation == Quaternion.identity) return;
-                    PerformAlgorithmTuning(HANDTYPE.RIGHT_HAND);
-
-                    qroffset = CalculateStaticOffset(RH, HANDTYPE.RIGHT_HAND);
-                    qroffset_cal = true;
+                    if (!IsVREnabled ||
+                        (IsVREnabled && RH_tracker.transform.rotation != Quaternion.identity))
+                    {
+                        PerformAlgorithmTuning(HANDTYPE.RIGHT_HAND);
+                        qroffset = CalculateStaticOffset(RH, HANDTYPE.RIGHT_HAND);
+                        qroffset_cal = true;
+                    }
                 }
 
-                if (IsVREnabled && RH_tracker != null)
+                if (IsVREnabled && bIsRHTrackerFound)
                 {
                     SetPosition(VRTRIXBones.R_Arm, RH_tracker.transform.position, RH_tracker.transform.rotation, RHTrackerOffset);
                 }
@@ -211,17 +241,18 @@ namespace VRTRIX
 
             if (LH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED)
             {
-                if (IsVREnabled && LH_tracker == null) return;
                 if (!qloffset_cal && IsValidQuat(LH.GetReceivedRotation(VRTRIXBones.L_Hand)))
                 {
-                    if (IsVREnabled && LH_tracker.transform.rotation == Quaternion.identity) return;
-                    PerformAlgorithmTuning(HANDTYPE.LEFT_HAND);
-
-                    qloffset = CalculateStaticOffset(LH, HANDTYPE.LEFT_HAND);
-                    qloffset_cal = true;
+                    if (!IsVREnabled ||
+                        (IsVREnabled && LH_tracker.transform.rotation != Quaternion.identity))
+                    { 
+                        PerformAlgorithmTuning(HANDTYPE.LEFT_HAND);
+                        qloffset = CalculateStaticOffset(LH, HANDTYPE.LEFT_HAND);
+                        qloffset_cal = true;
+                    }
                 }
 
-                if (IsVREnabled && LH_tracker != null)
+                if (IsVREnabled && bIsLHTrackerFound)
                 {
                     SetPosition(VRTRIXBones.L_Arm, LH_tracker.transform.position, LH_tracker.transform.rotation, LHTrackerOffset);
                 }
@@ -248,14 +279,14 @@ namespace VRTRIX
             }
             if (LH.GetReceivedStatus() != VRTRIXGloveStatus.CONNECTED && LH.GetReceivedStatus() != VRTRIXGloveStatus.TRYTORECONNECT)
             {
-                if((IsVREnabled && LH_tracker != null) || !IsVREnabled)
+                if((IsVREnabled && bIsLHTrackerFound) || !IsVREnabled)
                 {
                     LH.OnConnectDataGlove((int)Index, ServerIP);
                 }
             }
             if (RH.GetReceivedStatus() != VRTRIXGloveStatus.CONNECTED && RH.GetReceivedStatus() != VRTRIXGloveStatus.TRYTORECONNECT)
             {
-                if ((IsVREnabled && RH_tracker != null) || !IsVREnabled)
+                if ((IsVREnabled && bIsRHTrackerFound) || !IsVREnabled)
                 {
                     RH.OnConnectDataGlove((int)Index, ServerIP);
                 }
@@ -848,19 +879,40 @@ namespace VRTRIX
             }
             return transform_array;
         }
-        
+
+        private void OnNewTrackerPoses(TrackedDevicePose_t[] poses)
+        {
+
+            if (bIsLHTrackerFound
+                && poses[LH_tracker_index].bDeviceIsConnected
+                && poses[LH_tracker_index].bPoseIsValid)
+            {
+                var pose = new SteamVR_Utils.RigidTransform(poses[LH_tracker_index].mDeviceToAbsoluteTracking);
+                LH_tracker.transform.localPosition = pose.pos;
+                LH_tracker.transform.localRotation = pose.rot * new Quaternion(0, 0, 1, 0);
+            }
+
+            if (bIsRHTrackerFound
+                && poses[RH_tracker_index].bDeviceIsConnected
+                && poses[RH_tracker_index].bPoseIsValid)
+            {
+                var pose = new SteamVR_Utils.RigidTransform(poses[RH_tracker_index].mDeviceToAbsoluteTracking);
+                RH_tracker.transform.localPosition = pose.pos;
+                RH_tracker.transform.localRotation = pose.rot * new Quaternion(0, 0, 1, 0);
+            }
+        }
+
         //! Check the tracked device model name stored in hardware config to find specific hardware type. (SteamVR Tracking support)
         /*! 
          * \param type Hand type to check(if wrist tracker for data glove is the hardware to check).
          * \param device Device type to check(if other kind of interactive hardware to check).
          * \return the gameobject of the tracked device.
          */
-        public static GameObject CheckDeviceModelName(HANDTYPE type = HANDTYPE.NONE, InteractiveDevice device = InteractiveDevice.NONE)
+        public void CheckDeviceModelName(HANDTYPE type = HANDTYPE.NONE)
         {
             var system = OpenVR.System;
-            if (system == null)
-                return null;
-            for (int i = 0; i < 16; i++)
+            if (system == null) return;
+            for (uint i = 0; i < OpenVR.k_unMaxTrackedDeviceCount; i++)
             {
                 var error = ETrackedPropertyError.TrackedProp_Success;
                 var capacity = system.GetStringTrackedDeviceProperty((uint)i, ETrackedDeviceProperty.Prop_RenderModelName_String, null, 0, ref error);
@@ -876,45 +928,23 @@ namespace VRTRIX
                 {
                     if (s.Contains("LH"))
                     {
-                        return GameObject.Find("Device" + i);
+                        LH_tracker_index = i;
+                        bIsLHTrackerFound = true;
+                        print("Found Left Hand Tracker on index " + LH_tracker_index);
+                        return;
                     }
                 }
                 else if (type == HANDTYPE.RIGHT_HAND)
                 {
                     if (s.Contains("RH"))
                     {
-                        return GameObject.Find("Device" + i);
-                    }
-                }
-
-                else if(device == InteractiveDevice.SWORD)
-                {
-                    if (s.Contains("sword"))
-                    {
-                        GameObject sword_ref = GameObject.Find("Device" + i);
-                        sword_ref.GetComponent<SteamVR_RenderModel>().enabled = false;
-                        return sword_ref;
-                    }
-                }
-                else if (device == InteractiveDevice.SHIELD)
-                {
-                    if (s.Contains("shield"))
-                    {
-                        GameObject shield_ref = GameObject.Find("Device" + i);
-                        shield_ref.GetComponent<SteamVR_RenderModel>().enabled = false;
-                        return shield_ref;
-                    }
-                }
-                else if (device == InteractiveDevice.EXTINGUISHER)
-                {
-                    if (s.Contains("fire"))
-                    {
-                        GameObject ex_ref = GameObject.Find("Device" + i);
-                        return ex_ref;
+                        RH_tracker_index = i;
+                        bIsRHTrackerFound = true;
+                        print("Found Right Hand Tracker on index " + RH_tracker_index);
+                        return;
                     }
                 }
             }
-            return null;
         }
     }
 }
