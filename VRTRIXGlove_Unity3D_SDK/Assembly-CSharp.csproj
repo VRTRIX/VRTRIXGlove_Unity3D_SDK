@@ -84,8 +84,6 @@
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXExtraInteraction\VRTRIXGlovePackageSpawner.cs" />
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXExtraInteraction\VRTRIXGloveWaveDetector.cs" />
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXExtraInteraction\VRTRIXWaveDetectionHints.cs" />
-    <Compile Include="Assets\VRTRIX\Scripts\VRTRIXTeleport\ChaperoneInfo.cs" />
-    <Compile Include="Assets\VRTRIX\Scripts\VRTRIXTeleport\IgnoreTeleportTrace.cs" />
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXTeleport\VRTRIXAllowTeleportWhileAttachedToHand.cs" />
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXTeleport\VRTRIXGlovePlayer.cs" />
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXTeleport\VRTRIXGloveTeleport.cs" />
@@ -352,6 +350,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="SteamVR_Actions.csproj">
+      <Project>{DD248CEF-C45A-92F3-5DD0-8D3B970E261E}</Project>
+      <Name>SteamVR_Actions</Name>
+    </ProjectReference>
     <ProjectReference Include="SteamVR.csproj">
       <Project>{3C5BB688-281B-8427-B75B-497BDDBDB400}</Project>
       <Name>SteamVR</Name>
@@ -367,10 +369,6 @@
     <ProjectReference Include="SteamVR_Editor.csproj">
       <Project>{538947BB-A410-562A-A3D7-C2ECEB3D5C0E}</Project>
       <Name>SteamVR_Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="SteamVR_Actions.csproj">
-      <Project>{DD248CEF-C45A-92F3-5DD0-8D3B970E261E}</Project>
-      <Name>SteamVR_Actions</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
