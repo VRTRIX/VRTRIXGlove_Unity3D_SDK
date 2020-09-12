@@ -9,7 +9,7 @@ using UnityEngine;
 using System;
 using System.Threading;
 using System.Collections.Generic;
-using Valve.VR;
+using Valve.VRAPI;
 
 namespace VRTRIX
 {

@@ -5,7 +5,7 @@
 //
 //=============================================================================
 using UnityEngine;
-using Valve.VR;
+using Valve.VRAPI;
 
 namespace VRTRIX
 {

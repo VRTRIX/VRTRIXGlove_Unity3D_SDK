@@ -18,7 +18,7 @@
 //=============================================================================
 using UnityEngine;
 using UnityEngine.Events;
-using Valve.VR;
+using Valve.VRAPI;
 
 namespace VRTRIX
 {
