@@ -95,6 +95,7 @@
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXUtils\VRTRIXCameraFollow.cs" />
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXUtils\VRTRIXChaperoneInfo.cs" />
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXUtils\VRTRIXEvents.cs" />
+    <Compile Include="Assets\VRTRIX\Scripts\VRTRIXUtils\VRTRIXFireSource.cs" />
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXUtils\VRTRIXGloveStatusUIUpdate.cs" />
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXUtils\VRTRIXIgnoreHovering.cs" />
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXUtils\VRTRIXUtils.cs" />
