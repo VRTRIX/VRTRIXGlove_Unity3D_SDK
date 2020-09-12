@@ -61,10 +61,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\VRTRIX\Plugins\openvr_api.cs" />
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXBasicDataStreaming\VRTRIXBoneMapping.cs" />
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXBasicDataStreaming\VRTRIXDataWrapper.cs" />
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXBasicDataStreaming\VRTRIXGloveDataStreaming.cs" />
-    <Compile Include="Assets\VRTRIX\Scripts\VRTRIXBasicDataStreaming\VRTRIXUtilities.cs" />
+    <Compile Include="Assets\VRTRIX\Scripts\VRTRIXBasicDataStreaming\VRTRIXJointDef.cs" />
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXBasicInteraction\VRTRIXCustomEvents.cs" />
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXBasicInteraction\VRTRIXGloveButtons.cs" />
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXBasicInteraction\VRTRIXGloveDestroyOnDetached.cs" />
@@ -79,9 +80,6 @@
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXBasicInteraction\VRTRIXGloveUIElement.cs" />
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXBasicInteraction\VRTRIXInteractable.cs" />
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXBasicInteraction\VRTRIXVelocityEstimator.cs" />
-    <Compile Include="Assets\VRTRIX\Scripts\VRTRIXExtraInteraction\VRTRIXGloveItemPacakgeReference.cs" />
-    <Compile Include="Assets\VRTRIX\Scripts\VRTRIXExtraInteraction\VRTRIXGloveItemPackage.cs" />
-    <Compile Include="Assets\VRTRIX\Scripts\VRTRIXExtraInteraction\VRTRIXGlovePackageSpawner.cs" />
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXExtraInteraction\VRTRIXGloveWaveDetector.cs" />
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXExtraInteraction\VRTRIXWaveDetectionHints.cs" />
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXTeleport\VRTRIXAllowTeleportWhileAttachedToHand.cs" />
@@ -90,11 +88,16 @@
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXTeleport\VRTRIXGloveTeleportArc.cs" />
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXTeleport\VRTRIXGloveTelportArea.cs" />
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXTeleport\VRTRIXGloveTelportPoint.cs" />
+    <Compile Include="Assets\VRTRIX\Scripts\VRTRIXTeleport\VRTRIXIgnoreTeleportTrace.cs" />
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXTeleport\VRTRIXTeleportMarkerBase.cs" />
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXUtils\DrawIfAttribute.cs" />
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXUtils\FixedSizeQueue.cs" />
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXUtils\VRTRIXCameraFollow.cs" />
+    <Compile Include="Assets\VRTRIX\Scripts\VRTRIXUtils\VRTRIXChaperoneInfo.cs" />
+    <Compile Include="Assets\VRTRIX\Scripts\VRTRIXUtils\VRTRIXEvents.cs" />
     <Compile Include="Assets\VRTRIX\Scripts\VRTRIXUtils\VRTRIXGloveStatusUIUpdate.cs" />
+    <Compile Include="Assets\VRTRIX\Scripts\VRTRIXUtils\VRTRIXIgnoreHovering.cs" />
+    <Compile Include="Assets\VRTRIX\Scripts\VRTRIXUtils\VRTRIXUtils.cs" />
     <None Include="Assets\VRTRIX\Resource\Shaders\SteamVR_Fade.shader" />
     <None Include="Assets\VRTRIX\Resource\Shaders\SteamVR_ClearAll.shader" />
     <None Include="Assets\VRTRIX\Resource\Shaders\ControllerButtonHints.shader" />
@@ -309,9 +312,6 @@
     <Reference Include="UnityEngine.SpatialTracking">
       <HintPath>C:/Program Files/Unity_2018/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
     </Reference>
-    <Reference Include="Valve.Newtonsoft.Json">
-      <HintPath>D:/VRTRIX/Projects/VRGlove/SDKs/Unity/VRTRIXGlove_Unity3D_SDK/VRTRIXGlove_Unity3D_SDK/Assets/SteamVR/Input/Plugins/JSON.NET/Valve.Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEngine.Analytics">
       <HintPath>C:/Users/Admin/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.analytics@2.0.16/UnityEngine.Analytics.dll</HintPath>
     </Reference>
@@ -348,28 +348,6 @@
     <Reference Include="Boo.Lang">
       <HintPath>C:/Program Files/Unity_2018/Editor/Data/MonoBleedingEdge/lib/mono/2.0-api/Boo.Lang.dll</HintPath>
     </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="SteamVR_Actions.csproj">
-      <Project>{DD248CEF-C45A-92F3-5DD0-8D3B970E261E}</Project>
-      <Name>SteamVR_Actions</Name>
-    </ProjectReference>
-    <ProjectReference Include="SteamVR.csproj">
-      <Project>{3C5BB688-281B-8427-B75B-497BDDBDB400}</Project>
-      <Name>SteamVR</Name>
-    </ProjectReference>
-    <ProjectReference Include="SteamVR_Input_Editor.csproj">
-      <Project>{DB9450E6-7768-5B16-F39E-F9F925DAA103}</Project>
-      <Name>SteamVR_Input_Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="SteamVR_Windows_EditorHelper.csproj">
-      <Project>{EC7A8261-B75C-6001-6A6F-FE33F81A444E}</Project>
-      <Name>SteamVR_Windows_EditorHelper</Name>
-    </ProjectReference>
-    <ProjectReference Include="SteamVR_Editor.csproj">
-      <Project>{538947BB-A410-562A-A3D7-C2ECEB3D5C0E}</Project>
-      <Name>SteamVR_Editor</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

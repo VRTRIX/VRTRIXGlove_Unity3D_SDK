@@ -273,7 +273,7 @@ namespace VRTRIX
         {
             _instance = this;
 
-            if (SteamVR.instance != null)
+            if (OpenVR.System != null)
             {
                 ActivateRig(rigSteamVR);
             }
@@ -316,66 +316,6 @@ namespace VRTRIX
 
             Gizmos.color = Color.red;
             int count = handCount;
-            for (int i = 0; i < count; i++)
-            {
-                //VRTRIXGloveGrab hand = GetHand(i);
-
-                //if (hand.startingHandType == VRTRIXGloveGrab.HandType.Left)
-                //{
-                //    Gizmos.DrawIcon(hand.transform.position, "vr_interaction_system_left_hand.png");
-                //}
-                //else if (hand.startingHandType == VRTRIXGloveGrab.HandType.Right)
-                //{
-                //    Gizmos.DrawIcon(hand.transform.position, "vr_interaction_system_right_hand.png");
-                //}
-                //else
-                //{
-                //    VRTRIXGloveGrab.HandType guessHandType = hand.GuessCurrentHandType();
-
-                //    if (guessHandType == VRTRIXGloveGrab.HandType.Left)
-                //    {
-                //        Gizmos.DrawIcon(hand.transform.position, "vr_interaction_system_left_hand_question.png");
-                //    }
-                //    else if (guessHandType == VRTRIXGloveGrab.HandType.Right)
-                //    {
-                //        Gizmos.DrawIcon(hand.transform.position, "vr_interaction_system_right_hand_question.png");
-                //    }
-                //    else
-                //    {
-                //        Gizmos.DrawIcon(hand.transform.position, "vr_interaction_system_unknown_hand.png");
-                //    }
-                //}
-            }
-        }
-
-
-        //-------------------------------------------------
-        public void Draw2DDebug()
-        {
-            if (!allowToggleTo2D)
-                return;
-
-            if (!SteamVR.active)
-                return;
-
-            int width = 100;
-            int height = 25;
-            int left = Screen.width / 2 - width / 2;
-            int top = Screen.height - height - 10;
-
-            string text = (rigSteamVR.activeSelf) ? "2D Debug" : "VR";
-
-            if (GUI.Button(new Rect(left, top, width, height), text))
-            {
-                if (rigSteamVR.activeSelf)
-                {
-                    ActivateRig(rig2DFallback);
-                }
-                else
-                {
-                    ActivateRig(rigSteamVR);
-                }
-            }
         }
 
 

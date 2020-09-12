@@ -5,7 +5,6 @@
 //=============================================================================
 
 using UnityEngine;
-using Valve.VR.InteractionSystem;
 
 namespace VRTRIX
 {
@@ -266,9 +265,9 @@ namespace VRTRIX
 
                 if (Physics.Linecast(segmentStartPos, segmentEndPos, out hitInfo, traceLayerMask))
                 {
-                    if (hitInfo.collider.GetComponent<IgnoreTeleportTrace>() == null)
+                    if (hitInfo.collider.GetComponent<VRTRIXIgnoreTeleportTrace>() == null)
                     {
-                        Util.DrawCross(hitInfo.point, Color.red, 0.5f);
+                        VRTRIXUtils.DrawCross(hitInfo.point, Color.red, 0.5f);
                         float segmentDistance = Vector3.Distance(segmentStartPos, segmentEndPos);
                         float hitTime = segmentStartTime + (timeStep * (hitInfo.distance / segmentDistance));
                         return hitTime;

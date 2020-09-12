@@ -121,7 +121,7 @@ namespace VRTRIX
         private TrackedDevicePose_t[] poses = new TrackedDevicePose_t[OpenVR.k_unMaxTrackedDeviceCount];
         private TrackedDevicePose_t[] gamePoses = new TrackedDevicePose_t[0];
 
-        private SteamVR_Events.Action newTrackerPosesAction;
+        private VRTRIXEvents.Action newTrackerPosesAction;
         private uint LH_tracker_index = OpenVR.k_unMaxTrackedDeviceCount;
         private uint RH_tracker_index = OpenVR.k_unMaxTrackedDeviceCount;
         private bool bIsLHTrackerFound, bIsRHTrackerFound;
@@ -138,8 +138,6 @@ namespace VRTRIX
 
         void Start()
         {
-            //LH_tracker = new GameObject();
-            //RH_tracker = new GameObject();
             LH = new VRTRIXDataWrapper(AdvancedMode, version, HANDTYPE.LEFT_HAND);
             RH = new VRTRIXDataWrapper(AdvancedMode, version, HANDTYPE.RIGHT_HAND);
 
@@ -179,7 +177,7 @@ namespace VRTRIX
             {
                 try
                 {
-                    newTrackerPosesAction = SteamVR_Events.NewPosesAction(OnNewTrackerPoses);
+                    newTrackerPosesAction = VRTRIXEvents.NewPosesAction(OnNewTrackerPoses);
                     newTrackerPosesAction.enabled = true;
                     CheckDeviceModelName(HANDTYPE.RIGHT_HAND);
                     CheckDeviceModelName(HANDTYPE.LEFT_HAND);
@@ -206,8 +204,8 @@ namespace VRTRIX
                 if (compositor != null)
                 {
                     compositor.GetLastPoses(poses, gamePoses);
-                    SteamVR_Events.NewPoses.Send(poses);
-                    SteamVR_Events.NewPosesApplied.Send();
+                    VRTRIXEvents.NewPoses.Send(poses);
+                    VRTRIXEvents.NewPosesApplied.Send();
                 }
             }
 
@@ -865,7 +863,7 @@ namespace VRTRIX
             Transform[] transform_array = new Transform[(int)VRTRIXBones.NumOfBones];
             for(int i = 0; i < (int)VRTRIXBones.NumOfBones; ++i)
             {
-                string bone_name = VRTRIXUtilities.GetBoneName(i);
+                string bone_name = VRTRIXJointDef.GetBoneName(i);
                 VRTRIXBoneMapping map = gameObject.GetComponent(typeof(VRTRIXBoneMapping)) as VRTRIXBoneMapping;
                 if (map != null)
                 {
@@ -887,7 +885,7 @@ namespace VRTRIX
                 && poses[LH_tracker_index].bDeviceIsConnected
                 && poses[LH_tracker_index].bPoseIsValid)
             {
-                var pose = new SteamVR_Utils.RigidTransform(poses[LH_tracker_index].mDeviceToAbsoluteTracking);
+                var pose = new VRTRIXUtils.RigidTransform(poses[LH_tracker_index].mDeviceToAbsoluteTracking);
                 LH_tracker.transform.localPosition = pose.pos;
                 LH_tracker.transform.localRotation = pose.rot * new Quaternion(0, 0, 1, 0);
             }
@@ -896,7 +894,7 @@ namespace VRTRIX
                 && poses[RH_tracker_index].bDeviceIsConnected
                 && poses[RH_tracker_index].bPoseIsValid)
             {
-                var pose = new SteamVR_Utils.RigidTransform(poses[RH_tracker_index].mDeviceToAbsoluteTracking);
+                var pose = new VRTRIXUtils.RigidTransform(poses[RH_tracker_index].mDeviceToAbsoluteTracking);
                 RH_tracker.transform.localPosition = pose.pos;
                 RH_tracker.transform.localRotation = pose.rot * new Quaternion(0, 0, 1, 0);
             }

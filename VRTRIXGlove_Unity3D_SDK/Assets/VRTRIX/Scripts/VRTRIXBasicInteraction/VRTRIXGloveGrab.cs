@@ -13,7 +13,6 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Valve.VR.InteractionSystem;
 
 namespace VRTRIX {
 
@@ -184,7 +183,7 @@ namespace VRTRIX {
             float flScaledSphereRadius = hoverSphereRadius * flHoverRadiusScale;
             // if we're close to the floor, increase the radius to make things easier to pick up
             float handDiff = Mathf.Abs(transform.position.y);
-            float boxMult = Util.RemapNumberClamped(handDiff, 0.0f, 0.5f * flHoverRadiusScale, 5.0f, 1.0f) * flHoverRadiusScale;
+            float boxMult = VRTRIXUtils.RemapNumberClamped(handDiff, 0.0f, 0.5f * flHoverRadiusScale, 5.0f, 1.0f) * flHoverRadiusScale;
 
             // null out old vals
             for (int i = 0; i < overlappingColliders.Length; ++i)
@@ -212,7 +211,7 @@ namespace VRTRIX {
                     continue;
 
                 // Ignore this collider for hovering
-                IgnoreHovering ignore = collider.GetComponent<IgnoreHovering>();
+                VRTRIXIgnoreHovering ignore = collider.GetComponent<VRTRIXIgnoreHovering>();
                 if (ignore != null)
                 {
                     if (ignore.onlyIgnoreHand == null || ignore.onlyIgnoreHand == this)
@@ -254,7 +253,7 @@ namespace VRTRIX {
             float flScaledSphereRadius = fingerSphereRadius * flHoverRadiusScale;
             // if we're close to the floor, increase the radius to make things easier to pick up
             float handDiff = Mathf.Abs(transform.position.y);
-            float boxMult = Util.RemapNumberClamped(handDiff, 0.0f, 0.5f * flHoverRadiusScale, 5.0f, 1.0f) * flHoverRadiusScale;
+            float boxMult = VRTRIXUtils.RemapNumberClamped(handDiff, 0.0f, 0.5f * flHoverRadiusScale, 5.0f, 1.0f) * flHoverRadiusScale;
 
             // null out old vals
             for (int i = 0; i < indexOverlappingColliders.Length; ++i)
