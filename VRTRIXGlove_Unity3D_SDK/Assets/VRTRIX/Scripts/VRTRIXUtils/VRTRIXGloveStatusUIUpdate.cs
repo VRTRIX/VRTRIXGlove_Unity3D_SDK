@@ -329,12 +329,14 @@ namespace VRTRIX
 
             if (type == HANDTYPE.LEFT_HAND)
             {
+                m_AlignFingerButton.GetComponentInChildren<Text>().text = "Calibrate Tracking System & Align Fingers";
                 thumb_offset[0] = glove3D.thumb_offset_L[0];
                 thumb_offset[1] = glove3D.thumb_offset_L[1];
                 thumb_offset[2] = glove3D.thumb_offset_L[2];
             }
             else if (type == HANDTYPE.RIGHT_HAND)
             {
+                m_AlignFingerButton.GetComponentInChildren<Text>().text = "Align Fingers";
                 thumb_offset[0] = glove3D.thumb_offset_R[0];
                 thumb_offset[1] = glove3D.thumb_offset_R[1];
                 thumb_offset[2] = glove3D.thumb_offset_R[2];
