@@ -197,6 +197,7 @@ namespace VRTRIX
 
                     if (IsVREnabled && RH_tracker != null)
                     {
+                        //RH.SetRefPose(RH_tracker.transform.rotation);
                         SetPosition(VRTRIXBones.R_Arm, RH_tracker.transform.position, RH_tracker.transform.rotation, RHTrackerOffset);
                     }
                     //以下是设置右手每个骨骼节点全局旋转(global rotation)；
@@ -224,6 +225,7 @@ namespace VRTRIX
 
                     if (IsVREnabled && LH_tracker != null)
                     {
+                        //LH.SetRefPose(LH_tracker.transform.rotation);
                         SetPosition(VRTRIXBones.L_Arm, LH_tracker.transform.position, LH_tracker.transform.rotation, LHTrackerOffset);
                     }
 

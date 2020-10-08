@@ -294,6 +294,16 @@ namespace VRTRIX {
         /// <param name="benddown_threshold">threshold value to set</param>
         [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         public static extern void SetBendDownThreshold(IntPtr glove, double benddown_threshold);
+        /// <summary>
+        /// Set Wrist Ref Pose in quaternion.
+        /// </summary>
+        /// <param name="glove">The data glove object</param>
+        /// <param name="SetRefPoseQw">Wrist Ref Pose Qw value to set</param>
+        /// <param name="SetRefPoseQx">Wrist Ref Pose Qx value to set</param>
+        /// <param name="SetRefPoseQy">Wrist Ref Pose Qy value to set</param>
+        /// <param name="SetRefPoseQz">Wrist Ref Pose Qz value to set</param>
+        [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+        public static extern void SetRefPose(IntPtr glove, double SetRefPoseQw, double SetRefPoseQx, double SetRefPoseQy, double SetRefPoseQz);
         #endregion
 
 
@@ -623,6 +633,15 @@ namespace VRTRIX {
         public void SetBendDownThreshold(double threshold)
         {
             SetBendDownThreshold(glove, threshold);
+        }
+
+        //! Set wrist reference pose.
+        /*! 
+         * \param refPose refPose value to set.
+         */
+        public void SetRefPose(Quaternion refPose)
+        {
+            SetRefPose(glove, refPose.w, refPose.x, refPose.y, refPose.z);
         }
 
         //! Set radio channel limit for data gloves.
