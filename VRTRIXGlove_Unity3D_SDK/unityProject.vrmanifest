@@ -1,0 +1,16 @@
+{
+  "source": "Unity",
+  "applications": [
+    {
+      "app_key": "application.generated.unity.vrtrixdataglovedemo.exe",
+      "launch_type": "url",
+      "url": "steam://launch/",
+      "action_manifest_path": "D:\\VRTRIX\\Projects\\VRGlove\\SDKs\\Unity\\VRTRIXGlove_Unity3D_SDK\\VRTRIXGlove_Unity3D_SDK\\Assets\\StreamingAssets\\SteamVR\\actions.json",
+      "strings": {
+        "en_us": {
+          "name": "VRTRIXDataGloveDemo [Testing]"
+        }
+      }
+    }
+  ]
+}

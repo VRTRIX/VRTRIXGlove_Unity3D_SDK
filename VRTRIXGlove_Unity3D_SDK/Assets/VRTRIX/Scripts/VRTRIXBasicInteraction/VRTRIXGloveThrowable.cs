@@ -7,7 +7,6 @@
 using UnityEngine;
 using UnityEngine.Events;
 using System.Collections;
-using Valve.VR.InteractionSystem;
 
 namespace VRTRIX
 {
@@ -19,7 +18,6 @@ namespace VRTRIX
     public class VRTRIXGloveThrowable : MonoBehaviour
     {
         // Use this for initialization
-        [EnumFlags]
         [Tooltip("The flags used to attach this object to the hand.")]
         public VRTRIXGloveGrab.AttachmentFlags attachmentFlags = VRTRIXGloveGrab.AttachmentFlags.ParentToHand | VRTRIXGloveGrab.AttachmentFlags.DetachFromOtherHand;
 
@@ -132,7 +130,7 @@ namespace VRTRIX
             if (attachEaseIn)
             {
                 attachEaseInTransform = hand.transform;
-                if (!Util.IsNullOrEmpty(attachEaseInAttachmentNames))
+                if (!VRTRIXUtils.IsNullOrEmpty(attachEaseInAttachmentNames))
                 {
                     float smallestAngle = float.MaxValue;
                     for (int i = 0; i < attachEaseInAttachmentNames.Length; i++)
@@ -214,7 +212,7 @@ namespace VRTRIX
 
             if (attachEaseIn)
             {
-                float t = Util.RemapNumberClamped(Time.time, attachTime, attachTime + snapAttachEaseInTime, 0.0f, 1.0f);
+                float t = VRTRIXUtils.RemapNumberClamped(Time.time, attachTime, attachTime + snapAttachEaseInTime, 0.0f, 1.0f);
                 if (t < 1.0f)
                 {
                     t = snapAttachEaseInCurve.Evaluate(t);

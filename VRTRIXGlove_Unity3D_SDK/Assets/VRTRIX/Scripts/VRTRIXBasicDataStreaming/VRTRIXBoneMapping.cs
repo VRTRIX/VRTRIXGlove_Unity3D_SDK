@@ -25,7 +25,7 @@ public class VRTRIXBoneMapping : MonoBehaviour
      */
     public GameObject MapToVRTRIX_BoneName(string bone_name)
     {
-        int bone_index = VRTRIXUtilities.GetBoneIndex(bone_name);
+        int bone_index = VRTRIXJointDef.GetBoneIndex(bone_name);
         return MyCharacterFingers[bone_index] ? MyCharacterFingers[bone_index].gameObject : null;
     }
 }

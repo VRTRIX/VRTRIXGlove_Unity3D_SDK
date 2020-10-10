@@ -334,7 +334,7 @@ namespace VRTRIX
             int portNum = 11002 + id;
             // Register call back function
             RegisterCallBack();
-            Debug.Log("try to connect glove index " + id + " ip: " + serverIP);
+            Debug.Log("Try to connect glove index " + id + " ip: " + serverIP);
             ConnectDataGlove(glove, id, serverIP, portNum.ToString());
         }
 

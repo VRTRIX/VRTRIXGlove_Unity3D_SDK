@@ -6,8 +6,6 @@
 
 using UnityEngine;
 using UnityEngine.Events;
-using System.Collections;
-using Valve.VR.InteractionSystem;
 
 namespace VRTRIX
 {
@@ -109,18 +107,18 @@ namespace VRTRIX
         private Vector3 startingFeetOffset = Vector3.zero;
         private bool movedFeetFarEnough = false;
 
-        SteamVR_Events.Action chaperoneInfoInitializedAction;
+        VRTRIXEvents.Action chaperoneInfoInitializedAction;
 
         // Events
 
-        public static SteamVR_Events.Event<float> ChangeScene = new SteamVR_Events.Event<float>();
-        public static SteamVR_Events.Action<float> ChangeSceneAction(UnityAction<float> action) { return new SteamVR_Events.Action<float>(ChangeScene, action); }
+        public static VRTRIXEvents.Event<float> ChangeScene = new VRTRIXEvents.Event<float>();
+        public static VRTRIXEvents.Action<float> ChangeSceneAction(UnityAction<float> action) { return new VRTRIXEvents.Action<float>(ChangeScene, action); }
 
-        public static SteamVR_Events.Event<VRTRIXTeleportMarkerBase> Player = new SteamVR_Events.Event<VRTRIXTeleportMarkerBase>();
-        public static SteamVR_Events.Action<VRTRIXTeleportMarkerBase> PlayerAction(UnityAction<VRTRIXTeleportMarkerBase> action) { return new SteamVR_Events.Action<VRTRIXTeleportMarkerBase>(Player, action); }
+        public static VRTRIXEvents.Event<VRTRIXTeleportMarkerBase> Player = new VRTRIXEvents.Event<VRTRIXTeleportMarkerBase>();
+        public static VRTRIXEvents.Action<VRTRIXTeleportMarkerBase> PlayerAction(UnityAction<VRTRIXTeleportMarkerBase> action) { return new VRTRIXEvents.Action<VRTRIXTeleportMarkerBase>(Player, action); }
 
-        public static SteamVR_Events.Event<VRTRIXTeleportMarkerBase> PlayerPre = new SteamVR_Events.Event<VRTRIXTeleportMarkerBase>();
-        public static SteamVR_Events.Action<VRTRIXTeleportMarkerBase> PlayerPreAction(UnityAction<VRTRIXTeleportMarkerBase> action) { return new SteamVR_Events.Action<VRTRIXTeleportMarkerBase>(PlayerPre, action); }
+        public static VRTRIXEvents.Event<VRTRIXTeleportMarkerBase> PlayerPre = new VRTRIXEvents.Event<VRTRIXTeleportMarkerBase>();
+        public static VRTRIXEvents.Action<VRTRIXTeleportMarkerBase> PlayerPreAction(UnityAction<VRTRIXTeleportMarkerBase> action) { return new VRTRIXEvents.Action<VRTRIXTeleportMarkerBase>(PlayerPre, action); }
 
         //-------------------------------------------------
         private static VRTRIXGloveTeleport _instance;
@@ -143,7 +141,7 @@ namespace VRTRIX
         {
             _instance = this;
 
-            chaperoneInfoInitializedAction = ChaperoneInfo.InitializedAction(OnChaperoneInfoInitialized);
+            chaperoneInfoInitializedAction = VRTRIXChaperoneInfo.InitializedAction(OnChaperoneInfoInitialized);
 
             pointerLineRenderer = GetComponentInChildren<LineRenderer>();
             teleportPointerObject = pointerLineRenderer.gameObject;
@@ -258,6 +256,7 @@ namespace VRTRIX
             //If something is attached to the hand that is preventing teleport
             if (allowTeleportWhileAttached && !allowTeleportWhileAttached.teleportAllowed)
             {
+                print("allowTeleportWhileAttached : " + allowTeleportWhileAttached);
                 HidePointer();
             }
             else
@@ -437,7 +436,7 @@ namespace VRTRIX
 
                 //Scale the invalid reticle based on the distance from the player
                 float distanceFromPlayer = Vector3.Distance(hitInfo.point, player.hmdTransform.position);
-                float invalidReticleCurrentScale = Util.RemapNumberClamped(distanceFromPlayer, invalidReticleMinScaleDistance, invalidReticleMaxScaleDistance, invalidReticleMinScale, invalidReticleMaxScale);
+                float invalidReticleCurrentScale = VRTRIXUtils.RemapNumberClamped(distanceFromPlayer, invalidReticleMinScaleDistance, invalidReticleMaxScaleDistance, invalidReticleMinScale, invalidReticleMaxScale);
                 invalidReticleScale.x = invalidReticleCurrentScale;
                 invalidReticleScale.y = invalidReticleCurrentScale;
                 invalidReticleScale.z = invalidReticleCurrentScale;
@@ -543,7 +542,7 @@ namespace VRTRIX
         //-------------------------------------------------
         private void OnChaperoneInfoInitialized()
         {
-            ChaperoneInfo chaperone = ChaperoneInfo.instance;
+            VRTRIXChaperoneInfo chaperone = VRTRIXChaperoneInfo.instance;
 
             if (chaperone.initialized && chaperone.roomscale)
             {
@@ -553,7 +552,7 @@ namespace VRTRIX
                 {
                     playAreaPreviewTransform = new GameObject("PlayAreaPreviewTransform").transform;
                     playAreaPreviewTransform.parent = transform;
-                    Util.ResetTransform(playAreaPreviewTransform);
+                    VRTRIXUtils.ResetTransform(playAreaPreviewTransform);
 
                     playAreaPreviewCorner.SetActive(true);
                     playAreaPreviewCorners = new Transform[4];
@@ -842,8 +841,8 @@ namespace VRTRIX
                 Debug.Log("SwitchToNewScene");
             }
 
-            SteamVR_Fade.Start(Color.clear, 0);
-            SteamVR_Fade.Start(Color.black, currentFadeTime);
+            //SteamVR_Fade.Start(Color.clear, 0);
+            //SteamVR_Fade.Start(Color.black, currentFadeTime);
 
             headAudioSource.transform.SetParent(player.hmdTransform);
             headAudioSource.transform.localPosition = Vector3.zero;
@@ -860,7 +859,7 @@ namespace VRTRIX
 
             VRTRIXGloveTeleport.PlayerPre.Send(pointedAtTeleportMarker);
 
-            SteamVR_Fade.Start(Color.clear, currentFadeTime);
+            //SteamVR_Fade.Start(Color.clear, currentFadeTime);
 
             VRTRIXGloveTelportPoint teleportPoint = teleportingToMarker as VRTRIXGloveTelportPoint;
             Vector3 teleportPosition = pointedAtPosition;
@@ -1047,10 +1046,10 @@ namespace VRTRIX
                 return false;
             }
 
-            if (hand.hoveringInteractable != null)
-            {
-                return false;
-            }
+            //if (hand.hoveringInteractable != null)
+            //{
+            //    return false;
+            //}
 
             //if (hand.noSteamVRFallbackCamera == null)
             //{
