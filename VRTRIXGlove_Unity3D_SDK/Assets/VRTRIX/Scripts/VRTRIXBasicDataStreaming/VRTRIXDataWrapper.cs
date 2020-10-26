@@ -66,11 +66,10 @@ namespace VRTRIX
     /*! Define the glove connection status. */
     public enum VRTRIXGloveStatus
     {
-        CLOSED,
+        TRYTOCONNECT,
         CONNECTED,
         TRYTORECONNECT,
-        DISCONNECTED,
-        MAGANOMALY
+        DISCONNECTED
     };
 
     //! Glove event enum.
@@ -110,7 +109,7 @@ namespace VRTRIX
         private int calscore;
         private bool port_opened = false;
         private Quaternion[] data = new Quaternion[16];
-        private VRTRIXGloveStatus stat = VRTRIXGloveStatus.CLOSED;
+        private VRTRIXGloveStatus stat = VRTRIXGloveStatus.DISCONNECTED;
 
         //! Quaternion data struction used in unmanaged C++ API.
         [StructLayout(LayoutKind.Sequential)]
@@ -336,12 +335,12 @@ namespace VRTRIX
             RegisterCallBack();
             Debug.Log("Try to connect glove index " + id + " ip: " + serverIP);
             ConnectDataGlove(glove, id, serverIP, portNum.ToString());
+            stat = VRTRIXGloveStatus.TRYTOCONNECT;
         }
 
         public void OnDisconnectDataGlove()
         {
             DisconnectDataGlove(glove);
-            stat = VRTRIXGloveStatus.DISCONNECTED;
         }
 
         [MonoPInvokeCallback(typeof(ReceivedDataCallback))]
