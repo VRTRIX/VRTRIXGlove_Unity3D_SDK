@@ -275,14 +275,14 @@ namespace VRTRIX
                 ServerIP = UI.GetServerIP();
                 Index = (GloveIndex)UI.GetGloveDeviceID();
             }
-            if (LH.GetReceivedStatus() != VRTRIXGloveStatus.CONNECTED && LH.GetReceivedStatus() != VRTRIXGloveStatus.TRYTORECONNECT)
+            if (LH.GetReceivedStatus() == VRTRIXGloveStatus.DISCONNECTED)
             {
                 if((IsVREnabled && bIsLHTrackerFound) || !IsVREnabled)
                 {
                     LH.OnConnectDataGlove((int)Index, ServerIP);
                 }
             }
-            if (RH.GetReceivedStatus() != VRTRIXGloveStatus.CONNECTED && RH.GetReceivedStatus() != VRTRIXGloveStatus.TRYTORECONNECT)
+            if (RH.GetReceivedStatus() == VRTRIXGloveStatus.DISCONNECTED)
             {
                 if ((IsVREnabled && bIsRHTrackerFound) || !IsVREnabled)
                 {
@@ -295,11 +295,11 @@ namespace VRTRIX
         //! Disconnect data glove and uninitialization.
         public void OnDisconnectGlove()
         {
-            if (LH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED || LH.GetReceivedStatus() == VRTRIXGloveStatus.TRYTORECONNECT)
+            if (LH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED)
             {
                 LH.OnDisconnectDataGlove();
             }
-            if (RH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED || RH.GetReceivedStatus() == VRTRIXGloveStatus.TRYTORECONNECT)
+            if (RH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED)
             {
                 RH.OnDisconnectDataGlove();
             }
@@ -471,7 +471,14 @@ namespace VRTRIX
         //! Application quit operation. 
         void OnApplicationQuit()
         {
-            OnDisconnectGlove();
+            if (LH.GetReceivedStatus() != VRTRIXGloveStatus.DISCONNECTED)
+            {
+                LH.OnDisconnectDataGlove();
+            }
+            if (RH.GetReceivedStatus() != VRTRIXGloveStatus.DISCONNECTED)
+            {
+                RH.OnDisconnectDataGlove();
+            }
         }
 
         //! Get current transform of specific joint
@@ -644,7 +651,7 @@ namespace VRTRIX
                         return LH.GetReceivedStatus();
                     }
                 default:
-                    return VRTRIXGloveStatus.CLOSED;
+                    return VRTRIXGloveStatus.DISCONNECTED;
             }
         }
         

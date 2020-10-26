@@ -191,6 +191,27 @@ namespace VRTRIX
                     m_Status.GetComponent<Text>().text = "Server Status:   DISCONNECTED";
                 }
 
+                if (glove3D.GetGloveConnectionStat(HANDTYPE.RIGHT_HAND) && glove3D.GetGloveConnectionStat(HANDTYPE.LEFT_HAND))
+                {
+
+                    if (m_ConnectButton.GetComponentInChildren<Text>().text == "Connect")
+                    {
+                        m_ConnectButton.GetComponentInChildren<Text>().text = "Disconnect";
+                        m_ConnectButton.GetComponent<Button>().onClick.RemoveAllListeners();
+                        m_ConnectButton.GetComponent<Button>().onClick.AddListener(OnDisconnectGlovePressed);
+                    }
+                }
+                else if (!glove3D.GetGloveConnectionStat(HANDTYPE.RIGHT_HAND) && !glove3D.GetGloveConnectionStat(HANDTYPE.LEFT_HAND))
+                {
+
+                    if (m_ConnectButton.GetComponentInChildren<Text>().text == "Disconnect")
+                    {
+                        m_ConnectButton.GetComponentInChildren<Text>().text = "Connect";
+                        m_ConnectButton.GetComponent<Button>().onClick.RemoveAllListeners();
+                        m_ConnectButton.GetComponent<Button>().onClick.AddListener(OnConnectGlovePressed);
+                    }
+                }
+
 
                 //Right hand parameters
                 m_RHCalStat.SetActive(glove3D.GetReceivedCalScoreMean(HANDTYPE.RIGHT_HAND) > 5 && glove3D.GetGloveConnectionStat(HANDTYPE.RIGHT_HAND));
@@ -235,17 +256,12 @@ namespace VRTRIX
         public void OnConnectGlovePressed()
         {
             glove3D.OnConnectGlove();
-            m_ConnectButton.GetComponentInChildren<Text>().text = "Disconnect";
-            m_ConnectButton.GetComponent<Button>().onClick.RemoveAllListeners();
-            m_ConnectButton.GetComponent<Button>().onClick.AddListener(OnDisconnectGlovePressed);
         }
         public void OnDisconnectGlovePressed()
         {
             glove3D.OnDisconnectGlove();
-            m_ConnectButton.GetComponentInChildren<Text>().text = "Connect";
-            m_ConnectButton.GetComponent<Button>().onClick.RemoveAllListeners();
-            m_ConnectButton.GetComponent<Button>().onClick.AddListener(OnConnectGlovePressed);
         }
+
         public void OnLHTriggerHapticsPressed()
         {
             glove3D.OnVibrate(HANDTYPE.LEFT_HAND);
