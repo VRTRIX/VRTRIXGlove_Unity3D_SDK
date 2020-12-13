@@ -301,11 +301,11 @@ namespace VRTRIX
                 m_FingerCurvedSpacingSlider.GetComponent<Slider>().interactable = true;
             }
 
-            if(type == HANDTYPE.LEFT_HAND)
+            if(type == HANDTYPE.LEFT_HAND && GetGloveDeviceID() == 0)
             {
                 m_AlignFingerButton.GetComponent<Button>().GetComponentInChildren<Text>().text = "Coordinate Calibration";
             }
-            else if (type == HANDTYPE.RIGHT_HAND)
+            else
             {
                 m_AlignFingerButton.GetComponent<Button>().GetComponentInChildren<Text>().text = "Align Fingers";
             }
