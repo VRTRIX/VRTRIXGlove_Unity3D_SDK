@@ -790,8 +790,8 @@ namespace VRTRIX
                 string bone_name = VRTRIXUtilities.GetBoneName(i);
                 if (GetComponent("VRTRIXBoneMapping"))
                 {
-                    GameObject bone = VRTRIXBoneMapping.UniqueStance.MapToVRTRIX_BoneName(bone_name);
-                    if(bone != null)
+                    GameObject bone = GetComponent<VRTRIXBoneMapping>().MapToVRTRIX_BoneName(bone_name);
+                    if (bone != null)
                     {
                         transform_array[i] = bone.transform;
                     }
