@@ -159,6 +159,27 @@ namespace VRTRIX
         {
             try
             {
+                if (glove3D.GetGloveConnectionStat(HANDTYPE.RIGHT_HAND) && glove3D.GetGloveConnectionStat(HANDTYPE.LEFT_HAND))
+                {
+
+                    if (m_ConnectButton.GetComponentInChildren<Text>().text == "Connect")
+                    {
+                        m_ConnectButton.GetComponentInChildren<Text>().text = "Disconnect";
+                        m_ConnectButton.GetComponent<Button>().onClick.RemoveAllListeners();
+                        m_ConnectButton.GetComponent<Button>().onClick.AddListener(OnDisconnectGlovePressed);
+                    }
+                }
+                else if (!glove3D.GetGloveConnectionStat(HANDTYPE.RIGHT_HAND) && !glove3D.GetGloveConnectionStat(HANDTYPE.LEFT_HAND))
+                {
+
+                    if (m_ConnectButton.GetComponentInChildren<Text>().text == "Disconnect")
+                    {
+                        m_ConnectButton.GetComponentInChildren<Text>().text = "Connect";
+                        m_ConnectButton.GetComponent<Button>().onClick.RemoveAllListeners();
+                        m_ConnectButton.GetComponent<Button>().onClick.AddListener(OnConnectGlovePressed);
+                    }
+                }
+
                 if (m_timeCounter < m_refreshTime)
                 {
                     m_timeCounter += Time.deltaTime;
@@ -190,28 +211,6 @@ namespace VRTRIX
                 {
                     m_Status.GetComponent<Text>().text = "Server Status:   DISCONNECTED";
                 }
-
-                if (glove3D.GetGloveConnectionStat(HANDTYPE.RIGHT_HAND) && glove3D.GetGloveConnectionStat(HANDTYPE.LEFT_HAND))
-                {
-
-                    if (m_ConnectButton.GetComponentInChildren<Text>().text == "Connect")
-                    {
-                        m_ConnectButton.GetComponentInChildren<Text>().text = "Disconnect";
-                        m_ConnectButton.GetComponent<Button>().onClick.RemoveAllListeners();
-                        m_ConnectButton.GetComponent<Button>().onClick.AddListener(OnDisconnectGlovePressed);
-                    }
-                }
-                else if (!glove3D.GetGloveConnectionStat(HANDTYPE.RIGHT_HAND) && !glove3D.GetGloveConnectionStat(HANDTYPE.LEFT_HAND))
-                {
-
-                    if (m_ConnectButton.GetComponentInChildren<Text>().text == "Disconnect")
-                    {
-                        m_ConnectButton.GetComponentInChildren<Text>().text = "Connect";
-                        m_ConnectButton.GetComponent<Button>().onClick.RemoveAllListeners();
-                        m_ConnectButton.GetComponent<Button>().onClick.AddListener(OnConnectGlovePressed);
-                    }
-                }
-
 
                 //Right hand parameters
                 m_RHCalStat.SetActive(glove3D.GetReceivedCalScoreMean(HANDTYPE.RIGHT_HAND) > 5 && glove3D.GetGloveConnectionStat(HANDTYPE.RIGHT_HAND));
