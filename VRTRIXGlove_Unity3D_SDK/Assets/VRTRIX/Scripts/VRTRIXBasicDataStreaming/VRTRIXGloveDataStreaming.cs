@@ -140,7 +140,8 @@ namespace VRTRIX
         {
             LH = new VRTRIXDataWrapper(AdvancedMode, version, HANDTYPE.LEFT_HAND);
             RH = new VRTRIXDataWrapper(AdvancedMode, version, HANDTYPE.RIGHT_HAND);
-
+            int gloveCount = VRTRIXDataWrapper.GetGloveCount();
+            print("Found " + gloveCount + " gloves connected to PC.");
             Dictionary<VRTRIXBones, VRTRIXFingerStatusThreshold> thresholdMap = new Dictionary<VRTRIXBones, VRTRIXFingerStatusThreshold>();
             for (int i = 0; i < (int)VRTRIXBones.NumOfBones - 2; ++i)
             {
