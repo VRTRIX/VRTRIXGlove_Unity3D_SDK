@@ -10,6 +10,7 @@
 //=============================================================================
 using AOT;
 using System;
+using System.Text;
 using System.Runtime.InteropServices;
 using UnityEngine;
 
@@ -295,6 +296,16 @@ namespace VRTRIX
         /// <param name="benddown_threshold">threshold value to set</param>
         [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         public static extern void SetBendDownThreshold(IntPtr glove, double benddown_threshold);
+        /// <summary>
+        /// Get connected glove count.
+        /// </summary>
+        [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+        public static extern int GetGloveCount();
+        /// <summary>
+        /// Get connected glove port info.
+        /// </summary>
+        [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+        public static extern void GetPortInfo(int index, HANDTYPE type, StringBuilder deviceSN);
         #endregion
 
 
@@ -333,7 +344,19 @@ namespace VRTRIX
             int portNum = 11002 + id;
             // Register call back function
             RegisterCallBack();
-            Debug.Log("Try to connect glove index " + id + " ip: " + serverIP);
+            if(hand_type == HANDTYPE.LEFT_HAND)
+            {
+                StringBuilder LHdeviceSN = new StringBuilder(10);
+                GetPortInfo(id, HANDTYPE.LEFT_HAND, LHdeviceSN);
+                Debug.Log("Try to connect glove index " + id + " IP: " + serverIP + " LHdeviceSN: " + LHdeviceSN);
+            }
+            else if(hand_type == HANDTYPE.RIGHT_HAND)
+            {
+                StringBuilder RHdeviceSN = new StringBuilder(10);
+                GetPortInfo(id, HANDTYPE.RIGHT_HAND, RHdeviceSN);
+                Debug.Log("Try to connect glove index " + id + " IP: " + serverIP + " RHdeviceSN: " + RHdeviceSN);
+            }
+
             ConnectDataGlove(glove, id, serverIP, portNum.ToString());
             stat = VRTRIXGloveStatus.TRYTOCONNECT;
         }
