@@ -32,7 +32,9 @@ namespace VRTRIX
         //Scissor,rock and paper
         BUTTONPAPER = BUTTONFIVE,
         BUTTONSCISSOR = BUTTONTWO,
-        BUTTONROCK = 0x400
+        BUTTONROCK = 0x400,
+
+        BUTTONTELEPORTCANCEL = 0x800
     };
 
     public enum VRTRIXGloveDynamicGesture
@@ -228,6 +230,14 @@ namespace VRTRIX
                 curGesture = curGesture | VRTRIXGloveGesture.BUTTONOK;
             }
 
+            //Button Teleport Cancel Detection
+            if (fingerStat.ThumbStat >= VRTRIXFingerStatus.CURVED && (fingerStat.IndexStat >= VRTRIXFingerStatus.BEND_DOWN ||
+                fingerStat.MiddleStat >= VRTRIXFingerStatus.BEND_DOWN) && fingerStat.RingStat >= VRTRIXFingerStatus.CURVED &&
+                fingerStat.PinkyStat >= VRTRIXFingerStatus.CURVED)
+            {
+                curGesture = curGesture | VRTRIXGloveGesture.BUTTONTELEPORTCANCEL;
+            }
+            
             //Button Grab Detection
             if (fingerStat.ThumbStat >= VRTRIXFingerStatus.BEND_DOWN && fingerStat.IndexStat >= VRTRIXFingerStatus.CURVED &&
                 fingerStat.MiddleStat >= VRTRIXFingerStatus.CURVED && fingerStat.RingStat >= VRTRIXFingerStatus.CURVED &&

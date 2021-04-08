@@ -623,7 +623,8 @@ namespace VRTRIX {
         //-------------------------------------------------
         public bool GetTeleportButtonUp()
         {
-            return (gloveVR.GetGesture(this.GetHandType()) & VRTRIXGloveGesture.BUTTONTELEPORT) == VRTRIXGloveGesture.BUTTONINVALID;
+            return (gloveVR.GetGesture(this.GetHandType()) & VRTRIXGloveGesture.BUTTONTELEPORT) == VRTRIXGloveGesture.BUTTONINVALID
+                && (gloveVR.GetGesture(this.GetHandType()) & VRTRIXGloveGesture.BUTTONTELEPORTCANCEL) == VRTRIXGloveGesture.BUTTONINVALID;
         }
 
 
