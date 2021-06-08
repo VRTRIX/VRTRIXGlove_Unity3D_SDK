@@ -280,69 +280,6 @@ namespace VRTRIX
             }
         }
 
-        //数据手套硬件地磁校准数据储存，仅在磁场大幅度变化后使用。
-        //! Save hardware calibration parameters in IMU, only used in magnetic field changed dramatically.
-        public void OnHardwareCalibrate(HANDTYPE type)
-        {
-            if (type == HANDTYPE.LEFT_HAND && LH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED && LH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED)
-            {
-                LH.OnSaveCalibration();
-            }
-            if (type == HANDTYPE.RIGHT_HAND && RH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED && RH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED)
-            {
-                RH.OnSaveCalibration();
-            }
-            if (type == HANDTYPE.BOTH_HAND
-                && LH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED
-                && RH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED)
-            {
-                LH.OnSaveCalibration();
-                RH.OnSaveCalibration();
-            }
-        }
-
-        //数据手套振动
-        //! Trigger a haptic vibration on data glove.
-        public void OnVibrate(HANDTYPE type)
-        {
-            if (type == HANDTYPE.LEFT_HAND && LH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED)
-            {
-                LH.VibratePeriod(500);
-            }
-            if (type == HANDTYPE.RIGHT_HAND && RH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED)
-            {
-                RH.VibratePeriod(500);
-            }
-            if (type == HANDTYPE.BOTH_HAND
-                && LH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED
-                && RH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED)
-            {
-                LH.VibratePeriod(500);
-                RH.VibratePeriod(500);
-            }
-        }
-
-        //数据手套手动跳频
-        //! Switch radio channel of data glove. Only used for testing/debuging. Automatic channel switching is enabled by default in normal mode.
-        public void OnChannelHopping(HANDTYPE type)
-        {
-            if (type == HANDTYPE.LEFT_HAND && LH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED && LH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED)
-            {
-                LH.ChannelHopping();
-            }
-            if (type == HANDTYPE.RIGHT_HAND && RH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED && RH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED)
-            {
-                RH.ChannelHopping();
-            }
-            if (type == HANDTYPE.BOTH_HAND
-                && LH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED
-                && RH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED)
-            {
-                LH.ChannelHopping();
-                RH.ChannelHopping();
-            }
-        }
-
         //数据手套设置手背初始方向。
         //! Align five fingers to closed gesture (only if advanced mode is set to true). Also align wrist to the game object chosen.
         public void OnAlignWrist(HANDTYPE type)
@@ -459,113 +396,30 @@ namespace VRTRIX
             return fingerTransformArray[(int)bone];
         }
 
-        //获取磁场校准水平，值越小代表效果越好
-        //! Get current calibration score for specific IMU sensor
-        /*! 
-         * \param bone specific joint of hand.
-         * \return current calibration score for specific IMU sensor. Lower value of score means better calibration performance.
-         */
-        public int GetCalScore(VRTRIXBones bone)
-        {
-            if ((int)bone < 16)
-            {
-                return RH.GetReceivedCalScore(bone);
-            }
-            else
-            {
-                return LH.GetReceivedCalScore(bone);
-            }
-        }
-
-        //获取信号强度，值越大代表信号越强
-        //! Get radio strength of data glove 
+        //获取按钮状态
+        //! Get current button status of gloves according to hand type
         /*! 
          * \param type Data glove hand type.
-         * \return radio strength of data glove. Higher value of score means better radio strength.         
+         * \return current button status. 
          */
-        public int GetReceiveRadioStrength(HANDTYPE type)
+        public int GetButtonStat(HANDTYPE type)
         {
             switch (type)
             {
                 case HANDTYPE.RIGHT_HAND:
                     {
-                        return RH.GetReceiveRadioStrength();
+                        return RH.GetReceivedButtonStat();
                     }
                 case HANDTYPE.LEFT_HAND:
                     {
-                        return LH.GetReceiveRadioStrength();
+                        return LH.GetReceivedButtonStat();
                     }
                 default:
                     return 0;
             }
         }
 
-        //获取当前通信信道，1-100共100个信道
-        //! Get current radio channel of data glove used
-        /*! 
-         * \param type Data glove hand type.
-         * \return current radio channel of data glove used.         
-         */
-        public int GetReceiveRadioChannel(HANDTYPE type)
-        {
-            switch (type)
-            {
-                case HANDTYPE.RIGHT_HAND:
-                    {
-                        return RH.GetReceiveRadioChannel();
-                    }
-                case HANDTYPE.LEFT_HAND:
-                    {
-                        return LH.GetReceiveRadioChannel();
-                    }
-                default:
-                    return 0;
-            }
-        }
-        //获取电量
-        //! Get current battery level in percentage of data glove
-        /*! 
-         * \param type Data glove hand type.
-         * \return current battery level in percentage of data glove.         
-         */
-        public float GetBatteryLevel(HANDTYPE type)
-        {
-            switch (type)
-            {
-                case HANDTYPE.RIGHT_HAND:
-                    {
-                        return RH.GetReceiveBattery();
-                    }
-                case HANDTYPE.LEFT_HAND:
-                    {
-                        return LH.GetReceiveBattery();
-                    }
-                default:
-                    return 0;
-            }
-        }
-        //获取磁场校准水平均值
-        //! Get current calibration score average value
-        /*! 
-         * \param type Data glove hand type.
-         * \return current calibration score average value.
-         */
-        public int GetReceivedCalScoreMean(HANDTYPE type)
-        {
-            switch (type)
-            {
-                case HANDTYPE.RIGHT_HAND:
-                    {
-                        return RH.GetReceivedCalScoreMean();
-                    }
-                case HANDTYPE.LEFT_HAND:
-                    {
-                        return LH.GetReceivedCalScoreMean();
-                    }
-                default:
-                    return 0;
-            }
-        }
+
 
         //获取实际帧率
         //! Get data rate received per second 

@@ -30,18 +30,10 @@ namespace VRTRIX
         private GameObject m_ParametersPanel;
 
         private GameObject m_Status;
-        private GameObject m_LHRadio;
-        private GameObject m_RHRadio;
-        private GameObject m_LHBattery;
-        private GameObject m_RHBattery;
-        private GameObject m_LHRadioBar;
-        private GameObject m_RHRadioBar;
         private GameObject m_LHCal;
         private GameObject m_RHCal;
         private GameObject m_LHCalBar;
         private GameObject m_RHCalBar;
-        private GameObject m_LHCalStat;
-        private GameObject m_RHCalStat;
         private GameObject m_LHDataRate;
         private GameObject m_RHDataRate;
 
@@ -58,7 +50,6 @@ namespace VRTRIX
         private GameObject m_ThumbOffsetResetButton;
 
         private GameObject m_AlignFingerButton;
-        private GameObject m_HardwareCalButton;
 
         private VRTRIXGloveDataStreaming glove3D;
 
@@ -66,8 +57,6 @@ namespace VRTRIX
         private int m_frameCounter = 0;
         private float m_timeCounter = 0.0f;
         private float m_lastFramerate = 0.0f;
-        private int m_radioStrengthLH = 0;
-        private int m_radioStrengthRH = 0;
         public float m_refreshTime = 1.0f;
         private Quaternion m_lastFrameQuat = Quaternion.identity;
         // Use this for initialization
@@ -88,18 +77,10 @@ namespace VRTRIX
                 m_RHResetButton = FindDeepChild(m_canvas.gameObject.transform, "RH_Reset");
 
                 m_Status = FindDeepChild(m_canvas.gameObject.transform, "STATUS");
-                m_LHRadio = FindDeepChild(m_canvas.gameObject.transform, "LH_RADIO");
-                m_RHRadio = FindDeepChild(m_canvas.gameObject.transform, "RH_RADIO");
-                m_LHBattery = FindDeepChild(m_canvas.gameObject.transform, "LH_BATTERY");
-                m_RHBattery = FindDeepChild(m_canvas.gameObject.transform, "RH_BATTERY");
-                m_LHRadioBar = FindDeepChild(m_canvas.gameObject.transform, "LH_RADIO_BAR");
-                m_RHRadioBar = FindDeepChild(m_canvas.gameObject.transform, "RH_RADIO_BAR");
                 m_LHCal = FindDeepChild(m_canvas.gameObject.transform, "LH_CAL");
                 m_RHCal = FindDeepChild(m_canvas.gameObject.transform, "RH_CAL");
                 m_LHCalBar = FindDeepChild(m_canvas.gameObject.transform, "LH_CAL_BAR");
                 m_RHCalBar = FindDeepChild(m_canvas.gameObject.transform, "RH_CAL_BAR");
-                m_LHCalStat = FindDeepChild(m_canvas.gameObject.transform, "LH_Cal_Status");
-                m_RHCalStat = FindDeepChild(m_canvas.gameObject.transform, "RH_Cal_Status");
                 m_LHDataRate = FindDeepChild(m_canvas.gameObject.transform, "LH_DATARATE");
                 m_RHDataRate = FindDeepChild(m_canvas.gameObject.transform, "RH_DATARATE");
 
@@ -118,13 +99,10 @@ namespace VRTRIX
                 m_ThumbOffsetSelectorDropdown = FindDeepChild(m_canvas.gameObject.transform, "ThumbOffsetSelectorDropdown");
                 m_ThumbOffsetResetButton = FindDeepChild(m_canvas.gameObject.transform, "ThumbOffsetResetButton");
                 m_AlignFingerButton = FindDeepChild(m_canvas.gameObject.transform, "AlignFingerButton");
-                m_HardwareCalButton = FindDeepChild(m_canvas.gameObject.transform, "8FigureCalButton");
 
                 m_ServerIP.GetComponent<InputField>().text = "127.0.0.1";
                 m_ConnectButton.GetComponentInChildren<Text>().text = "Connect";
                 m_ConnectButton.GetComponent<Button>().onClick.AddListener(OnConnectGlovePressed);
-                m_LHHapticsButton.GetComponent<Button>().onClick.AddListener(OnLHTriggerHapticsPressed);
-                m_RHHapticsButton.GetComponent<Button>().onClick.AddListener(OnRHTriggerHapticsPressed);
                 m_LHResetButton.GetComponent<Button>().onClick.AddListener(OnLHResetPressed);
                 m_RHResetButton.GetComponent<Button>().onClick.AddListener(OnRHResetPressed);
                 m_ParameterPanelToggle.GetComponent<Toggle>().onValueChanged.AddListener(OnToggleParamPanel);
@@ -145,8 +123,6 @@ namespace VRTRIX
                 m_ThumbOffsetSelectorDropdown.GetComponent<Dropdown>().onValueChanged.AddListener(OnToggleThumbIndex);
                 m_ThumbOffsetResetButton.GetComponent<Button>().onClick.AddListener(OnResetThumbOffset);
                 m_AlignFingerButton.GetComponent<Button>().onClick.AddListener(OnAlignFinger);
-                m_HardwareCalButton.GetComponent<Button>().onClick.AddListener(OnHardwareCal);
-
             }
             catch (Exception e)
             {
@@ -162,23 +138,14 @@ namespace VRTRIX
                 if (m_timeCounter < m_refreshTime)
                 {
                     m_timeCounter += Time.deltaTime;
-                    m_radioStrengthRH += glove3D.GetReceiveRadioStrength(HANDTYPE.RIGHT_HAND);
-                    m_radioStrengthLH += glove3D.GetReceiveRadioStrength(HANDTYPE.LEFT_HAND);
                     m_frameCounter++;
                 }
                 else
                 {
                     m_lastFramerate = (int)Math.Ceiling((float)m_frameCounter / m_timeCounter);
-                    m_RHRadio.GetComponent<Text>().text = "Radio Strength:  " + (m_radioStrengthRH / m_frameCounter).ToString() + " dB";
-                    m_LHRadio.GetComponent<Text>().text = "Radio Strength:  " + (m_radioStrengthLH / m_frameCounter).ToString() + " dB";
-
-                    RadioStrengthGUI(m_RHRadioBar.GetComponent<Image>(), m_radioStrengthRH / m_frameCounter);
-                    RadioStrengthGUI(m_LHRadioBar.GetComponent<Image>(), m_radioStrengthLH / m_frameCounter);
 
                     m_frameCounter = 0;
                     m_timeCounter = 0.0f;
-                    m_radioStrengthRH = 0;
-                    m_radioStrengthLH = 0;
                 }
 
                 m_FPS.GetComponent<Text>().text = "Frame Rate:   " + m_lastFramerate.ToString() + " fps";
@@ -193,16 +160,12 @@ namespace VRTRIX
 
 
                 //Right hand parameters
-                m_RHCalStat.SetActive(glove3D.GetReceivedCalScoreMean(HANDTYPE.RIGHT_HAND) > 5 && glove3D.GetGloveConnectionStat(HANDTYPE.RIGHT_HAND));
-                CalScoreGUI(m_RHCalBar.GetComponent<Image>(), glove3D.GetReceivedCalScoreMean(HANDTYPE.RIGHT_HAND));
-                m_RHBattery.GetComponent<Text>().text = "Battery:  " + glove3D.GetBatteryLevel(HANDTYPE.RIGHT_HAND).ToString() + " %";
+                CalScoreGUI(m_RHCalBar.GetComponent<Image>(), glove3D.GetButtonStat(HANDTYPE.RIGHT_HAND));
                 m_RHDataRate.GetComponent<Text>().text = "Data Rate: " + glove3D.GetReceivedDataRate(HANDTYPE.RIGHT_HAND).ToString() + "/s";
 
 
                 //Left hand parameters
-                m_LHCalStat.SetActive(glove3D.GetReceivedCalScoreMean(HANDTYPE.LEFT_HAND) > 5 && glove3D.GetGloveConnectionStat(HANDTYPE.LEFT_HAND));
-                CalScoreGUI(m_LHCalBar.GetComponent<Image>(), glove3D.GetReceivedCalScoreMean(HANDTYPE.LEFT_HAND));
-                m_LHBattery.GetComponent<Text>().text = "Battery:  " + glove3D.GetBatteryLevel(HANDTYPE.LEFT_HAND).ToString() + " %";
+                CalScoreGUI(m_LHCalBar.GetComponent<Image>(), glove3D.GetButtonStat(HANDTYPE.LEFT_HAND));
                 m_LHDataRate.GetComponent<Text>().text = "Data Rate: " + glove3D.GetReceivedDataRate(HANDTYPE.LEFT_HAND).ToString() + "/s";
             }
             catch (Exception e)
@@ -245,14 +208,6 @@ namespace VRTRIX
             m_ConnectButton.GetComponentInChildren<Text>().text = "Connect";
             m_ConnectButton.GetComponent<Button>().onClick.RemoveAllListeners();
             m_ConnectButton.GetComponent<Button>().onClick.AddListener(OnConnectGlovePressed);
-        }
-        public void OnLHTriggerHapticsPressed()
-        {
-            glove3D.OnVibrate(HANDTYPE.LEFT_HAND);
-        }
-        public void OnRHTriggerHapticsPressed()
-        {
-            glove3D.OnVibrate(HANDTYPE.RIGHT_HAND);
         }
         public void OnLHResetPressed()
         {
@@ -359,11 +314,6 @@ namespace VRTRIX
             HANDTYPE type = (HANDTYPE)m_HandTypeDropDown.GetComponent<Dropdown>().value + 2;
             glove3D.OnAlignFingers(type);
         }
-        public void OnHardwareCal()
-        {
-            HANDTYPE type = (HANDTYPE)m_HandTypeDropDown.GetComponent<Dropdown>().value + 2;
-            glove3D.OnHardwareCalibrate(type);
-        }
 
         public void OnFingerSpacingChanged(float value)
         {
@@ -458,37 +408,16 @@ namespace VRTRIX
             UpdateUIValue((HANDTYPE)m_HandTypeDropDown.GetComponent<Dropdown>().value + 2);
         }
 
-        private static void RadioStrengthGUI(Image image, int radiostrength)
-        {
-            image.fillAmount = ((radiostrength + 100) / 70f > 1) ? 1 : ((radiostrength + 100) / 70f);
-            if (radiostrength < -80)
-            {
-                image.color = Color.red;
-            }
-            else if (radiostrength < -55)
-            {
-                image.color = Color.yellow;
-            }
-            else
-            {
-                image.color = Color.green;
-            }
-        }
-
         private static void CalScoreGUI(Image image, int calscore)
         {
-            image.fillAmount = (calscore / 15f > 1) ? 0 : (1 - calscore / 15f);
-            if (calscore > 9)
+            //image.fillAmount = (calscore / 15f > 1) ? 0 : (1 - calscore / 15f);
+            if (calscore == 1)
             {
-                image.color = Color.red;
-            }
-            else if (calscore > 5)
-            {
-                image.color = Color.yellow;
+                image.color = Color.green;
             }
             else
             {
-                image.color = Color.green;
+                image.color = Color.red;
             }
         }
 

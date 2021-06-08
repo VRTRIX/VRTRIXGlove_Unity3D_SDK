@@ -471,6 +471,15 @@ namespace VRTRIX {
             return data_rate;
         }
 
+        //! Get button status 
+        /*! 
+         * \return button status received.         
+         */
+        public int GetReceivedButtonStat()
+        {
+            return calscore;
+        }
+
         //! Get radio strength of data glove 
         /*! 
          * \return radio strength of data glove.         
