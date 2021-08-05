@@ -119,7 +119,8 @@ namespace VRTRIX
         private Matrix4x4 ml_axisoffset, mr_axisoffset;
         private Vector3[] thumb_offset_L_default = new Vector3[3];
         private Vector3[] thumb_offset_R_default = new Vector3[3];
-
+        private float lh_orig_height = 0;
+        private float rh_orig_height = 0;
         void Start()
         {
             LH = new VRTRIXDataWrapper(AdvancedMode, version, HANDTYPE.LEFT_HAND);
@@ -170,6 +171,8 @@ namespace VRTRIX
                 }
             }
 
+            rh_orig_height = fingerTransformArray[(int)VRTRIXBones.R_Arm].localPosition.y;
+            lh_orig_height = fingerTransformArray[(int)VRTRIXBones.L_Arm].localPosition.y;
 
             VRTRIXGloveStatusUIUpdate UI = this.gameObject.GetComponent<VRTRIXGloveStatusUIUpdate>();
             if (UI == null)
@@ -193,7 +196,7 @@ namespace VRTRIX
                     if (obj != null)
                     {
                         Vector3 translation = RH.GetReceivedTranslation();
-                        obj.position = new Vector3(-translation.x, translation.y, translation.z);
+                        obj.localPosition = new Vector3(-translation.x, translation.y + rh_orig_height, translation.z);
                     }
                 }
                 //以下是设置右手每个骨骼节点全局旋转(global rotation)；
@@ -219,7 +222,7 @@ namespace VRTRIX
                     if (obj != null)
                     {
                         Vector3 translation = LH.GetReceivedTranslation();
-                        obj.position = new Vector3(-translation.x, translation.y, translation.z);
+                        obj.localPosition = new Vector3(-translation.x, translation.y + lh_orig_height, translation.z);
                     }
                 }
 

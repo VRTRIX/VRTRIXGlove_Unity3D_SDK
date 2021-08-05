@@ -153,7 +153,7 @@ namespace VRTRIX
                 fingerStat.RingStat = GetCurrentFingerStatus(fingerData.ringBendAngle, VRTRIXBones.L_Ring_2);
                 fingerStat.PinkyStat = GetCurrentFingerStatus(fingerData.pinkyBendAngle, VRTRIXBones.L_Pinky_2);
                 //Debug.Log("ThumbAngle: " + fingerData.thumbBendAngle + ", IndexAngle: " + fingerData.indexBendAngle + ", MiddleAngle: " + fingerData.middleBendAngle 
-                //    + ", RingAngle: " + fingerData.ringBendAngle + ", PinkyAngle: " + fingerData.pinkyBendAngle);
+                //+ ", RingAngle: " + fingerData.ringBendAngle + ", PinkyAngle: " + fingerData.pinkyBendAngle);
                 //ScrewGestureDetection(fingerData, fingerStat, HANDTYPE.LEFT_HAND);
             }
             else
@@ -409,9 +409,9 @@ namespace VRTRIX
         public VRTRIXFingerStatus GetCurrentFingerStatus(double angle, VRTRIXBones finger)
         {
             VRTRIXFingerStatusThreshold threshold = m_thresholdMap[finger];
-            if (angle < threshold.bendUpThreshold) return VRTRIXFingerStatus.BEND_UP;
-            else if (angle < threshold.bendDownThreshold) return VRTRIXFingerStatus.STRAIGHT;
-            else if (angle < threshold.curvedThreshold) return VRTRIXFingerStatus.BEND_DOWN;
+            if (angle > threshold.bendUpThreshold) return VRTRIXFingerStatus.BEND_UP;
+            else if (angle > threshold.bendDownThreshold) return VRTRIXFingerStatus.STRAIGHT;
+            else if (angle > threshold.curvedThreshold) return VRTRIXFingerStatus.BEND_DOWN;
             else return VRTRIXFingerStatus.CURVED;
         }
 
