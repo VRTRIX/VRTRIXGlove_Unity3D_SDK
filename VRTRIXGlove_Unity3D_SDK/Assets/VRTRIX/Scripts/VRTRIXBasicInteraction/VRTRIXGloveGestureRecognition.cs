@@ -158,8 +158,8 @@ namespace VRTRIX
             }
             else
             {
-                fingerData = new VRTRIXFingerData(hand.GetReceivedGestureAngle(VRTRIXBones.R_Thumb_2), hand.GetReceivedGestureAngle(VRTRIXBones.R_Index_2),
-                    hand.GetReceivedGestureAngle(VRTRIXBones.R_Middle_2), hand.GetReceivedGestureAngle(VRTRIXBones.R_Ring_2), hand.GetReceivedGestureAngle(VRTRIXBones.R_Pinky_2), hand.GetReceivedRotation(VRTRIXBones.R_Hand));
+                fingerData = new VRTRIXFingerData(-hand.GetReceivedGestureAngle(VRTRIXBones.R_Thumb_2), -hand.GetReceivedGestureAngle(VRTRIXBones.R_Index_2),
+                    -hand.GetReceivedGestureAngle(VRTRIXBones.R_Middle_2), -hand.GetReceivedGestureAngle(VRTRIXBones.R_Ring_2), -hand.GetReceivedGestureAngle(VRTRIXBones.R_Pinky_2), hand.GetReceivedRotation(VRTRIXBones.R_Hand));
 
                 fingerStat.ThumbStat = GetCurrentFingerStatus(fingerData.thumbBendAngle, VRTRIXBones.R_Thumb_2);
                 fingerStat.IndexStat = GetCurrentFingerStatus(fingerData.indexBendAngle, VRTRIXBones.R_Index_2);
