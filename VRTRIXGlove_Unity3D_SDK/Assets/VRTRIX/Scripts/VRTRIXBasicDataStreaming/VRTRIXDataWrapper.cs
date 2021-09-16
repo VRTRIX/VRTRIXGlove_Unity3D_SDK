@@ -108,6 +108,7 @@ namespace VRTRIX {
         private int radio_channel;
         private int calscore;
         private Quaternion[] data = new Quaternion[16];
+        private Quaternion[] lastData = new Quaternion[16];
         private VRTRIXGloveStatus stat = VRTRIXGloveStatus.CLOSED;
 
         //! Quaternion data struction used in unmanaged C++ API.
@@ -361,6 +362,7 @@ namespace VRTRIX {
             MarshalUnmananagedArray2Struct<VRTRIX_Quat>(ptr, 16, out quat);
             for (int i = 0; i < 16; i++)
             {
+                objDataGlove.lastData[i] = objDataGlove.data[i];
                 objDataGlove.data[i] = new Quaternion(quat[i].qx, quat[i].qy, quat[i].qz, quat[i].qw);
                 //Debug.Log(hand_type.ToString() + " Received data_rate: " + quat[i].qw.ToString() + "," + quat[i].qx.ToString() + "," + quat[i].qy.ToString() + "," + quat[i].qz.ToString());
             }
@@ -535,6 +537,13 @@ namespace VRTRIX {
         {
             if ((int)bone < (int)VRTRIXBones.L_Hand) return data[(int)bone];
             else if ((int)bone < (int)VRTRIXBones.R_Arm) return data[(int)bone - 16];
+            else return Quaternion.identity;
+        }
+
+        public Quaternion GetLastReceivedRotation(VRTRIXBones bone)
+        {
+            if ((int)bone < (int)VRTRIXBones.L_Hand) return lastData[(int)bone];
+            else if ((int)bone < (int)VRTRIXBones.R_Arm) return lastData[(int)bone - 16];
             else return Quaternion.identity;
         }
 

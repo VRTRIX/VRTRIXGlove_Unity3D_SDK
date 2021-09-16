@@ -51,6 +51,20 @@ namespace VRTRIX
 
         private GameObject m_AlignFingerButton;
 
+        private GameObject m_LH_Wrist;
+        private GameObject m_LH_Thumb;
+        private GameObject m_LH_Index;
+        private GameObject m_LH_Middle;
+        private GameObject m_LH_Ring;
+        private GameObject m_LH_Pinky;
+        private GameObject m_RH_Wrist;
+        private GameObject m_RH_Thumb;
+        private GameObject m_RH_Index;
+        private GameObject m_RH_Middle;
+        private GameObject m_RH_Ring;
+        private GameObject m_RH_Pinky;
+        private GameObject m_LHValid;
+        private GameObject m_RHValid;
         private VRTRIXGloveDataStreaming glove3D;
 
         private Vector3[] thumb_offset = new Vector3[3];
@@ -99,6 +113,24 @@ namespace VRTRIX
                 m_ThumbOffsetSelectorDropdown = FindDeepChild(m_canvas.gameObject.transform, "ThumbOffsetSelectorDropdown");
                 m_ThumbOffsetResetButton = FindDeepChild(m_canvas.gameObject.transform, "ThumbOffsetResetButton");
                 m_AlignFingerButton = FindDeepChild(m_canvas.gameObject.transform, "AlignFingerButton");
+
+                m_LH_Wrist = FindDeepChild(m_canvas.gameObject.transform, "LH_Wrist");
+                m_LH_Thumb = FindDeepChild(m_canvas.gameObject.transform, "LH_Thumb");
+                m_LH_Index = FindDeepChild(m_canvas.gameObject.transform, "LH_Index");
+                m_LH_Middle = FindDeepChild(m_canvas.gameObject.transform, "LH_Middle");
+                m_LH_Ring = FindDeepChild(m_canvas.gameObject.transform, "LH_Ring");
+                m_LH_Pinky = FindDeepChild(m_canvas.gameObject.transform, "LH_Pinky");
+
+                m_RH_Wrist = FindDeepChild(m_canvas.gameObject.transform, "RH_Wrist");
+                m_RH_Thumb = FindDeepChild(m_canvas.gameObject.transform, "RH_Thumb");
+                m_RH_Index = FindDeepChild(m_canvas.gameObject.transform, "RH_Index");
+                m_RH_Middle = FindDeepChild(m_canvas.gameObject.transform, "RH_Middle");
+                m_RH_Ring = FindDeepChild(m_canvas.gameObject.transform, "RH_Ring");
+                m_RH_Pinky = FindDeepChild(m_canvas.gameObject.transform, "RH_Pinky");
+
+                m_LHValid = FindDeepChild(m_canvas.gameObject.transform, "LH_Valid");
+                m_RHValid = FindDeepChild(m_canvas.gameObject.transform, "RH_Valid");
+
 
                 m_ServerIP.GetComponent<InputField>().text = "127.0.0.1";
                 m_ConnectButton.GetComponentInChildren<Text>().text = "Connect";
@@ -162,11 +194,24 @@ namespace VRTRIX
                 //Right hand parameters
                 CalScoreGUI(m_RHCalBar.GetComponent<Image>(), glove3D.GetButtonStat(HANDTYPE.RIGHT_HAND));
                 m_RHDataRate.GetComponent<Text>().text = "Data Rate: " + glove3D.GetReceivedDataRate(HANDTYPE.RIGHT_HAND).ToString() + "/s";
-
-
+                m_RH_Wrist.GetComponent<Text>().text = "Wrist: " + glove3D.GetReceivedData(HANDTYPE.RIGHT_HAND, VRTRIXBones.R_Hand).ToString("F4");
+                m_RH_Thumb.GetComponent<Text>().text = "Thumb: " + glove3D.GetReceivedData(HANDTYPE.RIGHT_HAND, VRTRIXBones.R_Thumb_2).ToString("F4");
+                m_RH_Index.GetComponent<Text>().text = "Index: " + glove3D.GetReceivedData(HANDTYPE.RIGHT_HAND, VRTRIXBones.R_Index_2).ToString("F4");
+                m_RH_Middle.GetComponent<Text>().text = "Middle: " + glove3D.GetReceivedData(HANDTYPE.RIGHT_HAND, VRTRIXBones.R_Middle_2).ToString("F4");
+                m_RH_Ring.GetComponent<Text>().text = "Ring: " + glove3D.GetReceivedData(HANDTYPE.RIGHT_HAND, VRTRIXBones.R_Ring_2).ToString("F4");
+                m_RH_Pinky.GetComponent<Text>().text = "Pinky: " + glove3D.GetReceivedData(HANDTYPE.RIGHT_HAND, VRTRIXBones.R_Pinky_2).ToString("F4");
+                DataValidGUI(m_RHValid.GetComponent<Image>(), glove3D.GetDataValid(HANDTYPE.RIGHT_HAND));
+                
                 //Left hand parameters
                 CalScoreGUI(m_LHCalBar.GetComponent<Image>(), glove3D.GetButtonStat(HANDTYPE.LEFT_HAND));
                 m_LHDataRate.GetComponent<Text>().text = "Data Rate: " + glove3D.GetReceivedDataRate(HANDTYPE.LEFT_HAND).ToString() + "/s";
+                m_LH_Wrist.GetComponent<Text>().text = "Wrist: " + glove3D.GetReceivedData(HANDTYPE.LEFT_HAND, VRTRIXBones.L_Hand).ToString("F4");
+                m_LH_Thumb.GetComponent<Text>().text = "Thumb: " + glove3D.GetReceivedData(HANDTYPE.LEFT_HAND, VRTRIXBones.L_Thumb_2).ToString("F4");
+                m_LH_Index.GetComponent<Text>().text = "Index: " + glove3D.GetReceivedData(HANDTYPE.LEFT_HAND, VRTRIXBones.L_Index_2).ToString("F4");
+                m_LH_Middle.GetComponent<Text>().text = "Middle: " + glove3D.GetReceivedData(HANDTYPE.LEFT_HAND, VRTRIXBones.L_Middle_2).ToString("F4");
+                m_LH_Ring.GetComponent<Text>().text = "Ring: " + glove3D.GetReceivedData(HANDTYPE.LEFT_HAND, VRTRIXBones.L_Ring_2).ToString("F4");
+                m_LH_Pinky.GetComponent<Text>().text = "Pinky: " + glove3D.GetReceivedData(HANDTYPE.LEFT_HAND, VRTRIXBones.L_Pinky_2).ToString("F4");
+                DataValidGUI(m_LHValid.GetComponent<Image>(), glove3D.GetDataValid(HANDTYPE.LEFT_HAND));
             }
             catch (Exception e)
             {
@@ -412,6 +457,18 @@ namespace VRTRIX
         {
             //image.fillAmount = (calscore / 15f > 1) ? 0 : (1 - calscore / 15f);
             if (calscore == 1)
+            {
+                image.color = Color.green;
+            }
+            else
+            {
+                image.color = Color.red;
+            }
+        }
+
+        private static void DataValidGUI(Image image, bool isValid)
+        {
+            if (isValid)
             {
                 image.color = Color.green;
             }

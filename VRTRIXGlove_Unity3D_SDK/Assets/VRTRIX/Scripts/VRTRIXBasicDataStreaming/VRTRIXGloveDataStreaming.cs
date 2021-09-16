@@ -121,7 +121,6 @@ namespace VRTRIX
         private Vector3[] thumb_offset_L_default = new Vector3[3];
         private Vector3[] thumb_offset_R_default = new Vector3[3];
 
-
         void Start()
         {
             LH = new VRTRIXDataWrapper(AdvancedMode, version, HANDTYPE.LEFT_HAND);
@@ -419,8 +418,6 @@ namespace VRTRIX
             }
         }
 
-
-
         //获取实际帧率
         //! Get data rate received per second 
         /*! 
@@ -444,6 +441,53 @@ namespace VRTRIX
             }
         }
 
+        public Quaternion GetReceivedData(HANDTYPE type, VRTRIXBones bone)
+        {
+            switch (type)
+            {
+                case HANDTYPE.RIGHT_HAND:
+                    {
+                        return RH.GetReceivedRotation(bone);
+                    }
+                case HANDTYPE.LEFT_HAND:
+                    {
+                        return LH.GetReceivedRotation(bone);
+                    }
+                default:
+                    return Quaternion.identity;
+            }
+        }
+
+        public bool GetDataValid(HANDTYPE type)
+        {
+            bool isValid = true;
+            switch (type)
+            {
+                case HANDTYPE.RIGHT_HAND:
+                    {
+                        isValid = isValid && IsValidQuat(RH.GetReceivedRotation(VRTRIXBones.R_Hand)) && (RH.GetReceivedRotation(VRTRIXBones.R_Hand) != Quaternion.identity);
+                        isValid = isValid && IsValidQuat(RH.GetReceivedRotation(VRTRIXBones.R_Thumb_2)) && (RH.GetReceivedRotation(VRTRIXBones.R_Thumb_2) != Quaternion.identity);
+                        isValid = isValid && IsValidQuat(RH.GetReceivedRotation(VRTRIXBones.R_Index_2)) && (RH.GetReceivedRotation(VRTRIXBones.R_Index_2) != Quaternion.identity);
+                        isValid = isValid && IsValidQuat(RH.GetReceivedRotation(VRTRIXBones.R_Middle_2)) && (RH.GetReceivedRotation(VRTRIXBones.R_Middle_2) != Quaternion.identity);
+                        isValid = isValid && IsValidQuat(RH.GetReceivedRotation(VRTRIXBones.R_Ring_2)) && (RH.GetReceivedRotation(VRTRIXBones.R_Ring_2) != Quaternion.identity);
+                        isValid = isValid && IsValidQuat(RH.GetReceivedRotation(VRTRIXBones.R_Pinky_2)) && (RH.GetReceivedRotation(VRTRIXBones.R_Pinky_2) != Quaternion.identity);
+                        return isValid;
+                    }
+                case HANDTYPE.LEFT_HAND:
+                    {
+                        isValid = isValid && IsValidQuat(LH.GetReceivedRotation(VRTRIXBones.L_Hand)) && (LH.GetReceivedRotation(VRTRIXBones.L_Hand) != Quaternion.identity);
+                        isValid = isValid && IsValidQuat(LH.GetReceivedRotation(VRTRIXBones.L_Thumb_2)) && (LH.GetReceivedRotation(VRTRIXBones.L_Thumb_2) != Quaternion.identity);
+                        isValid = isValid && IsValidQuat(LH.GetReceivedRotation(VRTRIXBones.L_Index_2)) && (LH.GetReceivedRotation(VRTRIXBones.L_Index_2) != Quaternion.identity);
+                        isValid = isValid && IsValidQuat(LH.GetReceivedRotation(VRTRIXBones.L_Middle_2)) && (LH.GetReceivedRotation(VRTRIXBones.L_Middle_2) != Quaternion.identity);
+                        isValid = isValid && IsValidQuat(LH.GetReceivedRotation(VRTRIXBones.L_Ring_2)) && (LH.GetReceivedRotation(VRTRIXBones.L_Ring_2) != Quaternion.identity);
+                        isValid = isValid && IsValidQuat(LH.GetReceivedRotation(VRTRIXBones.L_Pinky_2)) && (LH.GetReceivedRotation(VRTRIXBones.L_Pinky_2) != Quaternion.identity);
+                        return isValid;
+                    }
+                default:
+                    return false;
+            }
+        }
+        
         //获取连接状态
         //! Get data glove connection status 
         /*! 
