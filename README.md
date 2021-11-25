@@ -1,7 +1,7 @@
 # Introduction [中文][chinese]
 
 <p align="center">
-  <img src="https://github.com/VRTRIX/VRTRIXGlove_Unity3D_SDK/blob/master/docs/img/digital_glove.png"/>
+  <img src="https://github.com/VRTRIX/VRTRIXGlove_Unity3D_SDK/blob/client/docs/img/digital_glove.png"/>
 </p>
 
 
@@ -21,37 +21,37 @@ This repository contains the VRTRIX Glove Unity3D Plugin, which includes assets 
 Following are the demo scenes that driving hand model in Unity with VRTRIX Data Gloves.
 
 ## 3D Demonstration
-![](https://github.com/VRTRIX/VRTRIXGlove_Unity3D_SDK/blob/master/docs/img/pair_hand.gif?raw=true)
+![](https://github.com/VRTRIX/VRTRIXGlove_Unity3D_SDK/blob/client/docs/img/pair_hand.gif?raw=true)
 
 ## OK Pose Demonstration
-![](https://github.com/VRTRIX/VRTRIXGlove_Unity3D_SDK/blob/master/docs/img/ok_pose.gif)
+![](https://github.com/VRTRIX/VRTRIXGlove_Unity3D_SDK/blob/client/docs/img/ok_pose.gif)
 
 ## Thumb Pose Demonstration
-![](https://github.com/VRTRIX/VRTRIXGlove_Unity3D_SDK/blob/master/docs/img/thumb_pose.gif)
+![](https://github.com/VRTRIX/VRTRIXGlove_Unity3D_SDK/blob/client/docs/img/thumb_pose.gif)
 
 ## Finger Heading Demonstration
-![](https://github.com/VRTRIX/VRTRIXGlove_Unity3D_SDK/blob/master/docs/img/yaw_open.gif)
+![](https://github.com/VRTRIX/VRTRIXGlove_Unity3D_SDK/blob/client/docs/img/yaw_open.gif)
 
 ## Gesture Recognition Demonstration
-![](https://github.com/VRTRIX/VRTRIXGlove_Unity3D_SDK/blob/master/docs/img/gesture_recognition.gif)
+![](https://github.com/VRTRIX/VRTRIXGlove_Unity3D_SDK/blob/client/docs/img/gesture_recognition.gif)
 
 ## 6DOF with precise finger tracking in VR
-![](https://github.com/VRTRIX/VRTRIXGlove_Unity3D_SDK/blob/master/docs/img/vr_hand.gif?raw=true)
+![](https://github.com/VRTRIX/VRTRIXGlove_Unity3D_SDK/blob/client/docs/img/vr_hand.gif?raw=true)
 
 ## Teleport in VR with hand gesture recognition
-![](https://github.com/VRTRIX/VRTRIXGlove_Unity3D_SDK/blob/master/docs/img/teleport.gif?raw=true)
+![](https://github.com/VRTRIX/VRTRIXGlove_Unity3D_SDK/blob/client/docs/img/teleport.gif?raw=true)
 
 ## Interactable
-![](https://github.com/VRTRIX/VRTRIXGlove_Unity3D_SDK/blob/master/docs/img/interactable.gif?raw=true)
+![](https://github.com/VRTRIX/VRTRIXGlove_Unity3D_SDK/blob/client/docs/img/interactable.gif?raw=true)
 
 ## Grab with gravity enabled
-![](https://github.com/VRTRIX/VRTRIXGlove_Unity3D_SDK/blob/master/docs/img/grab1.gif?raw=true)
+![](https://github.com/VRTRIX/VRTRIXGlove_Unity3D_SDK/blob/client/docs/img/grab1.gif?raw=true)
 
 ## Throwing
-![](https://github.com/VRTRIX/VRTRIXGlove_Unity3D_SDK/blob/master/docs/img/throw.gif?raw=true)
+![](https://github.com/VRTRIX/VRTRIXGlove_Unity3D_SDK/blob/client/docs/img/throw.gif?raw=true)
 
 ## UI & Buttons
-![](https://github.com/VRTRIX/VRTRIXGlove_Unity3D_SDK/blob/master/docs/img/button.gif?raw=true)
+![](https://github.com/VRTRIX/VRTRIXGlove_Unity3D_SDK/blob/client/docs/img/button.gif?raw=true)
 
 ## Support
 
@@ -59,6 +59,6 @@ Following are the demo scenes that driving hand model in Unity with VRTRIX Data 
 
 - Note that this repository may contains code for work-in-progress modules, tentative modules, or older modules that may be unsupported.We recommend using the release version packages available on the [our release page][devsite].
 
-[chinese]: https://github.com/VRTRIX/VRTRIXGlove_Unity3D_SDK/blob/master/README_CN.md "chinese"
+[chinese]: https://github.com/VRTRIX/VRTRIXGlove_Unity3D_SDK/blob/client/README_CN.md "chinese"
 [devsite]: https://github.com/VRTRIX/VRTRIXGlove_Unity3D_SDK/releases "VRTRIX Glove Unity Plugin Release site"
 [wiki]: https://github.com/VRTRIX/VRTRIXGlove_Unity3D_SDK/wiki "VRTRIX Glove Unity Plugin Wiki"
