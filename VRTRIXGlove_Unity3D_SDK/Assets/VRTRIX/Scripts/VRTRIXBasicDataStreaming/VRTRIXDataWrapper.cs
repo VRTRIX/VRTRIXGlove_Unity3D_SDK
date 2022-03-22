@@ -49,6 +49,8 @@ namespace VRTRIX
         LEFT_HAND,
         RIGHT_HAND,
         BOTH_HAND,  // Currently not supported
+        LEFT_ARM,
+        RIGHT_ARM
     };
 
     //! Glove hardware version.

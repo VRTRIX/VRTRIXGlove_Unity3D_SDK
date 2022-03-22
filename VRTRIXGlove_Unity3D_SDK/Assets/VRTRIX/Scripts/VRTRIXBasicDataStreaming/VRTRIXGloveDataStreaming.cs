@@ -49,6 +49,13 @@ namespace VRTRIX
         //! If VR is enabled, set the right hand tracker object
         public GameObject RH_tracker;
 
+        [DrawIf("IsVREnabled", true)]
+        //! If VR is enabled, set the left arm tracker object
+        public GameObject LArm_tracker;
+
+        [DrawIf("IsVREnabled", true)]
+        //! If VR is enabled, set the right arm tracker object
+        public GameObject RArm_tracker;
 
         [Header("MoCap Settings")]
         //! Mocap enable flag, set to true if integrate with Mocap, use mocap wrist data.
@@ -124,7 +131,9 @@ namespace VRTRIX
         private VRTRIXEvents.Action newTrackerPosesAction;
         private uint LH_tracker_index = OpenVR.k_unMaxTrackedDeviceCount;
         private uint RH_tracker_index = OpenVR.k_unMaxTrackedDeviceCount;
-        private bool bIsLHTrackerFound, bIsRHTrackerFound;
+        private uint LArm_tracker_index = OpenVR.k_unMaxTrackedDeviceCount;
+        private uint RArm_tracker_index = OpenVR.k_unMaxTrackedDeviceCount;
+        private bool bIsLHTrackerFound, bIsRHTrackerFound, bIsLArmTrackerFound, bIsRArmTrackerFound;
         private VRTRIXGloveGestureRecognition gestureDetector;
         private Thread LH_receivedData, RH_receivedData;
         private Quaternion qloffset, qroffset;
@@ -182,6 +191,8 @@ namespace VRTRIX
                     newTrackerPosesAction.enabled = true;
                     CheckDeviceModelName(HANDTYPE.RIGHT_HAND);
                     CheckDeviceModelName(HANDTYPE.LEFT_HAND);
+                    CheckDeviceModelName(HANDTYPE.RIGHT_ARM);
+                    CheckDeviceModelName(HANDTYPE.LEFT_ARM);
                 }
                 catch (Exception e)
                 {
@@ -906,6 +917,24 @@ namespace VRTRIX
                 RH_tracker.transform.localPosition = pose.pos;
                 RH_tracker.transform.localRotation = pose.rot * new Quaternion(0, 0, 1, 0);
             }
+
+            if (bIsLArmTrackerFound
+                && poses[LArm_tracker_index].bDeviceIsConnected
+                && poses[LArm_tracker_index].bPoseIsValid)
+            {
+                var pose = new VRTRIXUtils.RigidTransform(poses[LArm_tracker_index].mDeviceToAbsoluteTracking);
+                LArm_tracker.transform.localPosition = pose.pos;
+                LArm_tracker.transform.localRotation = pose.rot * new Quaternion(0, 0, 1, 0);
+            }
+
+            if (bIsRArmTrackerFound
+                && poses[RArm_tracker_index].bDeviceIsConnected
+                && poses[RArm_tracker_index].bPoseIsValid)
+            {
+                var pose = new VRTRIXUtils.RigidTransform(poses[RArm_tracker_index].mDeviceToAbsoluteTracking);
+                RArm_tracker.transform.localPosition = pose.pos;
+                RArm_tracker.transform.localRotation = pose.rot * new Quaternion(0, 0, 1, 0);
+            }
         }
 
         //! Check the tracked device model name stored in hardware config to find specific hardware type. (SteamVR Tracking support)
@@ -947,6 +976,26 @@ namespace VRTRIX
                         RH_tracker_index = i;
                         bIsRHTrackerFound = true;
                         print("Found Right Hand Tracker on index " + RH_tracker_index);
+                        return;
+                    }
+                }
+                else if(type == HANDTYPE.LEFT_ARM)
+                {
+                    if (s.Contains("LA"))
+                    {
+                        LArm_tracker_index = i;
+                        bIsLArmTrackerFound = true;
+                        print("Found Left Arm Tracker on index " + LArm_tracker_index);
+                        return;
+                    }
+                }
+                else if (type == HANDTYPE.RIGHT_ARM)
+                {
+                    if (s.Contains("RA"))
+                    {
+                        RArm_tracker_index = i;
+                        bIsRArmTrackerFound = true;
+                        print("Found Right Arm Tracker on index " + RArm_tracker_index);
                         return;
                     }
                 }
