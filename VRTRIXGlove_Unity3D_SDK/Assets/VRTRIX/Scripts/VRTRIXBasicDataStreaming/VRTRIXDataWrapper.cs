@@ -297,6 +297,13 @@ namespace VRTRIX
         [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         public static extern void SetBendDownThreshold(IntPtr glove, double benddown_threshold);
         /// <summary>
+        /// Set reference pose.
+        /// </summary>
+        /// <param name="glove">The data glove object</param>
+        /// <param name="qw/qx/qy/qz">reference pose to set</param>
+        [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+        public static extern void SetRefPose(IntPtr glove, double qw, double qx, double qy, double qz);
+        /// <summary>
         /// Get connected glove count.
         /// </summary>
         [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
@@ -659,6 +666,11 @@ namespace VRTRIX
             SetRadioChannelLimit(glove, upperBound, lowerBound);
         }
 
+        public void SetRefPose(Quaternion q)
+        {
+            SetRefPose(glove, q.w, q.x, q.y, q.z);
+        }
+        
         private static void MarshalUnmananagedArray2Struct<VRTRIX_Quat>(IntPtr unmanagedArray, int length, out VRTRIX_Quat[] mangagedArray)
         {
             var size = Marshal.SizeOf(typeof(VRTRIX_Quat));

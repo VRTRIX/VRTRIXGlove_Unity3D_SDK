@@ -131,7 +131,9 @@ namespace VRTRIX
         private bool qloffset_cal, qroffset_cal;
         private VRTRIXGloveGesture LH_Gesture, RH_Gesture = VRTRIXGloveGesture.BUTTONINVALID;
         private Transform[] fingerTransformArray;
-        private Matrix4x4 ml_axisoffset, mr_axisoffset;
+        private Matrix4x4 ml_axisoffset = Matrix4x4.identity;
+        private Matrix4x4 mr_axisoffset = Matrix4x4.identity;
+        private Matrix4x4 hardware_axisoffset = Matrix4x4.identity;
         private Vector3[] thumb_offset_L_default = new Vector3[3];
         private Vector3[] thumb_offset_R_default = new Vector3[3];
 
@@ -171,9 +173,10 @@ namespace VRTRIX
                 ml_axisoffset.SetRow(i, ql_axisoffset[i]);
                 mr_axisoffset.SetRow(i, qr_axisoffset[i]);
             }
-            ml_axisoffset.SetRow(3, Vector3.forward);
-            mr_axisoffset.SetRow(3, Vector3.forward);
 
+            hardware_axisoffset.SetRow(0, new Vector3(1, 0, 0));
+            hardware_axisoffset.SetRow(1, new Vector3(0, 0, -1));
+            hardware_axisoffset.SetRow(2, new Vector3(0, -1, 0));
             if (IsVREnabled)
             {
                 try
@@ -278,17 +281,11 @@ namespace VRTRIX
             }
             if (LH.GetReceivedStatus() == VRTRIXGloveStatus.DISCONNECTED)
             {
-                if((IsVREnabled && bIsLHTrackerFound) || !IsVREnabled)
-                {
-                    LH.OnConnectDataGlove((int)Index, ServerIP);
-                }
+                LH.OnConnectDataGlove((int)Index, ServerIP);
             }
             if (RH.GetReceivedStatus() == VRTRIXGloveStatus.DISCONNECTED)
             {
-                if ((IsVREnabled && bIsRHTrackerFound) || !IsVREnabled)
-                {
-                    RH.OnConnectDataGlove((int)Index, ServerIP);
-                }
+                RH.OnConnectDataGlove((int)Index, ServerIP);
             }
         }
         
@@ -692,7 +689,7 @@ namespace VRTRIX
                 else
                 {
                     Quaternion rotation = glove.GetReceivedRotation(VRTRIXBones.R_Hand);
-                    Vector3 quat_vec = mr_axisoffset.MultiplyVector(new Vector3(rotation.x, rotation.y, rotation.z));
+                    Vector3 quat_vec = mr_axisoffset.MultiplyVector(new Vector4(rotation.x, rotation.y, rotation.z, 0));
                     rotation = new Quaternion(quat_vec.x, quat_vec.y, quat_vec.z, rotation.w);
                     return RH_ObjectToAlign.transform.rotation * Quaternion.Inverse(rotation);
                 }
@@ -707,7 +704,7 @@ namespace VRTRIX
                 else
                 {
                     Quaternion rotation = glove.GetReceivedRotation(VRTRIXBones.L_Hand);
-                    Vector3 quat_vec = ml_axisoffset.MultiplyVector(new Vector3(rotation.x, rotation.y, rotation.z));
+                    Vector3 quat_vec = ml_axisoffset.MultiplyVector(new Vector4(rotation.x, rotation.y, rotation.z, 0));
                     rotation = new Quaternion(quat_vec.x, quat_vec.y, quat_vec.z, rotation.w);
                     return LH_ObjectToAlign.transform.rotation * Quaternion.Inverse(rotation);
                 }
@@ -726,7 +723,7 @@ namespace VRTRIX
             if (type == HANDTYPE.RIGHT_HAND)
             {
                 Quaternion rotation = glove.GetReceivedRotation(VRTRIXBones.R_Hand);
-                Vector3 quat_vec = mr_axisoffset.MultiplyVector(new Vector3(rotation.x, rotation.y, rotation.z));
+                Vector3 quat_vec = mr_axisoffset.MultiplyVector(new Vector4(rotation.x, rotation.y, rotation.z, 0));
                 rotation = new Quaternion(quat_vec.x, quat_vec.y, quat_vec.z, rotation.w);
                 Quaternion target =  tracker.transform.rotation * qroffset * Quaternion.Euler(0, -90, 90); 
                 return target * Quaternion.Inverse(rotation);
@@ -736,7 +733,7 @@ namespace VRTRIX
             else if (type == HANDTYPE.LEFT_HAND)
             {
                 Quaternion rotation = glove.GetReceivedRotation(VRTRIXBones.L_Hand);
-                Vector3 quat_vec = ml_axisoffset.MultiplyVector(new Vector3(rotation.x, rotation.y, rotation.z));
+                Vector3 quat_vec = ml_axisoffset.MultiplyVector(new Vector4(rotation.x, rotation.y, rotation.z, 0));
                 rotation = new Quaternion(quat_vec.x, quat_vec.y, quat_vec.z, rotation.w);
                 Quaternion target =  tracker.transform.rotation * qloffset * Quaternion.Euler(0, 90, -90);
                 return target * Quaternion.Inverse(rotation);
@@ -755,7 +752,7 @@ namespace VRTRIX
             if (type == HANDTYPE.RIGHT_HAND)
             {
                 Quaternion rotation = glove.GetReceivedRotation(VRTRIXBones.R_Hand);
-                Vector3 quat_vec = mr_axisoffset.MultiplyVector(new Vector3(rotation.x, rotation.y, rotation.z));
+                Vector3 quat_vec = mr_axisoffset.MultiplyVector(new Vector4(rotation.x, rotation.y, rotation.z, 0));
                 rotation = new Quaternion(quat_vec.x, quat_vec.y, quat_vec.z, rotation.w);
                 return wrist.transform.rotation * Quaternion.Inverse(rotation);
             }
@@ -764,7 +761,7 @@ namespace VRTRIX
             else if (type == HANDTYPE.LEFT_HAND)
             {
                 Quaternion rotation = glove.GetReceivedRotation(VRTRIXBones.L_Hand);
-                Vector3 quat_vec = ml_axisoffset.MultiplyVector(new Vector3(rotation.x, rotation.y, rotation.z));
+                Vector3 quat_vec = ml_axisoffset.MultiplyVector(new Vector4(rotation.x, rotation.y, rotation.z, 0));
                 rotation = new Quaternion(quat_vec.x, quat_vec.y, quat_vec.z, rotation.w);
                 return wrist.transform.rotation * Quaternion.Inverse(rotation);
             }
@@ -794,7 +791,7 @@ namespace VRTRIX
                 {
                     if (type == HANDTYPE.LEFT_HAND)
                     {
-                        Vector3 quat_vec = ml_axisoffset.MultiplyVector(new Vector3(rotation.x, rotation.y, rotation.z));
+                        Vector3 quat_vec = ml_axisoffset.MultiplyVector(new Vector4(rotation.x, rotation.y, rotation.z, 0));
                         rotation = new Quaternion(quat_vec.x, quat_vec.y, quat_vec.z, rotation.w);
 
 
@@ -803,6 +800,14 @@ namespace VRTRIX
                             //当VR环境下，根据固定在手腕上tracker的方向对齐手背方向。
                             obj.rotation = (bone == VRTRIXBones.L_Hand) ? CalculateTrackerOffset(LH_tracker, LH, HANDTYPE.LEFT_HAND) * rotation :
                                                                      CalculateTrackerOffset(LH_tracker, LH, HANDTYPE.LEFT_HAND)* rotation * Quaternion.Euler(ql_modeloffset);
+                            if(bone == VRTRIXBones.L_Hand)
+                            {
+                                Vector3 raw_refPose_vec = ((ml_axisoffset * hardware_axisoffset).inverse).MultiplyVector(new Vector4(obj.rotation.x, obj.rotation.y, obj.rotation.z, 0));
+                                Quaternion raw_refPose = new Quaternion(raw_refPose_vec.x, raw_refPose_vec.y, raw_refPose_vec.z, -obj.rotation.w);
+                                raw_refPose = Quaternion.Euler(90, 0, 0) * raw_refPose;
+                                //print(raw_refPose.ToString("f4"));
+                                LH.SetRefPose(raw_refPose);
+                            }
                         }
                         else if(IsMoCapEnabled)
                         {
@@ -819,12 +824,20 @@ namespace VRTRIX
                     }
                     else if (type == HANDTYPE.RIGHT_HAND)
                     {
-                        Vector3 quat_vec = mr_axisoffset.MultiplyVector(new Vector3(rotation.x, rotation.y, rotation.z));
+                        Vector3 quat_vec = mr_axisoffset.MultiplyVector(new Vector4(rotation.x, rotation.y, rotation.z, 0));
                         rotation = new Quaternion(quat_vec.x, quat_vec.y, quat_vec.z, rotation.w);
                         if (IsVREnabled)
                         {
                             obj.rotation = (bone == VRTRIXBones.R_Hand) ? CalculateTrackerOffset(RH_tracker, RH, HANDTYPE.RIGHT_HAND)* rotation :
                                                                             CalculateTrackerOffset(RH_tracker, RH, HANDTYPE.RIGHT_HAND)* rotation * Quaternion.Euler(qr_modeloffset);
+                            if (bone == VRTRIXBones.R_Hand)
+                            {
+                                Vector3 raw_refPose_vec = ((mr_axisoffset * hardware_axisoffset).inverse).MultiplyVector(new Vector4(obj.rotation.x, obj.rotation.y, obj.rotation.z, 0));
+                                Quaternion raw_refPose = new Quaternion(raw_refPose_vec.x, raw_refPose_vec.y, raw_refPose_vec.z, -obj.rotation.w);
+                                raw_refPose = Quaternion.Euler(90, 0, 0) * raw_refPose;
+                                //print(raw_refPose.ToString("f4"));
+                                RH.SetRefPose(raw_refPose);
+                            }
                         }
                         else if (IsMoCapEnabled)
                         {
