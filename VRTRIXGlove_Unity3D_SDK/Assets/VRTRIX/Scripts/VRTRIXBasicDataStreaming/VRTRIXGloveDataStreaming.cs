@@ -178,6 +178,25 @@ namespace VRTRIX
             {
                 try
                 {
+                    var system = OpenVR.System;
+                    if (system == null)
+                    {
+                        EVRInitError initError = EVRInitError.None;
+                        OpenVR.GetGenericInterface(OpenVR.IVRCompositor_Version, ref initError);
+                        bool needsInit = initError != EVRInitError.None;
+
+                        if (needsInit)
+                        {
+                            EVRInitError error = EVRInitError.None;
+                            OpenVR.Init(ref error, EVRApplicationType.VRApplication_Overlay);
+
+                            if (error != EVRInitError.None)
+                            {
+                                Debug.LogError("<b>[SteamVR]</b> Error during OpenVR Init: " + error.ToString());
+                            }
+                        }
+                    }
+
                     newTrackerPosesAction = VRTRIXEvents.NewPosesAction(OnNewTrackerPoses);
                     newTrackerPosesAction.enabled = true;
                     CheckDeviceModelName(HANDTYPE.RIGHT_HAND);
@@ -204,6 +223,7 @@ namespace VRTRIX
                 var compositor = OpenVR.Compositor;
                 if (compositor != null)
                 {
+                    compositor.SetTrackingSpace(ETrackingUniverseOrigin.TrackingUniverseStanding);
                     compositor.GetLastPoses(poses, gamePoses);
                     VRTRIXEvents.NewPoses.Send(poses);
                     VRTRIXEvents.NewPosesApplied.Send();
