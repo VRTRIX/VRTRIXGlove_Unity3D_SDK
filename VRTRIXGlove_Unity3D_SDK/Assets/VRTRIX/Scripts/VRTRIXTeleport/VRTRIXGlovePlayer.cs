@@ -265,6 +265,15 @@ namespace VRTRIX
             {
                 trackingOriginTransform = this.transform;
             }
+
+            if (hmdTransforms != null)
+            {
+                foreach (var hmd in hmdTransforms)
+                {
+                    if (hmd.GetComponent<UnityEngine.SpatialTracking.TrackedPoseDriver>() == null)
+                        hmd.gameObject.AddComponent<UnityEngine.SpatialTracking.TrackedPoseDriver>();
+                }
+            }
         }
 
 
