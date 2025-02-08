@@ -131,7 +131,7 @@ namespace VRTRIX
                 m_ParametersPanel.SetActive(false);
 
 
-                UpdateUIValue((HANDTYPE)m_HandTypeDropDown.GetComponent<Dropdown>().value + 2);
+                //UpdateUIValue((HANDTYPE)m_HandTypeDropDown.GetComponent<Dropdown>().value + 2);
                 m_HandTypeDropDown.GetComponent<Dropdown>().onValueChanged.AddListener(OnToggleHandType);
                 m_AdvancedModeToggle.GetComponent<Toggle>().onValueChanged.AddListener(OnToggleAdvancedMode);
                 m_FingerSpacingSlider.GetComponent<Slider>().onValueChanged.AddListener(OnFingerSpacingChanged);
@@ -280,6 +280,7 @@ namespace VRTRIX
         public void OnToggleParamPanel(bool bIsEnabled)
         {
             FindDeepChild(m_canvas.gameObject.transform, "ParametersPanel").SetActive(bIsEnabled);
+            UpdateUIValue(HANDTYPE.LEFT_HAND);
         }
         public void OnHandTypeDropDownChanged(int index)
         {
