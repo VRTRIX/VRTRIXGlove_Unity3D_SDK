@@ -29,6 +29,9 @@ namespace VRTRIX
         public GameObject camera;
 
         [DrawIf("IsVREnabled", false)]
+        public GameObject HeadTrackerObj;
+
+        [DrawIf("IsVREnabled", false)]
         //! If VR is NOT enabled, wrist joint need an object to align, which can be the camera, or parent joint of wrist(if a full body model is used), or can just be any other game objects.
         public GameObject LH_ObjectToAlign;
 
@@ -107,7 +110,7 @@ namespace VRTRIX
 
         public double thumb_curved_threshold;
 
-        public VRTRIXDataWrapper LH, RH;
+        public VRTRIXDataWrapper LH, RH, HeadTracker;
         private GameObject LH_tracker, RH_tracker;
         private VRTRIXGloveGestureRecognition gestureDetector;
         private Thread LH_receivedData, RH_receivedData;
@@ -121,10 +124,12 @@ namespace VRTRIX
         private Vector3[] thumb_offset_R_default = new Vector3[3];
         private float lh_orig_height = 0;
         private float rh_orig_height = 0;
+        private float head_orig_height = 0;
         void Start()
         {
             LH = new VRTRIXDataWrapper(AdvancedMode, version, HANDTYPE.LEFT_HAND);
             RH = new VRTRIXDataWrapper(AdvancedMode, version, HANDTYPE.RIGHT_HAND);
+            HeadTracker = new VRTRIXDataWrapper(AdvancedMode, version, HANDTYPE.OTHER_HAND);
 
             Dictionary<VRTRIXBones, VRTRIXFingerStatusThreshold> thresholdMap = new Dictionary<VRTRIXBones, VRTRIXFingerStatusThreshold>();
             for (int i = 0; i < (int)VRTRIXBones.NumOfBones - 2; ++i)
@@ -173,6 +178,10 @@ namespace VRTRIX
 
             rh_orig_height = fingerTransformArray[(int)VRTRIXBones.R_Arm].localPosition.y;
             lh_orig_height = fingerTransformArray[(int)VRTRIXBones.L_Arm].localPosition.y;
+            if (HeadTrackerObj != null)
+            {
+                head_orig_height = HeadTrackerObj.transform.localPosition.y;
+            }
 
             VRTRIXGloveStatusUIUpdate UI = this.gameObject.GetComponent<VRTRIXGloveStatusUIUpdate>();
             if (UI == null)
@@ -233,6 +242,18 @@ namespace VRTRIX
                 }
                 LH_Gesture = gestureDetector.GestureDetection(LH, HANDTYPE.LEFT_HAND);
             }
+
+            if (HeadTracker.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED)
+            {
+                if (HeadTrackerObj != null)
+                {
+                    Transform obj = HeadTrackerObj.transform;
+                    Vector3 translation = HeadTracker.GetReceivedTranslation();
+                    obj.localPosition = new Vector3(-translation.x, translation.y + head_orig_height, translation.z);
+                    obj.rotation = HeadTracker.GetReceivedRotation(VRTRIXBones.L_Hand);
+
+                }
+            }
         }
 
         //数据手套初始化，数据服务器连接
@@ -255,6 +276,10 @@ namespace VRTRIX
             {
                 RH.OnConnectDataGlove((int)Index, ServerIP);
             }
+            if (HeadTracker.GetReceivedStatus() != VRTRIXGloveStatus.CONNECTED && HeadTracker.GetReceivedStatus() != VRTRIXGloveStatus.TRYTORECONNECT)
+            {
+                HeadTracker.OnConnectDataGlove((int)Index + 1, ServerIP);
+            }
         }
         
         //数据手套反初始化，数据服务器断开连接
@@ -268,6 +293,10 @@ namespace VRTRIX
             if (RH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED)
             {
                 RH.OnDisconnectDataGlove();
+            }
+            if (HeadTracker.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED)
+            {
+                HeadTracker.OnDisconnectDataGlove();
             }
         }
 
