@@ -110,6 +110,8 @@ namespace VRTRIX {
         private Quaternion[] data = new Quaternion[16];
         private VRTRIX_Vector wristData;
         private VRTRIXGloveStatus stat = VRTRIXGloveStatus.CLOSED;
+        // Stopwatch timestamp of the last data packet, 0 before the first; written on the plugin's thread.
+        private long last_data_ticks = 0;
 
         //! Quaternion data struction used in unmanaged C++ API.
         [StructLayout(LayoutKind.Sequential)]
@@ -371,6 +373,7 @@ namespace VRTRIX {
                 objDataGlove.hand_type = hand_type;
                 objDataGlove.radio_channel = radio_channel;
                 objDataGlove.calscore = cal_score;
+                System.Threading.Interlocked.Exchange(ref objDataGlove.last_data_ticks, System.Diagnostics.Stopwatch.GetTimestamp());
             };
 
             receivedEventCallback =
@@ -465,6 +468,20 @@ namespace VRTRIX {
         public int GetReceivedDataRate()
         {
             return data_rate;
+        }
+
+        //! Whether a data packet arrived within the last seconds
+        /*!
+         * An extra tracker connection (OTHER_HAND) receives packets only in data protocol 3.
+         * \param seconds the longest age of the last packet.
+         * \return true when the last packet is at most that old.
+         */
+        public bool HasReceivedDataWithin(double seconds)
+        {
+            long last = System.Threading.Interlocked.Read(ref last_data_ticks);
+            if (last == 0) return false;
+            double age = (System.Diagnostics.Stopwatch.GetTimestamp() - last) / (double)System.Diagnostics.Stopwatch.Frequency;
+            return age <= seconds;
         }
 
         //! Get radio strength of data glove 

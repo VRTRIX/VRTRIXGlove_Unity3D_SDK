@@ -125,6 +125,15 @@ namespace VRTRIX
         private float lh_orig_height = 0;
         private float rh_orig_height = 0;
         private float head_orig_height = 0;
+        // The extra tracker is shown only while its VRTRIXH frames arrive (data protocol 3).
+        private const double HeadTrackerTimeoutSeconds = 1.0;
+
+        void Awake()
+        {
+            // The server names the glove model when it starts the demo (VRTRIXDemoHardware.cs).
+            VRTRIXDemoHardware.Apply(this);
+        }
+
         void Start()
         {
             LH = new VRTRIXDataWrapper(AdvancedMode, version, HANDTYPE.LEFT_HAND);
@@ -243,9 +252,16 @@ namespace VRTRIX
                 LH_Gesture = gestureDetector.GestureDetection(LH, HANDTYPE.LEFT_HAND);
             }
 
-            if (HeadTracker.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED)
+            if (HeadTrackerObj != null)
             {
-                if (HeadTrackerObj != null)
+                // Data protocol 2 sends no VRTRIXH frames: hide the extra tracker until they arrive.
+                bool headTracked = HeadTracker.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED &&
+                                   HeadTracker.HasReceivedDataWithin(HeadTrackerTimeoutSeconds);
+                if (HeadTrackerObj.activeSelf != headTracked)
+                {
+                    HeadTrackerObj.SetActive(headTracked);
+                }
+                if (headTracked)
                 {
                     Transform obj = HeadTrackerObj.transform;
                     Vector3 translation = HeadTracker.GetReceivedTranslation();
@@ -278,7 +294,9 @@ namespace VRTRIX
             }
             if (HeadTracker.GetReceivedStatus() != VRTRIXGloveStatus.CONNECTED && HeadTracker.GetReceivedStatus() != VRTRIXGloveStatus.TRYTORECONNECT)
             {
-                HeadTracker.OnConnectDataGlove((int)Index + 1, ServerIP);
+                // The server sends the extra tracker's VRTRIXH frames on the pair's own port,
+                // next to its L and R frames; this connection keeps only the H frames.
+                HeadTracker.OnConnectDataGlove((int)Index, ServerIP);
             }
         }
         
