@@ -136,6 +136,12 @@ namespace VRTRIX
         private Vector3[] thumb_offset_R_default = new Vector3[3];
 
 
+        void Awake()
+        {
+            // The server names the glove model when it starts the demo (VRTRIXDemoHardware.cs).
+            VRTRIXDemoHardware.Apply(this);
+        }
+
         void Start()
         {
             LH = new VRTRIXDataWrapper(AdvancedMode, version, HANDTYPE.LEFT_HAND);
