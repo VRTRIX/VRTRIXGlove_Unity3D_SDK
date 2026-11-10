@@ -140,12 +140,14 @@ namespace VRTRIX
         {
             // The server names the glove model when it starts the demo (VRTRIXDemoHardware.cs).
             VRTRIXDemoHardware.Apply(this);
+            // Here, not in Start: VRTRIXGloveStatusUIUpdate.Start may run first, and it sets the
+            // hardware version dropdown, whose handler calls SetHardwareVersion (LH and RH).
+            LH = new VRTRIXDataWrapper(AdvancedMode, version, HANDTYPE.LEFT_HAND);
+            RH = new VRTRIXDataWrapper(AdvancedMode, version, HANDTYPE.RIGHT_HAND);
         }
 
         void Start()
         {
-            LH = new VRTRIXDataWrapper(AdvancedMode, version, HANDTYPE.LEFT_HAND);
-            RH = new VRTRIXDataWrapper(AdvancedMode, version, HANDTYPE.RIGHT_HAND);
             int gloveCount = VRTRIXDataWrapper.GetGloveCount();
             print("Found " + gloveCount + " gloves connected to PC.");
             Dictionary<VRTRIXBones, VRTRIXFingerStatusThreshold> thresholdMap = new Dictionary<VRTRIXBones, VRTRIXFingerStatusThreshold>();

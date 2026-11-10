@@ -123,6 +123,9 @@ namespace VRTRIX
                 m_ServerIP.GetComponent<InputField>().text = "127.0.0.1";
                 m_ConnectButton.GetComponentInChildren<Text>().text = "Connect";
                 m_ConnectButton.GetComponent<Button>().onClick.AddListener(OnConnectGlovePressed);
+                // The multiple gloves demo's panels have only these connection controls; the
+                // rest of the panel (status, parameters) is not there.
+                if (m_LHHapticsButton == null) return;
                 m_LHHapticsButton.GetComponent<Button>().onClick.AddListener(OnLHTriggerHapticsPressed);
                 m_RHHapticsButton.GetComponent<Button>().onClick.AddListener(OnRHTriggerHapticsPressed);
                 m_LHResetButton.GetComponent<Button>().onClick.AddListener(OnLHResetPressed);
@@ -132,6 +135,10 @@ namespace VRTRIX
 
 
                 UpdateUIValue((HANDTYPE)m_HandTypeDropDown.GetComponent<Dropdown>().value + 2);
+                // The scene saved no caption for it (the panel showed an empty box).
+                m_ThumbOffsetSelectorDropdown.GetComponent<Dropdown>().RefreshShownValue();
+                Debug.Log("[VRTRIX] UI: hardware " + m_HardwareVersionDropDown.GetComponent<Dropdown>().captionText.text +
+                          ", finger spacing " + m_FingerSpacingSlider.GetComponent<Slider>().value.ToString("F1"));
                 m_HandTypeDropDown.GetComponent<Dropdown>().onValueChanged.AddListener(OnToggleHandType);
                 m_AdvancedModeToggle.GetComponent<Toggle>().onValueChanged.AddListener(OnToggleAdvancedMode);
                 m_FingerSpacingSlider.GetComponent<Slider>().onValueChanged.AddListener(OnFingerSpacingChanged);
@@ -150,7 +157,8 @@ namespace VRTRIX
             }
             catch (Exception e)
             {
-                //Debug.Log(e);
+                // Logged: a silent failure here left the parameters panel at 0 with no handlers.
+                Debug.LogException(e);
             }
         }
 
