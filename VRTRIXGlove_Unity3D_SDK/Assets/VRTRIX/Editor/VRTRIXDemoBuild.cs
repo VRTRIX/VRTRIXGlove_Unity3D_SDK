@@ -80,7 +80,9 @@ namespace VRTRIX
                     BuildResult result = report.summary.result;
                     Debug.Log("[VRTRIXDemoBuild] " + player.Name + ": " + result + ", VR " + player.VR +
                               ", " + report.summary.totalSize + " bytes, " + report.summary.totalErrors + " errors -> " + exe);
-                    if (result != BuildResult.Succeeded) failures++;
+                    // Unity 2018.1 can say Succeeded with errors and leave the old player in place
+                    // (an IOException in its staging area).
+                    if (result != BuildResult.Succeeded || report.summary.totalErrors > 0) failures++;
                 }
             }
             finally
@@ -117,6 +119,26 @@ namespace VRTRIX
                         sb.Append("\n      ").Append(p.propertyPath).Append(" = ").Append(Describe(p));
                     }
                     Debug.Log(sb.ToString());
+                }
+                // The UI's dropdowns, with the option texts (the hardware version dropdown).
+                foreach (GameObject root in EditorSceneManager.GetActiveScene().GetRootGameObjects())
+                {
+                    foreach (UnityEngine.UI.Dropdown dropdown in root.GetComponentsInChildren<UnityEngine.UI.Dropdown>(true))
+                    {
+                        System.Text.StringBuilder sb = new System.Text.StringBuilder();
+                        sb.Append("[VRTRIXDemoBuild]   dropdown ").Append(PathOf(dropdown.transform))
+                          .Append(" value=").Append(dropdown.value).Append(" options=");
+                        for (int i = 0; i < dropdown.options.Count; ++i)
+                        {
+                            sb.Append(i == 0 ? "" : " | ").Append(i).Append(':').Append(dropdown.options[i].text);
+                        }
+                        sb.Append(" listeners=").Append(dropdown.onValueChanged.GetPersistentEventCount());
+                        for (int i = 0; i < dropdown.onValueChanged.GetPersistentEventCount(); ++i)
+                        {
+                            sb.Append(' ').Append(dropdown.onValueChanged.GetPersistentMethodName(i));
+                        }
+                        Debug.Log(sb.ToString());
+                    }
                 }
             }
         }
