@@ -446,11 +446,14 @@ namespace VRTRIX
          */
         public void SetHardwareVersion(GLOVEVERSION version)
         {
-            if (LH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED)
+            this.version = version;
+            // The UI's Start may run before this Start creates LH and RH (it sets the hardware
+            // version dropdown to the glove's model).
+            if (LH != null && LH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED)
             {
                 LH.SetHardwareVersion(version);
             }
-            if (RH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED)
+            if (RH != null && RH.GetReceivedStatus() == VRTRIXGloveStatus.CONNECTED)
             {
                 RH.SetHardwareVersion(version);
             }

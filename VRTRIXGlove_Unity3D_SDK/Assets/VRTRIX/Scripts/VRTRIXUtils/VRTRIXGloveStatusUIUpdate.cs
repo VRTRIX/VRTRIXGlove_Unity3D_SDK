@@ -120,6 +120,11 @@ namespace VRTRIX
             m_AlignFingerButton = FindDeepChild(m_canvas.gameObject.transform, "AlignFingerButton").gameObject;
             m_HardwareCalButton = FindDeepChild(m_canvas.gameObject.transform, "8FigureCalButton").gameObject;
 
+            // The glove's model (VRTRIXDemoHardware, from the server's command line), not the
+            // value saved in the scene. Before the gloves connect nothing is sent.
+            m_HardwareVersionDropDown.GetComponent<Dropdown>().value = (int)glove3D.version;
+            Debug.Log("[VRTRIX] Hardware version dropdown: " +
+                      m_HardwareVersionDropDown.GetComponent<Dropdown>().captionText.text);
             m_ServerIP.GetComponent<InputField>().text = "127.0.0.1";
             m_ConnectButton.GetComponentInChildren<Text>().text = "Connect";
             m_ConnectButton.GetComponent<Button>().onClick.AddListener(OnConnectGlovePressed);
@@ -210,20 +215,11 @@ namespace VRTRIX
             UpdateUIValue(type);
         }
 
+        // The dropdown's options are the GLOVEVERSION values in order (DK1 ... PRO12), as in the
+        // glove-only demo.
         public void OnSelectHardwareVersion(int index)
         {
-            if (index == 0)
-            {
-                glove3D.SetHardwareVersion(GLOVEVERSION.DK1);
-            }
-            else if (index == 1)
-            {
-                glove3D.SetHardwareVersion(GLOVEVERSION.DK2);
-            }
-            else if (index == 2)
-            {
-                glove3D.SetHardwareVersion(GLOVEVERSION.PRO);
-            }
+            glove3D.SetHardwareVersion((GLOVEVERSION)index);
         }
         public void OnConnectGlovePressed()
         {
